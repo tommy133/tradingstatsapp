@@ -5,9 +5,10 @@ export class Operation {
     time_op?: Date;
     time_close?: Date;
     timeframe?: string;
-    ratio?: number;
-    points?: number;
     graph?: string;
     status?: string;
     account?: string;
+    volume?: number;
+    ratio?: number;
+    points?: number;
 }
