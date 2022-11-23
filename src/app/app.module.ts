@@ -5,12 +5,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ProjectionComponent } from './projection/projection.component';
 import { OperationComponent } from './operation/operation.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProjectionComponent,
-    OperationComponent
+    OperationComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
