@@ -1,0 +1,17 @@
+.home {
+    color:white;
+    margin-left: 2%;
+}
+
+.btn-new {
+    margin-right: 2%;    
+    padding: 16px 20px 16px 20px;
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 16px;
+    color: #fff;
+    background: #5EFD71;
+    -moz-border-radius: 4px; -webkit-border-radius: 4px; border-radius: 4px;
+}
+
+/*FIX: nav se separa des marge dret per a width < 158*/
