@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProjectionComponent } from './projection.component';
+import { ProjectionListComponent } from './projection-list.component';
 
 describe('ProjectionComponent', () => {
-  let component: ProjectionComponent;
-  let fixture: ComponentFixture<ProjectionComponent>;
+  let component: ProjectionListComponent;
+  let fixture: ComponentFixture<ProjectionListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProjectionComponent ]
+      declarations: [ ProjectionListComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ProjectionComponent);
+    fixture = TestBed.createComponent(ProjectionListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

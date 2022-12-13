@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { OperationComponent } from './operation.component';
+import { OperationListComponent } from './operation-list.component';
 
-describe('OperationComponent', () => {
-  let component: OperationComponent;
-  let fixture: ComponentFixture<OperationComponent>;
+describe('OperationListComponent', () => {
+  let component: OperationListComponent;
+  let fixture: ComponentFixture<OperationListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OperationComponent ]
+      declarations: [ OperationListComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(OperationComponent);
+    fixture = TestBed.createComponent(OperationListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
