@@ -1,4 +1,4 @@
-export class Projection {
+export interface Projection {
     id?: number;
     symbol?: string;
     updown?: boolean;

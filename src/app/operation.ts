@@ -1,4 +1,4 @@
-export class Operation {
+export interface Operation {
     id?: number;
     symbol?: string;
     updown?: boolean;
