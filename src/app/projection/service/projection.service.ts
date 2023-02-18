@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Projection } from './projection';
+import { Projection } from '../model/projection';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { Projection } from './projection';
 export class ProjectionService {
   private apiServerUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public getProjections(): Observable<Projection[]> {
     return this.http.get<Projection[]>(`${this.apiServerUrl}/projection/all`)

@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Operation } from 'src/app/operation/model/operation';
 import { environment } from 'src/environments/environment';
-import { Operation } from './operation';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { Operation } from './operation';
 export class OperationService {
   private apiServerUrl = environment.apiBaseUrl;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   public getOperations(): Observable<Operation[]> {
     return this.http.get<Operation[]>(`${this.apiServerUrl}/operation/all`)
