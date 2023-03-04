@@ -1,15 +1,44 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { TableData } from './table/table.component';
 
 @Component({
   selector: 'app-projection-list',
   templateUrl: './projection-list.component.html',
-  styleUrls: ['./projection-list.component.css']
+  styleUrls: ['./projection-list.component.css'],
 })
-export class ProjectionListComponent implements OnInit {
+export class ProjectionListComponent {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  mockTableData: TableData = {
+    rows: [
+      {
+        id: 1,
+        symbol: 'EURUSD',
+        date: '01/01/97',
+        timeframe: 'M1',
+        status: 'ACTIVE',
+      },
+      {
+        id: 2,
+        symbol: 'USDJPY',
+        date: '01/01/97',
+        timeframe: 'M1',
+        status: 'ACTIVE',
+      },
+    ],
+    columns: [
+      {
+        name: 'Symbol',
+      },
+      {
+        name: 'Date',
+      },
+      {
+        name: 'Timeframe',
+      },
+      {
+        name: 'Status',
+      },
+    ],
+  };
 }

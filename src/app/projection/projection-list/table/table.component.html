@@ -1,0 +1,38 @@
+<div class="overflow-x-auto">
+  <div class="bg-gray-100 flex items-center justify-center">
+    <div class="w-full">
+      <div class="bg-white shadow-md rounded my-9">
+        <table class="min-w-max w-full table-auto">
+          <thead>
+            <tr class="bg-gray-200 text-gray-600 text-sm leading-normal">
+              <ng-container *ngFor="let column of tableData.columns">
+                <th class="py-3 px-6 text-center">
+                  {{ column.name }}
+                </th>
+              </ng-container>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600 text-sm font-light">
+            <tr
+              *ngFor="let row of tableData.rows"
+              class="border-b border-gray-200 hover:bg-gray-100"
+            >
+              <td class="py-3 px-6 text-left whitespace-nowrap font-bold">
+                {{ row.symbol }}
+              </td>
+              <td class="py-3 px-6 text-center whitespace-nowrap">
+                {{ row.date }}
+              </td>
+              <td class="py-3 px-6 text-center whitespace-nowrap">
+                {{ row.timeframe }}
+              </td>
+              <td class="py-3 px-6 text-center whitespace-nowrap">
+                {{ row.status }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
