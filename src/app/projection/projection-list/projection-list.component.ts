@@ -1,5 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { TableData } from './table/table.component';
+import { Observable } from 'rxjs';
+import { Projection } from '../model/projection';
+import { ProjectionService } from '../service/projection.service';
 
 @Component({
   selector: 'app-projection-list',
@@ -7,38 +10,40 @@ import { TableData } from './table/table.component';
   styleUrls: ['./projection-list.component.css'],
 })
 export class ProjectionListComponent {
-  constructor() {}
+  public projections$?: Observable<Projection[]>;
 
-  mockTableData: TableData = {
-    rows: [
-      {
-        id: 1,
-        symbol: 'EURUSD',
-        date: '01/01/97',
-        timeframe: 'M1',
-        status: 'ACTIVE',
+  constructor(private projectionService: ProjectionService) {}
+
+  ngOnInit(): void {
+    this.getProjections();
+  }
+
+  public getProjections(): void {
+    this.projections$ = this.projectionService.getProjections();
+  }
+
+  public onAddProjection(projection: Projection): void {
+    this.projectionService.addProjection(projection);
+  }
+
+  public onUpdateProjection(projection: Projection): void {
+    this.projectionService.updateProjection(projection).subscribe(() => {
+      //remove subscribe
+      this.getProjections();
+    }),
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      };
+  }
+
+  public onDeleteProjection(projectionId: number): void {
+    this.projectionService.deleteProjection(projectionId).subscribe(
+      () => {
+        this.getProjections();
       },
-      {
-        id: 2,
-        symbol: 'USDJPY',
-        date: '01/01/97',
-        timeframe: 'M1',
-        status: 'ACTIVE',
-      },
-    ],
-    columns: [
-      {
-        name: 'Symbol',
-      },
-      {
-        name: 'Date',
-      },
-      {
-        name: 'Timeframe',
-      },
-      {
-        name: 'Status',
-      },
-    ],
-  };
+      (error: HttpErrorResponse) => {
+        alert(error.message);
+      }
+    );
+  }
 }

@@ -5,7 +5,7 @@
         <table class="min-w-max w-full table-auto">
           <thead>
             <tr class="bg-gray-200 text-gray-600 text-sm leading-normal">
-              <ng-container *ngFor="let column of tableData.columns">
+              <ng-container *ngFor="let column of columns">
                 <th class="py-3 px-6 text-center">
                   {{ column.name }}
                 </th>
@@ -14,11 +14,14 @@
           </thead>
           <tbody class="text-gray-600 text-sm font-light">
             <tr
-              *ngFor="let row of tableData.rows"
+              *ngFor="let row of rows"
               class="border-b border-gray-200 hover:bg-gray-100"
             >
               <td class="py-3 px-6 text-left whitespace-nowrap font-bold">
                 {{ row.symbol }}
+              </td>
+              <td class="py-3 px-6 text-center whitespace-nowrap">
+                {{ row.updown == true ? "LONG" : "SHORT" }}
               </td>
               <td class="py-3 px-6 text-center whitespace-nowrap">
                 {{ row.date }}
