@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:8080'
+  apiBaseUrl: 'http://localhost:8080',
+  mockBaseUrl: 'https://640c20b0a3e07380e8ed815b.mockapi.io/tradingstats',
 };
 
 /*
