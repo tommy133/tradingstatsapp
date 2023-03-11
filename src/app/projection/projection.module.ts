@@ -3,12 +3,12 @@ import { NgModule } from '@angular/core';
 import { ProjectionRoutingModule } from './projection-routing.module';
 import { ProjectionListComponent } from './projection-list/projection-list.component';
 import { SharedModule } from '../shared/shared.module';
-import { TableComponent } from './projection-list/table/table.component';
+import { TableProjectionComponent } from './projection-list/table/table-projection.component';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
-  declarations: [ProjectionListComponent, TableComponent],
+  declarations: [ProjectionListComponent, TableProjectionComponent],
   imports: [
     CommonModule,
     ProjectionRoutingModule,

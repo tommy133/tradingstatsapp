@@ -19,10 +19,9 @@ export interface TableData {
 
 @Component({
   selector: 'app-table',
-  templateUrl: './table.component.html',
-  styleUrls: ['./table.component.css'],
+  templateUrl: './table-projection.component.html',
 })
-export class TableComponent {
+export class TableProjectionComponent {
   @Input() tableData!: TableData;
   constructor() {}
 }
