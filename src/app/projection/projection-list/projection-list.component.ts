@@ -1,6 +1,6 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable, of } from 'rxjs';
 import { Projection } from '../model/projection';
 import { ProjectionService } from '../service/projection.service';
 
@@ -15,11 +15,11 @@ export class ProjectionListComponent {
   constructor(private projectionService: ProjectionService) {}
 
   ngOnInit(): void {
-    this.getProjections();
+    this.projections$ = this.getProjections();
   }
 
-  public getProjections(): void {
-    this.projections$ = this.projectionService.getProjections();
+  public getProjections(): Observable<Projection[]> {
+    return this.projectionService.getProjections();
   }
 
   public onAddProjection(projection: Projection): void {
@@ -29,7 +29,7 @@ export class ProjectionListComponent {
   public onUpdateProjection(projection: Projection): void {
     this.projectionService.updateProjection(projection).subscribe(() => {
       //remove subscribe
-      this.getProjections();
+      this.projections$ = this.getProjections();
     }),
       (error: HttpErrorResponse) => {
         alert(error.message);
@@ -39,11 +39,26 @@ export class ProjectionListComponent {
   public onDeleteProjection(projectionId: number): void {
     this.projectionService.deleteProjection(projectionId).subscribe(
       () => {
-        this.getProjections();
+        this.projections$ = this.getProjections();
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
       }
     );
+  }
+
+  public filterProjections(key: string): void {
+    const filterFn = (projection: Projection) =>
+      projection.symbol?.toLowerCase().includes(key.toLowerCase()) ||
+      projection.timeframe?.toLowerCase().includes(key.toLowerCase()) ||
+      projection.status?.toLowerCase().includes(key.toLowerCase());
+
+    this.projections$
+      ?.pipe(map((projections) => projections.filter(filterFn)))
+      .subscribe((filteredProjections) => {
+        this.projections$ = key
+          ? of(filteredProjections)
+          : this.getProjections();
+      });
   }
 }
