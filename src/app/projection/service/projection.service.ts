@@ -8,7 +8,7 @@ import { Projection } from '../model/projection';
   providedIn: 'root',
 })
 export class ProjectionService {
-  private apiServerUrl = `${environment.mockBaseUrl}/projection`;
+  private apiServerUrl = `${environment.apiBaseUrl}/projections`;
 
   constructor(private http: HttpClient) {}
 
