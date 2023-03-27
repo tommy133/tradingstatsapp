@@ -18,19 +18,19 @@
               class="border-b border-gray-200 hover:bg-gray-100"
             >
               <td class="py-3 px-6 text-left whitespace-nowrap font-bold">
-                {{ row.symbol }}
+                {{ row.name_sym }}
               </td>
               <td class="py-3 px-6 text-center whitespace-nowrap">
                 {{ row.updown == true ? "LONG" : "SHORT" }}
               </td>
               <td class="py-3 px-6 text-center whitespace-nowrap">
-                {{ row.date }}
+                {{ row.date_proj | date : "dd/MM/yyyy" }}
               </td>
               <td class="py-3 px-6 text-center whitespace-nowrap">
-                {{ row.timeframe }}
+                {{ row.name_tf }}
               </td>
               <td class="py-3 px-6 text-center whitespace-nowrap">
-                {{ row.status }}
+                {{ row.name_st }}
               </td>
             </tr>
           </tbody>

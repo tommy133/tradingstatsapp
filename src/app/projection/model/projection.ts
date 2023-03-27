@@ -1,9 +1,10 @@
 export interface Projection {
-    id?: number;
-    symbol?: string;
-    updown?: boolean;
-    date?: Date;
-    timeframe?: string;
-    graph?: string;
-    status?: string;
+  id?: number;
+  name_sym?: string;
+  symbol?: string;
+  updown?: boolean;
+  date_proj?: Date;
+  name_tf?: string;
+  graph?: string;
+  name_st?: string;
 }

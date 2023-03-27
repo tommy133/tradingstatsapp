@@ -14,7 +14,7 @@ export class ProjectionListComponent {
 
   constructor(private projectionService: ProjectionService) {}
 
-  ngOnInit(): void {
+  ngOnInit() {
     this.projections$ = this.getProjections();
   }
 
@@ -50,8 +50,8 @@ export class ProjectionListComponent {
   public filterProjections(key: string): void {
     const filterFn = (projection: Projection) =>
       projection.symbol?.toLowerCase().includes(key.toLowerCase()) ||
-      projection.timeframe?.toLowerCase().includes(key.toLowerCase()) ||
-      projection.status?.toLowerCase().includes(key.toLowerCase());
+      projection.name_tf?.toLowerCase().includes(key.toLowerCase()) ||
+      projection.name_st?.toLowerCase().includes(key.toLowerCase());
 
     this.projections$
       ?.pipe(map((projections) => projections.filter(filterFn)))
