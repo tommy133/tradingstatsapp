@@ -1,4 +1,11 @@
 <app-navbar></app-navbar>
-<div class="container">
-  <app-table [rows]="projections$ | async"></app-table>
+<div
+  class="container"
+  *ngIf="projections$ | async as projections; else loading"
+>
+  <app-table [rows]="projections"></app-table>
 </div>
+
+<ng-template #loading>
+  <span>⌛⌛⌛ Loading ⌛⌛⌛</span>
+</ng-template>

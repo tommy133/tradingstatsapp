@@ -10,55 +10,37 @@ import { ProjectionService } from '../service/projection.service';
   styleUrls: ['./projection-list.component.css'],
 })
 export class ProjectionListComponent {
-  public projections$?: Observable<Projection[]>;
+  projections$: Observable<Projection[]> =
+    this.projectionService.getProjections();
 
-  constructor(private projectionService: ProjectionService) {}
-
-  ngOnInit() {
-    this.projections$ = this.getProjections();
+  constructor(private projectionService: ProjectionService) {
+    this.onDeleteProjection(33);
   }
 
-  public getProjections(): Observable<Projection[]> {
-    return this.projectionService.getProjections();
-  }
-
-  public onAddProjection(projection: Projection): void {
+  onAddProjection(projection: Projection): void {
     this.projectionService.addProjection(projection);
   }
 
-  public onUpdateProjection(projection: Projection): void {
-    this.projectionService.updateProjection(projection).subscribe(() => {
-      //remove subscribe
-      this.projections$ = this.getProjections();
-    }),
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      };
+  onUpdateProjection(projection: Projection): void {
+    this.projectionService.updateProjection(projection);
   }
 
-  public onDeleteProjection(projectionId: number): void {
-    this.projectionService.deleteProjection(projectionId).subscribe(
-      () => {
-        this.projections$ = this.getProjections();
-      },
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      }
-    );
+  onDeleteProjection(projectionId: number): void {
+    this.projectionService.deleteProjection(projectionId);
   }
 
-  public filterProjections(key: string): void {
-    const filterFn = (projection: Projection) =>
-      projection.symbol?.toLowerCase().includes(key.toLowerCase()) ||
-      projection.name_tf?.toLowerCase().includes(key.toLowerCase()) ||
-      projection.name_st?.toLowerCase().includes(key.toLowerCase());
+  filterProjections(key: string): void {
+    const fieldContainsKey = (field: string) =>
+      field.toLowerCase().includes(key.toLowerCase());
 
-    this.projections$
-      ?.pipe(map((projections) => projections.filter(filterFn)))
-      .subscribe((filteredProjections) => {
-        this.projections$ = key
-          ? of(filteredProjections)
-          : this.getProjections();
-      });
+    const filterFn = ({
+      symbol = '',
+      name_tf = '',
+      name_st = '',
+    }: Projection) => {
+      fieldContainsKey(symbol) ||
+        fieldContainsKey(name_tf) ||
+        fieldContainsKey(name_st);
+    };
   }
 }
