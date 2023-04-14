@@ -49,7 +49,7 @@ export class ProjectionListComponent {
 
   public filterProjections(key: string): void {
     const filterFn = (projection: Projection) =>
-      projection.symbol?.toLowerCase().includes(key.toLowerCase()) ||
+      projection.name_sym?.toLowerCase().includes(key.toLowerCase()) ||
       projection.name_tf?.toLowerCase().includes(key.toLowerCase()) ||
       projection.name_st?.toLowerCase().includes(key.toLowerCase());
 
