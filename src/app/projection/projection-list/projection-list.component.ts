@@ -48,10 +48,19 @@ export class ProjectionListComponent {
   }
 
   public filterProjections(key: string): void {
-    const filterFn = (projection: Projection) =>
-      projection.name_sym?.toLowerCase().includes(key.toLowerCase()) ||
-      projection.name_tf?.toLowerCase().includes(key.toLowerCase()) ||
-      projection.name_st?.toLowerCase().includes(key.toLowerCase());
+    const fieldContainsKey = (field: string) =>
+      field.toLowerCase().includes(key.toLowerCase());
+    const filterFn = ({
+      name_sym = '',
+      name_tf = '',
+      name_st = '',
+    }: Projection) => {
+      return (
+        fieldContainsKey(name_sym) ||
+        fieldContainsKey(name_tf) ||
+        fieldContainsKey(name_st)
+      );
+    };
 
     this.projections$
       ?.pipe(map((projections) => projections.filter(filterFn)))
