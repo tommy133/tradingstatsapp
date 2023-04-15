@@ -46,8 +46,8 @@ export class ProjectionListComponent {
       }
     );
   }
-
-  public filterProjections(key: string): void {
+  //TODO real time filter
+  public onFilterProjections(key: string): void {
     const fieldContainsKey = (field: string) =>
       field.toLowerCase().includes(key.toLowerCase());
     const filterFn = ({
