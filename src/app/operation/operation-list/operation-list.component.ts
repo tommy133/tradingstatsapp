@@ -3,13 +3,10 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-operation-list',
   templateUrl: './operation-list.component.html',
-  styleUrls: ['./operation-list.component.css']
+  styleUrls: ['./operation-list.component.css'],
 })
 export class OperationListComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

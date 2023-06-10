@@ -4,19 +4,9 @@ import { SharedModule } from '../shared/shared.module';
 import { OperationRoutingModule } from './operation-routing.module';
 import { CommonModule } from '@angular/common';
 
-
-
 @NgModule({
-  declarations: [
-    OperationListComponent
-  ],
-  imports: [
-    CommonModule,
-    OperationRoutingModule,
-    SharedModule
-  ],
-  exports: [
-    OperationListComponent
-  ]
+  declarations: [OperationListComponent],
+  imports: [CommonModule, OperationRoutingModule, SharedModule],
+  exports: [OperationListComponent],
 })
-export class OperationModule { }
+export class OperationModule {}

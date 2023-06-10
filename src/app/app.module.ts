@@ -10,18 +10,15 @@ import { ProjectionModule } from './projection/projection.module';
 import { OperationModule } from './operation/operation.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent
-  ],
+  declarations: [AppComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     SharedModule,
     ProjectionModule,
-    OperationModule
+    OperationModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
