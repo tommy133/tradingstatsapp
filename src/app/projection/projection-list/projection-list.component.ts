@@ -43,7 +43,7 @@ export class ProjectionListComponent {
       },
       (error: HttpErrorResponse) => {
         alert(error.message);
-      }
+      },
     );
   }
   //TODO real time filter

@@ -27,7 +27,7 @@ export class ProjectionService {
   public updateProjection(projection: Projection): Observable<Projection> {
     return this.http.put<Projection>(
       `${this.apiServerUrl}/${projection.id}`,
-      projection
+      projection,
     );
   }
 
