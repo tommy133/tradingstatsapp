@@ -1,20 +1,3 @@
-.container {
-  max-width: 700px;
-  width: 100%;
-
-  height: 50vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  position: absolute;
-  right: 0;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  margin: auto;
-}
-
 /*Buttons projections/operations*/
 .button {
   display: inline-block;
