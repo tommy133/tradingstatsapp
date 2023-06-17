@@ -8,9 +8,10 @@ import { HomeComponent } from './home/home.component';
 import { SharedModule } from './shared/shared.module';
 import { ProjectionModule } from './projection/projection.module';
 import { OperationModule } from './operation/operation.module';
+import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent],
+  declarations: [AppComponent, HomeComponent, MainLayoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
