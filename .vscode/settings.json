@@ -3,5 +3,8 @@
   "html.format.enable": false,
   // enable formatting by default
   "editor.formatOnSave": true,
-  "editor.formatOnPaste": true
+  "editor.formatOnPaste": true,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
+  }
 }
