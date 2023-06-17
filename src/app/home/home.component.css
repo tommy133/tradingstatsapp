@@ -1,16 +1,9 @@
 /*Buttons projections/operations*/
 .button {
-  display: inline-block;
-  padding: 25px 25px;
-  font-size: 40px;
-  min-width: 400px;
-  cursor: pointer;
-  text-align: center;
-  text-decoration: none;
-  outline: none;
+  font-size: 25px;
+  width: 100%;
   color: #fff;
   background-color: #4caf50;
-  border: none;
   border-radius: 15px;
   box-shadow: 0 9px #999;
 }
@@ -23,4 +16,8 @@
   background-color: #3e8e41;
   box-shadow: 0 5px #666;
   transform: translateY(4px);
+}
+
+a {
+  text-align: center;
 }
