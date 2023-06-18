@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-interface NavButton {
+export interface NavButton {
   text: string;
   link: string;
 }

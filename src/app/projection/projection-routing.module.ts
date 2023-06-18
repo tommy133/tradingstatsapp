@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectionListComponent } from './projection-list/projection-list.component';
 import { ProjectionAddComponent } from './projection-add/projection-add.component';
-import { ProjectionEditComponent } from './projection-edit/projection-edit.component';
 import { ProjectionDetailsComponent } from './projection-details/projection-details.component';
+import { ProjectionEditComponent } from './projection-edit/projection-edit.component';
+import { ProjectionListComponent } from './projection-list/projection-list.component';
 
 const routes: Routes = [
   {
-    path: 'projections',
+    path: '',
     component: ProjectionListComponent,
     children: [
       {
