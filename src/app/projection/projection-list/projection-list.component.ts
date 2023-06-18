@@ -22,20 +22,6 @@ export class ProjectionListComponent {
     return this.projectionService.getProjections();
   }
 
-  public onAddProjection(projection: Projection): void {
-    this.projectionService.addProjection(projection);
-  }
-
-  public onUpdateProjection(projection: Projection): void {
-    this.projectionService.updateProjection(projection).subscribe(() => {
-      //remove subscribe
-      this.projections$ = this.getProjections();
-    }),
-      (error: HttpErrorResponse) => {
-        alert(error.message);
-      };
-  }
-
   public onDeleteProjection(projectionId: number): void {
     this.projectionService.deleteProjection(projectionId).subscribe(
       () => {
