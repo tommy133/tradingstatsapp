@@ -1,11 +1,13 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { LoadingTemplateComponent } from './loading-template/loading-template.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
-  declarations: [NavbarComponent],
+  declarations: [NavbarComponent, SpinnerComponent, LoadingTemplateComponent],
   imports: [CommonModule, RouterModule],
-  exports: [NavbarComponent],
+  exports: [NavbarComponent, SpinnerComponent, LoadingTemplateComponent],
 })
 export class SharedModule {}

@@ -1,16 +1,21 @@
-<div class="row justify-content-center p-5">
-  <div class="search-container">
-    <input
-      type="text"
-      placeholder="Search by symbol, timeframe or status"
-      #inputFilter>
-    <button
-      type="submit"
-      (click)="onFilterProjections(inputFilter.value)">
-      <i class="fa fa-search"></i>
-    </button>
+<ng-container *ngIf="projections$ | async; else loading">
+  <div class="row justify-content-center p-5">
+    <div class="search-container">
+      <input
+        type="text"
+        placeholder="Search by symbol, timeframe or status"
+        #inputFilter>
+      <button
+        type="submit"
+        (click)="onFilterProjections(inputFilter.value)">
+        <i class="fa fa-search"></i>
+      </button>
+    </div>
   </div>
-</div>
-<div class="px-5">
-  <app-table [rows]="projections$ | async"></app-table>
-</div>
+  <div class="px-5">
+    <app-table [rows]="projections$ | async"></app-table>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <app-loading-template></app-loading-template>
+</ng-template>

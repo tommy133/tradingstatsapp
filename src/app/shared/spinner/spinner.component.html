@@ -1,0 +1,8 @@
+<ng-container *ngIf="type === 'inline'; else fullScreen">
+  <div class="spinner"></div>
+</ng-container>
+<ng-template #fullScreen>
+  <div class="flex justify-center items-center h-screen">
+    <div class="spinner"></div>
+  </div>
+</ng-template>
