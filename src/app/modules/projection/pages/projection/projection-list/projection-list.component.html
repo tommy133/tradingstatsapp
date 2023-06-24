@@ -1,5 +1,5 @@
 <ng-container *ngIf="projections$ | async; else loading">
-  <div class="row justify-content-center p-5">
+  <div class="flex justify-between p-5">
     <div class="search-container">
       <input
         type="text"
@@ -11,6 +11,11 @@
         <i class="fa fa-search"></i>
       </button>
     </div>
+    <button
+      class="rounded-full bg-blue-500 text-white px-5 py-2"
+      routerLink="add">
+      Add projection
+    </button>
   </div>
   <div class="px-5">
     <app-table [rows]="projections$ | async"></app-table>
