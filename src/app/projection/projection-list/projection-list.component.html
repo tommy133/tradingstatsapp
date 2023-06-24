@@ -15,6 +15,14 @@
   <div class="px-5">
     <app-table [rows]="projections$ | async"></app-table>
   </div>
+  <app-sidebar-right
+    class="fixed top-0 bottom-0 right-0 md:w-[460px] border-l-bright-gray border-l h-full bg-white overflow-auto"
+    [@sidebarRightInOut]="sidebarRightAnimationState">
+    <router-outlet
+      (activate)="sidebarRightAnimationState = 'in'"
+      (deactivate)="sidebarRightAnimationState = 'out'"></router-outlet>
+
+  </app-sidebar-right>
 </ng-container>
 <ng-template #loading>
   <app-loading-template></app-loading-template>

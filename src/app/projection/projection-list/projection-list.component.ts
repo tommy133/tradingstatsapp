@@ -1,6 +1,11 @@
+import { trigger } from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
+import {
+  sidebarRightAnimationSlide,
+  SidebarRightAnimationState,
+} from 'src/app/shared/utils/sidebar-right-animation';
 import { Projection } from '../model/projection';
 import { ProjectionService } from '../service/projection.service';
 
@@ -8,9 +13,11 @@ import { ProjectionService } from '../service/projection.service';
   selector: 'app-projection-list',
   templateUrl: './projection-list.component.html',
   styleUrls: ['./projection-list.component.css'],
+  animations: [trigger('sidebarRightInOut', sidebarRightAnimationSlide)],
 })
 export class ProjectionListComponent {
   public projections$?: Observable<Projection[]>;
+  sidebarRightAnimationState: SidebarRightAnimationState = 'out';
 
   constructor(private projectionService: ProjectionService) {}
 
