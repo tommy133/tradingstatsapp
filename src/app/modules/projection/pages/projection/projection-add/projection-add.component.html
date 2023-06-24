@@ -1,1 +1,45 @@
-<p>projection-add works!</p>
+<div class="h-full">
+  <form (ngSubmit)="onSubmit()">
+    <div class="pl-[32px] pt-[32px]">
+      <div class="flex justify-between pb-8">
+        <button
+          type="button"
+          routerLink="../">
+          Close
+        </button>
+        <div class="pr-5">
+          <button
+            type="submit"
+            buttonName="Add"
+            [disabled]="false">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <label>Select symbol</label>
+    <select>
+      <option value="EURUSD">EURUSD</option>
+      <option value="USDJPY">USDJPY</option>
+      <option value="BTCUSD">BTCUSD</option>
+      <option value="AUDUSD">AUDUSD</option>
+    </select>
+    <br>
+    <label>Order type</label>
+    <select>
+      <option value="1">BUY</option>
+      <option value="0">SELL</option>
+    </select>
+    <br>
+    <label>Upload chart</label>
+    <!-- Drag and drop -->
+    <label>Select timeframe</label>
+    <select>
+      <option value="M1">M1</option>
+      <option value="H1">H1</option>
+    </select>
+    <br>
+    <label>Comment</label>
+    <textarea></textarea>
+  </form>
+</div>

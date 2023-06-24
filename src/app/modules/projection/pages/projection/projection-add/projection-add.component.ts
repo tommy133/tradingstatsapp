@@ -9,7 +9,9 @@ import { ProjectionService } from '../../../service/projection.service';
 export class ProjectionAddComponent {
   constructor(private projectionService: ProjectionService) {}
 
-  public onAddProjection(projection: Projection): void {
+  onAddProjection(projection: Projection): void {
     this.projectionService.addProjection(projection);
   }
+
+  onSubmit() {}
 }
