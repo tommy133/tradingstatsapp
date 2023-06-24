@@ -1,9 +1,5 @@
 import { Component, Input } from '@angular/core';
-
-export interface NavButton {
-  text: string;
-  link: string;
-}
+import { NavButton } from '../../utils/custom-types';
 
 @Component({
   selector: 'app-navbar',

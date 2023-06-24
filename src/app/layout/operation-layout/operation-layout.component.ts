@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavButton } from 'src/app/shared/navbar/navbar.component';
+import { NavButton } from 'src/app/shared/utils/custom-types';
 
 @Component({
   selector: 'app-operation-layout',
