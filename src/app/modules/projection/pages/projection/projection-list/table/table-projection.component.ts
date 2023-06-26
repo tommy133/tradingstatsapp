@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Projection } from '../../model/projection';
+import { Projection } from 'src/app/modules/projection/model/projection';
 
 export interface TableColumn {
   name: string;

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectionAddComponent } from './projection-add/projection-add.component';
-import { ProjectionDetailsComponent } from './projection-details/projection-details.component';
-import { ProjectionEditComponent } from './projection-edit/projection-edit.component';
-import { ProjectionListComponent } from './projection-list/projection-list.component';
+import { ProjectionAddComponent } from './pages/projection/projection-add/projection-add.component';
+import { ProjectionDetailsComponent } from './pages/projection/projection-details/projection-details.component';
+import { ProjectionEditComponent } from './pages/projection/projection-edit/projection-edit.component';
+import { ProjectionListComponent } from './pages/projection/projection-list/projection-list.component';
 
 const routes: Routes = [
   {

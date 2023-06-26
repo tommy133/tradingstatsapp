@@ -6,8 +6,8 @@ import {
   sidebarRightAnimationSlide,
   SidebarRightAnimationState,
 } from 'src/app/shared/utils/sidebar-right-animation';
-import { Projection } from '../model/projection';
-import { ProjectionService } from '../service/projection.service';
+import { Projection } from '../../../model/projection';
+import { ProjectionService } from '../../../service/projection.service';
 
 @Component({
   selector: 'app-projection-list',

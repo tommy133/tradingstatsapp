@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { OperationListComponent } from './operation-list/operation-list.component';
-import { SharedModule } from '../shared/shared.module';
-import { OperationRoutingModule } from './operation-routing.module';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { OperationRoutingModule } from './operation-routing.module';
+import { OperationListComponent } from './pages/operation/operation-list/operation-list.component';
 
 @NgModule({
   declarations: [OperationListComponent],
