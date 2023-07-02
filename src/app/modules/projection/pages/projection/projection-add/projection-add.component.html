@@ -17,12 +17,14 @@
         </div>
       </div>
     </div>
-    <label>Select symbol</label>
-    <select>
-      <option value="EURUSD">EURUSD</option>
-      <option value="USDJPY">USDJPY</option>
-      <option value="BTCUSD">BTCUSD</option>
-      <option value="AUDUSD">AUDUSD</option>
+    <label for="symbolSelect">Select symbol</label>
+    <select
+      name="symbolSelect"
+      id="symbolSelect"
+      formControlName="symbol">
+      <ng-container *ngFor="let symbol of symbols$ | async">
+        <option [value]="symbol.id">{{symbol.name_sym}}</option>
+      </ng-container>
     </select>
     <br>
     <label>Order type</label>
@@ -33,10 +35,17 @@
     <br>
     <label>Upload chart</label>
     <!-- Drag and drop -->
+    <br>
     <label>Select timeframe</label>
     <select>
       <option value="M1">M1</option>
       <option value="H1">H1</option>
+    </select>
+    <br>
+    <label>Select status</label>
+    <select>
+      <option value="1">OPEN</option>
+      <option value="2">CLOSED</option>
     </select>
     <br>
     <label>Comment</label>
