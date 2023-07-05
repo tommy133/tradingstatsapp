@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { OperationLayoutComponent } from './layout/operation-layout/operation-layout.component';
 import { ProjectionLayoutComponent } from './layout/projection-layout/projection-layout.component';
@@ -24,6 +25,8 @@ import { SharedModule } from './shared/shared.module';
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    ReactiveFormsModule,
+    FormsModule,
     AppRoutingModule,
     SharedModule,
     ProjectionModule,
