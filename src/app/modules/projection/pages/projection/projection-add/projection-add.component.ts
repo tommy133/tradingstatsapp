@@ -21,8 +21,10 @@ export class ProjectionAddComponent {
   isLoading: boolean = false;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
-  /* timeframe!: Timeframe
-  status!: Status */
+  timeframes = Object.values(Timeframe).filter(
+    (value) => typeof value !== 'number',
+  );
+  statuses = Object.values(Status).filter((value) => typeof value !== 'number');
 
   symbol = this.formBuilder.control<Symbol | null>(null);
   orderType = this.formBuilder.control<string | null>(null);
@@ -43,5 +45,9 @@ export class ProjectionAddComponent {
     this.projectionService.addProjection(projection);
   }
 
-  onSubmit() {}
+  onSubmit() {
+    if (this.addProjectionForm.invalid) {
+      return;
+    }
+  }
 }

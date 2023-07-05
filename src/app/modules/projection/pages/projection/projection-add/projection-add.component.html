@@ -43,16 +43,18 @@
     <select
       name="timeframeSelect"
       formControlName="timeframe">
-      <option value="M1">M1</option>
-      <option value="H1">H1</option>
+      <ng-container *ngFor="let timeframe of timeframes">
+        <option [value]="timeframe">{{timeframe}}</option>
+      </ng-container>
     </select>
     <br>
     <label for="statusSelect">Select status</label>
     <select
       name="statusSelect"
       formControlName="status">
-      <option value="1">OPEN</option>
-      <option value="2">CLOSED</option>
+      <ng-container *ngFor="let status of statuses">
+        <option [value]="status">{{status}}</option>
+      </ng-container>
     </select>
     <br>
     <label for="commentSelect">Comment</label>
