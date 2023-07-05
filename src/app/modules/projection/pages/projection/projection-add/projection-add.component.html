@@ -1,5 +1,7 @@
 <div class="h-full">
-  <form (ngSubmit)="onSubmit()">
+  <form
+    [formGroup]="addProjectionForm"
+    (ngSubmit)="onSubmit()">
     <div class="pl-[32px] pt-[32px]">
       <div class="flex justify-between pb-8">
         <button
@@ -20,15 +22,16 @@
     <label for="symbolSelect">Select symbol</label>
     <select
       name="symbolSelect"
-      id="symbolSelect"
       formControlName="symbol">
       <ng-container *ngFor="let symbol of symbols$ | async">
         <option [value]="symbol.id">{{symbol.name_sym}}</option>
       </ng-container>
     </select>
     <br>
-    <label>Order type</label>
-    <select>
+    <label for="orderTypeSelect">Order type</label>
+    <select
+      name="orderTypeSelect"
+      formControlName="orderType">
       <option value="1">BUY</option>
       <option value="0">SELL</option>
     </select>
@@ -36,19 +39,25 @@
     <label>Upload chart</label>
     <!-- Drag and drop -->
     <br>
-    <label>Select timeframe</label>
-    <select>
+    <label for="timeframeSelect">Select timeframe</label>
+    <select
+      name="timeframeSelect"
+      formControlName="timeframe">
       <option value="M1">M1</option>
       <option value="H1">H1</option>
     </select>
     <br>
-    <label>Select status</label>
-    <select>
+    <label for="statusSelect">Select status</label>
+    <select
+      name="statusSelect"
+      formControlName="status">
       <option value="1">OPEN</option>
       <option value="2">CLOSED</option>
     </select>
     <br>
-    <label>Comment</label>
-    <textarea></textarea>
+    <label for="commentSelect">Comment</label>
+    <textarea
+      name="commentSelect"
+      formControlName="comment"></textarea>
   </form>
 </div>
