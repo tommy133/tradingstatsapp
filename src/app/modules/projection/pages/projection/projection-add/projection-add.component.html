@@ -24,7 +24,7 @@
       name="symbolSelect"
       formControlName="symbol">
       <ng-container *ngFor="let symbol of symbols$ | async">
-        <option [value]="symbol.id">{{symbol.name_sym}}</option>
+        <option [value]="symbol.name_sym">{{symbol.name_sym}}</option>
       </ng-container>
     </select>
     <br>
@@ -32,8 +32,8 @@
     <select
       name="orderTypeSelect"
       formControlName="orderType">
-      <option value="true">BUY</option>
-      <option value="false">SELL</option>
+      <option [value]="true">BUY</option>
+      <option [value]="false">SELL</option>
     </select>
     <br>
     <label>Upload chart</label>

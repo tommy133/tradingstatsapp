@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable, firstValueFrom } from 'rxjs';
-import { Symbol, SymbolService } from 'src/app/data/service/symbol.service';
-import { Status } from 'src/app/data/status';
-import { Timeframe } from 'src/app/data/timeframe';
+import { Comment } from 'src/app/data/models/comment';
+import { Status } from 'src/app/data/models/status';
+import { Symbol } from 'src/app/data/models/symbol';
+import { Timeframe } from 'src/app/data/models/timeframe';
+import { SymbolService } from 'src/app/data/service/symbol.service';
 import { Projection } from '../../../model/projection';
 import { ProjectionService } from '../../../service/projection.service';
 
@@ -18,6 +20,7 @@ export class ProjectionAddComponent {
     private symbolService: SymbolService,
   ) {}
 
+  idProjection: number | undefined;
   isLoading: boolean = false;
   errors: Array<string> = [];
 
@@ -27,8 +30,8 @@ export class ProjectionAddComponent {
   );
   statuses = Object.values(Status).filter((value) => typeof value !== 'number');
 
-  symbol = this.formBuilder.control<Symbol | null>(null);
-  orderType = this.formBuilder.control<boolean | null>(null);
+  symbol = this.formBuilder.control<string | null>(null);
+  orderType = this.formBuilder.control<boolean>(false);
   //chart
   timeframe = this.formBuilder.control<Timeframe | null>(null);
   status = this.formBuilder.control<Status | null>(null);
@@ -46,12 +49,19 @@ export class ProjectionAddComponent {
     return this.projectionService.addProjection(projection);
   }
 
+  get orderTypeValue(): boolean {
+    return this.orderType.value !== false;
+  }
+
   private async handleCreateProjection(projectionInput: Projection) {
     try {
       this.isLoading = true;
       const result = await firstValueFrom(
         this.onAddProjection(projectionInput),
       );
+      if (result) {
+        this.idProjection = result.id;
+      }
       // Toast showCreatedSuccessfully
     } catch (e: any) {
       this.errors.push(e.message as string);
@@ -60,22 +70,41 @@ export class ProjectionAddComponent {
     }
   }
 
-  private async handleCreateComment() {}
+  private async handleCreateComment(commentInput: Comment) {
+    try {
+      this.isLoading = true;
+      //const result = await firstValueFrom(this.onAddProjection(commentInput));
 
-  onSubmit() {
+      // Toast showCreatedSuccessfully
+    } catch (e: any) {
+      this.errors.push(e.message as string);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  async onSubmit() {
     if (this.addProjectionForm.invalid) {
       return;
     }
     const submitedInput = this.addProjectionForm.value;
-    const { symbol, orderType, timeframe, status, comment } = submitedInput;
+    const { symbol, timeframe, status, comment } = submitedInput;
     const projectionInput: Projection = {
-      name_sym: symbol?.name_sym,
-      updown: orderType!,
+      name_sym: symbol!,
+      updown: this.orderTypeValue,
       date_proj: new Date(),
       name_tf: timeframe?.toString(),
       name_st: status?.toString(),
     };
-    //const comment
+
     this.handleCreateProjection(projectionInput);
+
+    if (comment && this.idProjection) {
+      const commentInput: Comment = {
+        comment: comment,
+        id_proj: this.idProjection,
+      };
+      this.handleCreateComment(commentInput);
+    }
   }
 }
