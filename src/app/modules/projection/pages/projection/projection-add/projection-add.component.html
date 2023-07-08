@@ -24,7 +24,7 @@
       name="symbolSelect"
       formControlName="symbol">
       <ng-container *ngFor="let symbol of symbols$ | async">
-        <option [value]="symbol.name_sym">{{symbol.name_sym}}</option>
+        <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
       </ng-container>
     </select>
     <br>
@@ -52,8 +52,8 @@
     <select
       name="statusSelect"
       formControlName="status">
-      <ng-container *ngFor="let status of statuses">
-        <option [value]="status">{{status}}</option>
+      <ng-container *ngFor="let status of statuses$ | async">
+        <option [value]="status.id_st">{{status.name_st}}</option>
       </ng-container>
     </select>
     <br>
@@ -62,4 +62,11 @@
       name="commentSelect"
       formControlName="comment"></textarea>
   </form>
+  <p
+    *ngIf="projectionId"
+    class="bg-green-400">SUCCESS</p>
+  <p
+    *ngIf="!projectionId && isSubmitted"
+    class="bg-red-500">FAILURE</p>
+
 </div>

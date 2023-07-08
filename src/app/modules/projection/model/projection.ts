@@ -1,5 +1,5 @@
 export interface Projection {
-  id?: number;
+  id_proj?: number;
   name_sym?: string;
   updown?: boolean;
   date_proj?: Date;

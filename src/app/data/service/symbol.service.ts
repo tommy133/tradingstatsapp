@@ -25,7 +25,10 @@ export class SymbolService {
   }
 
   public updateSymbol(symbol: Symbol): Observable<Symbol> {
-    return this.http.put<Symbol>(`${this.apiServerUrl}/${symbol.id}`, symbol);
+    return this.http.put<Symbol>(
+      `${this.apiServerUrl}/${symbol.id_sym}`,
+      symbol,
+    );
   }
 
   public deleteSymbol(symbolId: number): Observable<Symbol> {

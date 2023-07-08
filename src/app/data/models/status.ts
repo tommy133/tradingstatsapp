@@ -1,4 +1,4 @@
 export interface Status {
-  id?: number;
+  id_st?: number;
   name_st?: string;
 }
