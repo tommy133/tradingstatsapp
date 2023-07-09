@@ -25,6 +25,7 @@ export class ProjectionAddComponent {
   projectionId: number | undefined;
   isLoading: boolean = false;
   errors: Array<string> = [];
+  isSubmited = false;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
   statuses$: Observable<Status[]> = this.statusService.getStatuses();
@@ -65,7 +66,7 @@ export class ProjectionAddComponent {
         this.onAddProjection(projectionCreateInput),
       );
       if (result) {
-        this.projectionId = result.id_proj;
+        this.projectionId = result as number;
       }
       // Toast showCreatedSuccessfully
     } catch (e: any) {
@@ -111,5 +112,6 @@ export class ProjectionAddComponent {
       };
       this.handleCreateComment(commentInput);
     }
+    this.isSubmited = true;
   }
 }

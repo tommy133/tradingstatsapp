@@ -65,8 +65,15 @@
   <p
     *ngIf="projectionId"
     class="bg-green-400">SUCCESS</p>
-  <p
-    *ngIf="!projectionId && isSubmitted"
-    class="bg-red-500">FAILURE</p>
+  <ng-container *ngIf="!projectionId && isSubmited">
+    <div class="bg-red-500">
+      <p>ERROR</p>
+
+      <ng-container *ngFor="let error of errors">
+        <p>{{error}}</p>
+      </ng-container>
+    </div>
+
+  </ng-container>
 
 </div>
