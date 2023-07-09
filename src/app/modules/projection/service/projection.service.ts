@@ -21,13 +21,8 @@ export class ProjectionService {
     return this.http.get<Projection>(`${this.apiServerUrl}/${projectionId}`);
   }
 
-  public addProjection(
-    projectionCreateInput: ProjectionCreateInput,
-  ): Observable<Projection> {
-    return this.http.post<Projection>(
-      `${this.apiServerUrl}`,
-      projectionCreateInput,
-    );
+  public addProjection(projectionCreateInput: ProjectionCreateInput) {
+    return this.http.post(`${this.apiServerUrl}`, projectionCreateInput);
   }
 
   public updateProjection(projection: Projection): Observable<Projection> {
