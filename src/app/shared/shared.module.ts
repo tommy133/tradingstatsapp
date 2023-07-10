@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LoadingTemplateComponent } from './components/loading-template/loading-template.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -13,8 +14,9 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     LoadingTemplateComponent,
     SidebarRightComponent,
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
+    ReactiveFormsModule,
     NavbarComponent,
     SpinnerComponent,
     LoadingTemplateComponent,

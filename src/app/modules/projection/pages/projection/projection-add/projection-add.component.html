@@ -1,1 +1,79 @@
-<p>projection-add works!</p>
+<div class="h-full">
+  <form
+    [formGroup]="addProjectionForm"
+    (ngSubmit)="onSubmit()">
+    <div class="pl-[32px] pt-[32px]">
+      <div class="flex justify-between pb-8">
+        <button
+          type="button"
+          routerLink="../">
+          Close
+        </button>
+        <div class="pr-5">
+          <button
+            type="submit"
+            buttonName="Add"
+            [disabled]="false">
+            Add
+          </button>
+        </div>
+      </div>
+    </div>
+    <label for="symbolSelect">Select symbol</label>
+    <select
+      name="symbolSelect"
+      formControlName="symbol">
+      <ng-container *ngFor="let symbol of symbols$ | async">
+        <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
+      </ng-container>
+    </select>
+    <br>
+    <label for="orderTypeSelect">Order type</label>
+    <select
+      name="orderTypeSelect"
+      formControlName="orderType">
+      <option [value]="true">BUY</option>
+      <option [value]="false">SELL</option>
+    </select>
+    <br>
+    <label>Upload chart</label>
+    <!-- Drag and drop -->
+    <br>
+    <label for="timeframeSelect">Select timeframe</label>
+    <select
+      name="timeframeSelect"
+      formControlName="timeframe">
+      <ng-container *ngFor="let timeframe of timeframes">
+        <option [value]="timeframe">{{timeframe}}</option>
+      </ng-container>
+    </select>
+    <br>
+    <label for="statusSelect">Select status</label>
+    <select
+      name="statusSelect"
+      formControlName="status">
+      <ng-container *ngFor="let status of statuses$ | async">
+        <option [value]="status.id_st">{{status.name_st}}</option>
+      </ng-container>
+    </select>
+    <br>
+    <label for="commentSelect">Comment</label>
+    <textarea
+      name="commentSelect"
+      formControlName="comment"></textarea>
+  </form>
+  <p
+    *ngIf="projectionId"
+    class="bg-green-400">SUCCESS</p>
+  <ng-container *ngIf="!projectionId && isSubmited">
+    <div class="bg-red-500">
+      <p>ERROR</p>
+
+      <ng-container *ngFor="let error of errors">
+        <p>{{error}}</p>
+      </ng-container>
+    </div>
+
+  </ng-container>
+
+</div>

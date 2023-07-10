@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Projection } from '../model/projection';
+import { ProjectionCreateInput } from '../model/projectionCreateInput';
 
 @Injectable({
   providedIn: 'root',
@@ -20,13 +21,13 @@ export class ProjectionService {
     return this.http.get<Projection>(`${this.apiServerUrl}/${projectionId}`);
   }
 
-  public addProjection(projection: Projection): Observable<Projection> {
-    return this.http.post<Projection>(`${this.apiServerUrl}`, projection);
+  public addProjection(projectionCreateInput: ProjectionCreateInput) {
+    return this.http.post(`${this.apiServerUrl}`, projectionCreateInput);
   }
 
   public updateProjection(projection: Projection): Observable<Projection> {
     return this.http.put<Projection>(
-      `${this.apiServerUrl}/${projection.id}`,
+      `${this.apiServerUrl}/${projection.id_proj}`,
       projection,
     );
   }
