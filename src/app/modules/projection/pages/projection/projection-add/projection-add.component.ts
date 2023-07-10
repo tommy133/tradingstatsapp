@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Observable, firstValueFrom } from 'rxjs';
-import { Comment } from 'src/app/data/models/comment';
+import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { Status } from 'src/app/data/models/status';
 import { Symbol } from 'src/app/data/models/symbol';
 import { Timeframe } from 'src/app/data/models/timeframe';
+import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
@@ -20,9 +21,9 @@ export class ProjectionAddComponent {
     private projectionService: ProjectionService,
     private symbolService: SymbolService,
     private statusService: StatusService,
+    private commentService: ProjectionCommentService,
   ) {}
 
-  projectionId: number | undefined;
   isLoading: boolean = false;
   errors: Array<string> = [];
   isSubmited = false;
@@ -53,20 +54,25 @@ export class ProjectionAddComponent {
     return this.projectionService.addProjection(projectionCreateInput);
   }
 
+  onAddComment(commentCreateInput: ProjectionComment) {
+    return this.commentService.addComment(commentCreateInput);
+  }
+
   get orderTypeValue(): boolean {
     return this.orderType.value !== false;
   }
 
   private async handleCreateProjection(
     projectionCreateInput: ProjectionCreateInput,
-  ) {
+  ): Promise<number | void> {
     try {
       this.isLoading = true;
       const result = await firstValueFrom(
         this.onAddProjection(projectionCreateInput),
       );
       if (result) {
-        this.projectionId = result as number;
+        this.isLoading = false;
+        return result as number;
       }
       // Toast showCreatedSuccessfully
     } catch (e: any) {
@@ -76,10 +82,12 @@ export class ProjectionAddComponent {
     }
   }
 
-  private async handleCreateComment(commentInput: Comment) {
+  private async handleCreateComment(commentCreateInput: ProjectionComment) {
     try {
       this.isLoading = true;
-      //const result = await firstValueFrom(this.onAddProjection(commentInput));
+      const result = await firstValueFrom(
+        this.onAddComment(commentCreateInput),
+      );
 
       // Toast showCreatedSuccessfully
     } catch (e: any) {
@@ -102,13 +110,12 @@ export class ProjectionAddComponent {
       name_tf: timeframe!.toString(),
       id_st: status!,
     };
+    const projId = await this.handleCreateProjection(projectionCreateInput);
 
-    this.handleCreateProjection(projectionCreateInput);
-
-    if (comment && this.projectionId) {
-      const commentInput: Comment = {
-        comment: comment,
-        id_proj: this.projectionId,
+    if (comment && projId) {
+      const commentInput: ProjectionComment = {
+        pcomment: comment,
+        id_proj: projId,
       };
       this.handleCreateComment(commentInput);
     }

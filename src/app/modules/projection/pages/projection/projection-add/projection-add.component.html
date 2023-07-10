@@ -63,9 +63,9 @@
       formControlName="comment"></textarea>
   </form>
   <p
-    *ngIf="projectionId"
+    *ngIf="errors.length === 0 && isSubmited"
     class="bg-green-400">SUCCESS</p>
-  <ng-container *ngIf="!projectionId && isSubmited">
+  <ng-container *ngIf="errors.length > 0">
     <div class="bg-red-500">
       <p>ERROR</p>
 
