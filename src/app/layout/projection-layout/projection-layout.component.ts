@@ -10,6 +10,10 @@ export class ProjectionLayoutComponent {
   title: string = 'Trading Stats';
   buttons: NavButton[] = [
     {
+      text: 'Projections',
+      link: '/projections',
+    },
+    {
       text: 'Operations',
       link: '/operations',
     },

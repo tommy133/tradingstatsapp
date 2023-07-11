@@ -13,6 +13,10 @@ export class OperationLayoutComponent {
       text: 'Projections',
       link: '/projections',
     },
+    {
+      text: 'Operations',
+      link: '/operations',
+    },
   ];
 
   constructor() {}
