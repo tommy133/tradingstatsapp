@@ -36,7 +36,7 @@ export class ProjectionAddComponent {
   );
 
   symbol = this.formBuilder.control<number | null>(null);
-  orderType = this.formBuilder.control<boolean>(false);
+  orderType = this.formBuilder.control<boolean | null>(null);
   //chart
   timeframe = this.formBuilder.control<Timeframe | null>(null);
   status = this.formBuilder.control<number | null>(null);
