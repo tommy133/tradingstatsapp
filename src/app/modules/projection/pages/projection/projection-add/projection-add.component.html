@@ -1,21 +1,23 @@
-<div class="h-full">
+<div class="h-full bg-dark-grey">
   <form
     [formGroup]="addProjectionForm"
     (ngSubmit)="onSubmit()">
-    <div class="pl-[32px] pt-[32px]">
+    <div class="pl-8 pt-8 bg-dark">
       <div class="flex justify-between pb-8">
-        <button
-          type="button"
-          routerLink="../">
-          Close
-        </button>
+        <app-rounded-button
+          [text]="'Close'"
+          [color]="'bg-red'"
+          [routerLink]="'../'"
+          [type]="'button'">
+        </app-rounded-button>
+
         <div class="pr-5">
-          <button
-            type="submit"
-            buttonName="Add"
-            [disabled]="false">
-            Add
-          </button>
+          <app-rounded-button
+            [text]="'Add'"
+            [color]="'bg-green'"
+            [type]="'submit'">
+          </app-rounded-button>
+
         </div>
       </div>
     </div>
