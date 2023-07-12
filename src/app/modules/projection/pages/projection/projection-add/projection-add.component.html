@@ -4,12 +4,7 @@
     (ngSubmit)="onSubmit()">
     <div class="p-8 bg-dark">
       <div class="flex justify-between">
-        <app-rounded-button
-          [text]="'Close'"
-          [color]="'bg-red'"
-          [routerLink]="'../'"
-          [type]="'button'">
-        </app-rounded-button>
+        <app-close-button routerLink="../"></app-close-button>
 
         <app-rounded-button
           [text]="'Add'"
