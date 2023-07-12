@@ -2,8 +2,8 @@
   <form
     [formGroup]="addProjectionForm"
     (ngSubmit)="onSubmit()">
-    <div class="pl-8 pt-8 bg-dark">
-      <div class="flex justify-between pb-8">
+    <div class="p-8 bg-dark">
+      <div class="flex justify-between">
         <app-rounded-button
           [text]="'Close'"
           [color]="'bg-red'"
@@ -11,58 +11,58 @@
           [type]="'button'">
         </app-rounded-button>
 
-        <div class="pr-5">
-          <app-rounded-button
-            [text]="'Add'"
-            [color]="'bg-green'"
-            [type]="'submit'">
-          </app-rounded-button>
-
-        </div>
+        <app-rounded-button
+          [text]="'Add'"
+          [color]="'bg-green'"
+          [type]="'submit'">
+        </app-rounded-button>
       </div>
     </div>
-    <label for="symbolSelect">Select symbol</label>
-    <select
-      name="symbolSelect"
-      formControlName="symbol">
-      <ng-container *ngFor="let symbol of symbols$ | async">
-        <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
-      </ng-container>
-    </select>
-    <br>
-    <label for="orderTypeSelect">Order type</label>
-    <select
-      name="orderTypeSelect"
-      formControlName="orderType">
-      <option [value]="true">BUY</option>
-      <option [value]="false">SELL</option>
-    </select>
-    <br>
-    <label>Upload chart</label>
-    <!-- Drag and drop -->
-    <br>
-    <label for="timeframeSelect">Select timeframe</label>
-    <select
-      name="timeframeSelect"
-      formControlName="timeframe">
-      <ng-container *ngFor="let timeframe of timeframes">
-        <option [value]="timeframe">{{timeframe}}</option>
-      </ng-container>
-    </select>
-    <br>
-    <label for="statusSelect">Select status</label>
-    <select
-      name="statusSelect"
-      formControlName="status">
-      <ng-container *ngFor="let status of statuses$ | async">
-        <option [value]="status.id_st">{{status.name_st}}</option>
-      </ng-container>
-    </select>
-    <br>
-    <label for="commentSelect">Comment</label>
-    <textarea
-      name="commentSelect"
-      formControlName="comment"></textarea>
+    <div class="p-8">
+      <app-form-label [text]="'Select symbol'"></app-form-label>
+      <select
+        name="symbolSelect"
+        formControlName="symbol">
+        <ng-container *ngFor="let symbol of symbols$ | async">
+          <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
+        </ng-container>
+      </select>
+      <br>
+      <app-form-label [text]="'Select order type'"></app-form-label>
+      <select
+        name="orderTypeSelect"
+        formControlName="orderType">
+        <option [value]="true">BUY</option>
+        <option [value]="false">SELL</option>
+      </select>
+      <br>
+      <label>Upload chart</label>
+      <!-- Drag and drop -->
+      <br>
+      <app-form-label [text]="'Select timeframe'"></app-form-label>
+      <select
+        name="timeframeSelect"
+        formControlName="timeframe">
+        <ng-container *ngFor="let timeframe of timeframes">
+          <option [value]="timeframe">{{timeframe}}</option>
+        </ng-container>
+      </select>
+      <br>
+      <app-form-label [text]="'Select status'"></app-form-label>
+      <select
+        name="statusSelect"
+        formControlName="status">
+        <ng-container *ngFor="let status of statuses$ | async">
+          <option [value]="status.id_st">{{status.name_st}}</option>
+        </ng-container>
+      </select>
+      <br>
+      <app-form-label [text]="'Comment'"></app-form-label>
+      <textarea
+        name="commentSelect"
+        formControlName="comment"></textarea>
+    </div>
+
   </form>
   <p
     *ngIf="errors.length === 0 && isSubmited"
