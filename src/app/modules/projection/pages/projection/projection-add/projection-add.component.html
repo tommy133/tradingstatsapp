@@ -19,48 +19,67 @@
       </div>
     </div>
     <div class="p-8">
-      <app-form-label [text]="'Select symbol'"></app-form-label>
-      <select
-        name="symbolSelect"
-        formControlName="symbol">
-        <ng-container *ngFor="let symbol of symbols$ | async">
-          <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
-        </ng-container>
-      </select>
-      <br>
-      <app-form-label [text]="'Select order type'"></app-form-label>
-      <select
-        name="orderTypeSelect"
-        formControlName="orderType">
-        <option [value]="true">BUY</option>
-        <option [value]="false">SELL</option>
-      </select>
-      <br>
+      <div class="flex flex-row">
+        <app-form-label [text]="'Select symbol'"></app-form-label>
+        <div class="pl-10">
+          <select
+            name="symbolSelect"
+            formControlName="symbol">
+            <ng-container *ngFor="let symbol of symbols$ | async">
+              <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex flex-row pt-5">
+        <app-form-label [text]="'Select order type'"></app-form-label>
+        <div class="pl-[17px]">
+          <select
+            name="orderTypeSelect"
+            formControlName="orderType">
+            <option [value]="true">BUY</option>
+            <option [value]="false">SELL</option>
+          </select>
+        </div>
+      </div>
       <label>Upload chart</label>
       <!-- Drag and drop -->
-      <br>
-      <app-form-label [text]="'Select timeframe'"></app-form-label>
-      <select
-        name="timeframeSelect"
-        formControlName="timeframe">
-        <ng-container *ngFor="let timeframe of timeframes">
-          <option [value]="timeframe">{{timeframe}}</option>
-        </ng-container>
-      </select>
-      <br>
-      <app-form-label [text]="'Select status'"></app-form-label>
-      <select
-        name="statusSelect"
-        formControlName="status">
-        <ng-container *ngFor="let status of statuses$ | async">
-          <option [value]="status.id_st">{{status.name_st}}</option>
-        </ng-container>
-      </select>
-      <br>
-      <app-form-label [text]="'Comment'"></app-form-label>
-      <textarea
-        name="commentSelect"
-        formControlName="comment"></textarea>
+      <div class="flex flex-row pt-5">
+        <app-form-label [text]="'Select timeframe'"></app-form-label>
+        <div class="pl-5">
+          <select
+            name="timeframeSelect"
+            formControlName="timeframe">
+            <ng-container *ngFor="let timeframe of timeframes">
+              <option [value]="timeframe">{{timeframe}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+
+      <div class="flex flex-row pt-5">
+        <app-form-label [text]="'Select status'"></app-form-label>
+        <div class="pl-[50px]">
+          <select
+            name="statusSelect"
+            formControlName="status">
+            <ng-container *ngFor="let status of statuses$ | async">
+              <option [value]="status.id_st">{{status.name_st}}</option>
+            </ng-container>
+          </select>
+        </div>
+      </div>
+      <div class="flex items-center flex-row pt-5">
+        <app-form-label [text]="'Comment'"></app-form-label>
+        <div class="pl-[68px]">
+
+          <textarea
+            name="commentSelect"
+            formControlName="comment"></textarea>
+        </div>
+      </div>
+
     </div>
 
   </form>
