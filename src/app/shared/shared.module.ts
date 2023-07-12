@@ -4,6 +4,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { LoadingTemplateComponent } from './components/loading-template/loading-template.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { RoundedButtonComponent } from './components/rounded-button/rounded-button.component';
 import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 
@@ -13,6 +14,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     SpinnerComponent,
     LoadingTemplateComponent,
     SidebarRightComponent,
+    RoundedButtonComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -21,6 +23,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     SpinnerComponent,
     LoadingTemplateComponent,
     SidebarRightComponent,
+    RoundedButtonComponent,
   ],
 })
 export class SharedModule {}
