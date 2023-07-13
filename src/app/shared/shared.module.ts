@@ -9,6 +9,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { RoundedButtonComponent } from './components/rounded-button/rounded-button.component';
 import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     RoundedButtonComponent,
     FormLabelComponent,
     CloseButtonComponent,
+    ValidationErrorComponent,
   ],
   imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
   exports: [
@@ -30,6 +32,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
     RoundedButtonComponent,
     FormLabelComponent,
     CloseButtonComponent,
+    ValidationErrorComponent,
   ],
 })
 export class SharedModule {}

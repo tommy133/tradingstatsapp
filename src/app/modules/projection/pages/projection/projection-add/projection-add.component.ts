@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, firstValueFrom } from 'rxjs';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { Status } from 'src/app/data/models/status';
@@ -35,11 +35,17 @@ export class ProjectionAddComponent {
     (value) => typeof value !== 'number',
   );
 
-  symbol = this.formBuilder.control<number | null>(null);
-  orderType = this.formBuilder.control<boolean | null>(null);
+  symbol = this.formBuilder.control<number | null>(null, Validators.required);
+  orderType = this.formBuilder.control<boolean | null>(
+    null,
+    Validators.required,
+  );
   //chart
-  timeframe = this.formBuilder.control<Timeframe | null>(null);
-  status = this.formBuilder.control<number | null>(null);
+  timeframe = this.formBuilder.control<Timeframe | null>(
+    null,
+    Validators.required,
+  );
+  status = this.formBuilder.control<number | null>(null, Validators.required);
   comment = this.formBuilder.control<string | null>(null);
 
   addProjectionForm = this.formBuilder.group({
