@@ -1,95 +1,92 @@
-<div class="h-full bg-dark-grey">
-  <form
-    [formGroup]="addProjectionForm"
-    (ngSubmit)="onSubmit()">
-    <div class="p-8 bg-dark">
-      <div class="flex justify-between">
-        <app-close-button routerLink="../"></app-close-button>
+<form
+  [formGroup]="addProjectionForm"
+  (ngSubmit)="onSubmit()">
+  <div class="p-8 bg-dark">
+    <div class="flex justify-between">
+      <app-close-button routerLink="../"></app-close-button>
 
-        <app-rounded-button
-          [text]="'Add'"
-          [color]="'bg-green'"
-          [type]="'submit'">
-        </app-rounded-button>
+      <app-rounded-button
+        [text]="'Add'"
+        [color]="'bg-green'"
+        [type]="'submit'">
+      </app-rounded-button>
+    </div>
+  </div>
+  <div class="p-8">
+    <div class="flex flex-row">
+      <app-form-label [text]="'Select symbol'"></app-form-label>
+      <div class="pl-10">
+        <select
+          name="symbolSelect"
+          formControlName="symbol">
+          <ng-container *ngFor="let symbol of symbols$ | async">
+            <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
+          </ng-container>
+        </select>
       </div>
     </div>
-    <div class="p-8">
-      <div class="flex flex-row">
-        <app-form-label [text]="'Select symbol'"></app-form-label>
-        <div class="pl-10">
-          <select
-            name="symbolSelect"
-            formControlName="symbol">
-            <ng-container *ngFor="let symbol of symbols$ | async">
-              <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
-            </ng-container>
-          </select>
-        </div>
-      </div>
 
-      <div class="flex flex-row pt-5">
-        <app-form-label [text]="'Select order type'"></app-form-label>
-        <div class="pl-[17px]">
-          <select
-            name="orderTypeSelect"
-            formControlName="orderType">
-            <option [value]="true">BUY</option>
-            <option [value]="false">SELL</option>
-          </select>
-        </div>
+    <div class="flex flex-row pt-5">
+      <app-form-label [text]="'Select order type'"></app-form-label>
+      <div class="pl-[17px]">
+        <select
+          name="orderTypeSelect"
+          formControlName="orderType">
+          <option [value]="true">BUY</option>
+          <option [value]="false">SELL</option>
+        </select>
       </div>
-      <label>Upload chart</label>
-      <!-- Drag and drop -->
-      <div class="flex flex-row pt-5">
-        <app-form-label [text]="'Select timeframe'"></app-form-label>
-        <div class="pl-5">
-          <select
-            name="timeframeSelect"
-            formControlName="timeframe">
-            <ng-container *ngFor="let timeframe of timeframes">
-              <option [value]="timeframe">{{timeframe}}</option>
-            </ng-container>
-          </select>
-        </div>
+    </div>
+    <label>Upload chart</label>
+    <!-- Drag and drop -->
+    <div class="flex flex-row pt-5">
+      <app-form-label [text]="'Select timeframe'"></app-form-label>
+      <div class="pl-5">
+        <select
+          name="timeframeSelect"
+          formControlName="timeframe">
+          <ng-container *ngFor="let timeframe of timeframes">
+            <option [value]="timeframe">{{timeframe}}</option>
+          </ng-container>
+        </select>
       </div>
-
-      <div class="flex flex-row pt-5">
-        <app-form-label [text]="'Select status'"></app-form-label>
-        <div class="pl-[50px]">
-          <select
-            name="statusSelect"
-            formControlName="status">
-            <ng-container *ngFor="let status of statuses$ | async">
-              <option [value]="status.id_st">{{status.name_st}}</option>
-            </ng-container>
-          </select>
-        </div>
-      </div>
-      <div class="flex items-center flex-row pt-5">
-        <app-form-label [text]="'Comment'"></app-form-label>
-        <div class="pl-[68px]">
-
-          <textarea
-            name="commentSelect"
-            formControlName="comment"></textarea>
-        </div>
-      </div>
-
     </div>
 
-  </form>
-  <p
-    *ngIf="errors.length === 0 && isSubmited"
-    class="bg-green-400">SUCCESS</p>
-  <ng-container *ngIf="errors.length > 0">
-    <div class="bg-red-500">
-      <p>ERROR</p>
+    <div class="flex flex-row pt-5">
+      <app-form-label [text]="'Select status'"></app-form-label>
+      <div class="pl-[50px]">
+        <select
+          name="statusSelect"
+          formControlName="status">
+          <ng-container *ngFor="let status of statuses$ | async">
+            <option [value]="status.id_st">{{status.name_st}}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+    <div class="flex items-center flex-row pt-5">
+      <app-form-label [text]="'Comment'"></app-form-label>
+      <div class="pl-[68px]">
 
-      <ng-container *ngFor="let error of errors">
-        <p>{{error}}</p>
-      </ng-container>
+        <textarea
+          name="commentSelect"
+          formControlName="comment"></textarea>
+      </div>
     </div>
 
-  </ng-container>
+  </div>
 
-</div>
+</form>
+<p
+  *ngIf="errors.length === 0 && isSubmited"
+  class="bg-green-400">SUCCESS</p>
+<ng-container *ngIf="errors.length > 0">
+  <div class="bg-red-500">
+    <p>ERROR</p>
+
+    <ng-container *ngFor="let error of errors">
+      <p>{{error}}</p>
+    </ng-container>
+  </div>
+
+</ng-container>
