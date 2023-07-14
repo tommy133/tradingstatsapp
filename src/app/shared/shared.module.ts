@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { AngularSvgIconModule } from 'angular-svg-icon';
 import { CloseButtonComponent } from './components/close-button/close-button.component';
 import { FormLabelComponent } from './components/form-label/form-label.component';
 import { LoadingTemplateComponent } from './components/loading-template/loading-template.component';
@@ -22,9 +23,16 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     CloseButtonComponent,
     ValidationErrorComponent,
   ],
-  imports: [CommonModule, RouterModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AngularSvgIconModule.forRoot(),
+  ],
   exports: [
     ReactiveFormsModule,
+    AngularSvgIconModule,
     NavbarComponent,
     SpinnerComponent,
     LoadingTemplateComponent,
