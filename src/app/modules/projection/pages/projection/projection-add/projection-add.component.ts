@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Observable, firstValueFrom } from 'rxjs';
+import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { Status } from 'src/app/data/models/status';
 import { Symbol } from 'src/app/data/models/symbol';
@@ -22,11 +23,11 @@ export class ProjectionAddComponent {
     private symbolService: SymbolService,
     private statusService: StatusService,
     private commentService: ProjectionCommentService,
+    private toastService: ToastService,
   ) {}
 
   isLoading: boolean = false;
   errors: Array<string> = [];
-  isSubmited = false;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
   statuses$: Observable<Status[]> = this.statusService.getStatuses();
@@ -125,6 +126,17 @@ export class ProjectionAddComponent {
       };
       this.handleCreateComment(commentInput);
     }
-    this.isSubmited = true;
+
+    if (this.errors.length === 0) {
+      this.toastService.success({
+        message: `Projection has been successfully created`,
+      });
+    } else {
+      this.errors.forEach((error) => {
+        this.toastService.error({
+          message: error,
+        });
+      });
+    }
   }
 }

@@ -13,6 +13,7 @@ import { HomeComponent } from './modules/home/pages/home/home.component';
 import { OperationModule } from './modules/operation/operation.module';
 import { ProjectionModule } from './modules/projection/projection.module';
 import { SharedModule } from './shared/shared.module';
+import { ToastPopupComponent } from './layout/main-layout/components/toast-popup/toast-popup.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
     MainLayoutComponent,
     ProjectionLayoutComponent,
     OperationLayoutComponent,
+    ToastPopupComponent,
   ],
   imports: [
     BrowserModule,
