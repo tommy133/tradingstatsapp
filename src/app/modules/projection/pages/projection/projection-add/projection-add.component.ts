@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { FileUploader } from 'ng2-file-upload';
 import { Observable, firstValueFrom } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
@@ -12,6 +13,8 @@ import { SymbolService } from 'src/app/data/service/symbol.service';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionService } from '../../../service/projection.service';
 
+const fileUploadUri = 'http://localhost:8000/file/upload';
+
 @Component({
   selector: 'app-projection-add',
   templateUrl: './projection-add.component.html',
@@ -19,6 +22,8 @@ import { ProjectionService } from '../../../service/projection.service';
 export class ProjectionAddComponent {
   isLoading: boolean = false;
   errors: Array<string> = [];
+  uploader: FileUploader = new FileUploader({ url: fileUploadUri });
+  attachmentList: any = [];
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
   statuses$: Observable<Status[]> = this.statusService.getStatuses();
@@ -55,7 +60,16 @@ export class ProjectionAddComponent {
     private statusService: StatusService,
     private commentService: ProjectionCommentService,
     private toastService: ToastService,
-  ) {}
+  ) {
+    this.uploader.onCompleteItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any,
+    ) => {
+      this.attachmentList.push(JSON.parse(response));
+    };
+  }
 
   onAddProjection(projectionCreateInput: ProjectionCreateInput) {
     return this.projectionService.addProjection(projectionCreateInput);
