@@ -17,6 +17,7 @@ export class TableProjectionComponent {
     { name: 'Date' },
     { name: 'Timeframe' },
     { name: 'Status' },
+    { name: 'Actions' },
   ];
   constructor() {}
 }
