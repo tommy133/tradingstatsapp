@@ -1,6 +1,6 @@
 export interface ProjectionCreateInput {
   id_sym: number;
-  updown: boolean;
+  updown: number;
   date_proj?: Date;
   graph?: string;
   name_tf: string;

@@ -28,7 +28,7 @@ export class ProjectionAddComponent {
   );
 
   symbol = this.formBuilder.control<number | null>(null, Validators.required);
-  orderType = this.formBuilder.control<boolean | null>(
+  orderType = this.formBuilder.control<number | null>(
     null,
     Validators.required,
   );
@@ -63,10 +63,6 @@ export class ProjectionAddComponent {
 
   onAddComment(commentCreateInput: ProjectionComment) {
     return this.commentService.addComment(commentCreateInput);
-  }
-
-  get orderTypeValue(): boolean {
-    return this.orderType.value !== false;
   }
 
   private async handleCreateProjection(
@@ -109,10 +105,10 @@ export class ProjectionAddComponent {
       return;
     }
     const submitedInput = this.addProjectionForm.value;
-    const { symbol, timeframe, status, comment } = submitedInput;
+    const { symbol, orderType, timeframe, status, comment } = submitedInput;
     const projectionCreateInput: ProjectionCreateInput = {
       id_sym: symbol!,
-      updown: this.orderTypeValue,
+      updown: orderType!,
       date_proj: new Date(),
       name_tf: timeframe!.toString(),
       id_st: status!,
