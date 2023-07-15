@@ -13,7 +13,7 @@ import { SymbolService } from 'src/app/data/service/symbol.service';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionService } from '../../../service/projection.service';
 
-const fileUploadUri = 'http://localhost:8000/file/upload';
+const fileUploadUri = 'http://localhost:8080/file/upload';
 
 @Component({
   selector: 'app-projection-add',
@@ -22,8 +22,10 @@ const fileUploadUri = 'http://localhost:8000/file/upload';
 export class ProjectionAddComponent {
   isLoading: boolean = false;
   errors: Array<string> = [];
-  uploader: FileUploader = new FileUploader({ url: fileUploadUri });
-  attachmentList: any = [];
+  uploader: FileUploader = new FileUploader({
+    url: fileUploadUri,
+    itemAlias: 'chart',
+  });
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
   statuses$: Observable<Status[]> = this.statusService.getStatuses();
@@ -61,13 +63,17 @@ export class ProjectionAddComponent {
     private commentService: ProjectionCommentService,
     private toastService: ToastService,
   ) {
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+    };
+
     this.uploader.onCompleteItem = (
       item: any,
       response: any,
       status: any,
       headers: any,
     ) => {
-      this.attachmentList.push(JSON.parse(response));
+      console.log('uploaded successfully...', status);
     };
   }
 
