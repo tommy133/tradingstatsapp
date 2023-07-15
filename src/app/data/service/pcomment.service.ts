@@ -16,8 +16,8 @@ export class ProjectionCommentService {
     return this.http.get<ProjectionComment[]>(`${this.serverUrl}`);
   }
 
-  public getComment(commentId: number): Observable<ProjectionComment> {
-    return this.http.get<ProjectionComment>(`${this.serverUrl}/${commentId}`);
+  public getComment(projId: number): Observable<ProjectionComment> {
+    return this.http.get<ProjectionComment>(`${this.serverUrl}/${projId}`);
   }
 
   public addComment(comment: ProjectionComment) {
@@ -28,14 +28,12 @@ export class ProjectionCommentService {
     comment: ProjectionComment,
   ): Observable<ProjectionComment> {
     return this.http.put<ProjectionComment>(
-      `${this.serverUrl}/${comment.id_pc}`,
+      `${this.serverUrl}/${comment.id_proj}`,
       comment,
     );
   }
 
-  public deleteComment(commentId: number): Observable<ProjectionComment> {
-    return this.http.delete<ProjectionComment>(
-      `${this.serverUrl}/${commentId}`,
-    );
+  public deleteComment(projId: number): Observable<ProjectionComment> {
+    return this.http.delete<ProjectionComment>(`${this.serverUrl}/${projId}`);
   }
 }
