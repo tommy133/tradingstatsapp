@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { FileUploadModule } from 'ng2-file-upload';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectionAddComponent } from './pages/projection/projection-add/projection-add.component';
 import { ProjectionDetailsComponent } from './pages/projection/projection-details/projection-details.component';
@@ -23,6 +24,7 @@ import { ProjectionRoutingModule } from './projection-routing.module';
     ProjectionRoutingModule,
     HttpClientModule,
     SharedModule,
+    FileUploadModule,
   ],
   providers: [HttpClient],
   exports: [ProjectionListComponent],
