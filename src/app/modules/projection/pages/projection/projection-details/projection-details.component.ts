@@ -12,8 +12,8 @@ import { ProjectionService } from '../../../service/projection.service';
   templateUrl: './projection-details.component.html',
 })
 export class ProjectionDetailsComponent implements OnInit {
-  projectionDetails$?: Observable<Projection>;
-  comments$?: Observable<ProjectionComment>;
+  projection$?: Observable<Projection>;
+  comment$?: Observable<ProjectionComment>;
   isLoading: boolean = false;
   errors: Array<string> = [];
 
@@ -25,14 +25,14 @@ export class ProjectionDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.projectionDetails$ = this.activatedRoute.params.pipe(
+    this.projection$ = this.activatedRoute.params.pipe(
       switchMap((params) => {
         const id = params['id'];
         return this.projectionService.getProjection(id);
       }),
     );
 
-    this.comments$ = this.activatedRoute.params.pipe(
+    this.comment$ = this.activatedRoute.params.pipe(
       switchMap((params) => {
         const id = params['id'];
         return this.commentService.getComment(id);

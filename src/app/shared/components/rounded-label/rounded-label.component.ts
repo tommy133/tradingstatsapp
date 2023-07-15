@@ -10,6 +10,6 @@ import { Component, Input } from '@angular/core';
 })
 export class RoundedLabelComponent {
   @Input() text: string = '';
-  @Input() bgColor?: string = 'bg-light-grey';
-  @Input() textColor?: string = 'text-black';
+  @Input() bgColor: string = 'bg-light-grey';
+  @Input() textColor: string = 'text-black';
 }

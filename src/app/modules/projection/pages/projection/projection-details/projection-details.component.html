@@ -1,4 +1,4 @@
-<ng-container *ngIf="projectionDetails$ | async as projection; else loading">
+<ng-container *ngIf="projection$ | async as projection; else loading">
   <div class="p-8 bg-dark">
     <div class="flex justify-between">
       <app-close-button routerLink="../"></app-close-button>
@@ -14,14 +14,14 @@
     <div class="flex flex-row items-center">
       <app-form-label text="Symbol"></app-form-label>
       <div class="pl-10">
-        <app-rounded-label [text]="projection.name_sym ?? 'EUR/USD'"></app-rounded-label>
+        <app-rounded-label [text]="projection.name_sym"></app-rounded-label>
       </div>
     </div>
 
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Order type"></app-form-label>
       <div class="pl-[17px]">
-        <app-rounded-label [text]="'BUY'"></app-rounded-label>
+        <app-rounded-label [text]="projection.updown ? 'LONG' : 'SHORT'"></app-rounded-label>
 
       </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Timeframe"></app-form-label>
       <div class="pl-5">
-        <app-rounded-label [text]="'M1'"></app-rounded-label>
+        <app-rounded-label [text]="projection.name_tf"></app-rounded-label>
 
       </div>
     </div>
@@ -37,18 +37,19 @@
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Status"></app-form-label>
       <div class="pl-[50px]">
-        <app-rounded-label [text]="'ACTIVE'"></app-rounded-label>
-
+        <app-rounded-label [text]="projection.name_st"></app-rounded-label>
       </div>
     </div>
 
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Comment"></app-form-label>
       <div class="pl-7">
-        <textarea
-          cols="30"
-          rows="5">
-        </textarea>
+        <ng-container *ngIf="comment$ | async as comment;">
+          <textarea
+            cols="30"
+            rows="5">{{comment.pcomment}}
+          </textarea>
+        </ng-container>
       </div>
     </div>
 
