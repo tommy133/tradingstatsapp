@@ -1,4 +1,4 @@
-<ng-container *ngIf="projections$ | async; else loading">
+<ng-container *ngIf="projections$ | async as projections; else loading">
   <div class="flex justify-between p-5">
     <div class="search-container">
       <input
@@ -13,13 +13,13 @@
     </div>
     <app-rounded-button
       [text]="'Add projection'"
-      [color]="'bg-green'"
+      [bgColor]="'bg-green'"
       [routerLink]="'add'">
     </app-rounded-button>
 
   </div>
   <div class="px-5">
-    <app-table [rows]="projections$ | async"></app-table>
+    <app-table [rows]="projections"></app-table>
   </div>
   <app-sidebar-right
     class="fixed top-0 bottom-0 right-0 md:w-[460px] overflow-auto"

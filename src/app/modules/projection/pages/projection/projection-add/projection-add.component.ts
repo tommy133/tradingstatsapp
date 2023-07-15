@@ -17,15 +17,6 @@ import { ProjectionService } from '../../../service/projection.service';
   templateUrl: './projection-add.component.html',
 })
 export class ProjectionAddComponent {
-  constructor(
-    private formBuilder: FormBuilder,
-    private projectionService: ProjectionService,
-    private symbolService: SymbolService,
-    private statusService: StatusService,
-    private commentService: ProjectionCommentService,
-    private toastService: ToastService,
-  ) {}
-
   isLoading: boolean = false;
   errors: Array<string> = [];
 
@@ -56,6 +47,15 @@ export class ProjectionAddComponent {
     status: this.status,
     comment: this.comment,
   });
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private projectionService: ProjectionService,
+    private symbolService: SymbolService,
+    private statusService: StatusService,
+    private commentService: ProjectionCommentService,
+    private toastService: ToastService,
+  ) {}
 
   onAddProjection(projectionCreateInput: ProjectionCreateInput) {
     return this.projectionService.addProjection(projectionCreateInput);

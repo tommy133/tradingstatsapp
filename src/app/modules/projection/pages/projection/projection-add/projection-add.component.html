@@ -6,15 +6,15 @@
       <app-close-button routerLink="../"></app-close-button>
 
       <app-rounded-button
-        [text]="'Add'"
-        [color]="'bg-green'"
-        [type]="'submit'">
+        text="Add"
+        color="bg-green"
+        type="submit">
       </app-rounded-button>
     </div>
   </div>
   <div class="p-8">
     <div class="flex flex-row">
-      <app-form-label [text]="'Select symbol'"></app-form-label>
+      <app-form-label text="Select symbol"></app-form-label>
       <div class="pl-10">
         <select
           name="symbolSelect"
@@ -30,7 +30,7 @@
     </div>
 
     <div class="flex flex-row pt-5">
-      <app-form-label [text]="'Select order type'"></app-form-label>
+      <app-form-label text="Select order type"></app-form-label>
       <div class="pl-[17px]">
         <select
           name="orderTypeSelect"
@@ -46,7 +46,7 @@
     <label>Upload chart</label>
     <!-- Drag and drop -->
     <div class="flex flex-row pt-5">
-      <app-form-label [text]="'Select timeframe'"></app-form-label>
+      <app-form-label text="Select timeframe"></app-form-label>
       <div class="pl-5">
         <select
           name="timeframeSelect"
@@ -62,7 +62,7 @@
     </div>
 
     <div class="flex flex-row pt-5">
-      <app-form-label [text]="'Select status'"></app-form-label>
+      <app-form-label text="Select status"></app-form-label>
       <div class="pl-[50px]">
         <select
           name="statusSelect"
@@ -77,7 +77,7 @@
       </div>
     </div>
     <div class="flex items-center flex-row pt-5">
-      <app-form-label [text]="'Comment'"></app-form-label>
+      <app-form-label text="Comment"></app-form-label>
       <div class="pl-[68px]">
         <textarea
           name="commentSelect"
