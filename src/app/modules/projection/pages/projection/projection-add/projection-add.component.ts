@@ -10,6 +10,7 @@ import { Timeframe } from 'src/app/data/models/timeframe';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
+import { FileService } from 'src/app/file.service';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionService } from '../../../service/projection.service';
 
@@ -26,6 +27,7 @@ export class ProjectionAddComponent {
     url: fileUploadUri,
     itemAlias: 'chart',
   });
+  chartFileName: string = '';
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
   statuses$: Observable<Status[]> = this.statusService.getStatuses();
@@ -62,6 +64,7 @@ export class ProjectionAddComponent {
     private statusService: StatusService,
     private commentService: ProjectionCommentService,
     private toastService: ToastService,
+    private fileService: FileService,
   ) {
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
@@ -83,6 +86,13 @@ export class ProjectionAddComponent {
 
   onAddComment(commentCreateInput: ProjectionComment) {
     return this.commentService.addComment(commentCreateInput);
+  }
+
+  downloadChart(fileName: string) {
+    this.fileService.downloadFile(fileName).subscribe(
+      (data) => console.log(data),
+      (error) => console.error(error),
+    );
   }
 
   private async handleCreateProjection(
