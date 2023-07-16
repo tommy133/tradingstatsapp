@@ -102,6 +102,9 @@ export class ProjectionAddComponent {
 
   async onSubmit() {
     if (this.addProjectionForm.invalid) {
+      this.toastService.error({
+        message: 'Invalid form!',
+      });
       return;
     }
     const submitedInput = this.addProjectionForm.value;
