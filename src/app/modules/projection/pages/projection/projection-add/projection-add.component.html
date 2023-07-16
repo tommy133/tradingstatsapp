@@ -43,8 +43,18 @@
           fieldName="order type"></app-validation-error>
       </div>
     </div>
-    <label>Upload chart</label>
-    <!-- Drag and drop -->
+    <div class="flex flex-row pt-5">
+      <app-form-label text="Upload chart"></app-form-label>
+      <div class="pl-11">
+        <input
+          type="file"
+          name="chart"
+          ng2FileSelect
+          [uploader]="uploader">
+      </div>
+
+    </div>
+
     <div class="flex flex-row pt-5">
       <app-form-label text="Select timeframe"></app-form-label>
       <div class="pl-5">
