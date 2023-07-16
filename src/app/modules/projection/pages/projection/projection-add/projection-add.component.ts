@@ -109,7 +109,6 @@ export class ProjectionAddComponent {
         this.isLoading = false;
         return result as number;
       }
-      // Toast showCreatedSuccessfully
     } catch (e: any) {
       this.errors.push(e.message as string);
     } finally {
@@ -134,8 +133,6 @@ export class ProjectionAddComponent {
 
         this.isLoading = false;
         return uploadPromise;
-      } else {
-        console.error('No file to upload');
       }
     } catch (e: any) {
       this.errors.push(e.message as string);
