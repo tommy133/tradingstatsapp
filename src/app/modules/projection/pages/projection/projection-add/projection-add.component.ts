@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { FileUploader } from 'ng2-file-upload';
-import { Observable, firstValueFrom } from 'rxjs';
+import { Observable, Subscription, firstValueFrom } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { Status } from 'src/app/data/models/status';
@@ -28,6 +28,7 @@ export class ProjectionAddComponent {
     itemAlias: 'chart',
   });
   chartFileName: string = '';
+  subscription: Subscription | undefined;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
   statuses$: Observable<Status[]> = this.statusService.getStatuses();
@@ -76,7 +77,8 @@ export class ProjectionAddComponent {
       status: any,
       headers: any,
     ) => {
-      console.log('uploaded successfully...', status);
+      this.chartFileName = JSON.parse(response);
+      console.log('Uploaded successfully...', status);
     };
   }
 
@@ -115,14 +117,37 @@ export class ProjectionAddComponent {
     }
   }
 
+  private async handleUploadChart() {
+    try {
+      this.isLoading = true;
+      if (this.uploader.queue.length > 0) {
+        const fileItem = this.uploader.queue[0];
+
+        const uploadPromise = new Promise<void>((resolve) => {
+          this.subscription = this.uploader.response.subscribe((res) => {
+            this.chartFileName = JSON.parse(res).filename;
+            resolve();
+          });
+        });
+
+        fileItem.upload();
+
+        this.isLoading = false;
+        return uploadPromise;
+      } else {
+        console.error('No file to upload');
+      }
+    } catch (e: any) {
+      this.errors.push(e.message as string);
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
   private async handleCreateComment(commentCreateInput: ProjectionComment) {
     try {
       this.isLoading = true;
-      const result = await firstValueFrom(
-        this.onAddComment(commentCreateInput),
-      );
-
-      // Toast showCreatedSuccessfully
+      await firstValueFrom(this.onAddComment(commentCreateInput));
     } catch (e: any) {
       this.errors.push(e.message as string);
     } finally {
@@ -136,10 +161,14 @@ export class ProjectionAddComponent {
     }
     const submitedInput = this.addProjectionForm.value;
     const { symbol, orderType, timeframe, status, comment } = submitedInput;
+
+    await this.handleUploadChart(); // wait toload this.chartFileName
+
     const projectionCreateInput: ProjectionCreateInput = {
       id_sym: symbol!,
       updown: orderType!,
       date_proj: new Date(),
+      graph: this.chartFileName,
       name_tf: timeframe!.toString(),
       id_st: status!,
     };
@@ -163,6 +192,12 @@ export class ProjectionAddComponent {
           message: error,
         });
       });
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
     }
   }
 }
