@@ -12,6 +12,7 @@ import { RoundedButtonComponent } from './components/rounded-button/rounded-butt
 import { RoundedLabelComponent } from './components/rounded-label/rounded-label.component';
 import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 
 @NgModule({
@@ -26,6 +27,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     ValidationErrorComponent,
     RoundedLabelComponent,
     IconButtonComponent,
+    TextIconButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -47,6 +49,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     ValidationErrorComponent,
     RoundedLabelComponent,
     IconButtonComponent,
+    TextIconButtonComponent,
   ],
 })
 export class SharedModule {}
