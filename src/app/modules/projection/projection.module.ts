@@ -9,6 +9,7 @@ import { ProjectionDetailsComponent } from './pages/projection/projection-detail
 import { ProjectionEditComponent } from './pages/projection/projection-edit/projection-edit.component';
 import { ProjectionListComponent } from './pages/projection/projection-list/projection-list.component';
 import { TableProjectionComponent } from './pages/projection/projection-list/table/table-projection.component';
+import { ViewChartComponent } from './pages/view-chart/view-chart.component';
 import { ProjectionRoutingModule } from './projection-routing.module';
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ProjectionRoutingModule } from './projection-routing.module';
     ProjectionAddComponent,
     ProjectionDetailsComponent,
     ProjectionEditComponent,
+    ViewChartComponent,
   ],
   imports: [
     CommonModule,
