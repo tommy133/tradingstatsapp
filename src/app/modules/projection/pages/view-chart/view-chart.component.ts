@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
+import { ITradingViewWidget } from 'angular-tradingview-widget';
 import { FileService } from 'src/app/file.service';
 
 @Component({
@@ -9,6 +10,10 @@ import { FileService } from 'src/app/file.service';
 })
 export class ViewChartComponent implements OnInit {
   imageUrl?: SafeUrl;
+  widgetConfig: ITradingViewWidget = {
+    symbol: 'EURUSD',
+    widgetType: 'widget',
+  };
   constructor(
     private fileService: FileService,
     private activatedRoute: ActivatedRoute,
