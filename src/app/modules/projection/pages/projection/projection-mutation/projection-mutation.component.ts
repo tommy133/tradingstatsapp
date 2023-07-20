@@ -19,10 +19,10 @@ import { ProjectionService } from '../../../service/projection.service';
 const fileUploadUri = 'http://localhost:8080/file/upload';
 
 @Component({
-  selector: 'app-projection-add',
-  templateUrl: './projection-add.component.html',
+  selector: 'app-projection-mutation',
+  templateUrl: './projection-mutation.component.html',
 })
-export class ProjectionAddComponent {
+export class ProjectionMutationComponent {
   isLoading: boolean = false;
   errors: Array<string> = [];
   uploader: FileUploader = new FileUploader({
