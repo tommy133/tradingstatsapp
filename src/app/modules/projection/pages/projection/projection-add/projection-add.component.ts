@@ -11,6 +11,7 @@ import { Timeframe } from 'src/app/data/models/timeframe';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
+import { MutationType } from 'src/app/shared/utils/custom-types';
 import { redirectById } from 'src/app/shared/utils/shared-utils';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionService } from '../../../service/projection.service';
@@ -59,10 +60,6 @@ export class ProjectionAddComponent {
     comment: this.comment,
   });
 
-  get isFileUploaded(): boolean {
-    return this.uploader.queue.length > 0;
-  }
-
   constructor(
     private formBuilder: FormBuilder,
     private projectionService: ProjectionService,
@@ -86,6 +83,21 @@ export class ProjectionAddComponent {
       this.chartFileName = JSON.parse(response);
       console.log('Uploaded successfully...', status);
     };
+  }
+
+  get isFileUploaded(): boolean {
+    return this.uploader.queue.length > 0;
+  }
+
+  get mutation(): MutationType {
+    if (this.activatedRoute.snapshot.params['id']) {
+      return MutationType.EDIT;
+    }
+    return MutationType.ADD;
+  }
+
+  get isMutationAdd(): boolean {
+    return this.mutation === MutationType.ADD;
   }
 
   onAddProjection(projectionCreateInput: ProjectionCreateInput) {
