@@ -4,8 +4,13 @@ import { ProjectionAddComponent } from './pages/projection/projection-add/projec
 import { ProjectionDetailsComponent } from './pages/projection/projection-details/projection-details.component';
 import { ProjectionEditComponent } from './pages/projection/projection-edit/projection-edit.component';
 import { ProjectionListComponent } from './pages/projection/projection-list/projection-list.component';
+import { ViewChartComponent } from './pages/view-chart/view-chart.component';
 
 const routes: Routes = [
+  {
+    path: 'view-chart',
+    component: ViewChartComponent,
+  },
   {
     path: '',
     component: ProjectionListComponent,

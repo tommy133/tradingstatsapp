@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
-import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { Projection } from '../../../model/projection';
@@ -20,7 +19,6 @@ export class ProjectionDetailsComponent implements OnInit {
   constructor(
     private projectionService: ProjectionService,
     private commentService: ProjectionCommentService,
-    private toastService: ToastService,
     private activatedRoute: ActivatedRoute,
   ) {}
 

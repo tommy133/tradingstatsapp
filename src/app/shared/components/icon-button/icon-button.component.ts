@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-icon-button',
-  template: `<button type="button" (click)="emitEvent()">
+  template: `<button type="button">
     <svg-icon
       [svgClass]="iconSvgClass"
       [svgStyle]="iconSvgStyle"
@@ -18,8 +18,4 @@ export class IconButtonComponent {
   @Input() iconSvgStyle?: any = { 'height.px': 32, 'width.px': 32 };
   @Input() iconSvgClass?: string;
   @Output() clickEvent = new EventEmitter<any>();
-
-  emitEvent() {
-    this.clickEvent.emit();
-  }
 }
