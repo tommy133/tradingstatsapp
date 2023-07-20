@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable, Subscription, firstValueFrom } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -11,6 +12,7 @@ import { ProjectionCommentService } from 'src/app/data/service/pcomment.service'
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { FileService } from 'src/app/file.service';
+import { redirectById } from 'src/app/shared/utils/shared-utils';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionService } from '../../../service/projection.service';
 
@@ -66,6 +68,8 @@ export class ProjectionAddComponent {
     private commentService: ProjectionCommentService,
     private toastService: ToastService,
     private fileService: FileService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
@@ -186,6 +190,7 @@ export class ProjectionAddComponent {
       this.toastService.success({
         message: `Projection has been successfully created`,
       });
+      redirectById(this.router, this.activatedRoute, projId!, '../');
     } else {
       this.errors.forEach((error) => {
         this.toastService.error({
