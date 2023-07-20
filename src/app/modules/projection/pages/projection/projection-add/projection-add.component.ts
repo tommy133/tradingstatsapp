@@ -11,7 +11,6 @@ import { Timeframe } from 'src/app/data/models/timeframe';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
-import { FileService } from 'src/app/file.service';
 import { redirectById } from 'src/app/shared/utils/shared-utils';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionService } from '../../../service/projection.service';
@@ -60,6 +59,10 @@ export class ProjectionAddComponent {
     comment: this.comment,
   });
 
+  get isFileUploaded(): boolean {
+    return this.uploader.queue.length > 0;
+  }
+
   constructor(
     private formBuilder: FormBuilder,
     private projectionService: ProjectionService,
@@ -67,7 +70,6 @@ export class ProjectionAddComponent {
     private statusService: StatusService,
     private commentService: ProjectionCommentService,
     private toastService: ToastService,
-    private fileService: FileService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
   ) {
@@ -94,11 +96,8 @@ export class ProjectionAddComponent {
     return this.commentService.addComment(commentCreateInput);
   }
 
-  downloadChart(fileName: string) {
-    this.fileService.downloadFile(fileName).subscribe(
-      (data) => console.log(data),
-      (error) => console.error(error),
-    );
+  removeUploadedFile() {
+    this.uploader.clearQueue();
   }
 
   private async handleCreateProjection(
@@ -123,8 +122,8 @@ export class ProjectionAddComponent {
   private async handleUploadChart() {
     try {
       this.isLoading = true;
-      if (this.uploader.queue.length > 0) {
-        const fileItem = this.uploader.queue[0];
+      if (this.isFileUploaded) {
+        const fileItem = this.uploader.queue[this.uploader.queue.length - 1];
 
         const uploadPromise = new Promise<void>((resolve) => {
           this.subscription = this.uploader.response.subscribe((res) => {

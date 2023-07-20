@@ -103,8 +103,16 @@
             [uploader]="uploader">
         </label>
       </button>
+      <div
+        *ngIf="isFileUploaded"
+        class="flex flex-row items-center pl-4 space-x-2">
+        <p class="text-white">File uploaded</p>
+        <app-text-button
+          buttonText="Cancel"
+          buttonClass="bg-red text-white rounded p-1"
+          (clickEvent)="removeUploadedFile()">
+        </app-text-button>
+      </div>
     </div>
-
   </div>
-
 </form>
