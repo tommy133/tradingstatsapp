@@ -43,15 +43,16 @@ export class ProjectionListComponent {
   public onFilterProjections(key: string): void {
     const fieldContainsKey = (field: string) =>
       field.toLowerCase().includes(key.toLowerCase());
-    const filterFn = ({
-      name_sym = '',
-      name_tf = '',
-      name_st = '',
-    }: Projection) => {
+    const filterFn = (projection: Projection) => {
+      const {
+        symbol: { nameSymbol },
+        status: { nameStatus },
+      } = projection;
+
       return (
-        fieldContainsKey(name_sym) ||
-        fieldContainsKey(name_tf) ||
-        fieldContainsKey(name_st)
+        fieldContainsKey(nameSymbol) ||
+        fieldContainsKey(nameStatus) ||
+        fieldContainsKey(projection.timeframe)
       );
     };
 

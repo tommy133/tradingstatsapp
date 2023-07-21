@@ -5,33 +5,28 @@
         <table class="min-w-max w-full table-auto">
           <thead>
             <tr class="bg-gray-200 text-gray-600 text-sm leading-normal">
-              <ng-container *ngFor="let column of columns">
-                <th class="py-3 px-6 text-center">{{ column.name }}</th>
-              </ng-container>
+              <th
+                class="py-3 px-6 text-center"
+                *ngFor="let column of columns">
+                {{ column.name }}
+              </th>
             </tr>
           </thead>
           <tbody class="text-gray-600 text-sm font-light">
             <tr
               *ngFor="let row of rows"
               class="border-b border-gray-200 hover:bg-gray-100">
-              <td class="py-3 px-6 text-center whitespace-nowrap font-bold">{{ row.name_sym }}</td>
+              <td class="py-3 px-6 text-center whitespace-nowrap font-bold">{{ row.symbol.nameSymbol }}</td>
               <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.updown ? 'LONG' : 'SHORT' }}</td>
-
-              <td class="py-3 px-6 text-center whitespace-nowrap">
-                {{ row.date_proj | date : 'dd/MM/yyyy' }}
-              </td>
-              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.name_tf }}</td>
-              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.name_st }}</td>
+              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.date | date: 'dd/MM/yyyy' }}</td>
+              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.timeframe }}</td>
+              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.status.nameStatus }}</td>
               <td class="py-3 px-6 text-center whitespace-nowrap">
                 <app-icon-button
                   iconSource="assets/svg/edit-32.svg"
-                  [iconSvgStyle]="{
-                    'height.px': 32,
-                    'width.px': 32,
-                    'opacity': 0.5
-                  }"
+                  [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32, 'opacity': 0.5 }"
                   iconSvgClass="hover:bg-gray-300 rounded"
-                  [routerLink]="['.', row.id_proj]"></app-icon-button>
+                  [routerLink]="['.', row.id]"></app-icon-button>
               </td>
             </tr>
           </tbody>

@@ -1,9 +1,19 @@
+interface Symbol {
+  id: number;
+  nameSymbol: string;
+}
+
+interface Status {
+  id: number;
+  nameStatus: string;
+}
+
 export interface Projection {
-  id_proj: number;
-  name_sym: string;
+  id: number;
+  symbol: Symbol;
   updown: boolean;
-  date_proj?: Date;
+  date?: Date;
   graph?: string;
-  name_tf: string;
-  name_st: string;
+  timeframe: string;
+  status: Status;
 }

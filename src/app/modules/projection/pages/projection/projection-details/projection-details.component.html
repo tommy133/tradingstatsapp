@@ -14,7 +14,7 @@
     <div class="flex flex-row items-center">
       <app-form-label text="Symbol"></app-form-label>
       <div class="pl-10">
-        <app-rounded-label [text]="projection.name_sym"></app-rounded-label>
+        <app-rounded-label [text]="projection.symbol.nameSymbol"></app-rounded-label>
       </div>
     </div>
 
@@ -29,7 +29,7 @@
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Timeframe"></app-form-label>
       <div class="pl-5">
-        <app-rounded-label [text]="projection.name_tf"></app-rounded-label>
+        <app-rounded-label [text]="projection.timeframe"></app-rounded-label>
 
       </div>
     </div>
@@ -37,7 +37,7 @@
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Status"></app-form-label>
       <div class="pl-[50px]">
-        <app-rounded-label [text]="projection.name_st"></app-rounded-label>
+        <app-rounded-label [text]="projection.status.nameStatus"></app-rounded-label>
       </div>
     </div>
 
