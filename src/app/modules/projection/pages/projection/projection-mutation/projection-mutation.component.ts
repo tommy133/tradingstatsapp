@@ -158,6 +158,7 @@ export class ProjectionMutationComponent {
   }
 
   private setInitialFormStateProj(projectionDetails: Projection) {
+    this.id.setValue(projectionDetails.id);
     this.symbol.setValue(projectionDetails.symbol.id);
     this.orderType.setValue(projectionDetails.updown ? 1 : 0);
     this.timeframe.setValue(projectionDetails.timeframe);
