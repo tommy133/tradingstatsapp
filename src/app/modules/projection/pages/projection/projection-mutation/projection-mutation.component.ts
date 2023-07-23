@@ -14,6 +14,7 @@ import { SymbolService } from 'src/app/data/service/symbol.service';
 import { MutationType } from 'src/app/shared/utils/custom-types';
 import { redirectById } from 'src/app/shared/utils/shared-utils';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
+import { ProjectionUpdateInput } from '../../../model/projectionUpdateInput';
 import { ProjectionService } from '../../../service/projection.service';
 
 const fileUploadUri = 'http://localhost:8080/file/upload';
@@ -39,20 +40,23 @@ export class ProjectionMutationComponent {
     (value) => typeof value !== 'number',
   );
 
+  //CONTROLS
+  id = this.formBuilder.control<number | null>(null);
   symbol = this.formBuilder.control<number | null>(null, Validators.required);
   orderType = this.formBuilder.control<number | null>(
     null,
     Validators.required,
   );
   //chart
-  timeframe = this.formBuilder.control<Timeframe | null>(
+  timeframe = this.formBuilder.control<string | null>(
     null,
     Validators.required,
   );
   status = this.formBuilder.control<number | null>(null, Validators.required);
   comment = this.formBuilder.control<string | null>(null);
 
-  addProjectionForm = this.formBuilder.group({
+  projectionForm = this.formBuilder.group({
+    id: this.id,
     symbol: this.symbol,
     orderType: this.orderType,
     timeframe: this.timeframe,
@@ -85,6 +89,18 @@ export class ProjectionMutationComponent {
     };
   }
 
+  async ngOnInit() {
+    const id = this.activatedRoute.snapshot.params['id'];
+    if (id) {
+      const projectionDetails = await firstValueFrom(
+        this.projectionService.getProjection(id),
+      );
+      if (projectionDetails) {
+        //this.setInitialFormStateProj(projectionDetails);
+      }
+    }
+  }
+
   get isFileUploaded(): boolean {
     return this.uploader.queue.length > 0;
   }
@@ -104,31 +120,19 @@ export class ProjectionMutationComponent {
     return this.projectionService.addProjection(projectionCreateInput);
   }
 
+  onUpdateProjection(projectionUpdateInput: ProjectionUpdateInput) {
+    return this.projectionService.updateProjection(projectionUpdateInput);
+  }
+
   onAddComment(commentCreateInput: ProjectionComment) {
     return this.commentService.addComment(commentCreateInput);
+  }
+  onUpdateComment(commentUpdateInput: ProjectionComment) {
+    return this.commentService.updateComment(commentUpdateInput);
   }
 
   removeUploadedFile() {
     this.uploader.clearQueue();
-  }
-
-  private async handleCreateProjection(
-    projectionCreateInput: ProjectionCreateInput,
-  ): Promise<number | void> {
-    try {
-      this.isLoading = true;
-      const result = await firstValueFrom(
-        this.onAddProjection(projectionCreateInput),
-      );
-      if (result) {
-        this.isLoading = false;
-        return result as number;
-      }
-    } catch (e: any) {
-      this.errors.push(e.message as string);
-    } finally {
-      this.isLoading = false;
-    }
   }
 
   private async handleUploadChart() {
@@ -156,30 +160,51 @@ export class ProjectionMutationComponent {
     }
   }
 
-  private async handleCreateComment(commentCreateInput: ProjectionComment) {
+  private async handleMutationProjection(
+    projectionInput: ProjectionCreateInput | ProjectionUpdateInput,
+  ): Promise<number | void> {
     try {
       this.isLoading = true;
-      await firstValueFrom(this.onAddComment(commentCreateInput));
+      const result = this.isMutationAdd
+        ? await firstValueFrom(
+            this.onAddProjection(projectionInput as ProjectionCreateInput),
+          )
+        : await firstValueFrom(
+            this.onUpdateProjection(projectionInput as ProjectionUpdateInput),
+          );
+      if (result) {
+        this.isLoading = false;
+        return result as number;
+      }
     } catch (e: any) {
-      this.errors.push(e.message as string);
+      this.errors = [...this.errors, e.message as string];
     } finally {
       this.isLoading = false;
     }
   }
 
-  async onSubmit() {
-    if (this.addProjectionForm.invalid) {
-      this.toastService.error({
-        message: 'Invalid form!',
-      });
-      return;
+  private async handleMutationComment(
+    commentInput: ProjectionComment,
+  ): Promise<number | void> {
+    try {
+      this.isLoading = true;
+      const result = this.isMutationAdd
+        ? await firstValueFrom(this.onAddComment(commentInput))
+        : await firstValueFrom(this.onUpdateComment(commentInput));
+      if (result) {
+        this.isLoading = false;
+        return result as number;
+      }
+    } catch (e: any) {
+      this.errors = [...this.errors, e.message as string];
+    } finally {
+      this.isLoading = false;
     }
-    const submitedInput = this.addProjectionForm.value;
-    const { symbol, orderType, timeframe, status, comment } = submitedInput;
+  }
 
-    await this.handleUploadChart(); // wait toload this.chartFileName
-
-    const projectionCreateInput: ProjectionCreateInput = {
+  private getProjectionCreateInput(): ProjectionCreateInput {
+    const { symbol, orderType, timeframe, status } = this.projectionForm.value;
+    return {
       id_sym: symbol!,
       updown: orderType!,
       date_proj: new Date(),
@@ -187,14 +212,61 @@ export class ProjectionMutationComponent {
       name_tf: timeframe!.toString(),
       id_st: status!,
     };
-    const projId = await this.handleCreateProjection(projectionCreateInput);
+  }
 
-    if (comment && projId) {
-      const commentInput: ProjectionComment = {
-        pcomment: comment,
-        id_proj: projId,
-      };
-      this.handleCreateComment(commentInput);
+  private getProjectionUpdateInput(): ProjectionUpdateInput {
+    const { id, symbol, orderType, timeframe, status } =
+      this.projectionForm.value;
+    return {
+      id_proj: id!,
+      id_sym: symbol!,
+      updown: orderType!,
+      date_proj: new Date(),
+      graph: this.chartFileName,
+      name_tf: timeframe!.toString(),
+      id_st: status!,
+    };
+  }
+
+  private getCommentCreateInput(idProj: number): ProjectionComment {
+    const { comment } = this.projectionForm.value;
+    return {
+      pcomment: comment!,
+      id_proj: idProj!,
+    };
+  }
+
+  private getCommentUpdateInput(): ProjectionComment {
+    const { id, comment } = this.projectionForm.value;
+    return {
+      id_pc: 1,
+      pcomment: comment!,
+      id_proj: id!,
+    };
+  }
+
+  async onSubmit() {
+    if (this.projectionForm.invalid) {
+      this.toastService.error({
+        message: 'Invalid form!',
+      });
+      return;
+    }
+
+    await this.handleUploadChart(); // wait to load this.chartFileName
+
+    const projectionInput: ProjectionCreateInput | ProjectionUpdateInput = this
+      .isMutationAdd
+      ? this.getProjectionCreateInput()
+      : this.getProjectionUpdateInput();
+
+    const projId = await this.handleMutationProjection(projectionInput);
+
+    if (projId && this.projectionForm.value.comment) {
+      const commentInput: ProjectionComment = this.isMutationAdd
+        ? this.getCommentCreateInput(projId)
+        : this.getCommentUpdateInput();
+      this.handleMutationComment(commentInput);
     }
 
     if (this.errors.length === 0) {
