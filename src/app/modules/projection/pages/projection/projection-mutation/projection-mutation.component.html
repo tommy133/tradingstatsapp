@@ -3,11 +3,20 @@
   (ngSubmit)="onSubmit()">
   <div class="p-8 bg-dark">
     <div class="flex justify-between">
-      <app-close-button routerLink="../"></app-close-button>
+      <app-close-button [routerLink]="closeRoute"></app-close-button>
 
+      <div
+        *ngIf="!isMutationAdd"
+        class="pl-36">
+        <app-rounded-button
+          text="Cancel"
+          bgColor="bg-gray-400"
+          [routerLink]="cancelRoute">
+        </app-rounded-button>
+      </div>
       <app-rounded-button
-        text="Add"
-        color="bg-green"
+        [text]="buttonType"
+        [bgColor]="buttonColor"
         type="submit">
       </app-rounded-button>
     </div>

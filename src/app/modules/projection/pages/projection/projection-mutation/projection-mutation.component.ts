@@ -122,6 +122,22 @@ export class ProjectionMutationComponent {
     return this.mutation === MutationType.ADD;
   }
 
+  get closeRoute(): string {
+    return this.isMutationAdd ? '../' : '../../';
+  }
+
+  get cancelRoute(): string {
+    return '../../' + this.projectionForm.value.id;
+  }
+
+  get buttonType(): string {
+    return this.isMutationAdd ? 'Add' : 'Save';
+  }
+
+  get buttonColor(): string {
+    return this.isMutationAdd ? 'bg-green' : 'bg-orange';
+  }
+
   onAddProjection(projectionCreateInput: ProjectionCreateInput) {
     return this.projectionService.addProjection(projectionCreateInput);
   }
