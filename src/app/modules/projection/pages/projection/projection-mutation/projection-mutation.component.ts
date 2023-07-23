@@ -13,6 +13,7 @@ import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { MutationType } from 'src/app/shared/utils/custom-types';
 import { redirectById } from 'src/app/shared/utils/shared-utils';
+import { Projection } from '../../../model/projection';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionUpdateInput } from '../../../model/projectionUpdateInput';
 import { ProjectionService } from '../../../service/projection.service';
@@ -31,6 +32,7 @@ export class ProjectionMutationComponent {
     itemAlias: 'chart',
   });
   chartFileName: string = '';
+  idComment?: number;
   subscription: Subscription | undefined;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
@@ -96,7 +98,11 @@ export class ProjectionMutationComponent {
         this.projectionService.getProjection(id),
       );
       if (projectionDetails) {
-        //this.setInitialFormStateProj(projectionDetails);
+        this.setInitialFormStateProj(projectionDetails);
+      }
+      const comment = await firstValueFrom(this.commentService.getComment(id));
+      if (comment) {
+        this.setInitialFormStateComment(comment);
       }
     }
   }
@@ -133,6 +139,18 @@ export class ProjectionMutationComponent {
 
   removeUploadedFile() {
     this.uploader.clearQueue();
+  }
+
+  private setInitialFormStateProj(projectionDetails: Projection) {
+    this.symbol.setValue(projectionDetails.symbol.id);
+    this.orderType.setValue(projectionDetails.updown ? 1 : 0);
+    this.timeframe.setValue(projectionDetails.timeframe);
+    this.status.setValue(projectionDetails.status.id);
+  }
+
+  private setInitialFormStateComment(comment: ProjectionComment) {
+    this.idComment = comment.id_pc;
+    this.comment.setValue(comment.pcomment);
   }
 
   private async handleUploadChart() {
@@ -239,7 +257,7 @@ export class ProjectionMutationComponent {
   private getCommentUpdateInput(): ProjectionComment {
     const { id, comment } = this.projectionForm.value;
     return {
-      id_pc: 1,
+      id_pc: this.idComment!,
       pcomment: comment!,
       id_proj: id!,
     };
