@@ -161,6 +161,7 @@ export class ProjectionMutationComponent {
     this.id.setValue(projectionDetails.id);
     this.symbol.setValue(projectionDetails.symbol.id);
     this.orderType.setValue(projectionDetails.updown ? 1 : 0);
+    this.chartFileName = projectionDetails.graph!;
     this.timeframe.setValue(projectionDetails.timeframe);
     this.status.setValue(projectionDetails.status.id);
   }

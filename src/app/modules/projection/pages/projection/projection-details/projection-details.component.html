@@ -55,7 +55,9 @@
       </div>
     </div>
 
-    <div class="flex items-center flex-row pt-10">
+    <div
+      *ngIf="projection.graph"
+      class="flex items-center flex-row pt-10">
       <button
         type="button"
         routerLink="../view-chart"
