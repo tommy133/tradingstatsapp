@@ -37,4 +37,9 @@ export class ProjectionDetailsComponent implements OnInit {
       }),
     );
   }
+
+  dateFormatted(inputDate: Date): string {
+    const stringDate = inputDate.toString();
+    return stringDate.split('T')[0];
+  }
 }
