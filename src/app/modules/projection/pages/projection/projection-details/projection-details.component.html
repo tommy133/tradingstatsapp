@@ -48,7 +48,8 @@
         <ng-container *ngIf="comment$ | async as comment;">
           <textarea
             cols="30"
-            rows="5">
+            rows="5"
+            readonly>
             {{comment.pcomment}}
           </textarea>
         </ng-container>
