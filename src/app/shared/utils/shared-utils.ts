@@ -10,3 +10,8 @@ export function redirectById(
     relativeTo: activatedRoute,
   });
 }
+
+export function formatDate(inputDate: Date): string {
+  const stringDate = inputDate.toString();
+  return stringDate.split('T')[0];
+}

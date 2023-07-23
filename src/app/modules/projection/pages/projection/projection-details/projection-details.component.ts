@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
+import { formatDate } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionService } from '../../../service/projection.service';
 
@@ -38,8 +39,7 @@ export class ProjectionDetailsComponent implements OnInit {
     );
   }
 
-  dateFormatted(inputDate: Date): string {
-    const stringDate = inputDate.toString();
-    return stringDate.split('T')[0];
+  formatDate(inputDate: Date): string {
+    return formatDate(inputDate);
   }
 }
