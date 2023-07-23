@@ -305,10 +305,16 @@ export class ProjectionMutationComponent {
     }
 
     if (this.errors.length === 0) {
+      const operation = this.isMutationAdd ? 'created' : 'updated';
       this.toastService.success({
-        message: `Projection has been successfully created`,
+        message: `Projection has been successfully ${operation}`,
       });
-      redirectById(this.router, this.activatedRoute, projId!, '../');
+      redirectById(
+        this.router,
+        this.activatedRoute,
+        projId!,
+        this.isMutationAdd ? '../' : '../../',
+      );
     } else {
       this.errors.forEach((error) => {
         this.toastService.error({
