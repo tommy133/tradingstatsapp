@@ -6,7 +6,6 @@ import { TradingviewWidgetModule } from 'angular-tradingview-widget';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectionDetailsComponent } from './pages/projection/projection-details/projection-details.component';
-import { ProjectionEditComponent } from './pages/projection/projection-edit/projection-edit.component';
 import { ProjectionListComponent } from './pages/projection/projection-list/projection-list.component';
 import { TableProjectionComponent } from './pages/projection/projection-list/table/table-projection.component';
 import { ProjectionMutationComponent } from './pages/projection/projection-mutation/projection-mutation.component';
@@ -19,7 +18,6 @@ import { ProjectionRoutingModule } from './projection-routing.module';
     TableProjectionComponent,
     ProjectionMutationComponent,
     ProjectionDetailsComponent,
-    ProjectionEditComponent,
     ViewChartComponent,
   ],
   imports: [
