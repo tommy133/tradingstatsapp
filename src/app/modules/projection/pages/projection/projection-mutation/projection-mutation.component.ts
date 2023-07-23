@@ -189,7 +189,7 @@ export class ProjectionMutationComponent {
         return uploadPromise;
       }
     } catch (e: any) {
-      this.errors.push(e.message as string);
+      this.errors = [...this.errors, e.message as string];
     } finally {
       this.isLoading = false;
     }
