@@ -11,7 +11,6 @@ export function redirectById(
   });
 }
 
-export function formatDate(inputDate: Date): string {
-  const stringDate = inputDate.toString();
-  return stringDate.split('T')[0];
+export function formatDate(inputDate: string): string {
+  return inputDate.split('T')[0];
 }

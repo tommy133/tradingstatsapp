@@ -39,7 +39,7 @@ export class ProjectionDetailsComponent implements OnInit {
     );
   }
 
-  formatDate(inputDate: Date): string {
+  formatDate(inputDate: string): string {
     return formatDate(inputDate);
   }
 }

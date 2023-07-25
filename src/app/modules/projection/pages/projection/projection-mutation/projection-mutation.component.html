@@ -55,6 +55,16 @@
       </div>
 
       <div class="flex flex-row pt-5">
+        <app-form-label text="Select date"></app-form-label>
+        <div class="pl-[60px]">
+          <input
+            [value]="this.projectionForm.get('date')!.value | date: 'yyyy-MM-dd'"
+            type="date"
+            formControlName="date">
+        </div>
+      </div>
+
+      <div class="flex flex-row pt-5">
         <app-form-label text="Select timeframe"></app-form-label>
         <div class="pl-5">
           <select

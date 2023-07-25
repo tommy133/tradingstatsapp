@@ -12,7 +12,7 @@ import { ProjectionCommentService } from 'src/app/data/service/pcomment.service'
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { MutationType } from 'src/app/shared/utils/custom-types';
-import { redirectById } from 'src/app/shared/utils/shared-utils';
+import { formatDate, redirectById } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionUpdateInput } from '../../../model/projectionUpdateInput';
@@ -49,7 +49,7 @@ export class ProjectionMutationComponent {
     null,
     Validators.required,
   );
-  //chart
+  date = this.formBuilder.control<string | null>(null);
   timeframe = this.formBuilder.control<string | null>(
     null,
     Validators.required,
@@ -61,6 +61,7 @@ export class ProjectionMutationComponent {
     id: this.id,
     symbol: this.symbol,
     orderType: this.orderType,
+    date: this.date,
     timeframe: this.timeframe,
     status: this.status,
     comment: this.comment,
@@ -157,10 +158,15 @@ export class ProjectionMutationComponent {
     this.uploader.clearQueue();
   }
 
+  formatDate(inputDate: string): string {
+    return formatDate(inputDate);
+  }
+
   private setInitialFormStateProj(projectionDetails: Projection) {
     this.id.setValue(projectionDetails.id);
     this.symbol.setValue(projectionDetails.symbol.id);
     this.orderType.setValue(projectionDetails.updown ? 1 : 0);
+    this.date.setValue(formatDate(projectionDetails.date!));
     this.chartFileName = projectionDetails.graph!;
     this.timeframe.setValue(projectionDetails.timeframe);
     this.status.setValue(projectionDetails.status.id);
@@ -239,11 +245,12 @@ export class ProjectionMutationComponent {
   }
 
   private getProjectionCreateInput(): ProjectionCreateInput {
-    const { symbol, orderType, timeframe, status } = this.projectionForm.value;
+    const { symbol, orderType, date, timeframe, status } =
+      this.projectionForm.value;
     return {
       id_sym: symbol!,
       updown: orderType!,
-      date_proj: new Date(),
+      date_proj: date!,
       graph: this.chartFileName,
       name_tf: timeframe!.toString(),
       id_st: status!,
@@ -251,13 +258,13 @@ export class ProjectionMutationComponent {
   }
 
   private getProjectionUpdateInput(): ProjectionUpdateInput {
-    const { id, symbol, orderType, timeframe, status } =
+    const { id, symbol, orderType, date, timeframe, status } =
       this.projectionForm.value;
     return {
       id_proj: id!,
       id_sym: symbol!,
       updown: orderType!,
-      date_proj: new Date(),
+      date_proj: date!,
       graph: this.chartFileName,
       name_tf: timeframe!.toString(),
       id_st: status!,
