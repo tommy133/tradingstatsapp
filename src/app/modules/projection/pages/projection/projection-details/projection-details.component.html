@@ -11,18 +11,20 @@
       </app-rounded-button>
     </div>
   </div>
+
   <div class="p-8">
-    <div class="flex flex-row items-center">
+    <p class="text-white font-semibold">PROJECTION DETAILS</p>
+    <div class="flex flex-row items-center pt-5">
       <app-form-label text="Symbol"></app-form-label>
       <div class="pl-10">
-        <app-rounded-label [text]="projection.symbol.nameSymbol"></app-rounded-label>
+        <app-label [text]="projection.symbol.nameSymbol"></app-label>
       </div>
     </div>
 
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Order type"></app-form-label>
       <div class="pl-[17px]">
-        <app-rounded-label [text]="projection.updown ? 'LONG' : 'SHORT'"></app-rounded-label>
+        <app-label [text]="projection.updown ? 'LONG' : 'SHORT'"></app-label>
 
       </div>
     </div>
@@ -32,21 +34,21 @@
       class="flex flex-row items-center pt-5">
       <app-form-label text="Date"></app-form-label>
       <div class="pl-[60px]">
-        <app-rounded-label [text]="(projection.date | date: 'yyyy-MM-dd')!"></app-rounded-label>
+        <app-label [text]="(projection.date | date: 'yyyy-MM-dd')!"></app-label>
       </div>
     </div>
 
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Timeframe"></app-form-label>
       <div class="pl-5">
-        <app-rounded-label [text]="projection.timeframe"></app-rounded-label>
+        <app-label [text]="projection.timeframe"></app-label>
       </div>
     </div>
 
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Status"></app-form-label>
       <div class="pl-[50px]">
-        <app-rounded-label [text]="projection.status.nameStatus"></app-rounded-label>
+        <app-label [text]="projection.status.nameStatus"></app-label>
       </div>
     </div>
 

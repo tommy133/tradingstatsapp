@@ -22,8 +22,12 @@
         </app-rounded-button>
       </div>
     </div>
+
     <div class="p-8">
-      <div class="flex flex-row">
+      <p
+        *ngIf="!isMutationAdd"
+        class="text-white font-semibold">EDIT PROJECTION</p>
+      <div class="flex flex-row pt-5">
         <app-form-label text="Select symbol"></app-form-label>
         <div class="pl-10">
           <select

@@ -6,10 +6,10 @@ import { AngularSvgIconModule } from 'angular-svg-icon';
 import { CloseButtonComponent } from './components/close-button/close-button.component';
 import { FormLabelComponent } from './components/form-label/form-label.component';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
+import { LabelComponent } from './components/label/label.component';
 import { LoadingTemplateComponent } from './components/loading-template/loading-template.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RoundedButtonComponent } from './components/rounded-button/rounded-button.component';
-import { RoundedLabelComponent } from './components/rounded-label/rounded-label.component';
 import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
@@ -26,7 +26,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     FormLabelComponent,
     CloseButtonComponent,
     ValidationErrorComponent,
-    RoundedLabelComponent,
+    LabelComponent,
     IconButtonComponent,
     TextIconButtonComponent,
     TextButtonComponent,
@@ -49,7 +49,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     FormLabelComponent,
     CloseButtonComponent,
     ValidationErrorComponent,
-    RoundedLabelComponent,
+    LabelComponent,
     IconButtonComponent,
     TextIconButtonComponent,
     TextButtonComponent,
