@@ -2,6 +2,7 @@ import { trigger } from '@angular/animations';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { map, Observable, of } from 'rxjs';
+import { ToastService } from 'src/app/core/service/toast.service';
 import {
   sidebarRightAnimationSlide,
   SidebarRightAnimationState,
@@ -19,7 +20,10 @@ export class ProjectionListComponent {
   public projections$?: Observable<Projection[]>;
   sidebarRightAnimationState: SidebarRightAnimationState = 'out';
 
-  constructor(private projectionService: ProjectionService) {}
+  constructor(
+    private projectionService: ProjectionService,
+    private toastService: ToastService,
+  ) {}
 
   ngOnInit() {
     this.projections$ = this.getProjections();
@@ -32,6 +36,9 @@ export class ProjectionListComponent {
   public onDeleteProjection(projectionId: number): void {
     this.projectionService.deleteProjection(projectionId).subscribe(
       () => {
+        this.toastService.success({
+          message: 'Projection deleted successfully',
+        });
         this.projections$ = this.getProjections();
       },
       (error: HttpErrorResponse) => {
