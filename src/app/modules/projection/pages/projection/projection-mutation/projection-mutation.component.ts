@@ -140,6 +140,10 @@ export class ProjectionMutationComponent {
     return this.isMutationAdd ? 'Add' : 'Save';
   }
 
+  get formType(): string {
+    return this.isMutationAdd ? 'ADD' : 'EDIT';
+  }
+
   get buttonColor(): string {
     return this.isMutationAdd ? 'bg-green' : 'bg-orange';
   }
