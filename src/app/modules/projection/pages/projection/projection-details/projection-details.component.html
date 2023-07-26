@@ -3,12 +3,20 @@
     <div class="flex justify-between">
       <app-close-button routerLink="../"></app-close-button>
 
-      <app-rounded-button
-        text="Edit"
-        bgColor="bg-orange"
-        type="submit"
-        [routerLink]="'../edit/' + projection.id">
-      </app-rounded-button>
+      <div class="flex flex-row items-center space-x-5">
+        <app-rounded-button
+          text="Edit"
+          bgColor="bg-orange"
+          type="submit"
+          [routerLink]="'../edit/' + projection.id">
+        </app-rounded-button>
+
+        <app-rounded-button
+          text="Delete"
+          bgColor="bg-red"
+          type="submit"
+          (click)="onDeleteProjection(projection.id)"></app-rounded-button>
+      </div>
     </div>
   </div>
 

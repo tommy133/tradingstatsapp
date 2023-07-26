@@ -19,7 +19,9 @@
 
   </div>
   <div class="px-5">
-    <app-table [rows]="projections"></app-table>
+    <app-table
+      [rows]="projections"
+      (deleteEvent)="onDeleteProjection($event)"></app-table>
   </div>
   <app-sidebar-right
     class="fixed top-0 bottom-0 right-0 md:w-[460px] overflow-auto"

@@ -7,26 +7,25 @@
         <app-close-button [routerLink]="closeRoute"></app-close-button>
 
         <div
-          *ngIf="!isMutationAdd"
-          class="pl-36">
+          class="flex flex-row items-center space-x-5"
+          *ngIf="!isMutationAdd; else addSingleBtn">
           <app-rounded-button
             text="Cancel"
             bgColor="bg-gray-400"
             [routerLink]="cancelRoute">
           </app-rounded-button>
+
+          <app-rounded-button
+            [text]="buttonType"
+            [bgColor]="buttonColor"
+            type="submit">
+          </app-rounded-button>
         </div>
-        <app-rounded-button
-          [text]="buttonType"
-          [bgColor]="buttonColor"
-          type="submit">
-        </app-rounded-button>
       </div>
     </div>
 
     <div class="p-8">
-      <p
-        *ngIf="!isMutationAdd"
-        class="text-white font-semibold">EDIT PROJECTION</p>
+      <p class="text-white font-semibold">{{formType}} PROJECTION</p>
       <div class="flex flex-row pt-5">
         <app-form-label text="Select symbol"></app-form-label>
         <div class="pl-10">
@@ -161,4 +160,12 @@
 
 <ng-template #loading>
   <app-loading-template></app-loading-template>
+</ng-template>
+
+<ng-template #addSingleBtn>
+  <app-rounded-button
+    [text]="buttonType"
+    [bgColor]="buttonColor"
+    type="submit">
+  </app-rounded-button>
 </ng-template>

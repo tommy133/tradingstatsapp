@@ -28,7 +28,7 @@ export class ProjectionCommentService {
     return this.http.put(`${this.serverUrl}/${comment.id_pc}`, comment);
   }
 
-  public deleteComment(projId: number): Observable<ProjectionComment> {
-    return this.http.delete<ProjectionComment>(`${this.serverUrl}/${projId}`);
+  public deleteComment(projId: number) {
+    return this.http.delete(`${this.serverUrl}/${projId}`);
   }
 }
