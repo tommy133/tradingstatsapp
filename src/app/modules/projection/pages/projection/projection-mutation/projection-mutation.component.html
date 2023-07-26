@@ -1,0 +1,160 @@
+<ng-container *ngIf="!isLoading; else loading">
+  <form
+    [formGroup]="projectionForm"
+    (ngSubmit)="onSubmit()">
+    <div class="p-8 bg-dark">
+      <div class="flex justify-between">
+        <app-close-button [routerLink]="closeRoute"></app-close-button>
+
+        <div
+          *ngIf="!isMutationAdd"
+          class="pl-36">
+          <app-rounded-button
+            text="Cancel"
+            bgColor="bg-gray-400"
+            [routerLink]="cancelRoute">
+          </app-rounded-button>
+        </div>
+        <app-rounded-button
+          [text]="buttonType"
+          [bgColor]="buttonColor"
+          type="submit">
+        </app-rounded-button>
+      </div>
+    </div>
+    <div class="p-8">
+      <div class="flex flex-row">
+        <app-form-label text="Select symbol"></app-form-label>
+        <div class="pl-10">
+          <select
+            name="symbolSelect"
+            formControlName="symbol">
+            <ng-container *ngFor="let symbol of symbols$ | async">
+              <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
+            </ng-container>
+          </select>
+          <app-validation-error
+            for="symbol"
+            fieldName="symbol"></app-validation-error>
+        </div>
+      </div>
+
+      <div class="flex flex-row pt-5">
+        <app-form-label text="Select order type"></app-form-label>
+        <div class="pl-[17px]">
+          <select
+            name="orderTypeSelect"
+            formControlName="orderType">
+            <option [value]="1">BUY</option>
+            <option [value]="0">SELL</option>
+          </select>
+          <app-validation-error
+            for="orderType"
+            fieldName="order type"></app-validation-error>
+        </div>
+      </div>
+
+      <div class="flex flex-row pt-5">
+        <app-form-label text="Select date"></app-form-label>
+        <div class="pl-[60px]">
+          <input
+            [value]="dateValue"
+            type="date"
+            formControlName="date">
+        </div>
+      </div>
+
+      <div class="flex flex-row pt-5">
+        <app-form-label text="Select timeframe"></app-form-label>
+        <div class="pl-5">
+          <select
+            name="timeframeSelect"
+            formControlName="timeframe">
+            <ng-container *ngFor="let timeframe of timeframes">
+              <option [value]="timeframe">{{timeframe}}</option>
+            </ng-container>
+          </select>
+          <app-validation-error
+            for="timeframe"
+            fieldName="timeframe"></app-validation-error>
+        </div>
+      </div>
+
+      <div class="flex flex-row pt-5">
+        <app-form-label text="Select status"></app-form-label>
+        <div class="pl-[50px]">
+          <select
+            name="statusSelect"
+            formControlName="status">
+            <ng-container *ngFor="let status of statuses$ | async">
+              <option [value]="status.id_st">{{status.name_st}}</option>
+            </ng-container>
+          </select>
+          <app-validation-error
+            for="status"
+            fieldName="status"></app-validation-error>
+        </div>
+      </div>
+      <div class="flex items-center flex-row pt-5">
+        <app-form-label text="Comment"></app-form-label>
+        <div class="pl-[68px]">
+          <textarea
+            name="commentSelect"
+            formControlName="comment"
+            cols="30"
+            rows="5">
+          </textarea>
+        </div>
+      </div>
+      <div class="flex items-center flex-row pt-10">
+        <button type="button">
+          <label class="flex flex-row bg-red-violet rounded text-white items-center font-semibold p-3">
+            <svg-icon
+              [svgStyle]="{'height.px': 32, 'width.px': 32}"
+              src="assets/svg/graphics.svg"></svg-icon>
+            <div class="pl-2">
+              <h5 class="text-center">Upload chart</h5>
+            </div>
+            <input
+              class="hidden"
+              type="file"
+              name="chart"
+              ng2FileSelect
+              [uploader]="uploader">
+          </label>
+        </button>
+        <div
+          *ngIf="isFileUploaded"
+          class="flex flex-row items-center pl-4 space-x-2">
+          <p class="text-white">File uploaded</p>
+          <app-text-button
+            buttonText="Cancel"
+            buttonClass="bg-red text-white rounded p-1"
+            (clickEvent)="removeUploadedFile()">
+          </app-text-button>
+        </div>
+        <div
+          *ngIf="!isFileUploaded && this.chartFileName"
+          class="pl-4">
+          <button
+            type="button"
+            routerLink="../../view-chart"
+            [queryParams]="{fileName: this.chartFileName}">
+            <label class="flex flex-row bg-blue-300 rounded text-white items-center font-semibold p-3">
+              <svg-icon
+                [svgStyle]="{'height.px': 32, 'width.px': 32}"
+                src="assets/svg/graphics.svg"></svg-icon>
+              <div class="pl-2">
+                <h5 class="text-center">View chart</h5>
+              </div>
+            </label>
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>
+
+<ng-template #loading>
+  <app-loading-template></app-loading-template>
+</ng-template>

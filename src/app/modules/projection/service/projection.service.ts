@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Projection } from '../model/projection';
 import { ProjectionCreateInput } from '../model/projectionCreateInput';
+import { ProjectionUpdateInput } from '../model/projectionUpdateInput';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +26,9 @@ export class ProjectionService {
     return this.http.post(`${this.apiServerUrl}`, projectionCreateInput);
   }
 
-  public updateProjection(projection: Projection): Observable<Projection> {
-    return this.http.put<Projection>(
-      `${this.apiServerUrl}/${projection.id}`,
+  public updateProjection(projection: ProjectionUpdateInput) {
+    return this.http.put(
+      `${this.apiServerUrl}/${projection.id_proj}`,
       projection,
     );
   }

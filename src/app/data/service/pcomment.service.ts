@@ -24,13 +24,8 @@ export class ProjectionCommentService {
     return this.http.post(`${this.serverUrl}`, comment);
   }
 
-  public updateComment(
-    comment: ProjectionComment,
-  ): Observable<ProjectionComment> {
-    return this.http.put<ProjectionComment>(
-      `${this.serverUrl}/${comment.id_proj}`,
-      comment,
-    );
+  public updateComment(comment: ProjectionComment) {
+    return this.http.put(`${this.serverUrl}/${comment.id_pc}`, comment);
   }
 
   public deleteComment(projId: number): Observable<ProjectionComment> {

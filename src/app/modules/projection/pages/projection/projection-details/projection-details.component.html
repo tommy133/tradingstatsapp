@@ -6,7 +6,8 @@
       <app-rounded-button
         text="Edit"
         bgColor="bg-orange"
-        type="submit">
+        type="submit"
+        [routerLink]="'../edit/' + projection.id">
       </app-rounded-button>
     </div>
   </div>
@@ -26,11 +27,19 @@
       </div>
     </div>
 
+    <div
+      *ngIf="projection.date"
+      class="flex flex-row items-center pt-5">
+      <app-form-label text="Date"></app-form-label>
+      <div class="pl-[60px]">
+        <app-rounded-label [text]="(projection.date | date: 'yyyy-MM-dd')!"></app-rounded-label>
+      </div>
+    </div>
+
     <div class="flex flex-row items-center pt-5">
       <app-form-label text="Timeframe"></app-form-label>
       <div class="pl-5">
         <app-rounded-label [text]="projection.timeframe"></app-rounded-label>
-
       </div>
     </div>
 
@@ -47,14 +56,17 @@
         <ng-container *ngIf="comment$ | async as comment;">
           <textarea
             cols="30"
-            rows="5">
+            rows="5"
+            readonly>
             {{comment.pcomment}}
           </textarea>
         </ng-container>
       </div>
     </div>
 
-    <div class="flex items-center flex-row pt-10">
+    <div
+      *ngIf="projection.graph"
+      class="flex items-center flex-row pt-10">
       <button
         type="button"
         routerLink="../view-chart"

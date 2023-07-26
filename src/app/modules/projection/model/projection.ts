@@ -12,7 +12,7 @@ export interface Projection {
   id: number;
   symbol: Symbol;
   updown: boolean;
-  date?: Date;
+  date?: string;
   graph?: string;
   timeframe: string;
   status: Status;

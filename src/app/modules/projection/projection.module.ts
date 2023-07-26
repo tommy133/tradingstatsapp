@@ -5,11 +5,10 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TradingviewWidgetModule } from 'angular-tradingview-widget';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ProjectionAddComponent } from './pages/projection/projection-add/projection-add.component';
 import { ProjectionDetailsComponent } from './pages/projection/projection-details/projection-details.component';
-import { ProjectionEditComponent } from './pages/projection/projection-edit/projection-edit.component';
 import { ProjectionListComponent } from './pages/projection/projection-list/projection-list.component';
 import { TableProjectionComponent } from './pages/projection/projection-list/table/table-projection.component';
+import { ProjectionMutationComponent } from './pages/projection/projection-mutation/projection-mutation.component';
 import { ViewChartComponent } from './pages/view-chart/view-chart.component';
 import { ProjectionRoutingModule } from './projection-routing.module';
 
@@ -17,9 +16,8 @@ import { ProjectionRoutingModule } from './projection-routing.module';
   declarations: [
     ProjectionListComponent,
     TableProjectionComponent,
-    ProjectionAddComponent,
+    ProjectionMutationComponent,
     ProjectionDetailsComponent,
-    ProjectionEditComponent,
     ViewChartComponent,
   ],
   imports: [
