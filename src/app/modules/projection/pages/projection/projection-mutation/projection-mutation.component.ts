@@ -32,7 +32,7 @@ export class ProjectionMutationComponent {
     itemAlias: 'chart',
   });
   chartFileName: string = '';
-  idComment?: number;
+  idComment?: number = undefined;
   subscription: Subscription | undefined;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
@@ -121,6 +121,11 @@ export class ProjectionMutationComponent {
 
   get isMutationAdd(): boolean {
     return this.mutation === MutationType.ADD;
+  }
+
+  //if is add projection OR we are on edit and we don't have a comment, we create one
+  get isCreateCommentFromEdit(): boolean {
+    return this.isMutationAdd || !this.idComment;
   }
 
   get closeRoute(): string {
@@ -230,7 +235,7 @@ export class ProjectionMutationComponent {
   ): Promise<number | void> {
     try {
       this.isLoading = true;
-      const result = this.isMutationAdd
+      const result = this.isCreateCommentFromEdit
         ? await firstValueFrom(this.onAddComment(commentInput))
         : await firstValueFrom(this.onUpdateComment(commentInput));
       if (result) {
@@ -304,9 +309,10 @@ export class ProjectionMutationComponent {
       : this.getProjectionUpdateInput();
 
     const projId = await this.handleMutationProjection(projectionInput);
+    const comment = this.projectionForm.value.comment;
 
-    if (projId && this.projectionForm.value.comment) {
-      const commentInput: ProjectionComment = this.isMutationAdd
+    if (projId && comment) {
+      const commentInput: ProjectionComment = this.isCreateCommentFromEdit
         ? this.getCommentCreateInput(projId)
         : this.getCommentUpdateInput();
       this.handleMutationComment(commentInput);
