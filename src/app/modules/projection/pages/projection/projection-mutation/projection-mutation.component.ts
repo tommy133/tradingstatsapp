@@ -33,7 +33,7 @@ export class ProjectionMutationComponent {
   });
   chartFileName: string = '';
   idComment?: number = undefined;
-  subscription: Subscription | undefined;
+  uploaderSubscription: Subscription | undefined;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
   statuses$: Observable<Status[]> = this.statusService.getStatuses();
@@ -193,10 +193,12 @@ export class ProjectionMutationComponent {
         const fileItem = this.uploader.queue[this.uploader.queue.length - 1];
 
         const uploadPromise = new Promise<void>((resolve) => {
-          this.subscription = this.uploader.response.subscribe((res) => {
-            this.chartFileName = JSON.parse(res).filename;
-            resolve();
-          });
+          this.uploaderSubscription = this.uploader.response.subscribe(
+            (res) => {
+              this.chartFileName = JSON.parse(res).filename;
+              resolve();
+            },
+          );
         });
 
         fileItem.upload();
@@ -343,8 +345,8 @@ export class ProjectionMutationComponent {
   }
 
   ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
+    if (this.uploaderSubscription) {
+      this.uploaderSubscription.unsubscribe();
     }
   }
 }
