@@ -33,7 +33,7 @@ export class ProjectionService {
     );
   }
 
-  public deleteProjection(projectionId: number): Observable<Projection> {
-    return this.http.delete<Projection>(`${this.apiServerUrl}/${projectionId}`);
+  public deleteProjection(projectionId: number) {
+    return this.http.delete(`${this.apiServerUrl}/${projectionId}`);
   }
 }
