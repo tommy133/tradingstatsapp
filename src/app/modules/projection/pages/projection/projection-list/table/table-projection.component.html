@@ -22,11 +22,18 @@
               <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.timeframe }}</td>
               <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.status.nameStatus }}</td>
               <td class="py-3 px-6 text-center whitespace-nowrap">
-                <app-icon-button
-                  iconSource="assets/svg/edit-32.svg"
-                  [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32, 'opacity': 0.5 }"
-                  iconSvgClass="hover:bg-gray-300 rounded"
-                  [routerLink]="['.', row.id]"></app-icon-button>
+                <div class="flex flex-row justify-center space-x-2 items-center">
+                  <app-icon-button
+                    iconSource="assets/svg/edit-32.svg"
+                    [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32, 'opacity': 0.5 }"
+                    iconSvgClass="hover:bg-gray-300 rounded"
+                    [routerLink]="['.', row.id]"></app-icon-button>
+                  <svg-icon
+                    class="rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"
+                    src="assets/svg/delete.svg"
+                    [svgStyle]="{ 'width.px': 20, 'height.px': 20 }">
+                  </svg-icon>
+                </div>
               </td>
             </tr>
           </tbody>
