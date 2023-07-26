@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Projection } from 'src/app/modules/projection/model/projection';
 
 export interface TableColumn {
@@ -11,6 +11,8 @@ export interface TableColumn {
 })
 export class TableProjectionComponent {
   @Input() rows?: Projection[] | null;
+  @Output() deleteEvent = new EventEmitter<number>();
+
   columns: TableColumn[] = [
     { name: 'Symbol' },
     { name: 'Direction' },
@@ -20,4 +22,8 @@ export class TableProjectionComponent {
     { name: 'Actions' },
   ];
   constructor() {}
+
+  deleteProjection(projId: number) {
+    this.deleteEvent.emit(projId);
+  }
 }

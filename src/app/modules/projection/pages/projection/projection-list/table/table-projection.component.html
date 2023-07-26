@@ -31,7 +31,9 @@
                   <svg-icon
                     class="rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"
                     src="assets/svg/delete.svg"
-                    [svgStyle]="{ 'width.px': 20, 'height.px': 20 }">
+                    svgClass="hover:bg-gray-300 rounded"
+                    [svgStyle]="{ 'width.px': 20, 'height.px': 20 }"
+                    (click)="deleteProjection(row.id)">
                   </svg-icon>
                 </div>
               </td>
