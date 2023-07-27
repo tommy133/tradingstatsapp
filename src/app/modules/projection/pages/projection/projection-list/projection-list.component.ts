@@ -1,6 +1,8 @@
 import { trigger } from '@angular/animations';
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { map, Observable, of, Subscription } from 'rxjs';
+import { FormService } from 'src/app/core/service/form.service';
 import {
   sidebarRightAnimationSlide,
   SidebarRightAnimationState,
@@ -15,11 +17,25 @@ import { ProjectionService } from '../../../service/projection.service';
 })
 export class ProjectionListComponent {
   projections$ = this.projectionService.projections$;
+  searchProjectionsControl = new FormControl<string>('');
+  searchProjections$ = this.formService.applyDebounceOnSearch(
+    this.searchProjectionsControl.valueChanges,
+  );
+  filteredProjections$ = this.formService.filterItems(
+    this.projections$,
+    this.searchProjections$,
+    ({ symbol }) => symbol.nameSymbol,
+  );
   private filterSubscription?: Subscription;
 
   sidebarRightAnimationState: SidebarRightAnimationState = 'out';
 
-  constructor(private projectionService: ProjectionService) {}
+  constructor(
+    private projectionService: ProjectionService,
+    private formService: FormService,
+  ) {
+    this.filteredProjections$.subscribe(console.log);
+  }
 
   ngOnInit() {
     this.projectionService.setRefetchInterval();
