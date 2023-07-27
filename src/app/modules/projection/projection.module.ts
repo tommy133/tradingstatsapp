@@ -29,6 +29,5 @@ import { ProjectionRoutingModule } from './projection-routing.module';
     TradingviewWidgetModule,
   ],
   providers: [HttpClient],
-  exports: [ProjectionListComponent],
 })
 export class ProjectionModule {}
