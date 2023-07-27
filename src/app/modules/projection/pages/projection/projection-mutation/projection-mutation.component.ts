@@ -327,7 +327,7 @@ export class ProjectionMutationComponent {
     if (this.errors.length === 0) {
       const operation = this.isMutationAdd ? 'created' : 'updated';
       this.toastService.success({
-        message: `Projection has been successfully ${operation}`,
+        message: `Projection ${operation} successfully`,
       });
       redirectById(
         this.router,

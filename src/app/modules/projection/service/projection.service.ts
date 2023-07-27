@@ -68,9 +68,6 @@ export class ProjectionService {
       .pipe(
         map(
           (res) => {
-            this.toastService.success({
-              message: 'Projection updated successfully',
-            });
             this.refetch();
             return res;
           },
