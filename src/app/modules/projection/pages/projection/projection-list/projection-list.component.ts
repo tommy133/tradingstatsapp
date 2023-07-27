@@ -22,6 +22,10 @@ export class ProjectionListComponent {
 
   constructor(private projectionService: ProjectionService) {}
 
+  ngOnInit() {
+    this.projectionService.setRefetchInterval();
+  }
+
   public getProjections(): Observable<Projection[]> {
     return this.projectionService.getProjections();
   }
