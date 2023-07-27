@@ -47,7 +47,19 @@ export class ProjectionService {
   }
 
   public addProjection(projectionCreateInput: ProjectionCreateInput) {
-    return this.http.post(`${this.apiServerUrl}`, projectionCreateInput);
+    return this.http.post(`${this.apiServerUrl}`, projectionCreateInput).pipe(
+      map(
+        (res) => {
+          this.refetch();
+          return res;
+        },
+        (error: HttpErrorResponse) => {
+          this.toastService.error({
+            message: error.message,
+          });
+        },
+      ),
+    );
   }
 
   public updateProjection(projection: ProjectionUpdateInput) {
