@@ -34,7 +34,7 @@ export class FormService {
     return combineLatest([source$, search$]).pipe(
       map(([source, search]) => {
         const normalizedSearch = search.toLocaleLowerCase();
-        if (normalizedSearch === '') return [];
+        if (normalizedSearch === '') return source;
         return source.filter((item) => {
           const normalizedFullName = keySelector(item).toLocaleLowerCase();
           return normalizedFullName.includes(normalizedSearch);
