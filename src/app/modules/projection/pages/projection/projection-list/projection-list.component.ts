@@ -11,7 +11,6 @@ import { ProjectionService } from '../../../service/projection.service';
 @Component({
   selector: 'app-projection-list',
   templateUrl: './projection-list.component.html',
-  styleUrls: ['./projection-list.component.css'],
   animations: [trigger('sidebarRightInOut', sidebarRightAnimationSlide)],
 })
 export class ProjectionListComponent {
