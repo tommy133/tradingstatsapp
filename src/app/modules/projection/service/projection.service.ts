@@ -1,6 +1,12 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  map,
+  switchMap,
+} from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { environment } from 'src/environments/environment';
 import { Projection } from '../model/projection';
@@ -45,11 +51,24 @@ export class ProjectionService {
   }
 
   public updateProjection(projection: ProjectionUpdateInput) {
-    const res = this.http.put(
-      `${this.apiServerUrl}/${projection.id_proj}`,
-      projection,
-    );
-    return res;
+    return this.http
+      .put(`${this.apiServerUrl}/${projection.id_proj}`, projection)
+      .pipe(
+        map(
+          (res) => {
+            this.toastService.success({
+              message: 'Projection updated successfully',
+            });
+            this.refetch();
+            return res;
+          },
+          (error: HttpErrorResponse) => {
+            this.toastService.error({
+              message: error.message,
+            });
+          },
+        ),
+      );
   }
 
   public deleteProjection(projectionId: number) {
