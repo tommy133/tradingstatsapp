@@ -10,6 +10,7 @@ import { LabelComponent } from './components/label/label.component';
 import { LoadingTemplateComponent } from './components/loading-template/loading-template.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RoundedButtonComponent } from './components/rounded-button/rounded-button.component';
+import { SearchByTextComponent } from './components/search-by-text/search-by-text.component';
 import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
@@ -30,6 +31,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     IconButtonComponent,
     TextIconButtonComponent,
     TextButtonComponent,
+    SearchByTextComponent,
   ],
   imports: [
     CommonModule,
@@ -53,6 +55,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     IconButtonComponent,
     TextIconButtonComponent,
     TextButtonComponent,
+    SearchByTextComponent,
   ],
 })
 export class SharedModule {}
