@@ -1,6 +1,13 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  map,
+  switchMap,
+} from 'rxjs';
+import { ToastService } from 'src/app/core/service/toast.service';
 import { environment } from 'src/environments/environment';
 import { Projection } from '../model/projection';
 import { ProjectionCreateInput } from '../model/projectionCreateInput';
@@ -11,8 +18,26 @@ import { ProjectionUpdateInput } from '../model/projectionUpdateInput';
 })
 export class ProjectionService {
   private apiServerUrl = `${environment.apiBaseUrl}/projections`;
+  private fetchSignal = new BehaviorSubject(null);
+  private DEFAULT_REFETCH_INTERVAL = 5000;
 
-  constructor(private http: HttpClient) {}
+  public projections$ = this.fetchSignal
+    .asObservable()
+    .pipe(switchMap(() => this.getProjections()));
+
+  deleteSubscription?: Subscription;
+
+  constructor(private http: HttpClient, private toastService: ToastService) {}
+
+  public refetch() {
+    this.fetchSignal.next(null);
+  }
+
+  public setRefetchInterval(interval?: number) {
+    setInterval(() => {
+      this.refetch();
+    }, interval ?? this.DEFAULT_REFETCH_INTERVAL);
+  }
 
   public getProjections(): Observable<Projection[]> {
     return this.http.get<Projection[]>(`${this.apiServerUrl}`);
@@ -23,17 +48,58 @@ export class ProjectionService {
   }
 
   public addProjection(projectionCreateInput: ProjectionCreateInput) {
-    return this.http.post(`${this.apiServerUrl}`, projectionCreateInput);
-  }
-
-  public updateProjection(projection: ProjectionUpdateInput) {
-    return this.http.put(
-      `${this.apiServerUrl}/${projection.id_proj}`,
-      projection,
+    return this.http.post(`${this.apiServerUrl}`, projectionCreateInput).pipe(
+      map(
+        (res) => {
+          this.refetch();
+          return res;
+        },
+        (error: HttpErrorResponse) => {
+          this.toastService.error({
+            message: error.message,
+          });
+        },
+      ),
     );
   }
 
+  public updateProjection(projection: ProjectionUpdateInput) {
+    return this.http
+      .put(`${this.apiServerUrl}/${projection.id_proj}`, projection)
+      .pipe(
+        map(
+          (res) => {
+            this.refetch();
+            return res;
+          },
+          (error: HttpErrorResponse) => {
+            this.toastService.error({
+              message: error.message,
+            });
+          },
+        ),
+      );
+  }
+
   public deleteProjection(projectionId: number) {
-    return this.http.delete(`${this.apiServerUrl}/${projectionId}`);
+    this.deleteSubscription = this.http
+      .delete(`${this.apiServerUrl}/${projectionId}`)
+      .subscribe(
+        () => {
+          this.toastService.success({
+            message: 'Projection deleted successfully',
+          });
+          this.refetch();
+        },
+        (error: HttpErrorResponse) => {
+          this.toastService.error({
+            message: error.message,
+          });
+        },
+      );
+  }
+
+  ngOnDestroy() {
+    this.deleteSubscription?.unsubscribe();
   }
 }
