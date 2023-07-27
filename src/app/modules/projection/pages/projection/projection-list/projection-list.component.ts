@@ -1,8 +1,6 @@
 import { trigger } from '@angular/animations';
-import { HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { map, Observable, of, Subscription } from 'rxjs';
-import { ToastService } from 'src/app/core/service/toast.service';
 import {
   sidebarRightAnimationSlide,
   SidebarRightAnimationState,
@@ -17,41 +15,19 @@ import { ProjectionService } from '../../../service/projection.service';
   animations: [trigger('sidebarRightInOut', sidebarRightAnimationSlide)],
 })
 export class ProjectionListComponent {
-  public projections$?: Observable<Projection[]>;
-  private deleteSubscription?: Subscription;
+  projections$ = this.projectionService.projections$;
   private filterSubscription?: Subscription;
 
   sidebarRightAnimationState: SidebarRightAnimationState = 'out';
 
-  constructor(
-    private projectionService: ProjectionService,
-    private toastService: ToastService,
-  ) {}
-
-  ngOnInit() {
-    this.projections$ = this.getProjections();
-  }
+  constructor(private projectionService: ProjectionService) {}
 
   public getProjections(): Observable<Projection[]> {
     return this.projectionService.getProjections();
   }
 
   public onDeleteProjection(projectionId: number): void {
-    this.deleteSubscription = this.projectionService
-      .deleteProjection(projectionId)
-      .subscribe(
-        () => {
-          this.toastService.success({
-            message: 'Projection deleted successfully',
-          });
-          this.projections$ = this.getProjections();
-        },
-        (error: HttpErrorResponse) => {
-          this.toastService.error({
-            message: error.message,
-          });
-        },
-      );
+    this.projectionService.deleteProjection(projectionId);
   }
   //TODO real time filter
   public onFilterProjections(key: string): void {
@@ -80,7 +56,6 @@ export class ProjectionListComponent {
   }
 
   ngOnDestroy() {
-    this.deleteSubscription?.unsubscribe();
     this.filterSubscription?.unsubscribe();
   }
 }

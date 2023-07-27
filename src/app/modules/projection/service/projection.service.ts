@@ -1,6 +1,7 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { ToastService } from 'src/app/core/service/toast.service';
 import { environment } from 'src/environments/environment';
 import { Projection } from '../model/projection';
 import { ProjectionCreateInput } from '../model/projectionCreateInput';
@@ -12,7 +13,24 @@ import { ProjectionUpdateInput } from '../model/projectionUpdateInput';
 export class ProjectionService {
   private apiServerUrl = `${environment.apiBaseUrl}/projections`;
 
-  constructor(private http: HttpClient) {}
+  fetchSignal = new BehaviorSubject(null);
+  public projections$ = this.fetchSignal
+    .asObservable()
+    .pipe(switchMap(() => this.getProjections()));
+
+  deleteSubscription?: Subscription;
+
+  constructor(private http: HttpClient, private toastService: ToastService) {}
+
+  ngOnInit() {
+    setInterval(() => {
+      this.refetch(), 500;
+    });
+  }
+
+  refetch() {
+    this.fetchSignal.next(null);
+  }
 
   public getProjections(): Observable<Projection[]> {
     return this.http.get<Projection[]>(`${this.apiServerUrl}`);
@@ -27,13 +45,32 @@ export class ProjectionService {
   }
 
   public updateProjection(projection: ProjectionUpdateInput) {
-    return this.http.put(
+    const res = this.http.put(
       `${this.apiServerUrl}/${projection.id_proj}`,
       projection,
     );
+    return res;
   }
 
   public deleteProjection(projectionId: number) {
-    return this.http.delete(`${this.apiServerUrl}/${projectionId}`);
+    this.deleteSubscription = this.http
+      .delete(`${this.apiServerUrl}/${projectionId}`)
+      .subscribe(
+        () => {
+          this.toastService.success({
+            message: 'Projection deleted successfully',
+          });
+          this.refetch();
+        },
+        (error: HttpErrorResponse) => {
+          this.toastService.error({
+            message: error.message,
+          });
+        },
+      );
+  }
+
+  ngOnDestroy() {
+    this.deleteSubscription?.unsubscribe();
   }
 }
