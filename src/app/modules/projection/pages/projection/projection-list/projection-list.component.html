@@ -1,6 +1,6 @@
 <ng-container *ngIf="projections$ | async as projections; else loading">
   <div class="flex justify-between items-center p-5">
-
+    <app-search-by-text placeholder="Search by symbol"></app-search-by-text>
     <app-rounded-button
       [text]="'Add projection'"
       [bgColor]="'bg-green'"
