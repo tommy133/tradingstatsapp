@@ -18,8 +18,8 @@ import { ProjectionUpdateInput } from '../model/projectionUpdateInput';
 })
 export class ProjectionService {
   private apiServerUrl = `${environment.apiBaseUrl}/projections`;
+  private fetchSignal = new BehaviorSubject(null);
 
-  fetchSignal = new BehaviorSubject(null);
   public projections$ = this.fetchSignal
     .asObservable()
     .pipe(switchMap(() => this.getProjections()));
