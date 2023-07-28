@@ -21,7 +21,6 @@ export class TableProjectionComponent {
     { name: 'Status' },
     { name: 'Actions' },
   ];
-  constructor() {}
 
   deleteProjection(projId: number) {
     this.deleteEvent.emit(projId);
