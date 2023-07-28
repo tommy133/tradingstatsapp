@@ -1,23 +1,17 @@
-interface Symbol {
-  id: number;
-  nameSymbol: string;
-}
-
-interface Status {
-  id: number;
-  nameStatus: string;
-}
+import { Account } from 'src/app/data/models/account';
+import { Status } from 'src/app/data/models/status';
+import { Symbol } from 'src/app/data/models/symbol';
 
 export interface Operation {
   id: number;
   symbol: Symbol;
   updown: boolean;
-  time_op?: string;
-  time_close?: string;
+  dateOpen?: string;
+  dateClose?: string;
   timeframe: string;
   graph?: string;
   status: Status;
-  account: string;
+  account: Account;
   volume?: number;
   ratio?: number;
   points?: number;
