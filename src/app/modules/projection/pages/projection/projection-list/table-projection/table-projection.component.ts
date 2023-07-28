@@ -10,7 +10,7 @@ export interface TableColumn {
   templateUrl: './table-projection.component.html',
 })
 export class TableProjectionComponent {
-  @Input() rows?: Projection[] | null;
+  @Input() rows!: Projection[];
   @Output() deleteEvent = new EventEmitter<number>();
 
   columns: TableColumn[] = [
