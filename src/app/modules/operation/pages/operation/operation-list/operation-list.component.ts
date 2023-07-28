@@ -22,7 +22,7 @@ export class OperationListComponent implements OnInit {
   filteredOperations$ = this.formService.filterItems(
     this.operations$,
     this.searchOperations$,
-    ({ symbol }) => symbol.nameSymbol,
+    ({ symbol }) => symbol.name_sym,
   );
 
   sidebarRightAnimationState: SidebarRightAnimationState = 'out';
