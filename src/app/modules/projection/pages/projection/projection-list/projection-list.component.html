@@ -16,7 +16,7 @@
       (deleteEvent)="onDeleteProjection($event)"></app-table-projection>
   </div>
   <app-sidebar-right
-    class="fixed top-0 bottom-0 right-0 md:w-[460px] overflow-auto"
+    class="fixed top-0 bottom-0 right-0 md:w-[460px]"
     [@sidebarRightInOut]="sidebarRightAnimationState">
     <router-outlet
       (activate)="sidebarRightAnimationState = 'in'"
