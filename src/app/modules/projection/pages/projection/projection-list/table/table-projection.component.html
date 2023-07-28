@@ -16,11 +16,11 @@
             <tr
               *ngFor="let row of rows"
               class="border-b border-gray-200 hover:bg-gray-100">
-              <td class="py-3 px-6 text-center whitespace-nowrap font-bold">{{ row.symbol.nameSymbol }}</td>
+              <td class="py-3 px-6 text-center whitespace-nowrap font-bold">{{ row.symbol.name_sym }}</td>
               <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.updown ? 'LONG' : 'SHORT' }}</td>
               <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.date | date: 'dd/MM/yyyy' }}</td>
               <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.timeframe }}</td>
-              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.status.nameStatus }}</td>
+              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.status.name_st }}</td>
               <td class="py-3 px-6 text-center whitespace-nowrap">
                 <div class="flex flex-row justify-center space-x-2 items-center">
                   <app-icon-button
