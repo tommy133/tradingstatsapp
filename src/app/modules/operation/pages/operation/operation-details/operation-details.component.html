@@ -99,7 +99,9 @@
       class="flex flex-row items-center pt-5">
       <app-form-label text="Points"></app-form-label>
       <div class="pl-[50px]">
-        <app-label [text]="operation.points.toString()"></app-label>
+        <app-label
+          [text]="operation.points.toString()"
+          [textColor]="getPointsColorClass(operation.points)"></app-label>
       </div>
     </div>
 
