@@ -1,1 +1,29 @@
-<p class="bg-red"> Operation works!</p>
+<ng-container *ngIf="filteredOperations$ | async as projections; else loading">
+  <div class="flex justify-between items-center p-5">
+    <app-search-by-text
+      [searchControl]="searchOperationsControl"
+      placeholder="Search by symbol"></app-search-by-text>
+    <app-rounded-button
+      [text]="'Add operation'"
+      [bgColor]="'bg-green'"
+      [routerLink]="'add'">
+    </app-rounded-button>
+
+  </div>
+  <div class="px-5">
+    <!-- <app-table
+      [rows]="projections"
+      (deleteEvent)="onDeleteProjection($event)"></app-table> -->
+  </div>
+  <app-sidebar-right
+    class="fixed top-0 bottom-0 right-0 md:w-[460px] overflow-auto"
+    [@sidebarRightInOut]="sidebarRightAnimationState">
+    <router-outlet
+      (activate)="sidebarRightAnimationState = 'in'"
+      (deactivate)="sidebarRightAnimationState = 'out'"></router-outlet>
+
+  </app-sidebar-right>
+</ng-container>
+<ng-template #loading>
+  <app-loading-template></app-loading-template>
+</ng-template>
