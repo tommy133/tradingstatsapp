@@ -35,10 +35,10 @@ export class OperationService {
     return this.http.get<Operation[]>(`${this.apiServerUrl}`);
   }
 
-  /* public getOperation(operationId: number): Observable<Operation> {
+  public getOperation(operationId: number): Observable<Operation> {
     return this.http.get<Operation>(`${this.apiServerUrl}/${operationId}`);
   }
-
+  /*
   public addOperation(operationCreateInput: OperationCreateInput) {
     return this.http.post(`${this.apiServerUrl}`, projectionCreateInput).pipe(
       map(

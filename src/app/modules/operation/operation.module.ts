@@ -5,9 +5,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { OperationRoutingModule } from './operation-routing.module';
 import { OperationListComponent } from './pages/operation/operation-list/operation-list.component';
 import { TableOperationComponent } from './pages/operation/operation-list/table-operation/table-operation.component';
+import { OperationDetailsComponent } from './pages/operation/operation-details/operation-details.component';
 
 @NgModule({
-  declarations: [OperationListComponent, TableOperationComponent],
+  declarations: [OperationListComponent, TableOperationComponent, OperationDetailsComponent],
   imports: [
     CommonModule,
     OperationRoutingModule,
