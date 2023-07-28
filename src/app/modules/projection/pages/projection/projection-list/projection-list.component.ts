@@ -22,7 +22,7 @@ export class ProjectionListComponent {
   filteredProjections$ = this.formService.filterItems(
     this.projections$,
     this.searchProjections$,
-    ({ symbol }) => symbol.nameSymbol,
+    ({ symbol }) => symbol.name_sym,
   );
 
   sidebarRightAnimationState: SidebarRightAnimationState = 'out';

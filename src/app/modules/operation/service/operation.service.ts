@@ -1,38 +1,93 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { Operation } from 'src/app/operation/model/operation';
+import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import { ToastService } from 'src/app/core/service/toast.service';
 import { environment } from 'src/environments/environment';
+import { Operation } from '../model/operation';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OperationService {
-  private apiServerUrl = environment.apiBaseUrl;
+  private apiServerUrl = `${environment.apiBaseUrl}/operations`;
+  private fetchSignal = new BehaviorSubject(null);
+  private DEFAULT_REFETCH_INTERVAL = 5000;
 
-  constructor(private http: HttpClient) {}
+  public projections$ = this.fetchSignal
+    .asObservable()
+    .pipe(switchMap(() => this.getOperations()));
+
+  deleteSubscription?: Subscription;
+
+  constructor(private http: HttpClient, private toastService: ToastService) {}
+
+  public refetch() {
+    this.fetchSignal.next(null);
+  }
+
+  public setRefetchInterval(interval?: number) {
+    setInterval(() => {
+      this.refetch();
+    }, interval ?? this.DEFAULT_REFETCH_INTERVAL);
+  }
 
   public getOperations(): Observable<Operation[]> {
-    return this.http.get<Operation[]>(`${this.apiServerUrl}/operation/all`);
+    return this.http.get<Operation[]>(`${this.apiServerUrl}`);
   }
 
-  public addOperation(operation: Operation): Observable<Operation> {
-    return this.http.post<Operation>(
-      `${this.apiServerUrl}/operation/add`,
-      operation,
+  /* public getOperation(operationId: number): Observable<Operation> {
+    return this.http.get<Operation>(`${this.apiServerUrl}/${operationId}`);
+  }
+
+  public addOperation(operationCreateInput: OperationCreateInput) {
+    return this.http.post(`${this.apiServerUrl}`, projectionCreateInput).pipe(
+      map(
+        (res) => {
+          this.refetch();
+          return res;
+        },
+        (error: HttpErrorResponse) => {
+          this.toastService.error({
+            message: error.message,
+          });
+        },
+      ),
     );
   }
 
-  public updateOperation(operation: Operation): Observable<Operation> {
-    return this.http.put<Operation>(
-      `${this.apiServerUrl}/operation/update`,
-      operation,
-    );
+  public updateOperation(operation: OperationUpdateInput) {
+    return this.http
+      .put(`${this.apiServerUrl}/${operation.id_op}`, operation)
+      .pipe(
+        map(
+          (res) => {
+            this.refetch();
+            return res;
+          },
+          (error: HttpErrorResponse) => {
+            this.toastService.error({
+              message: error.message,
+            });
+          },
+        ),
+      );
   }
 
-  public deleteOperation(operationId: number): Observable<Operation> {
-    return this.http.delete<Operation>(
-      `${this.apiServerUrl}/operation/delete/${operationId}`,
-    );
-  }
+  public deleteOperation(operationId: number) {
+    this.deleteSubscription = this.http
+      .delete(`${this.apiServerUrl}/${operationId}`)
+      .subscribe(
+        () => {
+          this.toastService.success({
+            message: 'Projection deleted successfully',
+          });
+          this.refetch();
+        },
+        (error: HttpErrorResponse) => {
+          this.toastService.error({
+            message: error.message,
+          });
+        },
+      );
+  } */
 }

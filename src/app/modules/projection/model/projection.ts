@@ -1,12 +1,5 @@
-interface Symbol {
-  id: number;
-  nameSymbol: string;
-}
-
-interface Status {
-  id: number;
-  nameStatus: string;
-}
+import { Status } from 'src/app/data/models/status';
+import { Symbol } from 'src/app/data/models/symbol';
 
 export interface Projection {
   id: number;

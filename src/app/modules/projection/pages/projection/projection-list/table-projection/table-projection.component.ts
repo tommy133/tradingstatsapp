@@ -6,11 +6,11 @@ export interface TableColumn {
 }
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-table-projection',
   templateUrl: './table-projection.component.html',
 })
 export class TableProjectionComponent {
-  @Input() rows?: Projection[] | null;
+  @Input() rows!: Projection[];
   @Output() deleteEvent = new EventEmitter<number>();
 
   columns: TableColumn[] = [
@@ -21,7 +21,6 @@ export class TableProjectionComponent {
     { name: 'Status' },
     { name: 'Actions' },
   ];
-  constructor() {}
 
   deleteProjection(projId: number) {
     this.deleteEvent.emit(projId);

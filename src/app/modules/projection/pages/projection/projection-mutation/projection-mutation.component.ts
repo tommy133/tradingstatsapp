@@ -173,12 +173,12 @@ export class ProjectionMutationComponent {
 
   private setInitialFormStateProj(projectionDetails: Projection) {
     this.id.setValue(projectionDetails.id);
-    this.symbol.setValue(projectionDetails.symbol.id);
+    this.symbol.setValue(projectionDetails.symbol.id_sym);
     this.orderType.setValue(projectionDetails.updown ? 1 : 0);
     this.date.setValue(formatDate(projectionDetails.date!));
     this.chartFileName = projectionDetails.graph!;
     this.timeframe.setValue(projectionDetails.timeframe);
-    this.status.setValue(projectionDetails.status.id);
+    this.status.setValue(projectionDetails.status.id_st);
   }
 
   private setInitialFormStateComment(comment: ProjectionComment) {
