@@ -6,7 +6,7 @@ export interface TableColumn {
 }
 
 @Component({
-  selector: 'app-table',
+  selector: 'app-table-projection',
   templateUrl: './table-projection.component.html',
 })
 export class TableProjectionComponent {
