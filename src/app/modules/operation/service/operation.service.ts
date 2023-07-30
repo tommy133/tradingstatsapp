@@ -21,7 +21,7 @@ export class OperationService {
   private fetchSignal = new BehaviorSubject(null);
   private DEFAULT_REFETCH_INTERVAL = 5000;
 
-  public projections$ = this.fetchSignal
+  public operations$ = this.fetchSignal
     .asObservable()
     .pipe(switchMap(() => this.getOperations()));
 

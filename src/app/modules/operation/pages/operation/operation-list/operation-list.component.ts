@@ -14,7 +14,7 @@ import { OperationService } from '../../../service/operation.service';
   animations: [trigger('sidebarRightInOut', sidebarRightAnimationSlide)],
 })
 export class OperationListComponent implements OnInit {
-  operations$ = this.operationService.projections$;
+  operations$ = this.operationService.operations$;
   searchOperationsControl = new FormControl<string>('');
   searchOperations$ = this.formService.applyDebounceOnSearch(
     this.searchOperationsControl.valueChanges,

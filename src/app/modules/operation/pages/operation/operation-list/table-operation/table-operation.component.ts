@@ -27,7 +27,7 @@ export class TableOperationComponent {
     return points > 0 ? 'text-green' : 'text-red';
   }
 
-  deleteProjection(projId: number) {
-    this.deleteEvent.emit(projId);
+  deleteOperation(operationId: number) {
+    this.deleteEvent.emit(operationId);
   }
 }
