@@ -5,9 +5,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root',
 })
 export class FileService {
+  fileUploadUri = 'http://localhost:8080/file/upload';
+
   constructor(private http: HttpClient) {}
 
-  downloadFile(file: String) {
+  public downloadFile(file: String) {
     let body = { filename: file };
 
     return this.http.post('http://localhost:8080/file/download', body, {

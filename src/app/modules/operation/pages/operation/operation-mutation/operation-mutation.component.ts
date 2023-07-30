@@ -1,29 +1,30 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable, Subscription, firstValueFrom } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
-import { ProjectionComment } from 'src/app/data/models/pcomment';
+import { OperationComment } from 'src/app/data/models/opcomment';
 import { Status } from 'src/app/data/models/status';
 import { Symbol } from 'src/app/data/models/symbol';
 import { Timeframe } from 'src/app/data/models/timeframe';
-import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
+import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { FileService } from 'src/app/file.service';
 import { MutationType } from 'src/app/shared/utils/custom-types';
 import { formatDate, redirectById } from 'src/app/shared/utils/shared-utils';
-import { Projection } from '../../../model/projection';
-import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
-import { ProjectionUpdateInput } from '../../../model/projectionUpdateInput';
-import { ProjectionService } from '../../../service/projection.service';
+import { Operation } from '../../../model/operation';
+import { OperationCreateInput } from '../../../model/operationCreateInput';
+import { OperationUpdateInput } from '../../../model/operationUpdateInput';
+import { OperationService } from '../../../service/operation.service';
 
 @Component({
-  selector: 'app-projection-mutation',
-  templateUrl: './projection-mutation.component.html',
+  selector: 'app-operation-mutation',
+  templateUrl: './operation-mutation.component.html',
+  styles: [],
 })
-export class ProjectionMutationComponent {
+export class OperationMutationComponent implements OnInit {
   isLoading: boolean = false;
   errors: Array<string> = [];
   uploader: FileUploader = new FileUploader({
@@ -31,6 +32,7 @@ export class ProjectionMutationComponent {
     itemAlias: 'chart',
   });
   chartFileName: string = '';
+  account?: number = 1; //TODO get from router
   idComment?: number = undefined;
   uploaderSubscription: Subscription | undefined;
 
@@ -48,30 +50,38 @@ export class ProjectionMutationComponent {
     null,
     Validators.required,
   );
-  date = this.formBuilder.control<string | null>(null);
+  dateOpen = this.formBuilder.control<string | null>(null);
+  dateClose = this.formBuilder.control<string | null>(null);
   timeframe = this.formBuilder.control<string | null>(
     null,
     Validators.required,
   );
   status = this.formBuilder.control<number | null>(null, Validators.required);
+  volume = this.formBuilder.control<number | null>(null);
+  ratio = this.formBuilder.control<number | null>(null);
+  points = this.formBuilder.control<number | null>(null);
   comment = this.formBuilder.control<string | null>(null);
 
-  projectionForm = this.formBuilder.group({
+  operationForm = this.formBuilder.group({
     id: this.id,
     symbol: this.symbol,
     orderType: this.orderType,
-    date: this.date,
+    dateOpen: this.dateOpen,
+    dateClose: this.dateClose,
     timeframe: this.timeframe,
     status: this.status,
+    volume: this.volume,
+    ratio: this.ratio,
+    points: this.points,
     comment: this.comment,
   });
 
   constructor(
     private formBuilder: FormBuilder,
-    private projectionService: ProjectionService,
+    private operationService: OperationService,
     private symbolService: SymbolService,
     private statusService: StatusService,
-    private commentService: ProjectionCommentService,
+    private commentService: OperationCommentService,
     private toastService: ToastService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -93,12 +103,13 @@ export class ProjectionMutationComponent {
 
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
+    //this.account = this.activatedRoute.snapshot.params['account'];
     if (id) {
-      const projectionDetails = await firstValueFrom(
-        this.projectionService.getProjection(id),
+      const operationDetails = await firstValueFrom(
+        this.operationService.getOperation(id),
       );
-      if (projectionDetails) {
-        this.setInitialFormStateProj(projectionDetails);
+      if (operationDetails) {
+        this.setInitialFormState(operationDetails);
       }
       const comment = await firstValueFrom(this.commentService.getComment(id));
       if (comment) {
@@ -122,7 +133,7 @@ export class ProjectionMutationComponent {
     return this.mutation === MutationType.ADD;
   }
 
-  //if is add projection OR we are on edit and we don't have a comment, we create one
+  //if is add operation OR we are on edit and we don't have a comment, we create one
   get isCreateCommentFromEdit(): boolean {
     return this.isMutationAdd || !this.idComment;
   }
@@ -132,7 +143,7 @@ export class ProjectionMutationComponent {
   }
 
   get cancelRoute(): string {
-    return '../../' + this.projectionForm.value.id;
+    return '../../' + this.operationForm.value.id;
   }
 
   get buttonType(): string {
@@ -148,21 +159,21 @@ export class ProjectionMutationComponent {
   }
 
   get dateValue(): string {
-    return "${this.projectionForm.get('date')!.value} | date: 'yyyy-MM-dd'";
+    return "${this.operationForm.get('date')!.value} | date: 'yyyy-MM-dd'";
   }
 
-  onAddProjection(projectionCreateInput: ProjectionCreateInput) {
-    return this.projectionService.addProjection(projectionCreateInput);
+  onAddOperation(operationCreateInput: OperationCreateInput) {
+    return this.operationService.addOperation(operationCreateInput);
   }
 
-  onUpdateProjection(projectionUpdateInput: ProjectionUpdateInput) {
-    return this.projectionService.updateProjection(projectionUpdateInput);
+  onUpdateOperation(operationUpdateInput: OperationUpdateInput) {
+    return this.operationService.updateOperation(operationUpdateInput);
   }
 
-  onAddComment(commentCreateInput: ProjectionComment) {
+  onAddComment(commentCreateInput: OperationComment) {
     return this.commentService.addComment(commentCreateInput);
   }
-  onUpdateComment(commentUpdateInput: ProjectionComment) {
+  onUpdateComment(commentUpdateInput: OperationComment) {
     return this.commentService.updateComment(commentUpdateInput);
   }
 
@@ -170,19 +181,39 @@ export class ProjectionMutationComponent {
     this.uploader.clearQueue();
   }
 
-  private setInitialFormStateProj(projectionDetails: Projection) {
-    this.id.setValue(projectionDetails.id);
-    this.symbol.setValue(projectionDetails.symbol.id_sym);
-    this.orderType.setValue(projectionDetails.updown ? 1 : 0);
-    this.date.setValue(formatDate(projectionDetails.date!));
-    this.chartFileName = projectionDetails.graph!;
-    this.timeframe.setValue(projectionDetails.timeframe);
-    this.status.setValue(projectionDetails.status.id_st);
+  private setInitialFormState(operationDetails: Operation) {
+    const {
+      id,
+      symbol: { id_sym },
+      updown,
+      dateOpen,
+      dateClose,
+      graph,
+      timeframe,
+      status: { id_st },
+      account: { id_ac },
+      volume,
+      ratio,
+      points,
+    } = operationDetails;
+
+    this.id.setValue(id);
+    this.symbol.setValue(id_sym);
+    this.orderType.setValue(updown ? 1 : 0);
+    this.dateOpen.setValue(formatDate(dateOpen!));
+    this.dateClose.setValue(formatDate(dateClose!));
+    this.chartFileName = graph!;
+    this.timeframe.setValue(timeframe);
+    this.status.setValue(id_st);
+    this.account = id_ac;
+    this.volume.setValue(volume!);
+    this.ratio.setValue(ratio!);
+    this.points.setValue(points!);
   }
 
-  private setInitialFormStateComment(comment: ProjectionComment) {
-    this.idComment = comment.id_pc;
-    this.comment.setValue(comment.pcomment);
+  private setInitialFormStateComment(comment: OperationComment) {
+    this.idComment = comment.id_opc;
+    this.comment.setValue(comment.opcomment);
   }
 
   private async handleUploadChart() {
@@ -212,17 +243,17 @@ export class ProjectionMutationComponent {
     }
   }
 
-  private async handleMutationProjection(
-    projectionInput: ProjectionCreateInput | ProjectionUpdateInput,
+  private async handleMutationOperation(
+    operationInput: OperationCreateInput | OperationUpdateInput,
   ): Promise<number | void> {
     try {
       this.isLoading = true;
       const result = this.isMutationAdd
         ? await firstValueFrom(
-            this.onAddProjection(projectionInput as ProjectionCreateInput),
+            this.onAddOperation(operationInput as OperationCreateInput),
           )
         : await firstValueFrom(
-            this.onUpdateProjection(projectionInput as ProjectionUpdateInput),
+            this.onUpdateOperation(operationInput as OperationUpdateInput),
           );
       if (result) {
         this.isLoading = false;
@@ -236,7 +267,7 @@ export class ProjectionMutationComponent {
   }
 
   private async handleMutationComment(
-    commentInput: ProjectionComment,
+    commentInput: OperationComment,
   ): Promise<number | void> {
     try {
       this.isLoading = true;
@@ -254,52 +285,81 @@ export class ProjectionMutationComponent {
     }
   }
 
-  private getProjectionCreateInput(): ProjectionCreateInput {
-    const { symbol, orderType, date, timeframe, status } =
-      this.projectionForm.value;
+  private getOperationCreateInput(): OperationCreateInput {
+    const {
+      symbol,
+      orderType,
+      dateOpen,
+      dateClose,
+      timeframe,
+      status,
+      volume,
+      ratio,
+      points,
+    } = this.operationForm.value;
     return {
       id_sym: symbol!,
       updown: orderType!,
-      date_proj: date!,
+      time_op: dateOpen!,
+      time_close: dateClose!,
       graph: this.chartFileName,
       name_tf: timeframe!.toString(),
       id_st: status!,
+      id_ac: this.account!,
+      rr_ratio: ratio!,
+      volume: volume!,
+      points: points!,
     };
   }
 
-  private getProjectionUpdateInput(): ProjectionUpdateInput {
-    const { id, symbol, orderType, date, timeframe, status } =
-      this.projectionForm.value;
+  private getOperationUpdateInput(): OperationUpdateInput {
+    const {
+      id,
+      symbol,
+      orderType,
+      dateOpen,
+      dateClose,
+      timeframe,
+      status,
+      volume,
+      ratio,
+      points,
+    } = this.operationForm.value;
     return {
-      id_proj: id!,
+      id_op: id!,
       id_sym: symbol!,
       updown: orderType!,
-      date_proj: date!,
+      time_op: dateOpen!,
+      time_close: dateClose!,
       graph: this.chartFileName,
       name_tf: timeframe!.toString(),
       id_st: status!,
+      id_ac: this.account!,
+      rr_ratio: ratio!,
+      volume: volume!,
+      points: points!,
     };
   }
 
-  private getCommentCreateInput(idProj: number): ProjectionComment {
-    const { comment } = this.projectionForm.value;
+  private getCommentCreateInput(idOperation: number): OperationComment {
+    const { comment } = this.operationForm.value;
     return {
-      pcomment: comment!,
-      id_proj: idProj!,
+      opcomment: comment!,
+      id_op: idOperation!,
     };
   }
 
-  private getCommentUpdateInput(): ProjectionComment {
-    const { id, comment } = this.projectionForm.value;
+  private getCommentUpdateInput(): OperationComment {
+    const { id, comment } = this.operationForm.value;
     return {
-      id_pc: this.idComment!,
-      pcomment: comment!,
-      id_proj: id!,
+      id_opc: this.idComment!,
+      opcomment: comment!,
+      id_op: id!,
     };
   }
 
   async onSubmit() {
-    if (this.projectionForm.invalid) {
+    if (this.operationForm.invalid) {
       this.toastService.error({
         message: 'Invalid form!',
       });
@@ -308,17 +368,17 @@ export class ProjectionMutationComponent {
 
     await this.handleUploadChart(); // wait to load this.chartFileName
 
-    const projectionInput: ProjectionCreateInput | ProjectionUpdateInput = this
+    const operationInput: OperationCreateInput | OperationUpdateInput = this
       .isMutationAdd
-      ? this.getProjectionCreateInput()
-      : this.getProjectionUpdateInput();
+      ? this.getOperationCreateInput()
+      : this.getOperationUpdateInput();
 
-    const projId = await this.handleMutationProjection(projectionInput);
-    const comment = this.projectionForm.value.comment;
+    const operationId = await this.handleMutationOperation(operationInput);
+    const comment = this.operationForm.value.comment;
 
-    if (projId && comment) {
-      const commentInput: ProjectionComment = this.isCreateCommentFromEdit
-        ? this.getCommentCreateInput(projId)
+    if (operationId && comment) {
+      const commentInput: OperationComment = this.isCreateCommentFromEdit
+        ? this.getCommentCreateInput(operationId)
         : this.getCommentUpdateInput();
       this.handleMutationComment(commentInput);
     }
@@ -326,12 +386,12 @@ export class ProjectionMutationComponent {
     if (this.errors.length === 0) {
       const operation = this.isMutationAdd ? 'created' : 'updated';
       this.toastService.success({
-        message: `Projection ${operation} successfully`,
+        message: `Operation ${operation} successfully`,
       });
       redirectById(
         this.router,
         this.activatedRoute,
-        projId!,
+        operationId!,
         this.isMutationAdd ? '../' : '../../',
       );
     } else {

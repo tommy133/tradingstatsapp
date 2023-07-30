@@ -1,9 +1,17 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, Subscription, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subscription,
+  map,
+  switchMap,
+} from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { environment } from 'src/environments/environment';
 import { Operation } from '../model/operation';
+import { OperationCreateInput } from '../model/operationCreateInput';
+import { OperationUpdateInput } from '../model/operationUpdateInput';
 
 @Injectable({
   providedIn: 'root',
@@ -38,9 +46,9 @@ export class OperationService {
   public getOperation(operationId: number): Observable<Operation> {
     return this.http.get<Operation>(`${this.apiServerUrl}/${operationId}`);
   }
-  /*
+
   public addOperation(operationCreateInput: OperationCreateInput) {
-    return this.http.post(`${this.apiServerUrl}`, projectionCreateInput).pipe(
+    return this.http.post(`${this.apiServerUrl}`, operationCreateInput).pipe(
       map(
         (res) => {
           this.refetch();
@@ -72,7 +80,7 @@ export class OperationService {
         ),
       );
   }
-
+  /*
   public deleteOperation(operationId: number) {
     this.deleteSubscription = this.http
       .delete(`${this.apiServerUrl}/${operationId}`)
