@@ -80,14 +80,14 @@ export class OperationService {
         ),
       );
   }
-  /*
+
   public deleteOperation(operationId: number) {
     this.deleteSubscription = this.http
       .delete(`${this.apiServerUrl}/${operationId}`)
       .subscribe(
         () => {
           this.toastService.success({
-            message: 'Projection deleted successfully',
+            message: 'Operation deleted successfully',
           });
           this.refetch();
         },
@@ -97,5 +97,5 @@ export class OperationService {
           });
         },
       );
-  } */
+  }
 }

@@ -39,8 +39,8 @@ export class OperationDetailsComponent implements OnInit {
     );
   }
 
-  public onDeleteProjection(projectionId: number): void {
-    //this.operationService.deleteProjection(projectionId);
+  public onDeleteOperation(operationId: number): void {
+    this.operationService.deleteOperation(operationId);
     this.goBack();
   }
 

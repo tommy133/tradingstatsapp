@@ -37,6 +37,6 @@ export class OperationListComponent implements OnInit {
   }
 
   public onDeleteOperation(operationId: number): void {
-    //this.operationService.deleteOperation(operationId);
+    this.operationService.deleteOperation(operationId);
   }
 }
