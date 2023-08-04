@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-rounded-button',
@@ -7,6 +7,7 @@ import { Component, Input } from '@angular/core';
     [routerLink]="routerLink"
     [type]="type"
     [disabled]="disabled"
+    (click)="clickEvent.emit($event)"
   >
     {{ text }}
   </button> `,
@@ -18,4 +19,5 @@ export class RoundedButtonComponent {
   @Input() routerLink?: string;
   @Input() type: string = 'button';
   @Input() disabled: boolean = false;
+  @Output() clickEvent = new EventEmitter<any>();
 }
