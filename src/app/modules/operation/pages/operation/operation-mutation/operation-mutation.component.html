@@ -29,13 +29,13 @@
       <div class="flex flex-row pt-5">
         <app-form-label text="Select symbol"></app-form-label>
         <div class="pl-10">
-          <select
-            name="symbolSelect"
-            formControlName="symbol">
+          <app-selector
+            selectStyle="rounded"
+            [formControl]="formControl">
             <ng-container *ngFor="let symbol of symbols$ | async">
               <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
             </ng-container>
-          </select>
+          </app-selector>
           <app-validation-error
             for="symbol"
             fieldName="symbol"></app-validation-error>

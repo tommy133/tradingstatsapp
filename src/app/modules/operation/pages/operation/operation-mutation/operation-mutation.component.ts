@@ -162,6 +162,10 @@ export class OperationMutationComponent implements OnInit {
     return "${this.operationForm.get('date')!.value} | date: 'yyyy-MM-dd'";
   }
 
+  get formControl() {
+    return this.operationForm.controls.symbol;
+  }
+
   onAddOperation(operationCreateInput: OperationCreateInput) {
     return this.operationService.addOperation(operationCreateInput);
   }
