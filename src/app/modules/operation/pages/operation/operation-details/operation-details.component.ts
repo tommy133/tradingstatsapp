@@ -44,8 +44,31 @@ export class OperationDetailsComponent implements OnInit {
     this.goBack();
   }
 
-  private goBack() {
-    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+  goToEdit(operationId: number) {
+    this.router.navigate(['../edit', operationId], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.activatedRoute.snapshot.queryParams,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+  goBack() {
+    this.router.navigate(['../'], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.activatedRoute.snapshot.queryParams,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+  goToChart(graph: string) {
+    this.router.navigate(['../view-chart'], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        ...this.activatedRoute.snapshot.queryParams,
+        fileName: graph,
+      },
+      queryParamsHandling: 'merge',
+    });
   }
 
   getPointsColorClass(points: number): string {

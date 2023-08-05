@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-icon-button',
-  template: `<button type="button">
+  template: `<button type="button" (click)="clickEvent.emit($event)">
     <svg-icon
       [svgClass]="iconSvgClass"
       [svgStyle]="iconSvgStyle"

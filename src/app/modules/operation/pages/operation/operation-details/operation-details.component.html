@@ -1,21 +1,21 @@
 <ng-container *ngIf="operation$ | async as operation; else loading">
   <div class="p-8 bg-dark">
     <div class="flex justify-between">
-      <app-close-button routerLink="../"></app-close-button>
+      <app-close-button (closeEvent)="goBack()"></app-close-button>
 
       <div class="flex flex-row items-center space-x-5">
         <app-rounded-button
           text="Edit"
           bgColor="bg-orange"
           type="submit"
-          [routerLink]="'../edit/' + operation.id">
+          (clickEvent)="goToEdit(operation.id)">
         </app-rounded-button>
 
         <app-rounded-button
           text="Delete"
           bgColor="bg-red"
           type="submit"
-          (click)="onDeleteOperation(operation.id)"></app-rounded-button>
+          (clickEvent)="onDeleteOperation(operation.id)"></app-rounded-button>
       </div>
     </div>
   </div>
@@ -124,8 +124,7 @@
       class="flex items-center flex-row pt-10">
       <button
         type="button"
-        routerLink="../view-chart"
-        [queryParams]="{fileName: operation.graph}">
+        (click)="goToChart(operation.graph)">
         <label class="flex flex-row bg-blue rounded text-white items-center font-semibold p-3">
           <svg-icon
             [svgStyle]="{'height.px': 32, 'width.px': 32}"

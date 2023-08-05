@@ -32,7 +32,7 @@ export class OperationMutationComponent implements OnInit {
     itemAlias: 'chart',
   });
   chartFileName: string = '';
-  account?: number = 1; //TODO get from router
+  account: number = 1;
   idComment?: number = undefined;
   uploaderSubscription: Subscription | undefined;
 
@@ -103,7 +103,7 @@ export class OperationMutationComponent implements OnInit {
 
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
-    //this.account = this.activatedRoute.snapshot.params['account'];
+    this.account = this.activatedRoute.snapshot.queryParams['account'];
     if (id) {
       const operationDetails = await firstValueFrom(
         this.operationService.getOperation(id),
@@ -160,6 +160,22 @@ export class OperationMutationComponent implements OnInit {
 
   get dateValue(): string {
     return "${this.operationForm.get('date')!.value} | date: 'yyyy-MM-dd'";
+  }
+
+  goToList() {
+    this.router.navigate([this.closeRoute], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.activatedRoute.snapshot.queryParams,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+  goToDetails() {
+    this.router.navigate([this.cancelRoute], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.activatedRoute.snapshot.queryParams,
+      queryParamsHandling: 'preserve',
+    });
   }
 
   onAddOperation(operationCreateInput: OperationCreateInput) {

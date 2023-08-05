@@ -8,6 +8,8 @@ export function redirectById(
 ) {
   router.navigate([`${routeToNavigate}${id}`], {
     relativeTo: activatedRoute,
+    queryParams: activatedRoute.snapshot.queryParams,
+    queryParamsHandling: 'preserve',
   });
 }
 

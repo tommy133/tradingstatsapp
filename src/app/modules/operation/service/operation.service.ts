@@ -27,11 +27,12 @@ export class OperationService {
     switchMap(() => this.getOperations()),
     map((operations) => {
       const accountId = this.activatedRoute.snapshot.queryParams['account'];
-
-      const filteredByAccount = operations.filter(
-        (operation) => operation.account.id_ac.toString() === accountId,
-      );
-      return filteredByAccount;
+      if (accountId) {
+        const filteredByAccount = operations.filter(
+          (operation) => operation.account.id_ac.toString() === accountId,
+        );
+        return filteredByAccount;
+      } else return operations;
     }),
   );
 
