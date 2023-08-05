@@ -44,8 +44,12 @@ export class OperationDetailsComponent implements OnInit {
     this.goBack();
   }
 
-  private goBack() {
-    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+  goBack() {
+    this.router.navigate(['../'], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.activatedRoute.snapshot.queryParams,
+      queryParamsHandling: 'preserve',
+    });
   }
 
   getPointsColorClass(points: number): string {
