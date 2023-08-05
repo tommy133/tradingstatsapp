@@ -32,7 +32,7 @@ export class OperationMutationComponent implements OnInit {
     itemAlias: 'chart',
   });
   chartFileName: string = '';
-  account?: number = 1; //TODO get from router
+  account: number = 1;
   idComment?: number = undefined;
   uploaderSubscription: Subscription | undefined;
 
@@ -103,7 +103,7 @@ export class OperationMutationComponent implements OnInit {
 
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
-    //this.account = this.activatedRoute.snapshot.params['account'];
+    this.account = this.activatedRoute.snapshot.queryParams['account'];
     if (id) {
       const operationDetails = await firstValueFrom(
         this.operationService.getOperation(id),
