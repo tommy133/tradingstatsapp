@@ -44,6 +44,14 @@ export class OperationDetailsComponent implements OnInit {
     this.goBack();
   }
 
+  goToEdit(operationId: number) {
+    this.router.navigate(['../edit', operationId], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.activatedRoute.snapshot.queryParams,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
   goBack() {
     this.router.navigate(['../'], {
       relativeTo: this.activatedRoute,

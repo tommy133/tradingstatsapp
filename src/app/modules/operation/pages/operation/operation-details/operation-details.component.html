@@ -8,14 +8,14 @@
           text="Edit"
           bgColor="bg-orange"
           type="submit"
-          [routerLink]="'../edit/' + operation.id">
+          (clickEvent)="goToEdit(operation.id)">
         </app-rounded-button>
 
         <app-rounded-button
           text="Delete"
           bgColor="bg-red"
           type="submit"
-          (click)="onDeleteOperation(operation.id)"></app-rounded-button>
+          (clickEvent)="onDeleteOperation(operation.id)"></app-rounded-button>
       </div>
     </div>
   </div>

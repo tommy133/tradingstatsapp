@@ -162,6 +162,22 @@ export class OperationMutationComponent implements OnInit {
     return "${this.operationForm.get('date')!.value} | date: 'yyyy-MM-dd'";
   }
 
+  goToList() {
+    this.router.navigate([this.closeRoute], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.activatedRoute.snapshot.queryParams,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+  goToDetails() {
+    this.router.navigate([this.cancelRoute], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.activatedRoute.snapshot.queryParams,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
   onAddOperation(operationCreateInput: OperationCreateInput) {
     return this.operationService.addOperation(operationCreateInput);
   }

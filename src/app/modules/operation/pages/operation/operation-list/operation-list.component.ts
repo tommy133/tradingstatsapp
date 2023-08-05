@@ -1,6 +1,7 @@
 import { trigger } from '@angular/animations';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from 'src/app/core/service/form.service';
 import {
   SidebarRightAnimationState,
@@ -14,6 +15,9 @@ import { OperationService } from '../../../service/operation.service';
   animations: [trigger('sidebarRightInOut', sidebarRightAnimationSlide)],
 })
 export class OperationListComponent implements OnInit {
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+
   operations$ = this.operationService.operations$;
   searchOperationsControl = new FormControl<string>('');
   searchOperations$ = this.formService.applyDebounceOnSearch(
@@ -34,6 +38,14 @@ export class OperationListComponent implements OnInit {
 
   ngOnInit() {
     this.operationService.setRefetchInterval();
+  }
+
+  goToAdd() {
+    this.router.navigate(['add'], {
+      relativeTo: this.activatedRoute,
+      queryParams: this.activatedRoute.snapshot.queryParams,
+      queryParamsHandling: 'preserve',
+    });
   }
 
   public onDeleteOperation(operationId: number): void {
