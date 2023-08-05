@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import { NavButton } from 'src/app/shared/utils/custom-types';
@@ -26,33 +27,32 @@ export class OperationLayoutComponent {
       link: '/operations',
     },
   ];
-  account: number = 1;
 
+  account$ = this.activatedRoute.queryParams.pipe(
+    map((params) => {
+      const id = params['account'];
+      return id.toString() === '1' ? 'Demo' : 'Live';
+    }),
+  );
+  constructor() {
+    this.account$.subscribe(console.log);
+  }
   ngOnInit() {
     const queryParams = { ...this.activatedRoute.snapshot.queryParams };
-    this.router.navigate(
-      [],
-
-      {
-        queryParams: {
-          ...queryParams,
-          account: this.accountFromParamOrDefault,
-        },
+    this.router.navigate([], {
+      queryParams: {
+        ...queryParams,
+        account: this.accountFromParam,
       },
-    );
-    this.account = this.accountFromParamOrDefault;
+    });
   }
 
-  get accountType(): string {
-    return this.account === 1 ? 'Demo' : 'Live';
-  }
-
-  get accountFromParamOrDefault(): number {
-    return this.activatedRoute.snapshot.queryParams['account'] ?? this.account;
+  get accountFromParam(): number {
+    return this.activatedRoute.snapshot.queryParams['account'];
   }
 
   get accountSwitched(): number {
-    return this.account === 1 ? 2 : 1;
+    return this.accountFromParam.toString() === '1' ? 2 : 1;
   }
 
   switchAccount() {
@@ -62,10 +62,11 @@ export class OperationLayoutComponent {
 
       { queryParams: { ...queryParams, account: this.accountSwitched } },
     );
-    this.account = this.accountSwitched;
     this.operationService.refetch();
     this.toastService.info({
-      message: `Switched to ${this.accountType} account`,
+      message: `Switched to ${
+        this.accountSwitched === 1 ? 'Demo' : 'Live'
+      } account`,
     });
   }
 }
