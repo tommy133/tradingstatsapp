@@ -30,7 +30,7 @@
                     iconSource="assets/svg/edit-32.svg"
                     [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32, 'opacity': 0.5 }"
                     iconSvgClass="hover:bg-gray-300 rounded"
-                    [routerLink]="['.', row.id]"></app-icon-button>
+                    (clickEvent)="goToDetails(row.id)"></app-icon-button>
                   <svg-icon
                     class="rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"
                     src="assets/svg/delete.svg"
