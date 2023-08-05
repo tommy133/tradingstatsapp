@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
   Observable,
@@ -17,13 +18,22 @@ import { OperationUpdateInput } from '../model/operationUpdateInput';
   providedIn: 'root',
 })
 export class OperationService {
+  private activatedRoute = inject(ActivatedRoute);
   private apiServerUrl = `${environment.apiBaseUrl}/operations`;
   private fetchSignal = new BehaviorSubject(null);
   private DEFAULT_REFETCH_INTERVAL = 5000;
 
-  public operations$ = this.fetchSignal
-    .asObservable()
-    .pipe(switchMap(() => this.getOperations()));
+  public operations$ = this.fetchSignal.asObservable().pipe(
+    switchMap(() => this.getOperations()),
+    map((operations) => {
+      const accountId = this.activatedRoute.snapshot.queryParams['account'];
+
+      const filteredByAccount = operations.filter(
+        (operation) => operation.account.id_ac.toString() === accountId,
+      );
+      return filteredByAccount;
+    }),
+  );
 
   deleteSubscription?: Subscription;
 

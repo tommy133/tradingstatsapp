@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import { NavButton } from 'src/app/shared/utils/custom-types';
 
 @Component({
@@ -7,6 +9,10 @@ import { NavButton } from 'src/app/shared/utils/custom-types';
   styles: [],
 })
 export class OperationLayoutComponent {
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private operationService = inject(OperationService);
+
   title: string = 'Trading Stats';
   buttons: NavButton[] = [
     {
@@ -18,6 +24,43 @@ export class OperationLayoutComponent {
       link: '/operations',
     },
   ];
+  account: number = 1;
 
-  constructor() {}
+  ngOnInit() {
+    const queryParams = { ...this.activatedRoute.snapshot.queryParams };
+    this.router.navigate(
+      [],
+
+      {
+        queryParams: {
+          ...queryParams,
+          account: this.accountFromParamOrDefault,
+        },
+      },
+    );
+    this.account = this.accountFromParamOrDefault;
+  }
+
+  get accountType(): string {
+    return this.account === 1 ? 'Demo' : 'Live';
+  }
+
+  get accountFromParamOrDefault(): number {
+    return this.activatedRoute.snapshot.queryParams['account'] ?? this.account;
+  }
+
+  get accountSwitched(): number {
+    return this.account === 1 ? 2 : 1;
+  }
+
+  switchAccount() {
+    const queryParams = { ...this.activatedRoute.snapshot.queryParams };
+    this.router.navigate(
+      [],
+
+      { queryParams: { ...queryParams, account: this.accountSwitched } },
+    );
+    this.account = this.accountSwitched;
+    this.operationService.refetch();
+  }
 }
