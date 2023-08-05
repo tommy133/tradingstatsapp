@@ -42,12 +42,12 @@ export class OperationLayoutComponent {
     });
   }
 
-  get accountFromParam(): number {
-    return this.activatedRoute.snapshot.queryParams['account'];
+  get accountFromParamOrDefault(): number {
+    return this.activatedRoute.snapshot.queryParams['account'] ?? 1;
   }
 
   get accountSwitched(): number {
-    return this.accountFromParam.toString() === '1' ? 2 : 1;
+    return this.accountFromParamOrDefault?.toString() === '1' ? 2 : 1;
   }
 
   switchAccount() {
