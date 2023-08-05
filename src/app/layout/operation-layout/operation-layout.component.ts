@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import { NavButton } from 'src/app/shared/utils/custom-types';
@@ -8,7 +7,6 @@ import { NavButton } from 'src/app/shared/utils/custom-types';
 @Component({
   selector: 'app-operation-layout',
   templateUrl: './operation-layout.component.html',
-  styles: [],
 })
 export class OperationLayoutComponent {
   private router = inject(Router);
@@ -28,21 +26,18 @@ export class OperationLayoutComponent {
     },
   ];
 
-  account$ = this.activatedRoute.queryParams.pipe(
-    map((params) => {
-      const id = params['account'];
-      return id.toString() === '1' ? 'Demo' : 'Live';
-    }),
-  );
-  constructor() {
-    this.account$.subscribe(console.log);
-  }
+  account!: string;
+
+  accountSubscription = this.activatedRoute.queryParams.subscribe((params) => {
+    this.account = params['account'] === '1' ? 'Demo' : 'Live';
+  });
+
   ngOnInit() {
     const queryParams = { ...this.activatedRoute.snapshot.queryParams };
     this.router.navigate([], {
       queryParams: {
         ...queryParams,
-        account: this.accountFromParam,
+        account: 1,
       },
     });
   }
@@ -68,5 +63,9 @@ export class OperationLayoutComponent {
         this.accountSwitched === 1 ? 'Demo' : 'Live'
       } account`,
     });
+  }
+
+  ngOnDestroy() {
+    this.accountSubscription.unsubscribe();
   }
 }
