@@ -13,4 +13,14 @@ export class ToastPopupComponent {
   constructor(private toastService: ToastService) {
     this.toast$ = this.toastService.toast$;
   }
+
+  get titleStyle(): string {
+    return 'p-5 text-white';
+  }
+
+  getmessageStyle(toastType: string): string {
+    return toastType === 'success' || 'info'
+      ? 'text-center pt-4 text-white'
+      : 'pl-5 text-white';
+  }
 }

@@ -3,7 +3,7 @@
   [ngClass]="toast.type">
   <p
     *ngIf="toast.title!==''"
-    class="p-5 text-white">{{toast.title}}</p>
+    [ngClass]="titleStyle">{{toast.title}}</p>
 
-  <p [ngClass]="toast.type === 'success' ? ['text-center pt-4', 'text-white'] : ['pl-5', 'text-white']">{{toast.message}}</p>
+  <p [ngClass]="getmessageStyle(toast.type!)">{{toast.message}}</p>
 </div>

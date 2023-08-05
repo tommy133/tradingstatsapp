@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 
 export interface ToastOptions {
-  type?: 'success' | 'error'; // Use your declaration
+  type?: 'success' | 'error' | 'warning' | 'info';
   duration?: number;
   title?: string;
   message: string;
@@ -45,5 +45,9 @@ export class ToastService {
     ...restOfOptions
   }: ToastOptions) {
     this.showToast({ type: 'error', title, ...restOfOptions });
+  }
+
+  public info({ title = '', ...restOfOptions }: ToastOptions) {
+    this.showToast({ type: 'info', title, ...restOfOptions });
   }
 }

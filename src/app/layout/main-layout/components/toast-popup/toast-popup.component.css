@@ -1,5 +1,7 @@
 div.success,
-div.error {
+div.error,
+div.warning,
+div.info {
   box-sizing: border-box;
   position: absolute;
   width: 412px;
@@ -16,4 +18,14 @@ div.error {
 .error {
   background-color: #bf3523;
   height: 120px;
+}
+
+.warning {
+  background-color: #f89406;
+  height: 60px;
+}
+
+.info {
+  background-color: #2f96b4;
+  height: 60px;
 }

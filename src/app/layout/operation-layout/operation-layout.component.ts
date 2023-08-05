@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import { NavButton } from 'src/app/shared/utils/custom-types';
 
@@ -12,6 +13,7 @@ export class OperationLayoutComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private operationService = inject(OperationService);
+  private toastService = inject(ToastService);
 
   title: string = 'Trading Stats';
   buttons: NavButton[] = [
@@ -62,5 +64,8 @@ export class OperationLayoutComponent {
     );
     this.account = this.accountSwitched;
     this.operationService.refetch();
+    this.toastService.info({
+      message: `Switched to ${this.accountType} account`,
+    });
   }
 }
