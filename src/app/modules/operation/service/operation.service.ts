@@ -27,17 +27,20 @@ export class OperationService {
     switchMap(() => this.getOperations()),
     map((operations) => {
       const accountId = this.activatedRoute.snapshot.queryParams['account'];
-
-      const filteredByAccount = operations.filter(
-        (operation) => operation.account.id_ac.toString() === accountId,
-      );
-      return filteredByAccount;
+      if (accountId) {
+        const filteredByAccount = operations.filter(
+          (operation) => operation.account.id_ac.toString() === accountId,
+        );
+        return filteredByAccount;
+      } else return operations;
     }),
   );
 
   deleteSubscription?: Subscription;
 
-  constructor(private http: HttpClient, private toastService: ToastService) {}
+  constructor(private http: HttpClient, private toastService: ToastService) {
+    console.log(this.operations$.subscribe(console.log));
+  }
 
   public refetch() {
     this.fetchSignal.next(null);
