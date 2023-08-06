@@ -182,8 +182,7 @@
           class="pl-4">
           <button
             type="button"
-            routerLink="../../view-chart"
-            [queryParams]="{fileName: this.chartFileName}">
+            (click)="goToChart(this.chartFileName)">
             <label class="flex flex-row bg-blue rounded text-white items-center font-semibold p-3">
               <svg-icon
                 [svgStyle]="{'height.px': 32, 'width.px': 32}"

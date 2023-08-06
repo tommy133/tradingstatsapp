@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable, Subscription, firstValueFrom } from 'rxjs';
+import { RoutingService } from 'src/app/core/service/routing.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { Status } from 'src/app/data/models/status';
@@ -13,7 +14,7 @@ import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { FileService } from 'src/app/file.service';
 import { MutationType } from 'src/app/shared/utils/custom-types';
-import { formatDate, redirectById } from 'src/app/shared/utils/shared-utils';
+import { formatDate } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionUpdateInput } from '../../../model/projectionUpdateInput';
@@ -75,6 +76,7 @@ export class ProjectionMutationComponent {
     private toastService: ToastService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private routingService: RoutingService,
   ) {
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
@@ -328,11 +330,10 @@ export class ProjectionMutationComponent {
       this.toastService.success({
         message: `Projection ${operation} successfully`,
       });
-      redirectById(
+      this.routingService.navigatePreservingQueryParams(
+        [`${this.closeRoute}${projId}`],
         this.router,
         this.activatedRoute,
-        projId!,
-        this.isMutationAdd ? '../' : '../../',
       );
     } else {
       this.errors.forEach((error) => {
