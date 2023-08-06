@@ -180,17 +180,6 @@ export class OperationMutationComponent implements OnInit {
     );
   }
 
-  goToChart(graph: string) {
-    this.router.navigate(['../../view-chart'], {
-      relativeTo: this.activatedRoute,
-      queryParams: {
-        ...this.activatedRoute.snapshot.queryParams,
-        fileName: graph,
-      },
-      queryParamsHandling: 'merge',
-    });
-  }
-
   onAddOperation(operationCreateInput: OperationCreateInput) {
     return this.operationService.addOperation(operationCreateInput);
   }
