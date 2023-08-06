@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
+import { RoutingService } from 'src/app/core/service/routing.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { Operation } from '../../../model/operation';
@@ -21,6 +22,7 @@ export class OperationDetailsComponent implements OnInit {
     private commentService: OperationCommentService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private routingService: RoutingService,
   ) {}
 
   ngOnInit() {
@@ -45,19 +47,19 @@ export class OperationDetailsComponent implements OnInit {
   }
 
   goToEdit(operationId: number) {
-    this.router.navigate(['../edit', operationId], {
-      relativeTo: this.activatedRoute,
-      queryParams: this.activatedRoute.snapshot.queryParams,
-      queryParamsHandling: 'preserve',
-    });
+    this.routingService.navigatePreservingQueryParams(
+      ['../edit', operationId],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   goBack() {
-    this.router.navigate(['../'], {
-      relativeTo: this.activatedRoute,
-      queryParams: this.activatedRoute.snapshot.queryParams,
-      queryParamsHandling: 'preserve',
-    });
+    this.routingService.navigatePreservingQueryParams(
+      ['../'],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   getPointsColorClass(points: number): string {

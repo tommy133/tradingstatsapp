@@ -3,6 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileUploader } from 'ng2-file-upload';
 import { Observable, Subscription, firstValueFrom } from 'rxjs';
+import { RoutingService } from 'src/app/core/service/routing.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { Status } from 'src/app/data/models/status';
@@ -13,7 +14,7 @@ import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { FileService } from 'src/app/file.service';
 import { MutationType } from 'src/app/shared/utils/custom-types';
-import { formatDate, redirectById } from 'src/app/shared/utils/shared-utils';
+import { formatDate } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationCreateInput } from '../../../model/operationCreateInput';
 import { OperationUpdateInput } from '../../../model/operationUpdateInput';
@@ -85,6 +86,7 @@ export class OperationMutationComponent implements OnInit {
     private toastService: ToastService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private routingService: RoutingService,
   ) {
     this.uploader.onAfterAddingFile = (file) => {
       file.withCredentials = false;
@@ -163,19 +165,19 @@ export class OperationMutationComponent implements OnInit {
   }
 
   goToList() {
-    this.router.navigate([this.closeRoute], {
-      relativeTo: this.activatedRoute,
-      queryParams: this.activatedRoute.snapshot.queryParams,
-      queryParamsHandling: 'preserve',
-    });
+    this.routingService.navigatePreservingQueryParams(
+      [this.closeRoute],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   goToDetails() {
-    this.router.navigate([this.cancelRoute], {
-      relativeTo: this.activatedRoute,
-      queryParams: this.activatedRoute.snapshot.queryParams,
-      queryParamsHandling: 'preserve',
-    });
+    this.routingService.navigatePreservingQueryParams(
+      [this.cancelRoute],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   onAddOperation(operationCreateInput: OperationCreateInput) {
@@ -404,11 +406,10 @@ export class OperationMutationComponent implements OnInit {
       this.toastService.success({
         message: `Operation ${operation} successfully`,
       });
-      redirectById(
+      this.routingService.navigatePreservingQueryParams(
+        [`${this.closeRoute}${operationId}`],
         this.router,
         this.activatedRoute,
-        operationId!,
-        this.isMutationAdd ? '../' : '../../',
       );
     } else {
       this.errors.forEach((error) => {

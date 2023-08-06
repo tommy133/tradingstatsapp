@@ -3,6 +3,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from 'src/app/core/service/form.service';
+import { RoutingService } from 'src/app/core/service/routing.service';
 import {
   SidebarRightAnimationState,
   sidebarRightAnimationSlide,
@@ -17,6 +18,7 @@ import { OperationService } from '../../../service/operation.service';
 export class OperationListComponent implements OnInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private routingService = inject(RoutingService);
 
   operations$ = this.operationService.operations$;
   searchOperationsControl = new FormControl<string>('');
@@ -41,11 +43,11 @@ export class OperationListComponent implements OnInit {
   }
 
   goToAdd() {
-    this.router.navigate(['add'], {
-      relativeTo: this.activatedRoute,
-      queryParams: this.activatedRoute.snapshot.queryParams,
-      queryParamsHandling: 'preserve',
-    });
+    this.routingService.navigatePreservingQueryParams(
+      ['add'],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   public onDeleteOperation(operationId: number): void {
