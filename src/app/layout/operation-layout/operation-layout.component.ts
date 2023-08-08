@@ -29,17 +29,18 @@ export class OperationLayoutComponent {
   account!: string;
 
   accountSubscription = this.activatedRoute.queryParams.subscribe((params) => {
-    this.account = params['account'] === '1' ? 'Demo' : 'Live';
+    const paramAccount = params['account'];
+    if (paramAccount === undefined) {
+      this.redirectDefaultAccount();
+    } else if (paramAccount === '1') {
+      this.account = 'Demo';
+    } else {
+      this.account = 'Live';
+    }
   });
 
   ngOnInit() {
-    const queryParams = { ...this.activatedRoute.snapshot.queryParams };
-    this.router.navigate([], {
-      queryParams: {
-        ...queryParams,
-        account: 1,
-      },
-    });
+    this.redirectDefaultAccount();
   }
 
   get accountFromParamOrDefault(): number {
@@ -63,6 +64,18 @@ export class OperationLayoutComponent {
         this.accountSwitched === 1 ? 'Demo' : 'Live'
       } account`,
     });
+  }
+
+  redirectDefaultAccount() {
+    const queryParams = { ...this.activatedRoute.snapshot.queryParams };
+    if (queryParams['account'] === undefined) {
+      this.router.navigate([], {
+        queryParams: {
+          ...queryParams,
+          account: 1,
+        },
+      });
+    }
   }
 
   ngOnDestroy() {
