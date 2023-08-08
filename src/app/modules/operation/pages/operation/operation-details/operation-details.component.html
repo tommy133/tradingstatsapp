@@ -1,5 +1,7 @@
 <ng-container *ngIf="operation$ | async as operation; else loading">
-  <div class="p-8 bg-dark">
+  <div
+    *ngIf="extended"
+    class="p-8 bg-dark">
     <div class="flex justify-between">
       <app-close-button (closeEvent)="goBack()"></app-close-button>
 
@@ -120,7 +122,7 @@
     </div>
 
     <div
-      *ngIf="operation.graph"
+      *ngIf="extended && operation.graph"
       class="flex items-center flex-row pt-10">
       <button
         type="button"

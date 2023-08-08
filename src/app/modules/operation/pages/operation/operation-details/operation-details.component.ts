@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { RoutingService } from 'src/app/core/service/routing.service';
@@ -12,6 +12,7 @@ import { OperationService } from '../../../service/operation.service';
   templateUrl: './operation-details.component.html',
 })
 export class OperationDetailsComponent implements OnInit {
+  @Input() extended: boolean = true;
   operation$?: Observable<Operation>;
   comment$?: Observable<OperationComment>;
   isLoading: boolean = false;
