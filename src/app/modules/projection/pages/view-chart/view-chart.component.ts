@@ -8,18 +8,39 @@ import { FileService } from 'src/app/file.service';
 import { Projection } from '../../model/projection';
 import { ProjectionService } from '../../service/projection.service';
 
+type Interval =
+  | '1'
+  | '3'
+  | '5'
+  | '15'
+  | '30'
+  | '60'
+  | '120'
+  | '180'
+  | IntervalTypes.D
+  | IntervalTypes.W;
+
+enum IntervalTypes {
+  D = 'D',
+  W = 'W',
+}
+
+enum Themes {
+  LIGHT = 'Light',
+  DARK = 'Dark',
+}
+
 @Component({
   selector: 'app-view-chart',
   templateUrl: './view-chart.component.html',
 })
 export class ViewChartComponent implements OnInit {
   projection$?: Observable<Projection>;
+  projectionSubscription?: Subscription;
   fileSubscription?: Subscription;
   imageUrl?: SafeUrl;
-  widgetConfig: ITradingViewWidget = {
-    symbol: 'EURUSD',
-    widgetType: 'widget',
-  };
+  widgetConfig!: ITradingViewWidget;
+
   constructor(
     private projectionService: ProjectionService,
     private fileService: FileService,
@@ -35,6 +56,28 @@ export class ViewChartComponent implements OnInit {
         return this.projectionService.getProjection(id);
       }),
     );
+
+    const intervalMapping: Record<string, Interval> = {
+      M1: '1',
+      M3: '3',
+      M5: '5',
+      M15: '15',
+      M30: '30',
+      H1: '60',
+      H2: '120',
+      H3: '180',
+      D: IntervalTypes.D,
+      W: IntervalTypes.W,
+    };
+
+    this.projection$.subscribe((projection) => {
+      this.widgetConfig = {
+        symbol: projection.symbol.name_sym,
+        interval: intervalMapping[projection.timeframe],
+        theme: Themes.DARK,
+        widgetType: 'widget',
+      };
+    });
 
     const filename = this.activatedRoute.snapshot.queryParamMap.get('fileName');
 
@@ -60,5 +103,6 @@ export class ViewChartComponent implements OnInit {
 
   ngOnDestroy() {
     this.fileSubscription?.unsubscribe();
+    this.projectionSubscription?.unsubscribe();
   }
 }
