@@ -7,7 +7,7 @@ import { ViewChartComponent } from './pages/view-chart/view-chart.component';
 
 const routes: Routes = [
   {
-    path: 'view-chart',
+    path: 'view-chart/:id',
     component: ViewChartComponent,
   },
   {

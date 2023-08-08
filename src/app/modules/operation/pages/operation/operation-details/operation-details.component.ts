@@ -62,12 +62,12 @@ export class OperationDetailsComponent implements OnInit {
     );
   }
 
-  goToChart(graph: string) {
-    this.router.navigate(['../view-chart'], {
+  goToChart(operation: Operation) {
+    this.router.navigate(['../view-chart', operation.id], {
       relativeTo: this.activatedRoute,
       queryParams: {
         ...this.activatedRoute.snapshot.queryParams,
-        fileName: graph,
+        fileName: operation.graph,
       },
       queryParamsHandling: 'merge',
     });
