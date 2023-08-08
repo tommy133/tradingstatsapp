@@ -15,6 +15,6 @@ import { Component, Input } from '@angular/core';
 })
 export class LabelComponent {
   @Input() text: string = '';
-  @Input() bgColor: string = 'bg-light-grey';
+  @Input() bgColor: string = 'bg-light-gray';
   @Input() textColor: string = 'text-black';
 }

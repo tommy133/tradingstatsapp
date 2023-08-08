@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { BackToComponent } from './components/back-to/back-to.component';
+import { CardComponent } from './components/card/card.component';
 import { CloseButtonComponent } from './components/close-button/close-button.component';
 import { FormLabelComponent } from './components/form-label/form-label.component';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
@@ -32,6 +34,8 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     TextIconButtonComponent,
     TextButtonComponent,
     SearchByTextComponent,
+    CardComponent,
+    BackToComponent,
   ],
   imports: [
     CommonModule,
@@ -56,6 +60,8 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     TextIconButtonComponent,
     TextButtonComponent,
     SearchByTextComponent,
+    CardComponent,
+    BackToComponent,
   ],
 })
 export class SharedModule {}

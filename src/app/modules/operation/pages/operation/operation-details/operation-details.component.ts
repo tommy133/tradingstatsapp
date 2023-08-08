@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { RoutingService } from 'src/app/core/service/routing.service';
@@ -12,6 +12,7 @@ import { OperationService } from '../../../service/operation.service';
   templateUrl: './operation-details.component.html',
 })
 export class OperationDetailsComponent implements OnInit {
+  @Input() extended: boolean = true;
   operation$?: Observable<Operation>;
   comment$?: Observable<OperationComment>;
   isLoading: boolean = false;
@@ -62,12 +63,12 @@ export class OperationDetailsComponent implements OnInit {
     );
   }
 
-  goToChart(graph: string) {
-    this.router.navigate(['../view-chart'], {
+  goToChart(operation: Operation) {
+    this.router.navigate(['../view-chart', operation.id], {
       relativeTo: this.activatedRoute,
       queryParams: {
         ...this.activatedRoute.snapshot.queryParams,
-        fileName: graph,
+        fileName: operation.graph,
       },
       queryParamsHandling: 'merge',
     });

@@ -79,7 +79,7 @@
       class="flex items-center flex-row pt-10">
       <button
         type="button"
-        routerLink="../view-chart"
+        [routerLink]="['../view-chart', projection.id]"
         [queryParams]="{fileName: projection.graph}">
         <label class="flex flex-row bg-blue rounded text-white items-center font-semibold p-3">
           <svg-icon
