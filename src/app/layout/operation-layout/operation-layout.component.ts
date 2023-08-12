@@ -24,6 +24,10 @@ export class OperationLayoutComponent {
       text: 'Operations',
       link: '/operations',
     },
+    {
+      text: 'Stats',
+      link: '/stats',
+    },
   ];
 
   account!: string;

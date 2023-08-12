@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { OperationLayoutComponent } from './layout/operation-layout/operation-layout.component';
 import { ProjectionLayoutComponent } from './layout/projection-layout/projection-layout.component';
+import { StatsLayoutComponent } from './layout/stats-layout/stats-layout.component';
 import { HomeComponent } from './modules/home/pages/home/home.component';
 
 const pageRoutes: Routes = [
@@ -23,6 +24,12 @@ const pageRoutes: Routes = [
       import('./modules/operation/operation.module').then(
         (m) => m.OperationModule,
       ),
+  },
+  {
+    path: 'stats',
+    component: StatsLayoutComponent,
+    loadChildren: () =>
+      import('./modules/stats/stats.module').then((m) => m.StatsModule),
   },
 ];
 

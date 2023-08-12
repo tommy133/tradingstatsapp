@@ -14,6 +14,7 @@ import { HomeComponent } from './modules/home/pages/home/home.component';
 import { OperationModule } from './modules/operation/operation.module';
 import { ProjectionModule } from './modules/projection/projection.module';
 import { SharedModule } from './shared/shared.module';
+import { StatsLayoutComponent } from './layout/stats-layout/stats-layout.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { SharedModule } from './shared/shared.module';
     ProjectionLayoutComponent,
     OperationLayoutComponent,
     ToastPopupComponent,
+    StatsLayoutComponent,
   ],
   imports: [
     BrowserModule,
