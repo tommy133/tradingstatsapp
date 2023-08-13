@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { BackToComponent } from './components/back-to/back-to.component';
 import { CardComponent } from './components/card/card.component';
+import { ChartComponent } from './components/chart/chart.component';
 import { CloseButtonComponent } from './components/close-button/close-button.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { FormLabelComponent } from './components/form-label/form-label.component';
@@ -38,6 +39,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     CardComponent,
     BackToComponent,
     DatePickerComponent,
+    ChartComponent,
   ],
   imports: [
     CommonModule,
@@ -65,6 +67,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     CardComponent,
     BackToComponent,
     DatePickerComponent,
+    ChartComponent,
   ],
 })
 export class SharedModule {}
