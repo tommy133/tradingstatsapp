@@ -19,6 +19,8 @@ export class OperationListComponent implements OnInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private routingService = inject(RoutingService);
+  private operationService = inject(OperationService);
+  private formService = inject(FormService);
 
   operations$ = this.operationService.operations$;
   searchOperationsControl = new FormControl<string>('');
@@ -32,11 +34,6 @@ export class OperationListComponent implements OnInit {
   );
 
   sidebarRightAnimationState: SidebarRightAnimationState = 'out';
-
-  constructor(
-    private operationService: OperationService,
-    private formService: FormService,
-  ) {}
 
   ngOnInit() {
     this.operationService.setRefetchInterval();
