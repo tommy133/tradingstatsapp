@@ -7,9 +7,11 @@ export type ChartType = 'line' | 'pie';
   providedIn: 'root',
 })
 export class ChartService {
-  chart?: Highcharts.Chart;
+  lineChart?: Highcharts.Chart;
+  pieChart?: Highcharts.Chart;
+
   public initializeLineChart(data: (number | null)[]) {
-    this.chart = Highcharts.chart('line', {
+    this.lineChart = Highcharts.chart('line', {
       title: {
         text: 'Incremental Performance',
       },
@@ -29,8 +31,8 @@ export class ChartService {
     });
   }
 
-  public initializePieChart(data: (number | null)[]) {
-    this.chart = Highcharts.chart('pie', {
+  public initializePieChart(data: (any | null)[]) {
+    this.pieChart = Highcharts.chart('pie', {
       title: {
         text: 'Performance Ratio',
       },
@@ -38,21 +40,34 @@ export class ChartService {
       series: [
         {
           type: 'pie',
-          data: data,
+          data: this.processPieChartData(data),
         },
       ],
     });
   }
 
-  public updateChart(data: (number | null)[]) {
-    if (this.chart) {
-      this.chart.series[0].setData(data);
+  public updateChart(data: (number | null)[], chartType: ChartType) {
+    switch (chartType) {
+      case 'line':
+        this.lineChart?.series[0].setData(data);
+        break;
+      case 'pie':
+        this.pieChart?.series[0].setData(this.processPieChartData(data));
+        break;
     }
   }
 
-  public destroyChart() {
-    if (this.chart) {
-      this.chart.destroy();
-    }
+  private processPieChartData(data: (number | null)[]) {
+    const ratio = this.calculatePLRatio(data);
+    return [
+      { name: 'Benefit', color: '#32CD32', y: ratio },
+      { name: 'Loss', color: 'red', y: 1 - ratio },
+    ];
+  }
+
+  private calculatePLRatio(data: (number | null)[]) {
+    const positive = data.filter((res) => res !== null && res > 0).length;
+    const total = data.filter((res) => res !== null).length;
+    return positive / total;
   }
 }
