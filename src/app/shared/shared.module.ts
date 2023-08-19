@@ -7,6 +7,7 @@ import { BackToComponent } from './components/back-to/back-to.component';
 import { CardComponent } from './components/card/card.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { CloseButtonComponent } from './components/close-button/close-button.component';
+import { CounterUpComponent } from './components/counter-up/counter-up.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { FormLabelComponent } from './components/form-label/form-label.component';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
@@ -40,6 +41,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     BackToComponent,
     DatePickerComponent,
     ChartComponent,
+    CounterUpComponent,
   ],
   imports: [
     CommonModule,
@@ -68,6 +70,7 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     BackToComponent,
     DatePickerComponent,
     ChartComponent,
+    CounterUpComponent,
   ],
 })
 export class SharedModule {}
