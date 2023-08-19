@@ -14,10 +14,20 @@ export class ChartService {
     this.lineChart = Highcharts.chart('line', {
       title: {
         text: 'Incremental Performance',
+        style: {
+          color: '#fff',
+        },
+      },
+      chart: {
+        backgroundColor: '#333',
       },
       yAxis: {
         title: {
           text: 'Points',
+          style: {
+            color: '#fff',
+            fontSize: '1.2rem',
+          },
         },
       },
       series: [
@@ -35,6 +45,12 @@ export class ChartService {
     this.pieChart = Highcharts.chart('pie', {
       title: {
         text: 'Performance Ratio',
+        style: {
+          color: '#fff',
+        },
+      },
+      chart: {
+        backgroundColor: '#333',
       },
 
       series: [
