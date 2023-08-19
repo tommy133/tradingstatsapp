@@ -68,6 +68,7 @@ export class ChartService {
   private calculatePLRatio(data: (number | null)[]) {
     const positive = data.filter((res) => res !== null && res > 0).length;
     const total = data.filter((res) => res !== null).length;
-    return positive / total;
+    const res = positive / total;
+    return Number(res.toFixed(3));
   }
 }
