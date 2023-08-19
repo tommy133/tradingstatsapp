@@ -15,11 +15,22 @@ import { Component, Input, OnInit } from '@angular/core';
         <app-label
           bgColor="bg-dark"
           textColor="text-white"
-          style="inline-flex items-center justify-center rounded-md p-10 font-semibold text-sm"
+          styles="inline-flex items-center justify-center rounded-md p-10 font-semibold text-sm"
         >
-          <div class="flex flex-col">
-            <p>{{ counterValue }}</p>
-            <p>Hope</p>
+          <div class="flex flex-col space-y-10">
+            <p class="font-semibold text-base">Hope</p>
+            <app-label>
+              <p
+                [ngClass]="{
+                  'text-dark-green': counterValue > 0,
+                  'text-bright-blue': counterValue === 0,
+                  'text-red': counterValue < 0
+                }"
+              >
+                {{ counterValue }}
+              </p>
+              <p class="pl-1">points</p></app-label
+            >
           </div>
         </app-label>
       </div>
