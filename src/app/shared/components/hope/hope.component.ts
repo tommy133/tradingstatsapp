@@ -5,10 +5,12 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { OperationService } from 'src/app/modules/operation/service/operation.service';
 
 @Component({
-  selector: 'app-counter-up',
+  selector: 'app-hope',
   template: `
     <div class="text-center p-4">
       <div [@counterAnimation]="counterValue">
@@ -46,11 +48,24 @@ import { Component, Input, OnInit } from '@angular/core';
     ]),
   ],
 })
-export class CounterUpComponent implements OnInit {
-  @Input() targetValue: number = 0;
+export class HopeComponent implements OnInit {
+  private operationService = inject(OperationService);
+
+  private subscription?: Subscription;
+  private data: (number | null)[] = [];
   counterValue: number = 0;
 
-  ngOnInit() {
+  async ngOnInit() {
+    await new Promise<void>((resolve) => {
+      this.subscription = this.operationData$.subscribe((operations) => {
+        this.data = operations
+          .filter((operation) => operation.account.id_ac === 1)
+          .map(({ points }) => points ?? null);
+
+        this.chartService.updateChart(this.data, this.chartType);
+        resolve();
+      });
+    });
     this.startCounter();
   }
 
