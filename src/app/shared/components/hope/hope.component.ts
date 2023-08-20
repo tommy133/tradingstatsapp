@@ -53,6 +53,9 @@ export class HopeComponent implements OnInit {
 
   private subscription?: Subscription;
   private data: (number | null)[] = [];
+  operationData$ = this.operationService.operations$;
+
+  targetValue: number = 0;
   counterValue: number = 0;
 
   async ngOnInit() {
@@ -61,15 +64,36 @@ export class HopeComponent implements OnInit {
         this.data = operations
           .filter((operation) => operation.account.id_ac === 1)
           .map(({ points }) => points ?? null);
-
-        this.chartService.updateChart(this.data, this.chartType);
+        this.targetValue = this.calculateHope(this.data);
         resolve();
       });
     });
     this.startCounter();
   }
 
-  startCounter() {
+  private calculateHope(data: (number | null)[]): number {
+    // Separate positive and negative values
+    const positiveValues = data.filter((value) => value !== null && value > 0);
+    const negativeValues = data.filter((value) => value !== null && value! < 0);
+    const n_positive = positiveValues.length;
+    const n_negative = negativeValues.length;
+    const total = positiveValues.length + n_negative;
+    const probPositive = n_positive / total;
+
+    // Calculate mean for positive values
+    const sumPositive = positiveValues.reduce((acc, value) => acc! + value!, 0);
+    const meanPositive = (sumPositive ?? 0) / positiveValues.length;
+
+    // Calculate mean for negative values
+    const sumNegative = negativeValues.reduce((acc, value) => acc! + value!, 0);
+    const meanNegative = (sumNegative ?? 0) / negativeValues.length;
+
+    const sum = meanPositive * probPositive + meanNegative * (1 - probPositive);
+
+    return sum;
+  }
+
+  private startCounter() {
     const delay = 10;
     const duration = 2000;
     const steps = Math.ceil(duration / delay);
@@ -83,5 +107,11 @@ export class HopeComponent implements OnInit {
         clearInterval(interval);
       }
     }, delay);
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
