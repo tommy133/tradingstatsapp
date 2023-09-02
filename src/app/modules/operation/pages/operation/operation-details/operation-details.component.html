@@ -1,11 +1,11 @@
 <ng-container *ngIf="operation$ | async as operation; else loading">
-  <div
-    *ngIf="extended"
-    class="p-8 bg-dark">
+  <div class="p-8 bg-dark">
     <div class="flex justify-between">
       <app-close-button (closeEvent)="goBack()"></app-close-button>
 
-      <div class="flex flex-row items-center space-x-5">
+      <div
+        *ngIf="extended"
+        class="flex flex-row items-center space-x-5">
         <app-rounded-button
           text="Edit"
           bgColor="bg-orange"
@@ -115,8 +115,8 @@
             cols="30"
             rows="5"
             class="rounded"
-            readonly>{{comment.opcomment}}
-          </textarea>
+            readonly>
+            {{comment.opcomment}}</textarea>
         </ng-container>
       </div>
     </div>
