@@ -20,7 +20,9 @@ import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
 import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
+import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
+import { YearSelectorComponent } from './components/year-selector/year-selector.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +44,8 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     DatePickerComponent,
     ChartComponent,
     HopeComponent,
+    TrimesterSelectorComponent,
+    YearSelectorComponent,
   ],
   imports: [
     CommonModule,
@@ -71,6 +75,8 @@ import { ValidationErrorComponent } from './components/validation-error/validati
     DatePickerComponent,
     ChartComponent,
     HopeComponent,
+    TrimesterSelectorComponent,
+    YearSelectorComponent,
   ],
 })
 export class SharedModule {}

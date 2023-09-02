@@ -9,6 +9,10 @@ body {
   background-attachment: fixed;
 }
 
+.square-btn {
+  @apply rounded-md px-4 py-1 min-w-[52px] h-[48px] flex justify-center items-center;
+}
+
 /* SVG */
 
 .svg-white svg {
