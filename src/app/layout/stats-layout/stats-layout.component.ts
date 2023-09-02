@@ -2,8 +2,7 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-stats-layout',
-  template: ` <app-navbar [title]="title" [buttons]="buttons"></app-navbar>
-    <router-outlet></router-outlet>`,
+  templateUrl: './stats-layout.component.html',
 })
 export class StatsLayoutComponent {
   title: string = 'Trading Stats';
