@@ -6,14 +6,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HighchartsChartModule } from 'highcharts-angular';
+import { ToastPopupComponent } from './layout/main-layout/components/toast-popup/toast-popup.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { OperationLayoutComponent } from './layout/operation-layout/operation-layout.component';
 import { ProjectionLayoutComponent } from './layout/projection-layout/projection-layout.component';
+import { StatsLayoutComponent } from './layout/stats-layout/stats-layout.component';
 import { HomeComponent } from './modules/home/pages/home/home.component';
 import { OperationModule } from './modules/operation/operation.module';
 import { ProjectionModule } from './modules/projection/projection.module';
+import { StatsModule } from './modules/stats/stats.module';
 import { SharedModule } from './shared/shared.module';
-import { ToastPopupComponent } from './layout/main-layout/components/toast-popup/toast-popup.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,7 @@ import { ToastPopupComponent } from './layout/main-layout/components/toast-popup
     ProjectionLayoutComponent,
     OperationLayoutComponent,
     ToastPopupComponent,
+    StatsLayoutComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,6 +37,8 @@ import { ToastPopupComponent } from './layout/main-layout/components/toast-popup
     SharedModule,
     ProjectionModule,
     OperationModule,
+    StatsModule,
+    HighchartsChartModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

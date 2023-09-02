@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
-import { NavButton } from 'src/app/shared/utils/custom-types';
 
 @Component({
-  selector: 'app-projection-layout',
-  templateUrl: './projection-layout.component.html',
-  styles: [],
+  selector: 'app-stats-layout',
+  template: ` <app-navbar [title]="title" [buttons]="buttons"></app-navbar>
+    <router-outlet></router-outlet>`,
 })
-export class ProjectionLayoutComponent {
+export class StatsLayoutComponent {
   title: string = 'Trading Stats';
-  buttons: NavButton[] = [
+  buttons = [
     {
       text: 'Projections',
       link: '/projections',
