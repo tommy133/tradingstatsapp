@@ -31,6 +31,7 @@
         <div class="pl-10">
           <select
             name="symbolSelect"
+            class="rounded"
             formControlName="symbol">
             <ng-container *ngFor="let symbol of symbols$ | async">
               <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
@@ -47,6 +48,7 @@
         <div class="pl-[17px]">
           <select
             name="orderTypeSelect"
+            class="rounded"
             formControlName="orderType">
             <option [value]="1">BUY</option>
             <option [value]="0">SELL</option>
@@ -62,6 +64,7 @@
         <div class="pl-[20px]">
           <input
             [value]="dateValue"
+            class="rounded"
             type="date"
             formControlName="dateOpen">
         </div>
@@ -72,6 +75,7 @@
         <div class="pl-[20px]">
           <input
             [value]="dateValue"
+            class="rounded"
             type="date"
             formControlName="dateClose">
         </div>
@@ -82,6 +86,7 @@
         <div class="pl-5">
           <select
             name="timeframeSelect"
+            class="rounded"
             formControlName="timeframe">
             <ng-container *ngFor="let timeframe of timeframes">
               <option [value]="timeframe">{{timeframe}}</option>
@@ -98,6 +103,7 @@
         <div class="pl-[50px]">
           <select
             name="statusSelect"
+            class="rounded"
             formControlName="status">
             <ng-container *ngFor="let status of statuses$ | async">
               <option [value]="status.id_st">{{status.name_st}}</option>
@@ -113,7 +119,7 @@
         <app-form-label text="Volume"></app-form-label>
         <div class="pl-[85px]">
           <input
-            class="w-[100px]"
+            class="w-[100px] rounded"
             type="number"
             formControlName="volume">
         </div>
@@ -123,7 +129,7 @@
         <app-form-label text="Risk reward %"></app-form-label>
         <div class="pl-[40px]">
           <input
-            class="w-[100px]"
+            class="w-[100px] rounded"
             type="number"
             formControlName="ratio">
         </div>
@@ -133,7 +139,7 @@
         <app-form-label text="Points"></app-form-label>
         <div class="pl-[95px]">
           <input
-            class="w-[100px]"
+            class="w-[100px] rounded"
             type="number"
             formControlName="points">
         </div>
@@ -144,6 +150,7 @@
         <div class="pl-[68px]">
           <textarea
             name="commentSelect"
+            class="rounded"
             formControlName="comment"
             cols="30"
             rows="5">
