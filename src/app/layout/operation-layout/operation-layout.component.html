@@ -3,12 +3,17 @@
   [buttons]="buttons">
   <div class="flex flex-row space-x-2 items-center">
     <p class="text-white font-medium">Account: {{account}}</p>
-    <div class="flex flex-row space-x-1">
+    <div class="flex flex-row space-x-5">
       <app-rounded-button
         text="switch"
         bgColor="bg-blue-turquoise"
         styles="rounded text-white text-sm p-1"
         (clickEvent)="switchAccount()"></app-rounded-button>
+      <app-icon-button
+        [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32 }"
+        iconSource="assets\svg\logout.svg"
+        class="svg-white"
+        routerLink="/authentication"></app-icon-button>
       <!-- <app-rounded-button
         text="set default"
         bgColor="bg-gray-400"
