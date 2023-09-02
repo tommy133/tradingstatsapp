@@ -33,7 +33,6 @@ export class ChartService {
       series: [
         {
           type: 'line',
-          name: 'Number of operations',
           data: data,
           color: '#32CD32',
         },
@@ -51,6 +50,25 @@ export class ChartService {
       },
       chart: {
         backgroundColor: '#333',
+      },
+
+      plotOptions: {
+        pie: {
+          dataLabels: {
+            enabled: true,
+            formatter: function () {
+              return (
+                this.point.name +
+                ': ' +
+                Highcharts.numberFormat(this.percentage, 2) +
+                '%'
+              );
+            },
+            style: {
+              color: '#fff',
+            },
+          },
+        },
       },
 
       series: [
