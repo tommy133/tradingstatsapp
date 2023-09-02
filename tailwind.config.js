@@ -17,5 +17,11 @@ module.exports = {
       }
     },
   },
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant('hocus', ['&:hover', '&:focus'])
+      addVariant('not-last', '&:not(:last-child)')
+    }),
+  ],
 }
 

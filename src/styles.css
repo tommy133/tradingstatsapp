@@ -8,3 +8,9 @@ body {
   background-size: cover;
   background-attachment: fixed;
 }
+
+/* SVG */
+
+.svg-white svg {
+  @apply fill-white;
+}

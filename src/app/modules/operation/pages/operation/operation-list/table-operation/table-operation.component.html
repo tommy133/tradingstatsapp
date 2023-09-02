@@ -1,48 +1,42 @@
-<div class="overflow-x-auto">
-  <div class="bg-gray-100 flex items-center justify-center">
-    <div class="w-full">
-      <div class="bg-white shadow-md rounded my-9">
-        <table class="min-w-max w-full table-auto">
-          <thead>
-            <tr class="bg-gray-200 text-gray-600 text-sm leading-normal">
-              <th
-                class="py-3 px-6 text-center"
-                *ngFor="let column of columns">
-                {{ column.name }}
-              </th>
-            </tr>
-          </thead>
-          <tbody class="text-gray-600 text-sm font-light">
-            <tr
-              *ngFor="let row of rows"
-              class="border-b border-gray-200 hover:bg-gray-100">
-              <td class="py-3 px-6 text-center whitespace-nowrap font-bold">{{ row.symbol.name_sym }}</td>
-              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.updown ? 'LONG' : 'SHORT' }}</td>
-              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.dateOpen | date: 'dd/MM/yyyy' }}</td>
-              <td class="py-3 px-6 text-center whitespace-nowrap">
-                {{ row.dateClose | date: 'dd/MM/yyyy' }}
-              </td>
-              <td class="py-3 px-6 text-center whitespace-nowrap">{{ row.timeframe }}</td>
-              <td [ngClass]="'py-3 px-6 text-center whitespace-nowrap font-semibold ' + getPointsColorClass(row.points!)">{{ row.points }}</td>
-              <td class="py-3 px-6 text-center whitespace-nowrap">
-                <div class="flex flex-row justify-center space-x-2 items-center">
-                  <app-icon-button
-                    iconSource="assets/svg/edit-32.svg"
-                    [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32, 'opacity': 0.5 }"
-                    iconSvgClass="hover:bg-gray-300 rounded"
-                    (clickEvent)="goToDetails(row.id)"></app-icon-button>
-                  <svg-icon
-                    class="rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"
-                    src="assets/svg/delete.svg"
-                    svgClass="hover:bg-gray-300 rounded"
-                    [svgStyle]="{ 'width.px': 20, 'height.px': 20 }"
-                    (click)="deleteOperation(row.id)">
-                  </svg-icon>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+<div class="overflow-x-auto rounded">
+  <div class="w-full">
+    <div class="flex flex-col">
+      <div class="flex flex-row items-center bg-dark text-white">
+        <ng-container *ngFor="let column of columns">
+          <div class="py-3 px-6 text-center flex-1 font-bold">{{ column.name }}</div>
+        </ng-container>
+      </div>
+
+      <div class="bg-gray-900 text-white text-sm font-light">
+        <ng-container *ngFor="let row of rows">
+          <div class="flex flex-row items-center not-last:border-b hover:bg-gray-500">
+            <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-bold">{{ row.symbol.name_sym }}</div>
+            <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.updown ? 'LONG' : 'SHORT' }}</div>
+            <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.dateOpen | date: 'dd/MM/yyyy' }}</div>
+            <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">
+              {{ row.dateClose | date: 'dd/MM/yyyy' }}
+            </div>
+            <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.timeframe }}</div>
+            <div [ngClass]="'py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold ' + getPointsColorClass(row.points!)">{{ row.points }}</div>
+            <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">
+              <div class="flex flex-row justify-center space-x-2 items-center">
+                <app-icon-button
+                  iconSource="assets/svg/edit-32.svg"
+                  [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32 }"
+                  iconSvgClass="hover:bg-gray-300 rounded"
+                  class="svg-white"
+                  (clickEvent)="goToDetails(row.id)"></app-icon-button>
+                <svg-icon
+                  class="rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"
+                  src="assets/svg/delete.svg"
+                  svgClass="hover:bg-gray-300 rounded"
+                  [svgStyle]="{ 'width.px': 20, 'height.px': 20 }"
+                  (click)="deleteOperation(row.id)">
+                </svg-icon>
+              </div>
+            </div>
+          </div>
+        </ng-container>
       </div>
     </div>
   </div>
