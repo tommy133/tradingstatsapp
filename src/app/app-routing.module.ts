@@ -4,11 +4,10 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 import { OperationLayoutComponent } from './layout/operation-layout/operation-layout.component';
 import { ProjectionLayoutComponent } from './layout/projection-layout/projection-layout.component';
 import { StatsLayoutComponent } from './layout/stats-layout/stats-layout.component';
-import { HomeComponent } from './modules/home/pages/home/home.component';
+import { LoginComponent } from './modules/authentication/pages/login/login.component';
 
 const pageRoutes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
-  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'projections', pathMatch: 'full' },
   {
     path: 'projections',
     component: ProjectionLayoutComponent,
@@ -34,6 +33,10 @@ const pageRoutes: Routes = [
 ];
 
 const routes: Routes = [
+  {
+    path: 'authentication',
+    component: LoginComponent, //replace for LoginLayoutComponent
+  },
   { path: '', component: MainLayoutComponent, children: pageRoutes },
 ];
 
