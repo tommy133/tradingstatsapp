@@ -95,7 +95,8 @@
           <select
             name="statusSelect"
             class="rounded"
-            formControlName="status">
+            formControlName="status"
+            (change)="onSelectChange($event)">
             <ng-container *ngFor="let status of statuses$ | async">
               <option [value]="status.id_st">{{status.name_st}}</option>
             </ng-container>

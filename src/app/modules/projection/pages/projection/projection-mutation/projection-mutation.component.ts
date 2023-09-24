@@ -168,6 +168,16 @@ export class ProjectionMutationComponent {
     return this.commentService.updateComment(commentUpdateInput);
   }
 
+  onSelectChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+
+    if (selectedValue === '1') {
+      this.router.navigate(['../../../operations/add'], {
+        relativeTo: this.activatedRoute,
+      });
+    }
+  }
+
   removeUploadedFile() {
     this.uploader.clearQueue();
   }
