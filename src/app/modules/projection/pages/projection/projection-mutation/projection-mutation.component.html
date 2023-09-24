@@ -87,7 +87,9 @@
         </div>
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div
+        *ngIf="!isMutationAdd"
+        class="flex flex-row pt-5">
         <app-form-label text="Select status"></app-form-label>
         <div class="pl-[50px]">
           <select
