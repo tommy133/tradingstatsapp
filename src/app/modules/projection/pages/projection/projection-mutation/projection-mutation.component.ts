@@ -54,7 +54,7 @@ export class ProjectionMutationComponent {
     null,
     Validators.required,
   );
-  status = this.formBuilder.control<number | null>(null, Validators.required);
+  status = this.formBuilder.control<number | null>(null);
   comment = this.formBuilder.control<string | null>(null);
 
   projectionForm = this.formBuilder.group({
@@ -257,15 +257,14 @@ export class ProjectionMutationComponent {
   }
 
   private getProjectionCreateInput(): ProjectionCreateInput {
-    const { symbol, orderType, date, timeframe, status } =
-      this.projectionForm.value;
+    const { symbol, orderType, date, timeframe } = this.projectionForm.value;
     return {
       id_sym: symbol!,
       updown: orderType!,
       date_proj: date!,
       graph: this.chartFileName,
       name_tf: timeframe!.toString(),
-      id_st: status!,
+      id_st: 3,
     };
   }
 
@@ -301,6 +300,7 @@ export class ProjectionMutationComponent {
   }
 
   async onSubmit() {
+    debugger;
     if (this.projectionForm.invalid) {
       this.toastService.error({
         message: 'Invalid form!',
