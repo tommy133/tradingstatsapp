@@ -41,6 +41,11 @@ export class TableOperationComponent {
     );
   }
 
+  gotoEditOperation(operationId: number, event: any) {
+    event.stopPropagation();
+    this.router.navigate([`/operations/edit/${operationId}`]);
+  }
+
   deleteOperation(operationId: number) {
     this.deleteEvent.emit(operationId);
   }
