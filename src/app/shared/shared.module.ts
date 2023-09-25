@@ -18,6 +18,7 @@ import { RoundedButtonComponent } from './components/rounded-button/rounded-butt
 import { SearchByTextComponent } from './components/search-by-text/search-by-text.component';
 import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SquareButtonComponent } from './components/square-button/square-button.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
 import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
 import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
@@ -46,6 +47,7 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
     HopeComponent,
     TrimesterSelectorComponent,
     YearSelectorComponent,
+    SquareButtonComponent,
   ],
   imports: [
     CommonModule,
@@ -77,6 +79,7 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
     HopeComponent,
     TrimesterSelectorComponent,
     YearSelectorComponent,
+    SquareButtonComponent,
   ],
 })
 export class SharedModule {}
