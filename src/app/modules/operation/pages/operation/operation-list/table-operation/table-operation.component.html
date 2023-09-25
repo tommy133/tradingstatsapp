@@ -9,7 +9,9 @@
 
       <div class="bg-gray-900 text-white text-sm font-light">
         <ng-container *ngFor="let row of rows">
-          <div class="flex flex-row items-center not-last:border-b hover:bg-gray-500">
+          <div
+            class="flex flex-row items-center not-last:border-b hover:bg-gray-500 cursor-pointer"
+            (click)="goToDetails(row.id)">
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-bold">{{ row.symbol.name_sym }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.updown ? 'LONG' : 'SHORT' }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.dateOpen | date: 'dd/MM/yyyy' }}</div>
@@ -25,7 +27,7 @@
                   [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32 }"
                   iconSvgClass="hover:bg-gray-300 rounded"
                   class="svg-white"
-                  (clickEvent)="goToDetails(row.id)"></app-icon-button>
+                  (clickEvent)="gotoEditOperation(row.id, $event)"></app-icon-button>
                 <svg-icon
                   class="rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"
                   src="assets/svg/delete.svg"
