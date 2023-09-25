@@ -174,6 +174,12 @@ export class ProjectionMutationComponent {
     if (selectedValue === '1') {
       this.router.navigate(['../../../operations/add'], {
         relativeTo: this.activatedRoute,
+        queryParams: {
+          symbol: this.projectionForm.value.symbol,
+          orderType: this.projectionForm.value.orderType,
+          date: this.projectionForm.value.date,
+          timeframe: this.projectionForm.value.timeframe,
+        },
       });
     }
   }

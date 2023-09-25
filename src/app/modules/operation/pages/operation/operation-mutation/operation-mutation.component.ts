@@ -106,6 +106,8 @@ export class OperationMutationComponent implements OnInit {
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
     this.account = this.activatedRoute.snapshot.queryParams['account'];
+    const symbol = this.activatedRoute.snapshot.queryParams['symbol'];
+
     if (id) {
       const operationDetails = await firstValueFrom(
         this.operationService.getOperation(id),
@@ -117,6 +119,13 @@ export class OperationMutationComponent implements OnInit {
       if (comment) {
         this.setInitialFormStateComment(comment);
       }
+    } else if (symbol) {
+      const orderType = this.activatedRoute.snapshot.queryParams['orderType'];
+      const timeframe = this.activatedRoute.snapshot.queryParams['timeframe'];
+
+      this.symbol.setValue(symbol);
+      this.orderType.setValue(orderType);
+      this.timeframe.setValue(timeframe);
     }
   }
 
