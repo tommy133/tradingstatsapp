@@ -14,9 +14,11 @@
             (click)="goToDetails(row.id)">
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-bold">{{ row.symbol.name_sym }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.updown ? 'LONG' : 'SHORT' }}</div>
-            <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.dateOpen | date: 'dd/MM/yyyy' }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">
-              {{ row.dateClose | date: 'dd/MM/yyyy' }}
+              {{ row.dateOpen | date: 'dd/MM/yyyy HH:mm' }}
+            </div>
+            <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">
+              {{ row.dateClose | date: 'dd/MM/yyyy HH:mm' }}
             </div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.timeframe }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.status.name_st }}</div>

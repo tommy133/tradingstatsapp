@@ -45,7 +45,7 @@
       class="flex flex-row items-center pt-5">
       <app-form-label text="Opened"></app-form-label>
       <div class="pl-[35px]">
-        <app-label [text]="(operation.dateOpen | date: 'yyyy-MM-dd')!"></app-label>
+        <app-label [text]="(operation.dateOpen | date: 'yyyy-MM-dd HH:mm')!"></app-label>
       </div>
     </div>
 
@@ -54,7 +54,7 @@
       class="flex flex-row items-center pt-5">
       <app-form-label text="Close"></app-form-label>
       <div class="pl-[53px]">
-        <app-label [text]="(operation.dateClose | date: 'yyyy-MM-dd')!"></app-label>
+        <app-label [text]="(operation.dateClose | date: 'yyyy-MM-dd HH:mm')!"></app-label>
       </div>
     </div>
 
