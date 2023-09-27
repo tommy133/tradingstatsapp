@@ -175,6 +175,7 @@ export class ProjectionMutationComponent {
       this.router.navigate(['../../../operations/add'], {
         relativeTo: this.activatedRoute,
         queryParams: {
+          projectionId: this.projectionForm.value.id,
           symbol: this.projectionForm.value.symbol,
           orderType: this.projectionForm.value.orderType,
           date: this.projectionForm.value.date,
