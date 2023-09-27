@@ -93,14 +93,16 @@ export class ProjectionMutationComponent {
     };
   }
 
+  projDetails: Projection | undefined;
+
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
     if (id) {
-      const projectionDetails = await firstValueFrom(
+      this.projDetails = await firstValueFrom(
         this.projectionService.getProjection(id),
       );
-      if (projectionDetails) {
-        this.setInitialFormStateProj(projectionDetails);
+      if (this.projDetails) {
+        this.setInitialFormStateProj(this.projDetails);
       }
       const comment = await firstValueFrom(this.commentService.getComment(id));
       if (comment) {
@@ -176,6 +178,7 @@ export class ProjectionMutationComponent {
         relativeTo: this.activatedRoute,
         queryParams: {
           projectionId: this.projectionForm.value.id,
+          projectionGraph: this.projDetails?.graph,
           symbol: this.projectionForm.value.symbol,
           orderType: this.projectionForm.value.orderType,
           date: this.projectionForm.value.date,

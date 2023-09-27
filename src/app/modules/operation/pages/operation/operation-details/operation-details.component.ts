@@ -17,7 +17,8 @@ export class OperationDetailsComponent implements OnInit {
   comment$?: Observable<OperationComment>;
   isLoading: boolean = false;
   errors: Array<string> = [];
-
+  projId = this.activatedRoute.snapshot.params['projectionId'];
+  projGraph = this.activatedRoute.snapshot.params['projectionGraph'];
   constructor(
     private operationService: OperationService,
     private commentService: OperationCommentService,
