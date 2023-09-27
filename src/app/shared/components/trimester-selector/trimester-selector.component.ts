@@ -33,7 +33,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TrimesterSelectorComponent {
   router = inject(Router);
   activatedRoute = inject(ActivatedRoute);
-  token: number = 0;
+  token: number = 4;
   setToken(token: number) {
     this.token = token;
     this.router.navigate([''], {
