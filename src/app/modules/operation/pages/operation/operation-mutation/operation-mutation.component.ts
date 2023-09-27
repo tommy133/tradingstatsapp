@@ -57,7 +57,7 @@ export class OperationMutationComponent implements OnInit {
     null,
     Validators.required,
   );
-  status = this.formBuilder.control<number | null>(null, Validators.required);
+  status = this.formBuilder.control<number | null>(null);
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
   points = this.formBuilder.control<number | null>(null);
@@ -385,6 +385,8 @@ export class OperationMutationComponent implements OnInit {
   }
 
   async onSubmit() {
+    console.log(this.operationForm);
+
     if (this.operationForm.invalid) {
       this.toastService.error({
         message: 'Invalid form!',
