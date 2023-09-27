@@ -25,6 +25,7 @@ export class TableOperationComponent {
     { name: 'Date open' },
     { name: 'Date close' },
     { name: 'Timeframe' },
+    { name: 'Status' },
     { name: 'Points' },
     { name: 'Actions' },
   ];
