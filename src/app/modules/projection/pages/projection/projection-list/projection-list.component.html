@@ -18,6 +18,7 @@
   <div class="p-5">
     <app-table-projection
       [rows]="projections"
+      [trimNumber]="trimNum"
       (deleteEvent)="onDeleteProjection($event)"></app-table-projection>
   </div>
   <app-sidebar-right
