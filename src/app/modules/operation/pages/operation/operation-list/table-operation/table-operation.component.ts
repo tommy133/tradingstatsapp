@@ -47,7 +47,10 @@ export class TableOperationComponent {
     this.router.navigate([`/operations/edit/${operationId}`]);
   }
 
-  deleteOperation(operationId: number) {
-    this.deleteEvent.emit(operationId);
+  deleteOperation(operationId: number, event: any) {
+    event.stopPropagation();
+    if (confirm('Are you sure you want to delete this operation?')) {
+      this.deleteEvent.emit(operationId);
+    }
   }
 }
