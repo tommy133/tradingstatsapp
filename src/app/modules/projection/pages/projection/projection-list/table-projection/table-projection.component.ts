@@ -32,6 +32,8 @@ export class TableProjectionComponent {
 
   deleteProjection(projId: number, event: any) {
     event.stopPropagation();
-    this.deleteEvent.emit(projId);
+    if (confirm('Are you sure you want to delete this projection?')) {
+      this.deleteEvent.emit(projId);
+    }
   }
 }
