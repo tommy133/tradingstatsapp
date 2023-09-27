@@ -30,7 +30,8 @@ export class TableProjectionComponent {
     this.router.navigate([`/projections/edit/${projId}`]);
   }
 
-  deleteProjection(projId: number) {
+  deleteProjection(projId: number, event: any) {
+    event.stopPropagation();
     this.deleteEvent.emit(projId);
   }
 }
