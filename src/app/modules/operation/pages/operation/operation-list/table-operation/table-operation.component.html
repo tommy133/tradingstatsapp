@@ -19,6 +19,7 @@
               {{ row.dateClose | date: 'dd/MM/yyyy' }}
             </div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.timeframe }}</div>
+            <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.status.name_st }}</div>
             <div [ngClass]="'py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold ' + getPointsColorClass(row.points!)">{{ row.points }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">
               <div class="flex flex-row justify-center space-x-2 items-center">
