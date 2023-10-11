@@ -3,6 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
-  apiBaseUrl: 'https://app-94357af9-3925-43fa-8d1b-e7c475223036.cleverapps.io',
+  production: true,
+  apiBaseUrl: 'https://trading-stats.cleverapps.io',
+  bucketHost: 'cellar-c2.services.clever-cloud.com',
 };

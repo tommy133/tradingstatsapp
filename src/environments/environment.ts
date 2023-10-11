@@ -4,6 +4,6 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://app-94357af9-3925-43fa-8d1b-e7c475223036.cleverapps.io',
+  apiBaseUrl: 'https://trading-stats.cleverapps.io',
   bucketHost: 'cellar-c2.services.clever-cloud.com',
 };
