@@ -170,7 +170,7 @@ export class OperationMutationComponent implements OnInit {
   }
 
   get dateValue(): string {
-    return "${this.operationForm.get('date')!.value} | date: 'yyyy-MM-dd'";
+    return "${this.operationForm.get('date')!.value} | date: 'yyyy-MM-dd HH:mm'";
   }
 
   goToList() {
@@ -223,7 +223,6 @@ export class OperationMutationComponent implements OnInit {
       ratio,
       points,
     } = operationDetails;
-
     this.id.setValue(id);
     this.symbol.setValue(id_sym);
     this.orderType.setValue(updown ? 1 : 0);
