@@ -300,7 +300,6 @@ export class ProjectionMutationComponent {
   }
 
   async onSubmit() {
-    debugger;
     if (this.projectionForm.invalid) {
       this.toastService.error({
         message: 'Invalid form!',
