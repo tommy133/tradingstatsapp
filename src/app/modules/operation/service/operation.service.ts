@@ -21,7 +21,6 @@ export class OperationService {
   private activatedRoute = inject(ActivatedRoute);
   private apiServerUrl = `${environment.apiBaseUrl}/operations`;
   private fetchSignal = new BehaviorSubject(null);
-  private DEFAULT_REFETCH_INTERVAL = 5000;
 
   public operations$ = this.fetchSignal.asObservable().pipe(
     switchMap(() => this.getOperations()),
@@ -42,12 +41,6 @@ export class OperationService {
 
   public refetch() {
     this.fetchSignal.next(null);
-  }
-
-  public setRefetchInterval(interval?: number) {
-    setInterval(() => {
-      this.refetch();
-    }, interval ?? this.DEFAULT_REFETCH_INTERVAL);
   }
 
   public getOperations(): Observable<Operation[]> {

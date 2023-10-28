@@ -19,7 +19,6 @@ import { ProjectionUpdateInput } from '../model/projectionUpdateInput';
 export class ProjectionService {
   private apiServerUrl = `${environment.apiBaseUrl}/projections`;
   private fetchSignal = new BehaviorSubject(null);
-  private DEFAULT_REFETCH_INTERVAL = 5000;
 
   public projections$ = this.fetchSignal
     .asObservable()
@@ -31,12 +30,6 @@ export class ProjectionService {
 
   public refetch() {
     this.fetchSignal.next(null);
-  }
-
-  public setRefetchInterval(interval?: number) {
-    setInterval(() => {
-      this.refetch();
-    }, interval ?? this.DEFAULT_REFETCH_INTERVAL);
   }
 
   public getProjections(): Observable<Projection[]> {

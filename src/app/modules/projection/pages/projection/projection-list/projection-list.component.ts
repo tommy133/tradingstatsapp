@@ -32,10 +32,6 @@ export class ProjectionListComponent {
     private formService: FormService,
   ) {}
 
-  ngOnInit() {
-    this.projectionService.setRefetchInterval();
-  }
-
   public onDeleteProjection(projectionId: number): void {
     this.projectionService.deleteProjection(projectionId);
   }
