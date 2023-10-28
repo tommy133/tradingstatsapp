@@ -1,10 +1,7 @@
 <div [ngClass]="'flex flex-nowrap justify-between items-center border border-dark/[.08] rounded-md px-4 gap-4 hover:border-dark ' + bgColor">
-  <button>
-    <svg-icon
-      (click)="previousMonth()"
-      src="assets/svg/go-left.svg"
-      [svgStyle]="{ 'width.px':32 }"></svg-icon>
-  </button>
+  <app-icon-button
+    iconSource="assets/svg/go-left.svg"
+    (clickEvent)="previousMonth()"></app-icon-button>
 
   <input
     #date
@@ -13,10 +10,8 @@
     [value]="value"
     [ngClass]="'text-center ' + bgColor">
 
-  <button>
-    <svg-icon
-      (click)="nextMonth()"
-      src="assets/svg/go-right.svg"
-      [svgStyle]="{ 'width.px':32 }"></svg-icon>
-  </button>
+  <app-icon-button
+    iconSource="assets/svg/go-right.svg"
+    (clickEvent)="nextMonth()">
+  </app-icon-button>
 </div>

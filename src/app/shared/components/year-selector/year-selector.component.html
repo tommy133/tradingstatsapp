@@ -1,19 +1,15 @@
 <div class="h-[48px] justify-between items-center flex flex-nowrap border border-dark/[.08] rounded-md px-4 gap-4 bg-white">
-  <button
-    (click)="previousYear()"
-    [disabled]="isPrevDisabled">
-    <svg-icon
-      src="assets/svg/go-left.svg"
-      [svgStyle]="{ 'width.px':32,'opacity': isPrevDisabled ? 0.4 : 1 }"></svg-icon>
-  </button>
+  <app-icon-button
+    iconSource="assets/svg/go-left.svg"
+    (clickEvent)="previousYear()"
+    [disabled]="isPrevDisabled"
+    [iconSvgStyle]="{ 'width.px':32 ,'opacity': isPrevDisabled ? 0.4 : 1  }"></app-icon-button>
 
   <h5>{{ this.year }}</h5>
 
-  <button
-    (click)="nextYear()"
-    [disabled]="isNextDisabled">
-    <svg-icon
-      src="assets/svg/go-right.svg"
-      [svgStyle]="{ 'width.px':32 ,'opacity': isNextDisabled ? 0.4 : 1  }"></svg-icon>
-  </button>
+  <app-icon-button
+    iconSource="assets/svg/go-right.svg"
+    (clickEvent)="nextYear()"
+    [disabled]="isNextDisabled"
+    [iconSvgStyle]="{ 'width.px':32 ,'opacity': isNextDisabled ? 0.4 : 1  }"></app-icon-button>
 </div>

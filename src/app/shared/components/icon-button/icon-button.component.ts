@@ -1,8 +1,13 @@
+import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-icon-button',
-  template: `<button type="button" (click)="clickEvent.emit($event)">
+  template: `<button
+    type="button"
+    (click)="clickEvent.emit($event)"
+    [disabled]="disabled"
+  >
     <svg-icon
       [svgClass]="iconSvgClass"
       [svgStyle]="iconSvgStyle"
@@ -12,10 +17,18 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   </button>`,
 })
 export class IconButtonComponent {
-  constructor() {}
-
   @Input() iconSource!: string;
   @Input() iconSvgStyle?: any = { 'height.px': 32, 'width.px': 32 };
   @Input() iconSvgClass?: string;
+
+  @Input()
+  get disabled() {
+    return this._disabled;
+  }
+  set disabled(value: BooleanInput) {
+    this._disabled = coerceBooleanProperty(value);
+  }
+  private _disabled = false;
+
   @Output() clickEvent = new EventEmitter<any>();
 }
