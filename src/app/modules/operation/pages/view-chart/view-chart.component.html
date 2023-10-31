@@ -1,12 +1,31 @@
-<div class="p-10">
-  <app-back-to
-    backText="BACK TO OPERATIONS"
-    backTo="../../"></app-back-to>
-  <img
-    class="w-2/3"
-    [src]="imageUrl"
-    alt="chart image">
-  <app-sidebar-right class="fixed top-0 bottom-0 right-0 md:w-[460px]">
-    <app-operation-details [extended]="false"></app-operation-details>
-  </app-sidebar-right>
+<div class="flex flex-row items-center p-10">
+  <app-icon-button
+    iconSource="assets/svg/go-left.svg"
+    [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
+    (clickEvent)="navigatePreviousOperation()"></app-icon-button>
+  <div class="flex flex-col space-y-8 h-full">
+    <app-back-to
+      backText="BACK TO OPERATIONS"
+      backTo="../../"></app-back-to>
+    <img
+      [src]="imageUrl$ | async"
+      alt="chart image">
+
+  </div>
+  <app-icon-button
+    iconSource="assets/svg/go-right.svg"
+    [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
+    (clickEvent)="navigateNextOperation()"></app-icon-button>
+  <div class="flex flex-col space-y-8 h-full"></div>
+
 </div>
+<app-sidebar-right
+  [@sidebarRightInOut]="sidebarRightState$ | async"
+  class="fixed top-0 bottom-0 right-0 md:w-[460px]">
+  <app-operation-details [extended]="false"></app-operation-details>
+</app-sidebar-right>
+<app-icon-button
+  class="fixed top-16 bottom-0 right-0"
+  iconSource="assets/svg/sidebar-icon-21.svg"
+  [iconSvgStyle]="{'height.px': 50, 'width.px': 50}"
+  (clickEvent)="openSidebarRight()"></app-icon-button>

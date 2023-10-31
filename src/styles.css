@@ -18,3 +18,7 @@ body {
 .svg-white svg {
   @apply fill-white;
 }
+
+a {
+  @apply cursor-pointer;
+}

@@ -12,6 +12,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   `,
 })
 export class CloseButtonComponent {
-  @Input() routerLink: string = '/';
+  @Input() routerLink?: string;
   @Output() closeEvent = new EventEmitter<any>();
 }

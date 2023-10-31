@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { RoutingService } from 'src/app/core/service/routing.service';
+import { SidebarRightService } from 'src/app/core/service/sidebar-right.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { Operation } from '../../../model/operation';
@@ -12,19 +13,18 @@ import { OperationService } from '../../../service/operation.service';
   templateUrl: './operation-details.component.html',
 })
 export class OperationDetailsComponent implements OnInit {
+  private operationService = inject(OperationService);
+  private commentService = inject(OperationCommentService);
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private routingService = inject(RoutingService);
+  private sideBarRightService = inject(SidebarRightService);
+
   @Input() extended: boolean = true;
   operation$?: Observable<Operation>;
   comment$?: Observable<OperationComment>;
   isLoading: boolean = false;
   errors: Array<string> = [];
-
-  constructor(
-    private operationService: OperationService,
-    private commentService: OperationCommentService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-    private routingService: RoutingService,
-  ) {}
 
   ngOnInit() {
     this.operation$ = this.activatedRoute.params.pipe(
@@ -61,6 +61,10 @@ export class OperationDetailsComponent implements OnInit {
       this.router,
       this.activatedRoute,
     );
+  }
+
+  closeSidebarRight() {
+    this.sideBarRightService.closeSidebarRight();
   }
 
   goToChart(operation: Operation) {
