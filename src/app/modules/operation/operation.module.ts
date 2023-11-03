@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { TradingviewWidgetModule } from 'angular-tradingview-widget';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { OperationRoutingModule } from './operation-routing.module';
@@ -25,7 +24,6 @@ import { ViewChartComponent } from './pages/view-chart/view-chart.component';
     HttpClientModule,
     SharedModule,
     FileUploadModule,
-    TradingviewWidgetModule,
   ],
   providers: [HttpClient],
 })

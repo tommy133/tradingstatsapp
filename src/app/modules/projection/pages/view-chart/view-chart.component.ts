@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { ITradingViewWidget } from 'angular-tradingview-widget';
 import { Observable, Subscription, switchMap } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { FileService } from 'src/app/file.service';
@@ -39,7 +38,6 @@ export class ViewChartComponent implements OnInit {
   projectionSubscription?: Subscription;
   fileSubscription?: Subscription;
   imageUrl?: SafeUrl;
-  widgetConfig!: ITradingViewWidget;
 
   constructor(
     private projectionService: ProjectionService,
@@ -70,14 +68,14 @@ export class ViewChartComponent implements OnInit {
       W: IntervalTypes.W,
     };
 
-    this.projection$.subscribe((projection) => {
-      this.widgetConfig = {
-        symbol: projection.symbol.name_sym,
-        interval: intervalMapping[projection.timeframe],
-        theme: Themes.DARK,
-        widgetType: 'widget',
-      };
-    });
+    // this.projection$.subscribe((projection) => {
+    //   this.widgetConfig = {
+    //     symbol: projection.symbol.name_sym,
+    //     interval: intervalMapping[projection.timeframe],
+    //     theme: Themes.DARK,
+    //     widgetType: 'widget',
+    //   };
+    // });
 
     const filename = this.activatedRoute.snapshot.queryParamMap.get('fileName');
 

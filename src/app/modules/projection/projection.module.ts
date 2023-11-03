@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { TradingviewWidgetModule } from 'angular-tradingview-widget';
 import { FileUploadModule } from 'ng2-file-upload';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { ProjectionDetailsComponent } from './pages/projection/projection-details/projection-details.component';
@@ -26,7 +25,6 @@ import { ProjectionRoutingModule } from './projection-routing.module';
     HttpClientModule,
     SharedModule,
     FileUploadModule,
-    TradingviewWidgetModule,
   ],
   providers: [HttpClient],
 })

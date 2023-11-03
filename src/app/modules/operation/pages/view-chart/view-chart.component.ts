@@ -1,8 +1,7 @@
 import { trigger } from '@angular/animations';
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ITradingViewWidget } from 'angular-tradingview-widget';
 import { combineLatest, map, switchMap } from 'rxjs';
 import { SidebarRightService } from 'src/app/core/service/sidebar-right.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -35,10 +34,10 @@ export class ViewChartComponent implements OnDestroy {
   navigationIndex!: number;
 
   imageUrl?: SafeUrl;
-  widgetConfig: ITradingViewWidget = {
-    symbol: 'EURUSD',
-    widgetType: 'widget',
-  };
+  // widgetConfig: ITradingViewWidget = {
+  //   symbol: 'EURUSD',
+  //   widgetType: 'widget',
+  // };
 
   sidebarRightState$ = this.sidebarRightService.sidebarRightState$;
 
