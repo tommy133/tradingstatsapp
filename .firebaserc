@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "trading-stats-31429": {
+      "hosting": {
+        "tradingstatsapp": [
+          "trading-stats-31429"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "trading-stats-31429"
+  }
+}

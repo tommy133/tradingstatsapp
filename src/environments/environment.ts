@@ -5,5 +5,12 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'https://trading-stats.cleverapps.io',
-  bucketHost: 'cellar-c2.services.clever-cloud.com',
+  firebaseConfig: {
+    apiKey: 'AIzaSyCCy4wR_lfkri2QGzRoPUcXTZtsFXV1Rhs',
+    authDomain: 'trading-stats-31429.firebaseapp.com',
+    projectId: 'trading-stats-31429',
+    storageBucket: 'trading-stats-31429.appspot.com',
+    messagingSenderId: '1015930729920',
+    appId: '1:1015930729920:web:b6e2a33ff5406ff856c425',
+  },
 };

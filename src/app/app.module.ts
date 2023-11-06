@@ -5,8 +5,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { getStorage, provideStorage } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HighchartsChartModule } from 'highcharts-angular';
+import { environment } from 'src/environments/environment';
 import { LoginLayoutComponent } from './layout/login-layout/login-layout.component';
 import { ToastPopupComponent } from './layout/main-layout/components/toast-popup/toast-popup.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
@@ -41,6 +44,8 @@ import { SharedModule } from './shared/shared.module';
     OperationModule,
     StatsModule,
     HighchartsChartModule,
+    provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
+    provideStorage(() => getStorage()),
   ],
   providers: [],
   bootstrap: [AppComponent],
