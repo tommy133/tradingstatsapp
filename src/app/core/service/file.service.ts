@@ -1,22 +1,23 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { environment } from 'src/environments/environment';
+import { inject, Injectable } from '@angular/core';
+import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileService {
-  fileUploadUri = `${environment.apiBaseUrl}/file/upload`;
-  fileDownloadUri = `${environment.apiBaseUrl}/file/download`;
+  private storage = inject(Storage);
+  private readonly IMG_DIR = 'images';
 
-  constructor(private http: HttpClient) {}
+  async getImage(imgName: string) {
+    const imageRef = ref(this.storage, `${this.IMG_DIR}/${imgName}`);
 
-  public downloadFile(file: String) {
-    let body = { filename: file };
+    try {
+      const downloadURL = await getDownloadURL(imageRef);
 
-    return this.http.post(this.fileDownloadUri, body, {
-      responseType: 'blob',
-      headers: new HttpHeaders().append('Content-Type', 'application/json'),
-    });
+      return downloadURL;
+    } catch (error) {
+      console.error('Error getting image:', error);
+      return null;
+    }
   }
 }

@@ -1,9 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FileUploader } from 'ng2-file-upload';
 import { firstValueFrom, Observable, Subscription } from 'rxjs';
-import { FileService } from 'src/app/core/service/file.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
@@ -28,10 +26,7 @@ import { OperationService } from '../../../service/operation.service';
 export class OperationMutationComponent implements OnInit {
   isLoading: boolean = false;
   errors: Array<string> = [];
-  uploader: FileUploader = new FileUploader({
-    url: inject(FileService).fileUploadUri,
-    itemAlias: 'chart',
-  });
+
   chartFileName: string = '';
   account: number = 1;
   idComment?: number = undefined;
@@ -87,21 +82,7 @@ export class OperationMutationComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private routingService: RoutingService,
-  ) {
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-    };
-
-    this.uploader.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any,
-    ) => {
-      this.chartFileName = JSON.parse(response);
-      console.log('Uploaded successfully...', status);
-    };
-  }
+  ) {}
 
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
@@ -118,10 +99,6 @@ export class OperationMutationComponent implements OnInit {
         this.setInitialFormStateComment(comment);
       }
     }
-  }
-
-  get isFileUploaded(): boolean {
-    return this.uploader.queue.length > 0;
   }
 
   get mutation(): MutationType {
@@ -195,10 +172,6 @@ export class OperationMutationComponent implements OnInit {
     return this.commentService.updateComment(commentUpdateInput);
   }
 
-  removeUploadedFile() {
-    this.uploader.clearQueue();
-  }
-
   private setInitialFormState(operationDetails: Operation) {
     const {
       id,
@@ -236,23 +209,23 @@ export class OperationMutationComponent implements OnInit {
   private async handleUploadChart() {
     try {
       this.isLoading = true;
-      if (this.isFileUploaded) {
-        const fileItem = this.uploader.queue[this.uploader.queue.length - 1];
+      // if (this.isFileUploaded) {
+      //   const fileItem = this.uploader.queue[this.uploader.queue.length - 1];
 
-        const uploadPromise = new Promise<void>((resolve) => {
-          this.uploaderSubscription = this.uploader.response.subscribe(
-            (res) => {
-              this.chartFileName = JSON.parse(res).filename;
-              resolve();
-            },
-          );
-        });
+      //   const uploadPromise = new Promise<void>((resolve) => {
+      //     this.uploaderSubscription = this.uploader.response.subscribe(
+      //       (res) => {
+      //         this.chartFileName = JSON.parse(res).filename;
+      //         resolve();
+      //       },
+      //     );
+      //   });
 
-        fileItem.upload();
+      //   fileItem.upload();
 
-        this.isLoading = false;
-        return uploadPromise;
-      }
+      //   this.isLoading = false;
+      //   return uploadPromise;
+      // }
     } catch (e: any) {
       this.errors = [...this.errors, e.message as string];
     } finally {

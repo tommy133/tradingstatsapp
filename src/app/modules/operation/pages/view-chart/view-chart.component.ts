@@ -2,7 +2,7 @@ import { trigger } from '@angular/animations';
 import { Component, inject, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, map, switchMap } from 'rxjs';
+import { combineLatest, map, Subscription } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarRightService } from 'src/app/core/service/sidebar-right.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -41,23 +41,28 @@ export class ViewChartComponent implements OnDestroy {
 
   sidebarRightState$ = this.sidebarRightService.sidebarRightState$;
 
-  imageUrl$ = combineLatest([
+  private image$ = combineLatest([
     this.activatedRoute.params,
     this.operationService.operations$,
   ]).pipe(
-    switchMap(([params, operations]) => {
+    map(([params, operations]) => {
       const fileName = operations.find(
         (operation) => operation.id === parseInt(params['id']),
       )?.graph;
-      return this.fileService.downloadFile(fileName!).pipe(
-        map((data) => {
-          const blob = new Blob([data], { type: 'image/png' });
-          return this.sanitizer.bypassSecurityTrustUrl(
-            URL.createObjectURL(blob),
-          );
-        }),
-      );
+      return fileName;
     }),
+  );
+
+  private imageSubscription: Subscription = this.image$.subscribe(
+    (fileName) => {
+      if (fileName) {
+        this.fileService.getImage(fileName).then((url) => {
+          if (url) {
+            this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+          }
+        });
+      }
+    },
   );
 
   navigatePreviousOperation() {
@@ -95,5 +100,6 @@ export class ViewChartComponent implements OnDestroy {
 
   ngOnDestroy() {
     this.operationSubscription.unsubscribe();
+    this.imageSubscription.unsubscribe();
   }
 }

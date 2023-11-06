@@ -1,9 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FileUploader } from 'ng2-file-upload';
 import { firstValueFrom, Observable, Subscription } from 'rxjs';
-import { FileService } from 'src/app/core/service/file.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
@@ -27,10 +25,7 @@ import { ProjectionService } from '../../../service/projection.service';
 export class ProjectionMutationComponent {
   isLoading: boolean = false;
   errors: Array<string> = [];
-  uploader: FileUploader = new FileUploader({
-    url: inject(FileService).fileUploadUri,
-    itemAlias: 'chart',
-  });
+
   chartFileName: string = '';
   idComment?: number = undefined;
   uploaderSubscription: Subscription | undefined;
@@ -77,21 +72,7 @@ export class ProjectionMutationComponent {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private routingService: RoutingService,
-  ) {
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-    };
-
-    this.uploader.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any,
-    ) => {
-      this.chartFileName = JSON.parse(response);
-      console.log('Uploaded successfully...', status);
-    };
-  }
+  ) {}
 
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
@@ -107,10 +88,6 @@ export class ProjectionMutationComponent {
         this.setInitialFormStateComment(comment);
       }
     }
-  }
-
-  get isFileUploaded(): boolean {
-    return this.uploader.queue.length > 0;
   }
 
   get mutation(): MutationType {
@@ -168,10 +145,6 @@ export class ProjectionMutationComponent {
     return this.commentService.updateComment(commentUpdateInput);
   }
 
-  removeUploadedFile() {
-    this.uploader.clearQueue();
-  }
-
   private setInitialFormStateProj(projectionDetails: Projection) {
     this.id.setValue(projectionDetails.id);
     this.symbol.setValue(projectionDetails.symbol.id_sym);
@@ -190,23 +163,23 @@ export class ProjectionMutationComponent {
   private async handleUploadChart() {
     try {
       this.isLoading = true;
-      if (this.isFileUploaded) {
-        const fileItem = this.uploader.queue[this.uploader.queue.length - 1];
+      // if (this.isFileUploaded) {
+      //   const fileItem = this.uploader.queue[this.uploader.queue.length - 1];
 
-        const uploadPromise = new Promise<void>((resolve) => {
-          this.uploaderSubscription = this.uploader.response.subscribe(
-            (res) => {
-              this.chartFileName = JSON.parse(res).filename;
-              resolve();
-            },
-          );
-        });
+      //   const uploadPromise = new Promise<void>((resolve) => {
+      //     this.uploaderSubscription = this.uploader.response.subscribe(
+      //       (res) => {
+      //         this.chartFileName = JSON.parse(res).filename;
+      //         resolve();
+      //       },
+      //     );
+      //   });
 
-        fileItem.upload();
+      //   fileItem.upload();
 
-        this.isLoading = false;
-        return uploadPromise;
-      }
+      //   this.isLoading = false;
+      //   return uploadPromise;
+      // }
     } catch (e: any) {
       this.errors = [...this.errors, e.message as string];
     } finally {

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { Observable, Subscription, switchMap } from 'rxjs';
+import { combineLatest, map, Subscription, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
-import { Projection } from '../../model/projection';
 import { ProjectionService } from '../../service/projection.service';
 
 type Interval =
@@ -33,10 +32,8 @@ enum Themes {
   selector: 'app-view-chart',
   templateUrl: './view-chart.component.html',
 })
-export class ViewChartComponent implements OnInit {
-  projection$?: Observable<Projection>;
+export class ViewChartComponent {
   projectionSubscription?: Subscription;
-  fileSubscription?: Subscription;
   imageUrl?: SafeUrl;
 
   constructor(
@@ -47,60 +44,62 @@ export class ViewChartComponent implements OnInit {
     private toastService: ToastService,
   ) {}
 
-  ngOnInit() {
-    this.projection$ = this.activatedRoute.params.pipe(
-      switchMap((params) => {
-        const id = params['id'];
-        return this.projectionService.getProjection(id);
-      }),
-    );
+  projection$ = this.activatedRoute.params.pipe(
+    switchMap((params) => {
+      const id = params['id'];
+      return this.projectionService.getProjection(id);
+    }),
+  );
 
-    const intervalMapping: Record<string, Interval> = {
-      M1: '1',
-      M3: '3',
-      M5: '5',
-      M15: '15',
-      M30: '30',
-      H1: '60',
-      H2: '120',
-      H3: '180',
-      D: IntervalTypes.D,
-      W: IntervalTypes.W,
-    };
+  private image$ = combineLatest([
+    this.activatedRoute.params,
+    this.projectionService.projections$,
+  ]).pipe(
+    map(([params, projections]) => {
+      const fileName = projections.find(
+        (projection) => projection.id === parseInt(params['id']),
+      )?.graph;
+      return fileName;
+    }),
+  );
 
-    // this.projection$.subscribe((projection) => {
-    //   this.widgetConfig = {
-    //     symbol: projection.symbol.name_sym,
-    //     interval: intervalMapping[projection.timeframe],
-    //     theme: Themes.DARK,
-    //     widgetType: 'widget',
-    //   };
-    // });
+  private imageSubscription: Subscription = this.image$.subscribe(
+    (fileName) => {
+      if (fileName) {
+        this.fileService.getImage(fileName).then((url) => {
+          if (url) {
+            this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+          }
+        });
+      }
+    },
+  );
 
-    const filename = this.activatedRoute.snapshot.queryParamMap.get('fileName');
-
-    if (filename) {
-      this.downloadFile(filename);
-    }
-  }
-
-  private downloadFile(filename: string) {
-    this.fileSubscription = this.fileService.downloadFile(filename).subscribe(
-      (data) => {
-        const blob = new Blob([data], { type: 'image/png' });
-        this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(
-          URL.createObjectURL(blob),
-        );
-      },
-      (error) =>
-        this.toastService.error({
-          message: error,
-        }),
-    );
-  }
+  // ngOnInit() {
+  // const intervalMapping: Record<string, Interval> = {
+  //   M1: '1',
+  //   M3: '3',
+  //   M5: '5',
+  //   M15: '15',
+  //   M30: '30',
+  //   H1: '60',
+  //   H2: '120',
+  //   H3: '180',
+  //   D: IntervalTypes.D,
+  //   W: IntervalTypes.W,
+  // };
+  // this.projection$.subscribe((projection) => {
+  //   this.widgetConfig = {
+  //     symbol: projection.symbol.name_sym,
+  //     interval: intervalMapping[projection.timeframe],
+  //     theme: Themes.DARK,
+  //     widgetType: 'widget',
+  //   };
+  // });
+  // }
 
   ngOnDestroy() {
-    this.fileSubscription?.unsubscribe();
+    this.imageSubscription?.unsubscribe();
     this.projectionSubscription?.unsubscribe();
   }
 }

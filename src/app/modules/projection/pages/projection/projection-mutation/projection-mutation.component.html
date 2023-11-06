@@ -129,18 +129,16 @@
               class="hidden"
               type="file"
               name="chart"
-              ng2FileSelect
-              [uploader]="uploader">
+              ng2FileSelect>
           </label>
         </button>
         <div
-          *ngIf="isFileUploaded"
+          *ngIf="false"
           class="flex flex-row items-center pl-4 space-x-2">
           <p class="text-white">File uploaded</p>
           <app-text-button
             buttonText="Cancel"
-            buttonClass="bg-red text-white rounded p-1"
-            (clickEvent)="removeUploadedFile()">
+            buttonClass="bg-red text-white rounded p-1">
           </app-text-button>
         </div>
       </div>
