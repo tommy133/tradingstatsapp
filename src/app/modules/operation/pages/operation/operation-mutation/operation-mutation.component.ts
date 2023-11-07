@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, Observable, Subscription } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
+import { FileService } from 'src/app/core/service/file.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
@@ -24,13 +25,23 @@ import { OperationService } from '../../../service/operation.service';
   styles: [],
 })
 export class OperationMutationComponent implements OnInit {
+  private formBuilder = inject(FormBuilder);
+  private symbolService = inject(SymbolService);
+  private statusService = inject(StatusService);
+  private operationService = inject(OperationService);
+  private commentService = inject(OperationCommentService);
+  private routingService = inject(RoutingService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private toastService = inject(ToastService);
+  private fileService = inject(FileService);
+
   isLoading: boolean = false;
   errors: Array<string> = [];
 
-  chartFileName: string = '';
   account: number = 1;
   idComment?: number = undefined;
-  uploaderSubscription: Subscription | undefined;
+  uploadedFile: File | null = null;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
   statuses$: Observable<Status[]> = this.statusService.getStatuses();
@@ -71,18 +82,6 @@ export class OperationMutationComponent implements OnInit {
     points: this.points,
     comment: this.comment,
   });
-
-  constructor(
-    private formBuilder: FormBuilder,
-    private operationService: OperationService,
-    private symbolService: SymbolService,
-    private statusService: StatusService,
-    private commentService: OperationCommentService,
-    private toastService: ToastService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private routingService: RoutingService,
-  ) {}
 
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
@@ -158,6 +157,9 @@ export class OperationMutationComponent implements OnInit {
   }
 
   onAddOperation(operationCreateInput: OperationCreateInput) {
+    if (this.uploadedFile) {
+      this.uploadFileStorage(this.uploadedFile);
+    }
     return this.operationService.addOperation(operationCreateInput);
   }
 
@@ -179,7 +181,6 @@ export class OperationMutationComponent implements OnInit {
       updown,
       dateOpen,
       dateClose,
-      graph,
       timeframe,
       status: { id_st },
       account: { id_ac },
@@ -192,7 +193,6 @@ export class OperationMutationComponent implements OnInit {
     this.orderType.setValue(updown ? 1 : 0);
     this.dateOpen.setValue(formatDate(dateOpen!));
     this.dateClose.setValue(formatDate(dateClose!));
-    this.chartFileName = graph!;
     this.timeframe.setValue(timeframe);
     this.status.setValue(id_st);
     this.account = id_ac;
@@ -206,31 +206,16 @@ export class OperationMutationComponent implements OnInit {
     this.comment.setValue(comment.opcomment);
   }
 
-  private async handleUploadChart() {
-    try {
-      this.isLoading = true;
-      // if (this.isFileUploaded) {
-      //   const fileItem = this.uploader.queue[this.uploader.queue.length - 1];
+  uploadFileMemory($event: any) {
+    this.uploadedFile = $event.target.files[0];
+  }
 
-      //   const uploadPromise = new Promise<void>((resolve) => {
-      //     this.uploaderSubscription = this.uploader.response.subscribe(
-      //       (res) => {
-      //         this.chartFileName = JSON.parse(res).filename;
-      //         resolve();
-      //       },
-      //     );
-      //   });
+  removeFileMemory() {
+    this.uploadedFile = null;
+  }
 
-      //   fileItem.upload();
-
-      //   this.isLoading = false;
-      //   return uploadPromise;
-      // }
-    } catch (e: any) {
-      this.errors = [...this.errors, e.message as string];
-    } finally {
-      this.isLoading = false;
-    }
+  private uploadFileStorage(file: File) {
+    this.fileService.uploadImage(file);
   }
 
   private async handleMutationOperation(
@@ -291,7 +276,7 @@ export class OperationMutationComponent implements OnInit {
       updown: orderType!,
       time_op: dateOpen!,
       time_close: dateClose!,
-      graph: this.chartFileName,
+      graph: this.uploadedFile!.name,
       name_tf: timeframe!.toString(),
       id_st: 1,
       id_ac: this.account!,
@@ -320,7 +305,7 @@ export class OperationMutationComponent implements OnInit {
       updown: orderType!,
       time_op: dateOpen!,
       time_close: dateClose!,
-      graph: this.chartFileName,
+      graph: this.uploadedFile!.name,
       name_tf: timeframe!.toString(),
       id_st: status!,
       id_ac: this.account!,
@@ -355,8 +340,6 @@ export class OperationMutationComponent implements OnInit {
       return;
     }
 
-    await this.handleUploadChart(); // wait to load this.chartFileName
-
     const operationInput: OperationCreateInput | OperationUpdateInput = this
       .isMutationAdd
       ? this.getOperationCreateInput()
@@ -388,12 +371,6 @@ export class OperationMutationComponent implements OnInit {
           message: error,
         });
       });
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.uploaderSubscription) {
-      this.uploaderSubscription.unsubscribe();
     }
   }
 }

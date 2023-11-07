@@ -129,17 +129,21 @@
               class="hidden"
               type="file"
               name="chart"
-              ng2FileSelect>
+              (change)="uploadFileMemory($event)">
           </label>
         </button>
         <div
-          *ngIf="false"
-          class="flex flex-row items-center pl-4 space-x-2">
-          <p class="text-white">File uploaded</p>
-          <app-text-button
-            buttonText="Cancel"
-            buttonClass="bg-red text-white rounded p-1">
-          </app-text-button>
+          *ngIf="uploadedFile"
+          class="flex flex-col">
+          <div class="flex flex-row items-center pl-4 space-x-2">
+            <p class="text-white">File uploaded</p>
+            <app-text-button
+              buttonText="Cancel"
+              buttonClass="bg-red text-white rounded p-1"
+              (clickEvent)="removeFileMemory()">
+            </app-text-button>
+          </div>
+          <p class="text-green">{{uploadedFile.name}}</p>
         </div>
       </div>
     </div>
