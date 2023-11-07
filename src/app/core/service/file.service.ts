@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import {
+  deleteObject,
   getDownloadURL,
   ref,
   Storage,
@@ -33,6 +34,16 @@ export class FileService {
     } catch (error) {
       console.error('Error getting image:', error);
       return null;
+    }
+  }
+
+  public async deleteImage(imgName: string) {
+    const imageRef = ref(this.storage, `${this.IMG_DIR}/${imgName}`);
+
+    try {
+      await deleteObject(imageRef);
+    } catch (error) {
+      console.error('Error deleting image:', error);
     }
   }
 }
