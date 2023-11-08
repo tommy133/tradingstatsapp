@@ -39,6 +39,7 @@ export class ProjectionMutationComponent {
   errors: Array<string> = [];
 
   idComment?: number = undefined;
+  graphFileName: string | null = null;
   uploadedFile: File | null = null;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
@@ -137,6 +138,12 @@ export class ProjectionMutationComponent {
   }
 
   onUpdateProjection(projectionUpdateInput: ProjectionUpdateInput) {
+    if (this.uploadedFile) {
+      if (this.graphFileName) {
+        this.fileService.deleteImage(this.graphFileName);
+      }
+      this.uploadFileStorage(this.uploadedFile);
+    }
     return this.projectionService.updateProjection(projectionUpdateInput);
   }
 
@@ -152,6 +159,7 @@ export class ProjectionMutationComponent {
     this.symbol.setValue(projectionDetails.symbol.id_sym);
     this.orderType.setValue(projectionDetails.updown ? 1 : 0);
     this.date.setValue(formatDate(projectionDetails.date!));
+    this.graphFileName = projectionDetails.graph!;
     this.timeframe.setValue(projectionDetails.timeframe);
     this.status.setValue(projectionDetails.status.id_st);
   }

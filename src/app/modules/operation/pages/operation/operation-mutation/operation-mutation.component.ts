@@ -41,6 +41,7 @@ export class OperationMutationComponent implements OnInit {
 
   account: number = 1;
   idComment?: number = undefined;
+  graphFileName: string | null = null;
   uploadedFile: File | null = null;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
@@ -164,6 +165,12 @@ export class OperationMutationComponent implements OnInit {
   }
 
   onUpdateOperation(operationUpdateInput: OperationUpdateInput) {
+    if (this.uploadedFile) {
+      if (this.graphFileName) {
+        this.fileService.deleteImage(this.graphFileName);
+      }
+      this.uploadFileStorage(this.uploadedFile);
+    }
     return this.operationService.updateOperation(operationUpdateInput);
   }
 
@@ -181,6 +188,7 @@ export class OperationMutationComponent implements OnInit {
       updown,
       dateOpen,
       dateClose,
+      graph,
       timeframe,
       status: { id_st },
       account: { id_ac },
@@ -193,6 +201,7 @@ export class OperationMutationComponent implements OnInit {
     this.orderType.setValue(updown ? 1 : 0);
     this.dateOpen.setValue(formatDate(dateOpen!));
     this.dateClose.setValue(formatDate(dateClose!));
+    this.graphFileName = graph!;
     this.timeframe.setValue(timeframe);
     this.status.setValue(id_st);
     this.account = id_ac;
