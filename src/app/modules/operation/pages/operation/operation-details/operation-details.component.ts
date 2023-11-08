@@ -1,6 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
+import { FileService } from 'src/app/core/service/file.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
 import { SidebarRightService } from 'src/app/core/service/sidebar-right.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
@@ -19,6 +20,7 @@ export class OperationDetailsComponent implements OnInit {
   private router = inject(Router);
   private routingService = inject(RoutingService);
   private sideBarRightService = inject(SidebarRightService);
+  private fileService = inject(FileService);
 
   @Input() extended: boolean = true;
   operation$?: Observable<Operation>;
@@ -42,9 +44,14 @@ export class OperationDetailsComponent implements OnInit {
     );
   }
 
-  public onDeleteOperation(operationId: number): void {
+  public onDeleteOperation(operation: Operation): void {
+    const { id, graph } = operation;
+
     if (confirm('Are you sure you want to delete this operation?')) {
-      this.operationService.deleteOperation(operationId);
+      if (graph) {
+        this.fileService.deleteImage(graph);
+      }
+      this.operationService.deleteOperation(id);
       this.goBack();
     }
   }

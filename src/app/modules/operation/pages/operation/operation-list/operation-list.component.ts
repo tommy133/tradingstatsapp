@@ -2,12 +2,14 @@ import { trigger } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
 import {
-  SidebarRightAnimationState,
   sidebarRightAnimationSlide,
+  SidebarRightAnimationState,
 } from 'src/app/shared/utils/sidebar-right-animation';
+import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
 
 @Component({
@@ -21,6 +23,7 @@ export class OperationListComponent {
   private routingService = inject(RoutingService);
   private operationService = inject(OperationService);
   private formService = inject(FormService);
+  private fileService = inject(FileService);
 
   operations$ = this.operationService.operations$;
   searchOperationsControl = new FormControl<string>('');
@@ -43,7 +46,11 @@ export class OperationListComponent {
     );
   }
 
-  public onDeleteOperation(operationId: number): void {
-    this.operationService.deleteOperation(operationId);
+  public onDeleteOperation(operation: Operation): void {
+    const { id, graph } = operation;
+    if (graph) {
+      this.fileService.deleteImage(graph);
+    }
+    this.operationService.deleteOperation(id);
   }
 }

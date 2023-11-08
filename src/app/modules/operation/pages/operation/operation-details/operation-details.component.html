@@ -16,7 +16,7 @@
           text="Delete"
           bgColor="bg-red"
           type="submit"
-          (clickEvent)="onDeleteOperation(operation.id)"></app-rounded-button>
+          (clickEvent)="onDeleteOperation(operation)"></app-rounded-button>
       </div>
     </div>
   </div>
@@ -114,7 +114,8 @@
             cols="30"
             rows="5"
             class="rounded"
-            readonly>{{comment.opcomment}}
+            readonly>
+            {{comment.opcomment}}
           </textarea>
         </ng-container>
       </div>
