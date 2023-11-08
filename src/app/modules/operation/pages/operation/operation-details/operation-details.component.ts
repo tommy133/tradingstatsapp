@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { RoutingService } from 'src/app/core/service/routing.service';
@@ -43,8 +43,10 @@ export class OperationDetailsComponent implements OnInit {
   }
 
   public onDeleteOperation(operationId: number): void {
-    this.operationService.deleteOperation(operationId);
-    this.goBack();
+    if (confirm('Are you sure you want to delete this operation?')) {
+      this.operationService.deleteOperation(operationId);
+      this.goBack();
+    }
   }
 
   goToEdit(operationId: number) {

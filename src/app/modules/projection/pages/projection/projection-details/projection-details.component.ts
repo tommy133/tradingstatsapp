@@ -40,8 +40,10 @@ export class ProjectionDetailsComponent implements OnInit {
   }
 
   public onDeleteProjection(projectionId: number): void {
-    this.projectionService.deleteProjection(projectionId);
-    this.goBack();
+    if (confirm('Are you sure you want to delete this projection?')) {
+      this.projectionService.deleteProjection(projectionId);
+      this.goBack();
+    }
   }
 
   private goBack() {
