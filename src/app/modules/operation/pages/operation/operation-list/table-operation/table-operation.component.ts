@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RoutingService } from 'src/app/core/service/routing.service';
 import { Operation } from 'src/app/modules/operation/model/operation';
@@ -17,7 +17,7 @@ export class TableOperationComponent {
   private routingService = inject(RoutingService);
 
   @Input() rows!: Operation[];
-  @Output() deleteEvent = new EventEmitter<number>();
+  @Output() deleteEvent = new EventEmitter<Operation>();
 
   columns: TableColumn[] = [
     { name: 'Symbol' },
@@ -47,10 +47,10 @@ export class TableOperationComponent {
     this.router.navigate([`/operations/edit/${operationId}`]);
   }
 
-  deleteOperation(operationId: number, event: any) {
+  deleteOperation(operation: Operation, event: any) {
     event.stopPropagation();
     if (confirm('Are you sure you want to delete this operation?')) {
-      this.deleteEvent.emit(operationId);
+      this.deleteEvent.emit(operation);
     }
   }
 }

@@ -16,6 +16,7 @@
     "@angular/common": "^16.2.12",
     "@angular/compiler": "^16.2.12",
     "@angular/core": "^16.2.12",
+    "@angular/fire": "^16.0.0",
     "@angular/forms": "^16.2.12",
     "@angular/platform-browser": "^16.2.12",
     "@angular/platform-browser-dynamic": "^16.2.12",
@@ -23,7 +24,6 @@
     "angular-svg-icon": "^14.0.0",
     "highcharts": "^11.0.1",
     "highcharts-angular": "^3.0.0",
-    "ng2-file-upload": "^5.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.5.3",
     "zone.js": "^0.13.0"

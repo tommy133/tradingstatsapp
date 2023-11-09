@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FileUploader } from 'ng2-file-upload';
-import { Observable, Subscription, firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
+import { FileService } from 'src/app/core/service/file.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
@@ -12,7 +12,6 @@ import { Timeframe } from 'src/app/data/models/timeframe';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
-import { FileService } from 'src/app/file.service';
 import { MutationType } from 'src/app/shared/utils/custom-types';
 import { formatDate } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
@@ -25,15 +24,23 @@ import { ProjectionService } from '../../../service/projection.service';
   templateUrl: './projection-mutation.component.html',
 })
 export class ProjectionMutationComponent {
+  private formBuilder = inject(FormBuilder);
+  private symbolService = inject(SymbolService);
+  private statusService = inject(StatusService);
+  private projectionService = inject(ProjectionService);
+  private commentService = inject(ProjectionCommentService);
+  private routingService = inject(RoutingService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private toastService = inject(ToastService);
+  private fileService = inject(FileService);
+
   isLoading: boolean = false;
   errors: Array<string> = [];
-  uploader: FileUploader = new FileUploader({
-    url: inject(FileService).fileUploadUri,
-    itemAlias: 'chart',
-  });
-  chartFileName: string = '';
+
   idComment?: number = undefined;
-  uploaderSubscription: Subscription | undefined;
+  graphFileName: string | null = null;
+  uploadedFile: File | null = null;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
   statuses$: Observable<Status[]> = this.statusService.getStatuses();
@@ -67,32 +74,6 @@ export class ProjectionMutationComponent {
     comment: this.comment,
   });
 
-  constructor(
-    private formBuilder: FormBuilder,
-    private projectionService: ProjectionService,
-    private symbolService: SymbolService,
-    private statusService: StatusService,
-    private commentService: ProjectionCommentService,
-    private toastService: ToastService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private routingService: RoutingService,
-  ) {
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-    };
-
-    this.uploader.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any,
-    ) => {
-      this.chartFileName = JSON.parse(response);
-      console.log('Uploaded successfully...', status);
-    };
-  }
-
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
     if (id) {
@@ -107,10 +88,6 @@ export class ProjectionMutationComponent {
         this.setInitialFormStateComment(comment);
       }
     }
-  }
-
-  get isFileUploaded(): boolean {
-    return this.uploader.queue.length > 0;
   }
 
   get mutation(): MutationType {
@@ -154,10 +131,19 @@ export class ProjectionMutationComponent {
   }
 
   onAddProjection(projectionCreateInput: ProjectionCreateInput) {
+    if (this.uploadedFile) {
+      this.uploadFileStorage(this.uploadedFile);
+    }
     return this.projectionService.addProjection(projectionCreateInput);
   }
 
   onUpdateProjection(projectionUpdateInput: ProjectionUpdateInput) {
+    if (this.uploadedFile) {
+      if (this.graphFileName) {
+        this.fileService.deleteImage(this.graphFileName);
+      }
+      this.uploadFileStorage(this.uploadedFile);
+    }
     return this.projectionService.updateProjection(projectionUpdateInput);
   }
 
@@ -168,16 +154,12 @@ export class ProjectionMutationComponent {
     return this.commentService.updateComment(commentUpdateInput);
   }
 
-  removeUploadedFile() {
-    this.uploader.clearQueue();
-  }
-
   private setInitialFormStateProj(projectionDetails: Projection) {
     this.id.setValue(projectionDetails.id);
     this.symbol.setValue(projectionDetails.symbol.id_sym);
     this.orderType.setValue(projectionDetails.updown ? 1 : 0);
     this.date.setValue(formatDate(projectionDetails.date!));
-    this.chartFileName = projectionDetails.graph!;
+    this.graphFileName = projectionDetails.graph!;
     this.timeframe.setValue(projectionDetails.timeframe);
     this.status.setValue(projectionDetails.status.id_st);
   }
@@ -187,31 +169,16 @@ export class ProjectionMutationComponent {
     this.comment.setValue(comment.pcomment);
   }
 
-  private async handleUploadChart() {
-    try {
-      this.isLoading = true;
-      if (this.isFileUploaded) {
-        const fileItem = this.uploader.queue[this.uploader.queue.length - 1];
+  uploadFileMemory($event: any) {
+    this.uploadedFile = $event.target.files[0];
+  }
 
-        const uploadPromise = new Promise<void>((resolve) => {
-          this.uploaderSubscription = this.uploader.response.subscribe(
-            (res) => {
-              this.chartFileName = JSON.parse(res).filename;
-              resolve();
-            },
-          );
-        });
+  removeFileMemory() {
+    this.uploadedFile = null;
+  }
 
-        fileItem.upload();
-
-        this.isLoading = false;
-        return uploadPromise;
-      }
-    } catch (e: any) {
-      this.errors = [...this.errors, e.message as string];
-    } finally {
-      this.isLoading = false;
-    }
+  private uploadFileStorage(file: File) {
+    this.fileService.uploadImage(file);
   }
 
   private async handleMutationProjection(
@@ -262,7 +229,7 @@ export class ProjectionMutationComponent {
       id_sym: symbol!,
       updown: orderType!,
       date_proj: date!,
-      graph: this.chartFileName,
+      graph: this.uploadedFile!.name,
       name_tf: timeframe!.toString(),
       id_st: 3,
     };
@@ -276,7 +243,7 @@ export class ProjectionMutationComponent {
       id_sym: symbol!,
       updown: orderType!,
       date_proj: date!,
-      graph: this.chartFileName,
+      graph: this.uploadedFile!.name,
       name_tf: timeframe!.toString(),
       id_st: status!,
     };
@@ -306,8 +273,6 @@ export class ProjectionMutationComponent {
       });
       return;
     }
-
-    await this.handleUploadChart(); // wait to load this.chartFileName
 
     const projectionInput: ProjectionCreateInput | ProjectionUpdateInput = this
       .isMutationAdd
@@ -340,12 +305,6 @@ export class ProjectionMutationComponent {
           message: error,
         });
       });
-    }
-  }
-
-  ngOnDestroy() {
-    if (this.uploaderSubscription) {
-      this.uploaderSubscription.unsubscribe();
     }
   }
 }
