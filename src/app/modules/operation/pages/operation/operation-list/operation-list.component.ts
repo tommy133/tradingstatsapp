@@ -1,19 +1,15 @@
-import { trigger } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
-import { SidebarAnimationState } from 'src/app/shared/utils/custom-types';
-import { sidebarRightAnimationSlide } from 'src/app/shared/utils/sidebar-right-animation';
 import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
 
 @Component({
   selector: 'app-operation-list',
   templateUrl: './operation-list.component.html',
-  animations: [trigger('sidebarRightInOut', sidebarRightAnimationSlide)],
 })
 export class OperationListComponent {
   private router = inject(Router);
@@ -34,8 +30,6 @@ export class OperationListComponent {
     ({ symbol }) => symbol.name_sym,
   );
 
-  sidebarRightAnimationState: SidebarAnimationState = 'out';
-
   goToAdd() {
     this.routingService.navigatePreservingQueryParams(
       ['add'],
@@ -50,5 +44,9 @@ export class OperationListComponent {
       this.fileService.deleteImage(graph);
     }
     this.operationService.deleteOperation(id);
+  }
+
+  onCloseSidebar() {
+    this.router.navigate(['.'], { relativeTo: this.activatedRoute });
   }
 }

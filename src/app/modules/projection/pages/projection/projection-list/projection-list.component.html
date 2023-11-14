@@ -21,12 +21,9 @@
       (deleteEvent)="onDeleteProjection($event)"></app-table-projection>
   </div>
   <app-sidebar
-    class="fixed top-0 bottom-0 right-0 md:w-[460px]"
-    [@sidebarRightInOut]="sidebarRightAnimationState">
-    <router-outlet
-      (activate)="sidebarRightAnimationState = 'in'"
-      (deactivate)="sidebarRightAnimationState = 'out'"></router-outlet>
-
+    [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"
+    (closeEvent)="onCloseSidebar()">
+    <router-outlet #sidebarRight="outlet"></router-outlet>
   </app-sidebar>
 </ng-container>
 <ng-template #loading>

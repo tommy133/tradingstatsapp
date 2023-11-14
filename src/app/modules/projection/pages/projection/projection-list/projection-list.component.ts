@@ -1,22 +1,21 @@
-import { trigger } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
-import { SidebarAnimationState } from 'src/app/shared/utils/custom-types';
-import { sidebarRightAnimationSlide } from 'src/app/shared/utils/sidebar-right-animation';
 import { Projection } from '../../../model/projection';
 import { ProjectionService } from '../../../service/projection.service';
 
 @Component({
   selector: 'app-projection-list',
   templateUrl: './projection-list.component.html',
-  animations: [trigger('sidebarRightInOut', sidebarRightAnimationSlide)],
 })
 export class ProjectionListComponent {
   private projectionService = inject(ProjectionService);
   private formService = inject(FormService);
   private fileService = inject(FileService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
 
   projections$ = this.projectionService.projections$;
   searchProjectionsControl = new FormControl<string>('');
@@ -29,13 +28,15 @@ export class ProjectionListComponent {
     ({ symbol }) => symbol.name_sym,
   );
 
-  sidebarRightAnimationState: SidebarAnimationState = 'out';
-
   public onDeleteProjection(projection: Projection): void {
     const { id, graph } = projection;
     if (graph) {
       this.fileService.deleteImage(graph);
     }
     this.projectionService.deleteProjection(id);
+  }
+
+  onCloseSidebar() {
+    this.router.navigate(['.'], { relativeTo: this.activatedRoute });
   }
 }
