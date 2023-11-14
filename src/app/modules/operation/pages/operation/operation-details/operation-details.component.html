@@ -1,7 +1,7 @@
 <ng-container *ngIf="operation$ | async as operation; else loading">
   <div class="p-8 bg-dark">
     <div class="flex justify-between">
-      <app-close-button (closeEvent)="extended ?  goBack() : closeSidebarRight()"></app-close-button>
+      <app-close-button (closeEvent)="extended ?  goBack() : closeSidebarLeft()"></app-close-button>
       <div
         *ngIf="extended"
         class="flex flex-row items-center space-x-5">
@@ -114,7 +114,8 @@
             cols="30"
             rows="5"
             class="rounded"
-            readonly>{{comment.opcomment}}
+            readonly>
+            {{comment.opcomment}}
           </textarea>
         </ng-container>
       </div>

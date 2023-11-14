@@ -5,10 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
-import {
-  sidebarRightAnimationSlide,
-  SidebarRightAnimationState,
-} from 'src/app/shared/utils/sidebar-right-animation';
+import { SidebarAnimationState } from 'src/app/shared/utils/custom-types';
+import { sidebarRightAnimationSlide } from 'src/app/shared/utils/sidebar-right-animation';
 import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
 
@@ -36,7 +34,7 @@ export class OperationListComponent {
     ({ symbol }) => symbol.name_sym,
   );
 
-  sidebarRightAnimationState: SidebarRightAnimationState = 'out';
+  sidebarRightAnimationState: SidebarAnimationState = 'out';
 
   goToAdd() {
     this.routingService.navigatePreservingQueryParams(

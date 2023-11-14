@@ -3,10 +3,8 @@ import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
-import {
-  sidebarRightAnimationSlide,
-  SidebarRightAnimationState,
-} from 'src/app/shared/utils/sidebar-right-animation';
+import { SidebarAnimationState } from 'src/app/shared/utils/custom-types';
+import { sidebarRightAnimationSlide } from 'src/app/shared/utils/sidebar-right-animation';
 import { Projection } from '../../../model/projection';
 import { ProjectionService } from '../../../service/projection.service';
 
@@ -31,7 +29,7 @@ export class ProjectionListComponent {
     ({ symbol }) => symbol.name_sym,
   );
 
-  sidebarRightAnimationState: SidebarRightAnimationState = 'out';
+  sidebarRightAnimationState: SidebarAnimationState = 'out';
 
   public onDeleteProjection(projection: Projection): void {
     const { id, graph } = projection;

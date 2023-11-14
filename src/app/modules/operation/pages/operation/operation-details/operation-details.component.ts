@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
-import { SidebarRightService } from 'src/app/core/service/sidebar-right.service';
+import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { Operation } from '../../../model/operation';
@@ -19,7 +19,7 @@ export class OperationDetailsComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private routingService = inject(RoutingService);
-  private sideBarRightService = inject(SidebarRightService);
+  private sidebarService = inject(SidebarService);
   private fileService = inject(FileService);
 
   @Input() extended: boolean = true;
@@ -72,8 +72,8 @@ export class OperationDetailsComponent implements OnInit {
     );
   }
 
-  closeSidebarRight() {
-    this.sideBarRightService.closeSidebarRight();
+  closeSidebarLeft() {
+    this.sidebarService.closeSidebarLeft();
   }
 
   goToChart(operation: Operation) {

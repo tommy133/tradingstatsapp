@@ -4,15 +4,15 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, Subscription } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
-import { SidebarRightService } from 'src/app/core/service/sidebar-right.service';
+import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
-import { sidebarRightAnimationSlide } from 'src/app/shared/utils/sidebar-right-animation';
+import { sidebarLeftAnimationSlide } from 'src/app/shared/utils/sidebar-left-animation';
 import { Operation } from '../../model/operation';
 import { OperationService } from '../../service/operation.service';
 @Component({
   selector: 'app-view-chart',
   templateUrl: './view-chart.component.html',
-  animations: [trigger('sidebarRightInOut', sidebarRightAnimationSlide)],
+  animations: [trigger('sidebarLeftInOut', sidebarLeftAnimationSlide)],
 })
 export class ViewChartComponent implements OnDestroy {
   private fileService = inject(FileService);
@@ -21,7 +21,7 @@ export class ViewChartComponent implements OnDestroy {
   private sanitizer = inject(DomSanitizer);
   private toastService = inject(ToastService);
   private operationService = inject(OperationService);
-  private sidebarRightService = inject(SidebarRightService);
+  private sidebarService = inject(SidebarService);
 
   operations: Operation[] = [];
   operationsWithChart$ = this.operationService.operations$.pipe(
@@ -39,7 +39,7 @@ export class ViewChartComponent implements OnDestroy {
   //   widgetType: 'widget',
   // };
 
-  sidebarRightState$ = this.sidebarRightService.sidebarRightState$;
+  sidebarLeftState$ = this.sidebarService.sidebarLeftState$;
 
   private image$ = combineLatest([
     this.activatedRoute.params,
@@ -87,8 +87,8 @@ export class ViewChartComponent implements OnDestroy {
     });
   }
 
-  openSidebarRight() {
-    this.sidebarRightService.openSidebarRight();
+  openSidebarLeft() {
+    this.sidebarService.openSidebarLeft();
   }
 
   private getNavigationIndex() {

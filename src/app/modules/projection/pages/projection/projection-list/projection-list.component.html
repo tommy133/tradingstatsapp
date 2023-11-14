@@ -20,14 +20,14 @@
       [rows]="projections"
       (deleteEvent)="onDeleteProjection($event)"></app-table-projection>
   </div>
-  <app-sidebar-right
+  <app-sidebar
     class="fixed top-0 bottom-0 right-0 md:w-[460px]"
     [@sidebarRightInOut]="sidebarRightAnimationState">
     <router-outlet
       (activate)="sidebarRightAnimationState = 'in'"
       (deactivate)="sidebarRightAnimationState = 'out'"></router-outlet>
 
-  </app-sidebar-right>
+  </app-sidebar>
 </ng-container>
 <ng-template #loading>
   <app-loading-template></app-loading-template>

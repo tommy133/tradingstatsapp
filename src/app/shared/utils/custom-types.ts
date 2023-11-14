@@ -7,3 +7,5 @@ export enum MutationType {
   ADD,
   EDIT,
 }
+
+export type SidebarAnimationState = 'in' | 'out';

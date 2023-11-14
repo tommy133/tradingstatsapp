@@ -16,7 +16,7 @@ import { LoadingTemplateComponent } from './components/loading-template/loading-
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { RoundedButtonComponent } from './components/rounded-button/rounded-button.component';
 import { SearchByTextComponent } from './components/search-by-text/search-by-text.component';
-import { SidebarRightComponent } from './components/sidebar-right/sidebar-right.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
 import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
@@ -29,7 +29,7 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
     NavbarComponent,
     SpinnerComponent,
     LoadingTemplateComponent,
-    SidebarRightComponent,
+    SidebarComponent,
     RoundedButtonComponent,
     FormLabelComponent,
     CloseButtonComponent,
@@ -60,7 +60,7 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
     NavbarComponent,
     SpinnerComponent,
     LoadingTemplateComponent,
-    SidebarRightComponent,
+    SidebarComponent,
     RoundedButtonComponent,
     FormLabelComponent,
     CloseButtonComponent,

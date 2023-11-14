@@ -1,6 +1,6 @@
 import { animate, state, style, transition } from '@angular/animations';
 
-export const sidebarRightAnimationSlide = [
+export const sidebarLeftAnimationSlide = [
   state(
     'in',
     style({
@@ -11,7 +11,7 @@ export const sidebarRightAnimationSlide = [
   state(
     'out',
     style({
-      transform: 'translateX(700px)',
+      transform: 'translateX(-700px)',
     }),
   ),
 
