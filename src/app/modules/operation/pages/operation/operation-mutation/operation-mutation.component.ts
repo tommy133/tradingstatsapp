@@ -314,7 +314,7 @@ export class OperationMutationComponent implements OnInit {
       updown: orderType!,
       time_op: dateOpen!,
       time_close: dateClose!,
-      graph: this.uploadedFile!.name,
+      graph: this.uploadedFile?.name,
       name_tf: timeframe!.toString(),
       id_st: status!,
       id_ac: this.account!,
