@@ -8,7 +8,6 @@ import { OperationListComponent } from './pages/operation/operation-list/operati
 import { TableOperationComponent } from './pages/operation/operation-list/table-operation/table-operation.component';
 import { OperationMutationComponent } from './pages/operation/operation-mutation/operation-mutation.component';
 import { ViewChartComponent } from './pages/view-chart/view-chart.component';
-import { InnerSidebarLeftDirective } from './pages/view-chart/inner-sidebar-left.directive';
 
 @NgModule({
   declarations: [
@@ -17,7 +16,6 @@ import { InnerSidebarLeftDirective } from './pages/view-chart/inner-sidebar-left
     OperationDetailsComponent,
     OperationMutationComponent,
     ViewChartComponent,
-    InnerSidebarLeftDirective,
   ],
   imports: [
     CommonModule,
