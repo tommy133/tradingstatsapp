@@ -23,7 +23,9 @@
   <app-sidebar
     [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"
     (closeEvent)="onCloseSidebar()">
-    <router-outlet #sidebarRight="outlet"></router-outlet>
+    <ng-container right-content>
+      <router-outlet #sidebarRight="outlet"></router-outlet>
+    </ng-container>
   </app-sidebar>
 </ng-container>
 <ng-template #loading>

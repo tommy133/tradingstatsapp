@@ -91,6 +91,10 @@ export class ViewChartComponent implements OnDestroy {
     this.sidebarService.openSidebarLeft();
   }
 
+  closeSidebarLeft() {
+    this.sidebarService.closeSidebarLeft();
+  }
+
   private getNavigationIndex() {
     const paramId = parseInt(this.activatedRoute.snapshot.params['id']);
     const item = this.operations.find((operation) => operation.id === paramId);
