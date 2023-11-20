@@ -9,3 +9,5 @@ export enum MutationType {
 }
 
 export type SidebarAnimationState = 'in' | 'out';
+
+export type AccountType = 'Demo' | 'Live' | 'Backtest';

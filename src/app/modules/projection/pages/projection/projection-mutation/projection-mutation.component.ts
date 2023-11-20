@@ -38,6 +38,7 @@ export class ProjectionMutationComponent {
   isLoading: boolean = false;
   errors: Array<string> = [];
 
+  readonly STATUS_WATCHING = 3;
   idComment?: number = undefined;
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
@@ -61,7 +62,7 @@ export class ProjectionMutationComponent {
     null,
     Validators.required,
   );
-  status = this.formBuilder.control<number | null>(null);
+  status = this.formBuilder.control<number>(this.STATUS_WATCHING);
   comment = this.formBuilder.control<string | null>(null);
 
   projectionForm = this.formBuilder.group({
@@ -224,14 +225,15 @@ export class ProjectionMutationComponent {
   }
 
   private getProjectionCreateInput(): ProjectionCreateInput {
-    const { symbol, orderType, date, timeframe } = this.projectionForm.value;
+    const { symbol, orderType, date, timeframe, status } =
+      this.projectionForm.value;
     return {
       id_sym: symbol!,
       updown: orderType!,
       date_proj: date!,
       graph: this.uploadedFile?.name,
       name_tf: timeframe!.toString(),
-      id_st: 3,
+      id_st: status!,
     };
   }
 

@@ -39,6 +39,7 @@ export class OperationMutationComponent implements OnInit {
   isLoading: boolean = false;
   errors: Array<string> = [];
 
+  readonly STATUS_CLOSED: number = 2; //clo
   account: number = 1;
   idComment?: number = undefined;
   graphFileName: string | null = null;
@@ -64,7 +65,7 @@ export class OperationMutationComponent implements OnInit {
     null,
     Validators.required,
   );
-  status = this.formBuilder.control<number | null>(null);
+  status = this.formBuilder.control<number>(this.STATUS_CLOSED);
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
   points = this.formBuilder.control<number | null>(null);
@@ -276,6 +277,7 @@ export class OperationMutationComponent implements OnInit {
       dateOpen,
       dateClose,
       timeframe,
+      status,
       volume,
       ratio,
       points,
@@ -287,7 +289,7 @@ export class OperationMutationComponent implements OnInit {
       time_close: dateClose!,
       graph: this.uploadedFile?.name,
       name_tf: timeframe!.toString(),
-      id_st: 1,
+      id_st: status!,
       id_ac: this.account!,
       rr_ratio: ratio!,
       volume: volume!,
