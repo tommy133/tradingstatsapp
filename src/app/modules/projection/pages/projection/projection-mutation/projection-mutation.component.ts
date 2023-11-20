@@ -229,7 +229,7 @@ export class ProjectionMutationComponent {
       id_sym: symbol!,
       updown: orderType!,
       date_proj: date!,
-      graph: this.uploadedFile!.name,
+      graph: this.uploadedFile?.name,
       name_tf: timeframe!.toString(),
       id_st: 3,
     };
