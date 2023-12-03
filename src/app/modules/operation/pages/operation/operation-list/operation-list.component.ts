@@ -47,6 +47,9 @@ export class OperationListComponent {
   }
 
   onCloseSidebar() {
-    this.router.navigate(['.'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['.'], {
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'preserve',
+    });
   }
 }

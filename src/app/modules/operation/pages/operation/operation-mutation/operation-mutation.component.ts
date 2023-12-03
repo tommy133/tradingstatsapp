@@ -12,7 +12,7 @@ import { Timeframe } from 'src/app/data/models/timeframe';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
-import { MutationType } from 'src/app/shared/utils/custom-types';
+import { AccountType, MutationType } from 'src/app/shared/utils/custom-types';
 import { formatDate } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationCreateInput } from '../../../model/operationCreateInput';
@@ -39,8 +39,8 @@ export class OperationMutationComponent implements OnInit {
   isLoading: boolean = false;
   errors: Array<string> = [];
 
-  readonly STATUS_CLOSED: number = 2; //clo
-  account: number = 1;
+  readonly STATUS_CLOSED: number = 2; //closed status
+  readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
   idComment?: number = undefined;
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
@@ -65,6 +65,7 @@ export class OperationMutationComponent implements OnInit {
     null,
     Validators.required,
   );
+  account = this.formBuilder.control<number>(1);
   status = this.formBuilder.control<number>(this.STATUS_CLOSED);
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
@@ -79,6 +80,7 @@ export class OperationMutationComponent implements OnInit {
     dateClose: this.dateClose,
     timeframe: this.timeframe,
     status: this.status,
+    account: this.account,
     volume: this.volume,
     ratio: this.ratio,
     points: this.points,
@@ -205,7 +207,7 @@ export class OperationMutationComponent implements OnInit {
     this.graphFileName = graph!;
     this.timeframe.setValue(timeframe);
     this.status.setValue(id_st);
-    this.account = id_ac;
+    this.account.setValue(id_ac);
     this.volume.setValue(volume!);
     this.ratio.setValue(ratio!);
     this.points.setValue(points!);
@@ -278,6 +280,7 @@ export class OperationMutationComponent implements OnInit {
       dateClose,
       timeframe,
       status,
+      account,
       volume,
       ratio,
       points,
@@ -290,7 +293,7 @@ export class OperationMutationComponent implements OnInit {
       graph: this.uploadedFile?.name,
       name_tf: timeframe!.toString(),
       id_st: status!,
-      id_ac: this.account!,
+      id_ac: account!,
       rr_ratio: ratio!,
       volume: volume!,
       points: points!,
@@ -306,6 +309,7 @@ export class OperationMutationComponent implements OnInit {
       dateClose,
       timeframe,
       status,
+      account,
       volume,
       ratio,
       points,
@@ -319,7 +323,7 @@ export class OperationMutationComponent implements OnInit {
       graph: this.uploadedFile?.name,
       name_tf: timeframe!.toString(),
       id_st: status!,
-      id_ac: this.account!,
+      id_ac: account!,
       rr_ratio: ratio!,
       volume: volume!,
       points: points!,

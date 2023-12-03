@@ -5,7 +5,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 
@@ -49,6 +50,7 @@ import { OperationService } from 'src/app/modules/operation/service/operation.se
   ],
 })
 export class HopeComponent implements OnInit {
+  private activatedRoute = inject(ActivatedRoute);
   private operationService = inject(OperationService);
 
   private subscription?: Subscription;
@@ -61,8 +63,10 @@ export class HopeComponent implements OnInit {
   async ngOnInit() {
     await new Promise<void>((resolve) => {
       this.subscription = this.operationData$.subscribe((operations) => {
+        const account =
+          this.activatedRoute.snapshot.queryParams['account'] ?? '1';
         this.data = operations
-          .filter((operation) => operation.account.id_ac === 1)
+          .filter((operation) => operation.account.id_ac === parseInt(account))
           .map(({ points }) => points ?? null);
         this.targetValue = this.calculateHope(this.data);
         resolve();

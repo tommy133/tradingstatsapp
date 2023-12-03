@@ -1,4 +1,5 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ChartService, ChartType } from 'src/app/core/service/chart.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
@@ -8,6 +9,7 @@ import { OperationService } from 'src/app/modules/operation/service/operation.se
   template: '<div [id]="chartType"></div>',
 })
 export class ChartComponent implements OnInit {
+  private activatedRoute = inject(ActivatedRoute);
   private operationService = inject(OperationService);
   private chartService = inject(ChartService);
 
@@ -19,12 +21,15 @@ export class ChartComponent implements OnInit {
   operationData$ = this.operationService.operations$;
 
   async ngOnInit() {
+    const account = this.activatedRoute.snapshot.queryParams['account'] ?? '1';
     switch (this.chartType) {
       case 'line':
         await new Promise<void>((resolve) => {
           this.subscription = this.operationData$.subscribe((operations) => {
             this.data = operations
-              .filter((operation) => operation.account.id_ac === 1)
+              .filter(
+                (operation) => operation.account.id_ac === parseInt(account),
+              )
               .sort(
                 (a, b) =>
                   new Date(a.dateOpen!).getTime() -
@@ -51,7 +56,9 @@ export class ChartComponent implements OnInit {
         await new Promise<void>((resolve) => {
           this.subscription = this.operationData$.subscribe((operations) => {
             this.data = operations
-              .filter((operation) => operation.account.id_ac === 1)
+              .filter(
+                (operation) => operation.account.id_ac === parseInt(account),
+              )
               .map(({ points }) => points ?? null);
 
             this.chartService.updateChart(this.data, this.chartType);
