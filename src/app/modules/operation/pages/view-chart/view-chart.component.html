@@ -29,7 +29,7 @@
   [fadeDarkBackground]="false"
   (closeEvent)="closeSidebarLeft()">
   <ng-container left-content>
-    <app-operation-details [extended]="false"></app-operation-details>
+    <router-outlet></router-outlet>
   </ng-container>
 </app-sidebar>
 <app-icon-button

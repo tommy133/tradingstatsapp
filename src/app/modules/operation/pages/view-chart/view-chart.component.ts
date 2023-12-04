@@ -1,5 +1,5 @@
 import { trigger } from '@angular/animations';
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, Subscription } from 'rxjs';
@@ -14,7 +14,7 @@ import { OperationService } from '../../service/operation.service';
   templateUrl: './view-chart.component.html',
   animations: [trigger('sidebarLeftInOut', sidebarLeftAnimationSlide)],
 })
-export class ViewChartComponent implements OnDestroy {
+export class ViewChartComponent implements OnInit, OnDestroy {
   private fileService = inject(FileService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -40,6 +40,10 @@ export class ViewChartComponent implements OnDestroy {
   // };
 
   sidebarLeftState$ = this.sidebarService.sidebarLeftState$;
+
+  ngOnInit() {
+    this.sidebarService.openSidebarLeft(); //default open
+  }
 
   private image$ = combineLatest([
     this.activatedRoute.params,

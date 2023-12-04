@@ -6,9 +6,27 @@ import { OperationMutationComponent } from './pages/operation/operation-mutation
 import { ViewChartComponent } from './pages/view-chart/view-chart.component';
 
 const routes: Routes = [
+  { path: 'view-chart', pathMatch: 'full', redirectTo: 'view-chart/:id' },
   {
     path: 'view-chart/:id',
     component: ViewChartComponent,
+    children: [
+      {
+        path: '',
+        component: OperationDetailsComponent,
+        data: { editPath: '../edit', postDeletePath: '../../' },
+      },
+    ],
+  },
+  {
+    path: 'view-chart/edit',
+    component: ViewChartComponent,
+    children: [
+      {
+        path: ':id',
+        component: OperationMutationComponent,
+      },
+    ],
   },
   {
     path: '',
@@ -25,6 +43,7 @@ const routes: Routes = [
       {
         path: ':id',
         component: OperationDetailsComponent,
+        data: { editPath: '../edit', postDeletePath: '../' },
       },
     ],
   },

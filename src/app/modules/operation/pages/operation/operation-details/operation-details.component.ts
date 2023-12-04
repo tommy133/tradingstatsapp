@@ -23,6 +23,9 @@ export class OperationDetailsComponent implements OnInit {
   private fileService = inject(FileService);
 
   @Input() extended: boolean = true;
+
+  editPath = this.activatedRoute.snapshot.data['editPath'];
+  postDeletePath = this.activatedRoute.snapshot.data['postDeletePath'];
   operation$?: Observable<Operation>;
   comment$?: Observable<OperationComment>;
   isLoading: boolean = false;
@@ -58,7 +61,7 @@ export class OperationDetailsComponent implements OnInit {
 
   goToEdit(operationId: number) {
     this.routingService.navigatePreservingQueryParams(
-      ['../edit', operationId],
+      [this.editPath, operationId],
       this.router,
       this.activatedRoute,
     );
@@ -66,7 +69,7 @@ export class OperationDetailsComponent implements OnInit {
 
   goBack() {
     this.routingService.navigatePreservingQueryParams(
-      ['../'],
+      [this.postDeletePath],
       this.router,
       this.activatedRoute,
     );
