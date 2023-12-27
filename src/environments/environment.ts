@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'https://trading-stats.cleverapps.io',
+  apiBaseUrl: 'http://localhost:8080',
   firebaseConfig: {
     apiKey: 'AIzaSyCCy4wR_lfkri2QGzRoPUcXTZtsFXV1Rhs',
     authDomain: 'trading-stats-31429.firebaseapp.com',
