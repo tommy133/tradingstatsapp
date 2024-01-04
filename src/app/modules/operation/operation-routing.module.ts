@@ -14,7 +14,11 @@ const routes: Routes = [
       {
         path: '',
         component: OperationDetailsComponent,
-        data: { editPath: '../edit', postDeletePath: '../../' },
+        data: {
+          editPath: '../edit',
+          postDeletePath: '../../',
+          showViewChartBtn: false,
+        },
       },
     ],
   },
@@ -43,7 +47,11 @@ const routes: Routes = [
       {
         path: ':id',
         component: OperationDetailsComponent,
-        data: { editPath: '../edit', postDeletePath: '../' },
+        data: {
+          editPath: '../edit',
+          postDeletePath: '../',
+          closeSidebarRedirect: true,
+        },
       },
     ],
   },

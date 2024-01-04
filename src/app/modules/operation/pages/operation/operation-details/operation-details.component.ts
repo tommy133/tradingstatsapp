@@ -23,13 +23,17 @@ export class OperationDetailsComponent implements OnInit {
   private fileService = inject(FileService);
 
   @Input() extended: boolean = true;
+  @Input() viewChartMode: boolean = false;
 
-  editPath = this.activatedRoute.snapshot.data['editPath'];
-  postDeletePath = this.activatedRoute.snapshot.data['postDeletePath'];
+  private editPath = this.activatedRoute.snapshot.data['editPath'];
+  private postDeletePath = this.activatedRoute.snapshot.data['postDeletePath'];
+  closeSidebarRedirect =
+    this.activatedRoute.snapshot.data['closeSidebarRedirect'];
+  showViewChartBtn =
+    this.activatedRoute.snapshot.data['showViewChartBtn'] ?? true;
+
   operation$?: Observable<Operation>;
   comment$?: Observable<OperationComment>;
-  isLoading: boolean = false;
-  errors: Array<string> = [];
 
   ngOnInit() {
     this.operation$ = this.activatedRoute.params.pipe(
@@ -55,7 +59,7 @@ export class OperationDetailsComponent implements OnInit {
         this.fileService.deleteImage(graph);
       }
       this.operationService.deleteOperation(id);
-      this.goBack();
+      this.goBackDelete();
     }
   }
 
@@ -67,7 +71,7 @@ export class OperationDetailsComponent implements OnInit {
     );
   }
 
-  goBack() {
+  goBackDelete() {
     this.routingService.navigatePreservingQueryParams(
       [this.postDeletePath],
       this.router,

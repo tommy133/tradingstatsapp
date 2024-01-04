@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,7 +14,6 @@ import { OperationCommentService } from 'src/app/data/service/opcomment.service'
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { AccountType, MutationType } from 'src/app/shared/utils/custom-types';
-import { formatDate } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationCreateInput } from '../../../model/operationCreateInput';
 import { OperationUpdateInput } from '../../../model/operationUpdateInput';
@@ -35,10 +35,12 @@ export class OperationMutationComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private toastService = inject(ToastService);
   private fileService = inject(FileService);
+  private datePipe = inject(DatePipe);
 
   isLoading: boolean = false;
   errors: Array<string> = [];
 
+  readonly DEFAULT_SYMBOL = 20; //FDXS
   readonly STATUS_CLOSED: number = 2; //closed status
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
   idComment?: number = undefined;
@@ -54,7 +56,10 @@ export class OperationMutationComponent implements OnInit {
 
   //CONTROLS
   id = this.formBuilder.control<number | null>(null);
-  symbol = this.formBuilder.control<number | null>(null, Validators.required);
+  symbol = this.formBuilder.control<number | null>(
+    this.DEFAULT_SYMBOL,
+    Validators.required,
+  );
   orderType = this.formBuilder.control<number | null>(
     null,
     Validators.required,
@@ -62,10 +67,12 @@ export class OperationMutationComponent implements OnInit {
   dateOpen = this.formBuilder.control<string | null>(null);
   dateClose = this.formBuilder.control<string | null>(null);
   timeframe = this.formBuilder.control<string | null>(
-    null,
+    'M1',
     Validators.required,
   );
-  account = this.formBuilder.control<number>(1);
+  account = this.formBuilder.control<number>(
+    this.activatedRoute.snapshot.queryParams['account'] ?? 1,
+  );
   status = this.formBuilder.control<number>(this.STATUS_CLOSED);
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
@@ -89,7 +96,7 @@ export class OperationMutationComponent implements OnInit {
 
   async ngOnInit() {
     const id = this.activatedRoute.snapshot.params['id'];
-    this.account = this.activatedRoute.snapshot.queryParams['account'];
+    this.account.setValue(this.activatedRoute.snapshot.queryParams['account']);
     if (id) {
       const operationDetails = await firstValueFrom(
         this.operationService.getOperation(id),
@@ -138,10 +145,6 @@ export class OperationMutationComponent implements OnInit {
 
   get buttonColor(): string {
     return this.isMutationAdd ? 'bg-green' : 'bg-orange';
-  }
-
-  get dateValue(): string {
-    return "${this.operationForm.get('date')!.value} | date: 'yyyy-MM-dd HH:mm'";
   }
 
   goToList() {
@@ -202,8 +205,12 @@ export class OperationMutationComponent implements OnInit {
     this.id.setValue(id);
     this.symbol.setValue(id_sym);
     this.orderType.setValue(updown ? 1 : 0);
-    this.dateOpen.setValue(formatDate(dateOpen!));
-    this.dateClose.setValue(formatDate(dateClose!));
+    this.dateOpen.setValue(
+      this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm'),
+    );
+    this.dateClose.setValue(
+      this.datePipe.transform(new Date(dateClose!), 'yyyy-MM-ddTHH:mm'),
+    );
     this.graphFileName = graph!;
     this.timeframe.setValue(timeframe);
     this.status.setValue(id_st);

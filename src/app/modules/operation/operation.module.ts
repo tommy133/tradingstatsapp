@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -23,6 +23,6 @@ import { ViewChartComponent } from './pages/view-chart/view-chart.component';
     HttpClientModule,
     SharedModule,
   ],
-  providers: [HttpClient],
+  providers: [HttpClient, DatePipe],
 })
 export class OperationModule {}

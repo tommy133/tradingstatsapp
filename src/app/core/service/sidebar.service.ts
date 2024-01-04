@@ -21,14 +21,6 @@ export class SidebarService {
     .asObservable()
     .pipe(shareReplay());
 
-  openSidebarRight() {
-    this._sidebarRightState$.next('in');
-  }
-
-  closeSidebarRight() {
-    this._sidebarRightState$.next('out');
-  }
-
   openSidebarLeft() {
     this._sidebarLeftState$.next('in');
   }
