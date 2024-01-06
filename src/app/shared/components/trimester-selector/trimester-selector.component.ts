@@ -1,20 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-trimester-selector',
-  template: `<div class="flex flex-row space-x-4">
-    <button class="square-btn  bg-gray-300">
-      <h5 class="text-black">Q1</h5>
-    </button>
-    <button class="square-btn bg-dark">
-      <h5 class="text-white">Q2</h5>
-    </button>
-    <button class="square-btn bg-dark">
-      <h5 class="text-white">Q3</h5>
-    </button>
-    <button class="square-btn bg-dark">
-      <h5 class="text-white">Q4</h5>
-    </button>
-  </div> `,
+  template: `<ng-container
+    *ngIf="selectedTrimesters$ | async as selectedTrimesters"
+  >
+    <div class="flex flex-row space-x-4">
+      <app-trimester-btn [selected]="selectedTrimesters[0]">
+        Q1
+      </app-trimester-btn>
+      <app-trimester-btn [selected]="selectedTrimesters[1]">
+        Q2
+      </app-trimester-btn>
+      <app-trimester-btn [selected]="selectedTrimesters[2]">
+        Q3
+      </app-trimester-btn>
+      <app-trimester-btn [selected]="selectedTrimesters[3]">
+        Q4
+      </app-trimester-btn>
+    </div>
+  </ng-container> `,
 })
-export class TrimesterSelectorComponent {}
+export class TrimesterSelectorComponent {
+  private activatedRoute = inject(ActivatedRoute);
+  constructor() {
+    this.selectedTrimesters$.subscribe(console.log);
+  }
+  selectedTrimesters$ = this.activatedRoute.queryParams.pipe(
+    map((quarters) => [
+      quarters['q1'] === 'true',
+      quarters['q2'] === 'true',
+      quarters['q3'] === 'true',
+      quarters['q4'] === 'true',
+    ]),
+  );
+}
