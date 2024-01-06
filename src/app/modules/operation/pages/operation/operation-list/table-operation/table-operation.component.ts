@@ -44,7 +44,11 @@ export class TableOperationComponent {
 
   gotoEditOperation(operationId: number, event: any) {
     event.stopPropagation();
-    this.router.navigate([`/operations/edit/${operationId}`]);
+    this.routingService.navigatePreservingQueryParams(
+      [`/operations/edit/${operationId}`],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   deleteOperation(operation: Operation, event: any) {

@@ -86,11 +86,17 @@ export class HopeComponent implements OnInit {
 
     // Calculate mean for positive values
     const sumPositive = positiveValues.reduce((acc, value) => acc! + value!, 0);
-    const meanPositive = (sumPositive ?? 0) / positiveValues.length;
+    const meanPositive =
+      positiveValues.length > 0
+        ? (sumPositive ?? 0) / positiveValues.length
+        : 0;
 
     // Calculate mean for negative values
     const sumNegative = negativeValues.reduce((acc, value) => acc! + value!, 0);
-    const meanNegative = (sumNegative ?? 0) / negativeValues.length;
+    const meanNegative =
+      negativeValues.length > 0
+        ? (sumNegative ?? 0) / negativeValues.length
+        : 0;
 
     const sum = meanPositive * probPositive + meanNegative * (1 - probPositive);
 

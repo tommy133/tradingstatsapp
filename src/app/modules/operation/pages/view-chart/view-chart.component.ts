@@ -5,7 +5,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, Subscription } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
-import { ToastService } from 'src/app/core/service/toast.service';
 import { sidebarLeftAnimationSlide } from 'src/app/shared/utils/sidebar-left-animation';
 import { Operation } from '../../model/operation';
 import { OperationService } from '../../service/operation.service';
@@ -19,7 +18,6 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
-  private toastService = inject(ToastService);
   private operationService = inject(OperationService);
   private sidebarService = inject(SidebarService);
 
@@ -40,6 +38,10 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   // };
 
   sidebarLeftState$ = this.sidebarService.sidebarLeftState$;
+
+  backToQueryParams = {
+    account: this.activatedRoute.snapshot.queryParams['account'],
+  };
 
   ngOnInit() {
     this.sidebarService.openSidebarLeft(); //default open

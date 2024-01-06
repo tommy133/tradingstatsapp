@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
       buttonClass="flex flex-row items-center space-x-1 text-white font-semibold"
       iconSource="assets/svg/arrow-left.svg"
       [routerLink]="backTo"
+      [queryParams]="queryParams"
     >
     </app-text-icon-button>
   `,
@@ -15,4 +16,5 @@ import { Component, Input } from '@angular/core';
 export class BackToComponent {
   @Input() backText = 'Back previous';
   @Input() backTo = '../';
+  @Input() queryParams: any;
 }
