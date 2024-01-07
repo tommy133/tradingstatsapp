@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest, map } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { RoutingService } from 'src/app/core/service/routing.service';
@@ -24,10 +25,35 @@ export class OperationListComponent {
   searchOperations$ = this.formService.applyDebounceOnSearch(
     this.searchOperationsControl.valueChanges,
   );
-  filteredOperations$ = this.formService.filterItems(
+  filteredOperationsByName$ = this.formService.filterItems(
     this.operations$,
     this.searchOperations$,
     ({ symbol }) => symbol.name_sym,
+  );
+
+  filterOperationsByTrimester$ = this.activatedRoute.queryParams.pipe(
+    map((quarters) => ({
+      q1: quarters['q1'] === 'true',
+      q2: quarters['q2'] === 'true',
+      q3: quarters['q3'] === 'true',
+      q4: quarters['q4'] === 'true',
+    })),
+  );
+
+  filteredOperations$ = combineLatest([
+    this.filteredOperationsByName$,
+    this.filterOperationsByTrimester$,
+  ]).pipe(
+    map(([operations, quarters]) => {
+      return operations.filter((operation) => {
+        if (operation.dateOpen) {
+          const operationDate = new Date(operation.dateOpen);
+          const quarter = Math.floor(operationDate.getMonth() / 3) + 1;
+          return (quarters as { [key: string]: boolean })[`q${quarter}`];
+        }
+        return false;
+      });
+    }),
   );
 
   goToAdd() {
