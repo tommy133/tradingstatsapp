@@ -23,6 +23,7 @@ import { TextIconButtonComponent } from './components/text-icon-button/text-icon
 import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { YearSelectorComponent } from './components/year-selector/year-selector.component';
+import { TrimesterBtnComponent } from './components/trimester-selector/trimester-btn/trimester-btn.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
     HopeComponent,
     TrimesterSelectorComponent,
     YearSelectorComponent,
+    TrimesterBtnComponent,
   ],
   imports: [
     CommonModule,

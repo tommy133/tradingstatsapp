@@ -20,50 +20,58 @@ export class ChartComponent implements OnInit {
 
   operationData$ = this.operationService.operations$;
 
+  filteredOperations$ = this.operationService.filterOperationsByPeriod(
+    this.operationData$,
+  );
+
   async ngOnInit() {
     const account = this.activatedRoute.snapshot.queryParams['account'] ?? '1';
     switch (this.chartType) {
       case 'line':
         await new Promise<void>((resolve) => {
-          this.subscription = this.operationData$.subscribe((operations) => {
-            this.data = operations
-              .filter(
-                (operation) => operation.account.id_ac === parseInt(account),
-              )
-              .sort(
-                (a, b) =>
-                  new Date(a.dateOpen!).getTime() -
-                  new Date(b.dateOpen!).getTime(),
-              )
-              .reduce((accumulatedData: number[], operation) => {
-                const previousTotal =
-                  accumulatedData.length > 0
-                    ? accumulatedData[accumulatedData.length - 1]
-                    : 0;
-                const currentPoints = operation.points ?? 0;
-                const newTotal = previousTotal + currentPoints;
-                accumulatedData.push(newTotal);
-                return accumulatedData;
-              }, []);
-            this.chartService.updateChart(this.data, this.chartType);
-            resolve();
-          });
+          this.subscription = this.filteredOperations$.subscribe(
+            (operations) => {
+              this.data = operations
+                .filter(
+                  (operation) => operation.account.id_ac === parseInt(account),
+                )
+                .sort(
+                  (a, b) =>
+                    new Date(a.dateOpen!).getTime() -
+                    new Date(b.dateOpen!).getTime(),
+                )
+                .reduce((accumulatedData: number[], operation) => {
+                  const previousTotal =
+                    accumulatedData.length > 0
+                      ? accumulatedData[accumulatedData.length - 1]
+                      : 0;
+                  const currentPoints = operation.points ?? 0;
+                  const newTotal = previousTotal + currentPoints;
+                  accumulatedData.push(newTotal);
+                  return accumulatedData;
+                }, []);
+              this.chartService.updateChart(this.data, this.chartType);
+              resolve();
+            },
+          );
         });
 
         this.chartService.initializeLineChart(this.data);
         break;
       case 'pie':
         await new Promise<void>((resolve) => {
-          this.subscription = this.operationData$.subscribe((operations) => {
-            this.data = operations
-              .filter(
-                (operation) => operation.account.id_ac === parseInt(account),
-              )
-              .map(({ points }) => points ?? null);
+          this.subscription = this.filteredOperations$.subscribe(
+            (operations) => {
+              this.data = operations
+                .filter(
+                  (operation) => operation.account.id_ac === parseInt(account),
+                )
+                .map(({ points }) => points ?? null);
 
-            this.chartService.updateChart(this.data, this.chartType);
-            resolve();
-          });
+              this.chartService.updateChart(this.data, this.chartType);
+              resolve();
+            },
+          );
         });
 
         this.chartService.initializePieChart(this.data);

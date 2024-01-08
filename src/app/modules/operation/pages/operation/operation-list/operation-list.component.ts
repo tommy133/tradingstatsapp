@@ -24,10 +24,14 @@ export class OperationListComponent {
   searchOperations$ = this.formService.applyDebounceOnSearch(
     this.searchOperationsControl.valueChanges,
   );
-  filteredOperations$ = this.formService.filterItems(
+  filteredOperationsByName$ = this.formService.filterItems(
     this.operations$,
     this.searchOperations$,
     ({ symbol }) => symbol.name_sym,
+  );
+
+  filteredOperations$ = this.operationService.filterOperationsByPeriod(
+    this.filteredOperationsByName$,
   );
 
   goToAdd() {

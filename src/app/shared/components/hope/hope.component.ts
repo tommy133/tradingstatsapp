@@ -55,24 +55,29 @@ export class HopeComponent implements OnInit {
 
   private subscription?: Subscription;
   private data: (number | null)[] = [];
+
   operationData$ = this.operationService.operations$;
+
+  filteredOperations$ = this.operationService.filterOperationsByPeriod(
+    this.operationData$,
+  );
 
   targetValue: number = 0;
   counterValue: number = 0;
 
   async ngOnInit() {
     await new Promise<void>((resolve) => {
-      this.subscription = this.operationData$.subscribe((operations) => {
+      this.subscription = this.filteredOperations$.subscribe((operations) => {
         const account =
           this.activatedRoute.snapshot.queryParams['account'] ?? '1';
         this.data = operations
           .filter((operation) => operation.account.id_ac === parseInt(account))
           .map(({ points }) => points ?? null);
         this.targetValue = this.calculateHope(this.data);
+        this.startCounter();
         resolve();
       });
     });
-    this.startCounter();
   }
 
   private calculateHope(data: (number | null)[]): number {
