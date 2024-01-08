@@ -40,16 +40,24 @@ export class OperationListComponent {
     })),
   );
 
+  year$ = this.activatedRoute.queryParams.pipe(
+    map((queryParams) => queryParams['year']),
+  );
+
   filteredOperations$ = combineLatest([
     this.filteredOperationsByName$,
     this.filterOperationsByTrimester$,
+    this.year$,
   ]).pipe(
-    map(([operations, quarters]) => {
+    map(([operations, quarters, year]) => {
       return operations.filter((operation) => {
         if (operation.dateOpen) {
           const operationDate = new Date(operation.dateOpen);
           const quarter = Math.floor(operationDate.getMonth() / 3) + 1;
-          return (quarters as { [key: string]: boolean })[`q${quarter}`];
+          return (
+            (quarters as { [key: string]: boolean })[`q${quarter}`] &&
+            operationDate.getFullYear() == year
+          );
         }
         return false;
       });
