@@ -30,7 +30,7 @@ export class ProjectionListComponent {
     ({ symbol }) => symbol.name_sym,
   );
 
-  filteredProjectionsByTrimester$ = this.activatedRoute.queryParams.pipe(
+  quarters$ = this.activatedRoute.queryParams.pipe(
     map((quarters) => ({
       q1: quarters['q1'] === 'true',
       q2: quarters['q2'] === 'true',
@@ -45,7 +45,7 @@ export class ProjectionListComponent {
 
   filteredProjections$ = combineLatest([
     this.filteredProjectionsByName$,
-    this.filteredProjectionsByTrimester$,
+    this.quarters$,
     this.year$,
   ]).pipe(
     map(([projections, quarters, year]) => {

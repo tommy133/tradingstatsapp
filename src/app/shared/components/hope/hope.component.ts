@@ -7,7 +7,7 @@ import {
 } from '@angular/animations';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { combineLatest, map, Subscription } from 'rxjs';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 
 @Component({
@@ -55,24 +55,58 @@ export class HopeComponent implements OnInit {
 
   private subscription?: Subscription;
   private data: (number | null)[] = [];
+
   operationData$ = this.operationService.operations$;
+
+  quarters$ = this.activatedRoute.queryParams.pipe(
+    map((quarters) => ({
+      q1: quarters['q1'] === 'true',
+      q2: quarters['q2'] === 'true',
+      q3: quarters['q3'] === 'true',
+      q4: quarters['q4'] === 'true',
+    })),
+  );
+
+  year$ = this.activatedRoute.queryParams.pipe(
+    map((queryParams) => queryParams['year']),
+  );
+
+  filteredOperations$ = combineLatest([
+    this.operationData$,
+    this.quarters$,
+    this.year$,
+  ]).pipe(
+    map(([operations, quarters, year]) => {
+      return operations.filter((operation) => {
+        if (operation.dateOpen) {
+          const operationDate = new Date(operation.dateOpen);
+          const quarter = Math.floor(operationDate.getMonth() / 3) + 1;
+          return (
+            (quarters as { [key: string]: boolean })[`q${quarter}`] &&
+            operationDate.getFullYear() == year
+          );
+        }
+        return false;
+      });
+    }),
+  );
 
   targetValue: number = 0;
   counterValue: number = 0;
 
   async ngOnInit() {
     await new Promise<void>((resolve) => {
-      this.subscription = this.operationData$.subscribe((operations) => {
+      this.subscription = this.filteredOperations$.subscribe((operations) => {
         const account =
           this.activatedRoute.snapshot.queryParams['account'] ?? '1';
         this.data = operations
           .filter((operation) => operation.account.id_ac === parseInt(account))
           .map(({ points }) => points ?? null);
         this.targetValue = this.calculateHope(this.data);
+        this.startCounter();
         resolve();
       });
     });
-    this.startCounter();
   }
 
   private calculateHope(data: (number | null)[]): number {
