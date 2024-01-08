@@ -1,6 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, map, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ChartService, ChartType } from 'src/app/core/service/chart.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 
@@ -20,37 +20,8 @@ export class ChartComponent implements OnInit {
 
   operationData$ = this.operationService.operations$;
 
-  quarters$ = this.activatedRoute.queryParams.pipe(
-    map((quarters) => ({
-      q1: quarters['q1'] === 'true',
-      q2: quarters['q2'] === 'true',
-      q3: quarters['q3'] === 'true',
-      q4: quarters['q4'] === 'true',
-    })),
-  );
-
-  year$ = this.activatedRoute.queryParams.pipe(
-    map((queryParams) => queryParams['year']),
-  );
-
-  filteredOperations$ = combineLatest([
+  filteredOperations$ = this.operationService.filterOperationsByPeriod(
     this.operationData$,
-    this.quarters$,
-    this.year$,
-  ]).pipe(
-    map(([operations, quarters, year]) => {
-      return operations.filter((operation) => {
-        if (operation.dateOpen) {
-          const operationDate = new Date(operation.dateOpen);
-          const quarter = Math.floor(operationDate.getMonth() / 3) + 1;
-          return (
-            (quarters as { [key: string]: boolean })[`q${quarter}`] &&
-            operationDate.getFullYear() == year
-          );
-        }
-        return false;
-      });
-    }),
   );
 
   async ngOnInit() {
