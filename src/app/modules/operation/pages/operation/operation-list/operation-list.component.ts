@@ -31,7 +31,7 @@ export class OperationListComponent {
     ({ symbol }) => symbol.name_sym,
   );
 
-  filterOperationsByTrimester$ = this.activatedRoute.queryParams.pipe(
+  filteredOperationsByTrimester$ = this.activatedRoute.queryParams.pipe(
     map((quarters) => ({
       q1: quarters['q1'] === 'true',
       q2: quarters['q2'] === 'true',
@@ -46,7 +46,7 @@ export class OperationListComponent {
 
   filteredOperations$ = combineLatest([
     this.filteredOperationsByName$,
-    this.filterOperationsByTrimester$,
+    this.filteredOperationsByTrimester$,
     this.year$,
   ]).pipe(
     map(([operations, quarters, year]) => {
