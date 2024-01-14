@@ -6,6 +6,9 @@ FROM node:latest as build
 # Set the working directory
 WORKDIR /usr/local/app
 
+# Run command in Virtual directory
+RUN npm cache clean --force
+
 # Add the source code to app
 COPY ./ /usr/local/app/
 
