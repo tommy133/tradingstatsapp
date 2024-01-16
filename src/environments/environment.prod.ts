@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiBaseUrl: 'http://localhost:8080',
+  apiBaseUrl: `${window.location.protocol}//${window.location.hostname}:8080`,
   firebaseConfig: {
     apiKey: 'AIzaSyCCy4wR_lfkri2QGzRoPUcXTZtsFXV1Rhs',
     authDomain: 'trading-stats-31429.firebaseapp.com',
