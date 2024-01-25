@@ -45,9 +45,12 @@
 
       </app-card>
     </ng-container>
-    <img
-      [src]="imageUrl"
-      alt="chart image">
+    <ng-container *ngIf="!isLoading; else loading">
+      <img
+        [src]="imageUrl"
+        alt="chart image">
+    </ng-container>
+
   </div>
 
   <!-- <tradingview-widget [widgetConfig]="widgetConfig"></tradingview-widget> -->

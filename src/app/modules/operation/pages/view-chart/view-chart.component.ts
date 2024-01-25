@@ -36,6 +36,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   //   symbol: 'EURUSD',
   //   widgetType: 'widget',
   // };
+  isLoading!: boolean;
 
   sidebarLeftState$ = this.sidebarService.sidebarLeftState$;
 
@@ -44,6 +45,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   };
 
   ngOnInit() {
+    this.isLoading = true;
     this.sidebarService.openSidebarLeft(); //default open
   }
 
@@ -65,6 +67,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
         this.fileService.getImage(fileName).then((url) => {
           if (url) {
             this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+            this.isLoading = false;
           }
         });
       }

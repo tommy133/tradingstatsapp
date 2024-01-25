@@ -34,6 +34,7 @@ enum Themes {
 export class ViewChartComponent {
   projectionSubscription?: Subscription;
   imageUrl?: SafeUrl;
+  isLoading!: boolean;
 
   constructor(
     private projectionService: ProjectionService,
@@ -41,6 +42,10 @@ export class ViewChartComponent {
     private activatedRoute: ActivatedRoute,
     private sanitizer: DomSanitizer,
   ) {}
+
+  ngOnInit() {
+    this.isLoading = true;
+  }
 
   projection$ = this.activatedRoute.params.pipe(
     switchMap((params) => {
@@ -67,6 +72,7 @@ export class ViewChartComponent {
         this.fileService.getImage(fileName).then((url) => {
           if (url) {
             this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+            this.isLoading = false;
           }
         });
       }
