@@ -13,7 +13,7 @@ export type SidebarMode = 'right' | 'left';
       *ngIf="isSidebarLeft"
       [@sidebarLeftInOut]="sidebarState"
       class="absolute flex
-    flex-col h-full top-16 bottom-0 left-0 md:w-[460px]"
+    flex-col h-full top-16 min-h-[110vh] left-0 md:w-[460px]"
     >
       <div class="h-full bg-dark-gray flex-grow overflow-auto ">
         <ng-content select="[left-content]"></ng-content>
