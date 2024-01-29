@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
-import { RoutingService } from 'src/app/core/service/routing.service';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
 
@@ -14,7 +14,6 @@ import { OperationService } from '../../../service/operation.service';
 export class OperationListComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private routingService = inject(RoutingService);
   private operationService = inject(OperationService);
   private formService = inject(FormService);
   private fileService = inject(FileService);
@@ -35,11 +34,7 @@ export class OperationListComponent {
   );
 
   goToAdd() {
-    this.routingService.navigatePreservingQueryParams(
-      ['add'],
-      this.router,
-      this.activatedRoute,
-    );
+    navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
   }
 
   public onDeleteOperation(operation: Operation): void {
@@ -51,9 +46,6 @@ export class OperationListComponent {
   }
 
   onCloseSidebar() {
-    this.router.navigate(['.'], {
-      relativeTo: this.activatedRoute,
-      queryParamsHandling: 'preserve',
-    });
+    navigatePreservingQueryParams(['.'], this.router, this.activatedRoute);
   }
 }

@@ -4,6 +4,7 @@ import { Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionService } from '../../../service/projection.service';
 
@@ -49,11 +50,34 @@ export class ProjectionDetailsComponent implements OnInit {
         this.fileService.deleteImage(graph);
       }
       this.projectionService.deleteProjection(id);
-      this.goBack();
+      this.goBackDelete();
     }
   }
 
-  private goBack() {
+  goToEdit(projectionId: number) {
+    navigatePreservingQueryParams(
+      ['../edit/', projectionId],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
+  goToChart(projection: Projection) {
+    this.router.navigate(['../view-chart', projection.id], {
+      relativeTo: this.activatedRoute,
+      queryParams: {
+        ...this.activatedRoute.snapshot.queryParams,
+        fileName: projection.graph,
+      },
+      queryParamsHandling: 'merge',
+    });
+  }
+
+  private goBackDelete() {
     this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+  }
+
+  onCloseSidebar() {
+    navigatePreservingQueryParams(['.'], this.router, this.activatedRoute);
   }
 }

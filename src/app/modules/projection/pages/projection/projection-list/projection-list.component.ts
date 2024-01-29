@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionService } from '../../../service/projection.service';
 
@@ -63,6 +64,10 @@ export class ProjectionListComponent {
     }),
   );
 
+  goToAdd() {
+    navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
+  }
+
   public onDeleteProjection(projection: Projection): void {
     const { id, graph } = projection;
     if (graph) {
@@ -72,6 +77,6 @@ export class ProjectionListComponent {
   }
 
   onCloseSidebar() {
-    this.router.navigate(['.'], { relativeTo: this.activatedRoute });
+    navigatePreservingQueryParams(['.'], this.router, this.activatedRoute);
   }
 }

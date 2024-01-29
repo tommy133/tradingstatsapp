@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, Observable } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
-import { RoutingService } from 'src/app/core/service/routing.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { Status } from 'src/app/data/models/status';
@@ -13,7 +12,10 @@ import { ProjectionCommentService } from 'src/app/data/service/pcomment.service'
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { MutationType } from 'src/app/shared/utils/custom-types';
-import { formatDate } from 'src/app/shared/utils/shared-utils';
+import {
+  formatDate,
+  navigatePreservingQueryParams,
+} from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
 import { ProjectionUpdateInput } from '../../../model/projectionUpdateInput';
@@ -29,7 +31,6 @@ export class ProjectionMutationComponent {
   private statusService = inject(StatusService);
   private projectionService = inject(ProjectionService);
   private commentService = inject(ProjectionCommentService);
-  private routingService = inject(RoutingService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private toastService = inject(ToastService);
@@ -129,6 +130,22 @@ export class ProjectionMutationComponent {
 
   get dateValue(): string {
     return "${this.projectionForm.get('date')!.value} | date: 'yyyy-MM-dd'";
+  }
+
+  goToList() {
+    navigatePreservingQueryParams(
+      [this.closeRoute],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
+  goToDetails() {
+    navigatePreservingQueryParams(
+      [this.cancelRoute],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   onAddProjection(projectionCreateInput: ProjectionCreateInput) {
@@ -296,7 +313,7 @@ export class ProjectionMutationComponent {
       this.toastService.success({
         message: `Projection ${operation} successfully`,
       });
-      this.routingService.navigatePreservingQueryParams(
+      navigatePreservingQueryParams(
         [`${this.closeRoute}${projId}`],
         this.router,
         this.activatedRoute,

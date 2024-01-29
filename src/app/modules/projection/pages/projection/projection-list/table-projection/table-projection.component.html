@@ -10,7 +10,7 @@
         <ng-container *ngFor="let row of rows">
           <div
             class="flex flex-row items-center not-last:border-b hover:bg-gray-500 cursor-pointer"
-            [routerLink]="['.', row.id]">
+            (click)="goToDetails(row.id)">
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-bold">{{ row.symbol.name_sym }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.updown ? 'LONG' : 'SHORT' }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.date | date: 'dd/MM/yyyy' }}</div>

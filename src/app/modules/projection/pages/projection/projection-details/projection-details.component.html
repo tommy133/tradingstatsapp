@@ -1,14 +1,14 @@
 <ng-container *ngIf="projection$ | async as projection; else loading">
   <div class="p-8 bg-dark">
     <div class="flex justify-between">
-      <app-close-button routerLink="../"></app-close-button>
+      <app-close-button (closeEvent)="onCloseSidebar()"></app-close-button>
 
       <div class="flex flex-row items-center space-x-5">
         <app-rounded-button
           text="Edit"
           bgColor="bg-orange"
           type="submit"
-          [routerLink]="'../edit/' + projection.id">
+          (clickEvent)="goToEdit(projection.id)">
         </app-rounded-button>
 
         <app-rounded-button
@@ -68,7 +68,8 @@
             class="rounded"
             cols="30"
             rows="5"
-            readonly>{{comment.pcomment}}
+            readonly>
+            {{comment.pcomment}}
           </textarea>
         </ng-container>
       </div>
@@ -79,8 +80,7 @@
       class="flex items-center flex-row pt-10">
       <button
         type="button"
-        [routerLink]="['../view-chart', projection.id]"
-        [queryParams]="{fileName: projection.graph}">
+        (click)="goToChart(projection)">
         <label class="flex flex-row bg-blue-turquoise rounded text-white items-center font-semibold p-3">
           <svg-icon
             [svgStyle]="{'height.px': 32, 'width.px': 32}"

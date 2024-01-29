@@ -40,13 +40,13 @@ export class ViewChartComponent implements OnInit, OnDestroy {
 
   sidebarLeftState$ = this.sidebarService.sidebarLeftState$;
 
-  backToQueryParams = {
-    account: this.activatedRoute.snapshot.queryParams['account'],
-  };
+  backToQueryParams: { [key: string]: any } = {};
 
   ngOnInit() {
     this.isLoading = true;
     this.sidebarService.openSidebarLeft(); //default open
+
+    this.setBackToQueryParams();
   }
 
   private image$ = combineLatest([
@@ -109,6 +109,25 @@ export class ViewChartComponent implements OnInit, OnDestroy {
     const item = this.operations.find((operation) => operation.id === paramId);
 
     return this.operations.indexOf(item!);
+  }
+
+  private setBackToQueryParams() {
+    if (this.activatedRoute.snapshot.queryParams['account']) {
+      this.backToQueryParams['account'] =
+        this.activatedRoute.snapshot.queryParams['account'];
+    }
+
+    ['q1', 'q2', 'q3', 'q4'].forEach((quarter) => {
+      if (this.activatedRoute.snapshot.queryParams[quarter]) {
+        this.backToQueryParams[quarter] =
+          this.activatedRoute.snapshot.queryParams[quarter];
+      }
+    });
+
+    if (this.activatedRoute.snapshot.queryParams['year']) {
+      this.backToQueryParams['year'] =
+        this.activatedRoute.snapshot.queryParams['year'];
+    }
   }
 
   ngOnDestroy() {

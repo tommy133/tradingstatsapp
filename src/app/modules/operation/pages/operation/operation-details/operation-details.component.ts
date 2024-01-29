@@ -2,10 +2,10 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
-import { RoutingService } from 'src/app/core/service/routing.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
 
@@ -18,7 +18,6 @@ export class OperationDetailsComponent implements OnInit {
   private commentService = inject(OperationCommentService);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
-  private routingService = inject(RoutingService);
   private sidebarService = inject(SidebarService);
   private fileService = inject(FileService);
 
@@ -64,7 +63,7 @@ export class OperationDetailsComponent implements OnInit {
   }
 
   goToEdit(operationId: number) {
-    this.routingService.navigatePreservingQueryParams(
+    navigatePreservingQueryParams(
       [this.editPath, operationId],
       this.router,
       this.activatedRoute,
@@ -72,7 +71,7 @@ export class OperationDetailsComponent implements OnInit {
   }
 
   goBackDelete() {
-    this.routingService.navigatePreservingQueryParams(
+    navigatePreservingQueryParams(
       [this.postDeletePath],
       this.router,
       this.activatedRoute,

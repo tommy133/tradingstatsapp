@@ -1,7 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RoutingService } from 'src/app/core/service/routing.service';
 import { Operation } from 'src/app/modules/operation/model/operation';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 
 export interface TableColumn {
   name: string;
@@ -14,7 +14,6 @@ export interface TableColumn {
 export class TableOperationComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private routingService = inject(RoutingService);
 
   @Input() rows!: Operation[];
   @Output() deleteEvent = new EventEmitter<Operation>();
@@ -35,7 +34,7 @@ export class TableOperationComponent {
   }
 
   goToDetails(operationId: number) {
-    this.routingService.navigatePreservingQueryParams(
+    navigatePreservingQueryParams(
       ['.', operationId],
       this.router,
       this.activatedRoute,
@@ -44,7 +43,7 @@ export class TableOperationComponent {
 
   gotoEditOperation(operationId: number, event: any) {
     event.stopPropagation();
-    this.routingService.navigatePreservingQueryParams(
+    navigatePreservingQueryParams(
       [`/operations/edit/${operationId}`],
       this.router,
       this.activatedRoute,

@@ -4,7 +4,7 @@
     (ngSubmit)="onSubmit()">
     <div class="p-8 bg-dark">
       <div class="flex justify-between">
-        <app-close-button [routerLink]="closeRoute"></app-close-button>
+        <app-close-button (closeEvent)="goToList()"></app-close-button>
 
         <div
           class="flex flex-row items-center space-x-5"
@@ -12,7 +12,7 @@
           <app-rounded-button
             text="Cancel"
             bgColor="bg-gray-400"
-            [routerLink]="cancelRoute">
+            (clickEvent)="goToDetails()">
           </app-rounded-button>
 
           <app-rounded-button

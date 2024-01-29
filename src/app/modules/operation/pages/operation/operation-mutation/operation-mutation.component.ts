@@ -4,7 +4,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, Observable } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
-import { RoutingService } from 'src/app/core/service/routing.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { Status } from 'src/app/data/models/status';
@@ -14,6 +13,7 @@ import { OperationCommentService } from 'src/app/data/service/opcomment.service'
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { AccountType, MutationType } from 'src/app/shared/utils/custom-types';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationCreateInput } from '../../../model/operationCreateInput';
 import { OperationUpdateInput } from '../../../model/operationUpdateInput';
@@ -30,7 +30,6 @@ export class OperationMutationComponent implements OnInit {
   private statusService = inject(StatusService);
   private operationService = inject(OperationService);
   private commentService = inject(OperationCommentService);
-  private routingService = inject(RoutingService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private toastService = inject(ToastService);
@@ -148,7 +147,7 @@ export class OperationMutationComponent implements OnInit {
   }
 
   goToList() {
-    this.routingService.navigatePreservingQueryParams(
+    navigatePreservingQueryParams(
       [this.closeRoute],
       this.router,
       this.activatedRoute,
@@ -156,7 +155,7 @@ export class OperationMutationComponent implements OnInit {
   }
 
   goToDetails() {
-    this.routingService.navigatePreservingQueryParams(
+    navigatePreservingQueryParams(
       [this.cancelRoute],
       this.router,
       this.activatedRoute,
@@ -382,7 +381,7 @@ export class OperationMutationComponent implements OnInit {
       this.toastService.success({
         message: `Operation ${operation} successfully`,
       });
-      this.routingService.navigatePreservingQueryParams(
+      navigatePreservingQueryParams(
         [`${this.closeRoute}${operationId}`],
         this.router,
         this.activatedRoute,

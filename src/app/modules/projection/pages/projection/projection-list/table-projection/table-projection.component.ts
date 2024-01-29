@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Projection } from 'src/app/modules/projection/model/projection';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 
 export interface TableColumn {
   name: string;
@@ -11,10 +12,11 @@ export interface TableColumn {
   templateUrl: './table-projection.component.html',
 })
 export class TableProjectionComponent {
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+
   @Input() rows!: Projection[];
   @Output() deleteEvent = new EventEmitter<Projection>();
-
-  router = inject(Router);
 
   columns: TableColumn[] = [
     { name: 'Symbol' },
@@ -25,9 +27,21 @@ export class TableProjectionComponent {
     { name: 'Actions' },
   ];
 
+  goToDetails(operationId: number) {
+    navigatePreservingQueryParams(
+      ['.', operationId],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
   gotoEditProjection(projId: number, event: any) {
     event.stopPropagation();
-    this.router.navigate([`/projections/edit/${projId}`]);
+    navigatePreservingQueryParams(
+      [`/projections/edit/${projId}`],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   deleteProjection(projection: Projection, event: any) {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { combineLatest, map, Subscription, switchMap } from 'rxjs';
+import { Subscription, combineLatest, map, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ProjectionService } from '../../service/projection.service';
 
@@ -36,6 +36,8 @@ export class ViewChartComponent {
   imageUrl?: SafeUrl;
   isLoading!: boolean;
 
+  backToQueryParams: { [key: string]: any } = {};
+
   constructor(
     private projectionService: ProjectionService,
     private fileService: FileService,
@@ -45,6 +47,8 @@ export class ViewChartComponent {
 
   ngOnInit() {
     this.isLoading = true;
+
+    this.setBackToQueryParams();
   }
 
   projection$ = this.activatedRoute.params.pipe(
@@ -103,6 +107,20 @@ export class ViewChartComponent {
   //   };
   // });
   // }
+
+  private setBackToQueryParams() {
+    ['q1', 'q2', 'q3', 'q4'].forEach((quarter) => {
+      if (this.activatedRoute.snapshot.queryParams[quarter]) {
+        this.backToQueryParams[quarter] =
+          this.activatedRoute.snapshot.queryParams[quarter];
+      }
+    });
+
+    if (this.activatedRoute.snapshot.queryParams['year']) {
+      this.backToQueryParams['year'] =
+        this.activatedRoute.snapshot.queryParams['year'];
+    }
+  }
 
   ngOnDestroy() {
     this.imageSubscription?.unsubscribe();
