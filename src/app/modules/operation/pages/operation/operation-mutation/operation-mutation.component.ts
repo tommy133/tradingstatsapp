@@ -205,10 +205,10 @@ export class OperationMutationComponent implements OnInit {
     this.symbol.setValue(id_sym);
     this.orderType.setValue(updown ? 1 : 0);
     this.dateOpen.setValue(
-      this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm'),
+      this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm', 'UTC'),
     );
     this.dateClose.setValue(
-      this.datePipe.transform(new Date(dateClose!), 'yyyy-MM-ddTHH:mm'),
+      this.datePipe.transform(new Date(dateClose!), 'yyyy-MM-ddTHH:mm', 'UTC'),
     );
     this.graphFileName = graph!;
     this.timeframe.setValue(timeframe);
