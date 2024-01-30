@@ -63,8 +63,11 @@ export class OperationMutationComponent implements OnInit {
     null,
     Validators.required,
   );
-  dateOpen = this.formBuilder.control<string | null>(null);
-  dateClose = this.formBuilder.control<string | null>(null);
+  dateOpen = this.formBuilder.control<string | null>(null, Validators.required);
+  dateClose = this.formBuilder.control<string | null>(
+    null,
+    Validators.required,
+  );
   timeframe = this.formBuilder.control<string | null>(
     'M1',
     Validators.required,

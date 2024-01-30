@@ -58,7 +58,7 @@ export class ProjectionMutationComponent {
     null,
     Validators.required,
   );
-  date = this.formBuilder.control<string | null>(null);
+  date = this.formBuilder.control<string | null>(null, Validators.required);
   timeframe = this.formBuilder.control<string | null>(
     null,
     Validators.required,
