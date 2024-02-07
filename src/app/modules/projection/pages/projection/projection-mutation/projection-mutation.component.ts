@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
@@ -45,7 +45,15 @@ export class ProjectionMutationComponent {
   uploadedFile: File | null = null;
 
   symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
-  statuses$: Observable<Status[]> = this.statusService.getStatuses();
+  statuses$: Observable<Status[]> = this.statusService
+    .getStatuses()
+    .pipe(
+      map((statuses) =>
+        statuses.filter((status) =>
+          ProjectionService.PROJECTION_STATUSES.includes(status.name_st),
+        ),
+      ),
+    );
 
   timeframes = Object.values(Timeframe).filter(
     (value) => typeof value !== 'number',

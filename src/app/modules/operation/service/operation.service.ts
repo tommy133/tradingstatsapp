@@ -36,6 +36,8 @@ export class OperationService {
     }),
   );
 
+  public static OPERATION_STATUSES = ['OPEN', 'CLOSED'];
+
   deleteSubscription?: Subscription;
 
   constructor(private http: HttpClient, private toastService: ToastService) {}
