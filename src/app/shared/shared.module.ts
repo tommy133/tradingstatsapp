@@ -8,6 +8,7 @@ import { CardComponent } from './components/card/card.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { CloseButtonComponent } from './components/close-button/close-button.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { FilterOptionsComponent } from './components/filter-options/filter-options.component';
 import { FormLabelComponent } from './components/form-label/form-label.component';
 import { HopeComponent } from './components/hope/hope.component';
 import { IconButtonComponent } from './components/icon-button/icon-button.component';
@@ -20,10 +21,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
 import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
+import { TrimesterBtnComponent } from './components/trimester-selector/trimester-btn/trimester-btn.component';
 import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { YearSelectorComponent } from './components/year-selector/year-selector.component';
-import { TrimesterBtnComponent } from './components/trimester-selector/trimester-btn/trimester-btn.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { TrimesterBtnComponent } from './components/trimester-selector/trimester
     TrimesterSelectorComponent,
     YearSelectorComponent,
     TrimesterBtnComponent,
+    FilterOptionsComponent,
   ],
   imports: [
     CommonModule,
@@ -79,6 +81,7 @@ import { TrimesterBtnComponent } from './components/trimester-selector/trimester
     HopeComponent,
     TrimesterSelectorComponent,
     YearSelectorComponent,
+    FilterOptionsComponent,
   ],
 })
 export class SharedModule {}
