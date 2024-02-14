@@ -6,6 +6,7 @@ import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
+import { FilterFormService } from '../../../service/filter-form.service';
 import { ProjectionService } from '../../../service/projection.service';
 
 @Component({
@@ -18,6 +19,7 @@ export class ProjectionListComponent {
   private fileService = inject(FileService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private filterFormService = inject(FilterFormService);
 
   projections$ = this.projectionService.projections$;
   searchProjectionsControl = new FormControl<string>('');

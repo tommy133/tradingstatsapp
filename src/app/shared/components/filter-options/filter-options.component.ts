@@ -12,7 +12,7 @@ import { ClickAwayService } from 'src/app/core/service/click-away.service';
       class="absolute top-0 left-10 rounded-md bg-white shadow-dropshadow z-50"
     >
       <div class="flex flex-col w-[20rem] h-full p-6 space-y-8">
-        <h4>Filter by</h4>
+        <h1 class="font-semibold">Filter by</h1>
         <ng-content />
       </div>
     </div> `,

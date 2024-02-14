@@ -1,0 +1,41 @@
+<div class="flex space-x-6">
+  <div class="flex flex-col gap-4">
+    <label>Select order type</label>
+    <label>Select timeframe</label>
+    <label>Select status</label>
+    <label>Select market</label>
+
+  </div>
+  <div class="flex flex-col gap-3.5">
+    <select
+      name="orderTypeSelect"
+      class="rounded border-2"
+      [formControl]="orderTypeControl">
+      <option [value]="1">BUY</option>
+      <option [value]="0">SELL</option>
+    </select>
+    <select
+      name="timeframeSelect"
+      class="rounded border-2"
+      [formControl]="timeframeControl">
+      <ng-container *ngFor="let timeframe of timeframes">
+        <option [value]="timeframe">{{ timeframe }}</option>
+      </ng-container>
+    </select>
+    <select
+      name="statusSelect"
+      class="rounded border-2"
+      [formControl]="statusControl">
+      <ng-container *ngFor="let status of statuses$ | async">
+        <option [value]="status.id_st">{{ status.name_st }}</option>
+      </ng-container>
+    </select>
+    <select
+      name="marketSelect"
+      class="rounded border-2"
+      [formControl]="marketControl">
+      <option [value]="1">Forex</option>
+      <option [value]="2">Stock</option>
+    </select>
+  </div>
+</div>
