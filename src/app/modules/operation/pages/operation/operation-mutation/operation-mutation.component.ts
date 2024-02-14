@@ -40,7 +40,6 @@ export class OperationMutationComponent implements OnInit {
   errors: Array<string> = [];
 
   readonly DEFAULT_SYMBOL = 20; //FDXS
-  readonly STATUS_CLOSED: number = 2; //closed status
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
   idComment?: number = undefined;
   graphFileName: string | null = null;
@@ -83,7 +82,7 @@ export class OperationMutationComponent implements OnInit {
   account = this.formBuilder.control<number>(
     this.activatedRoute.snapshot.queryParams['account'] ?? 1,
   );
-  status = this.formBuilder.control<number>(this.STATUS_CLOSED);
+  status = this.formBuilder.control<number>(StatusService.STATUS_CLOSED);
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
   points = this.formBuilder.control<number | null>(null);

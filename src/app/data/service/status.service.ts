@@ -10,6 +10,8 @@ import { Status } from '../models/status';
 export class StatusService {
   private apiServerUrl = `${environment.apiBaseUrl}/statuses`;
 
+  static readonly STATUS_CLOSED: number = 2; //closed status
+
   constructor(private http: HttpClient) {}
 
   public getStatuses(): Observable<Status[]> {
