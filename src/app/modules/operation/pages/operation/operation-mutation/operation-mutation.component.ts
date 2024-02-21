@@ -40,7 +40,6 @@ export class OperationMutationComponent implements OnInit {
   errors: Array<string> = [];
 
   readonly DEFAULT_SYMBOL = 20; //FDXS
-  readonly STATUS_CLOSED: number = 2; //closed status
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
   idComment?: number = undefined;
   graphFileName: string | null = null;
@@ -60,6 +59,8 @@ export class OperationMutationComponent implements OnInit {
   timeframes = Object.values(Timeframe).filter(
     (value) => typeof value !== 'number',
   );
+
+  initialStatus: number = 0;
 
   //CONTROLS
   id = this.formBuilder.control<number | null>(null);
@@ -83,7 +84,7 @@ export class OperationMutationComponent implements OnInit {
   account = this.formBuilder.control<number>(
     this.activatedRoute.snapshot.queryParams['account'] ?? 1,
   );
-  status = this.formBuilder.control<number>(this.STATUS_CLOSED);
+  status = this.formBuilder.control<number>(this.initialStatus);
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
   points = this.formBuilder.control<number | null>(null);
@@ -119,6 +120,9 @@ export class OperationMutationComponent implements OnInit {
         this.setInitialFormStateComment(comment);
       }
     }
+    const statuses = await firstValueFrom(this.statuses$);
+    this.initialStatus =
+      statuses.find((status) => status.name_st === 'Open')?.id_st ?? 0;
   }
 
   get mutation(): MutationType {
@@ -214,7 +218,7 @@ export class OperationMutationComponent implements OnInit {
     } = operationDetails;
     this.id.setValue(id);
     this.symbol.setValue(id_sym);
-    this.orderType.setValue(updown ? 1 : 0);
+    this.orderType.setValue(updown);
     this.dateOpen.setValue(
       this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm', 'UTC'),
     );
