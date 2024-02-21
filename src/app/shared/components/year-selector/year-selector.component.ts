@@ -42,6 +42,14 @@ export class YearSelectorComponent implements OnInit {
     }
   };
 
+  dropQuarters() {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { q1: null, q2: null, q3: null, q4: null },
+      queryParamsHandling: 'merge',
+    });
+  }
+
   get isPrevDisabled() {
     return this.year <= this.minYear;
   }

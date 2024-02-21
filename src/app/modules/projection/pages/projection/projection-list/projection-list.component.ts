@@ -6,7 +6,7 @@ import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
-import { FilterFormService } from '../../../service/filter-form.service';
+import { ProjectionFilterFormService } from '../../../service/projection-filter-form.service';
 import { ProjectionService } from '../../../service/projection.service';
 
 @Component({
@@ -19,10 +19,10 @@ export class ProjectionListComponent implements OnInit {
   private fileService = inject(FileService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
-  private filterFormService = inject(FilterFormService);
+  private projectionFilterFormService = inject(ProjectionFilterFormService);
 
   ngOnInit() {
-    this.filterFormService.resetForm();
+    this.projectionFilterFormService.resetForm();
   }
 
   projections$ = this.projectionService.projections$;
@@ -50,7 +50,7 @@ export class ProjectionListComponent implements OnInit {
     map((queryParams) => parseInt(queryParams['year'])),
   );
 
-  filterForm$ = this.filterFormService.filtersForm.valueChanges.pipe(
+  filterForm$ = this.projectionFilterFormService.filtersForm.valueChanges.pipe(
     startWith(null),
     shareReplay(1),
   );
@@ -64,11 +64,15 @@ export class ProjectionListComponent implements OnInit {
     map(([projections, quarters, year, filterForm]) => {
       const filteredByPeriod = projections.filter((projection) => {
         if (projection.date) {
-          const operationDate = new Date(projection.date);
-          const quarter = Math.floor(operationDate.getMonth() / 3) + 1;
+          const projectionDate = new Date(projection.date);
+          const quarter = Math.floor(projectionDate.getMonth() / 3) + 1;
+
+          if (!quarters.q1 && !quarters.q2 && !quarters.q3 && !quarters.q4)
+            return projectionDate.getFullYear() === year;
+
           return (
             (quarters as { [key: string]: boolean })[`q${quarter}`] &&
-            operationDate.getFullYear() === year
+            projectionDate.getFullYear() === year
           );
         }
         return false;
@@ -80,7 +84,7 @@ export class ProjectionListComponent implements OnInit {
         const { orderType, status, timeframe, market } = filterForm;
         const checkNullSelectControl: (
           input: string | null | undefined,
-        ) => boolean = FilterFormService.checkNullSelectControl;
+        ) => boolean = ProjectionFilterFormService.checkNullSelectControl;
         const checkOrderType = checkNullSelectControl(orderType)
           ? true
           : projection.updown === parseInt(orderType!);
@@ -112,5 +116,9 @@ export class ProjectionListComponent implements OnInit {
 
   onCloseSidebar() {
     navigatePreservingQueryParams(['.'], this.router, this.activatedRoute);
+  }
+
+  resetFilterForm() {
+    this.projectionFilterFormService.resetForm();
   }
 }

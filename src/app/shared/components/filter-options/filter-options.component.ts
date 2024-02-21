@@ -1,6 +1,5 @@
 import { Component, HostListener, inject } from '@angular/core';
 import { ClickAwayService } from 'src/app/core/service/click-away.service';
-import { FilterFormService } from 'src/app/modules/projection/service/filter-form.service';
 
 @Component({
   selector: 'app-filter-options',
@@ -15,14 +14,9 @@ import { FilterFormService } from 'src/app/modules/projection/service/filter-for
       <div class="flex flex-col w-[20rem] h-full p-6 space-y-8">
         <div class="flex justify-between items-center">
           <h1 class="font-semibold">Filter by</h1>
-          <button
-            (click)="resetForm()"
-            class="bg-bright-blue rounded-sm px-2 py-1 text-white"
-          >
-            Reset
-          </button>
+          <ng-content select="[resetButton]" />
         </div>
-        <ng-content />
+        <ng-content select="[filters]" />
       </div>
     </div> `,
   styles: [
@@ -35,16 +29,11 @@ import { FilterFormService } from 'src/app/modules/projection/service/filter-for
 })
 export class FilterOptionsComponent {
   private clickAwayService = inject(ClickAwayService);
-  private filterFormService = inject(FilterFormService);
 
   buttonToggle = false;
 
   toggleButton() {
     this.buttonToggle = !this.buttonToggle;
-  }
-
-  resetForm() {
-    this.filterFormService.resetForm();
   }
 
   get buttonIcon() {

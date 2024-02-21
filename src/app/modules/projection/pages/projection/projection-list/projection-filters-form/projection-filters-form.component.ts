@@ -4,14 +4,14 @@ import { Status } from 'src/app/data/models/status';
 import { Timeframe } from 'src/app/data/models/timeframe';
 import { MarketService } from 'src/app/data/service/market.service';
 import { StatusService } from 'src/app/data/service/status.service';
-import { FilterFormService } from 'src/app/modules/projection/service/filter-form.service';
+import { ProjectionFilterFormService } from 'src/app/modules/projection/service/projection-filter-form.service';
 import { ProjectionService } from 'src/app/modules/projection/service/projection.service';
 @Component({
-  selector: 'filters-form',
-  templateUrl: './filters-form.component.html',
+  selector: 'projection-filters-form',
+  templateUrl: './projection-filters-form.component.html',
 })
-export class FiltersFormComponent {
-  private filterFormService = inject(FilterFormService);
+export class ProjectionFiltersFormComponent {
+  private filterFormService = inject(ProjectionFilterFormService);
   private statusService = inject(StatusService);
   private marketService = inject(MarketService);
 

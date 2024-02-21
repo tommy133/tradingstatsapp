@@ -4,7 +4,7 @@ import { FormBuilder } from '@angular/forms';
 @Injectable({
   providedIn: 'root',
 })
-export class FilterFormService {
+export class ProjectionFilterFormService {
   private formBuilder = inject(FormBuilder);
 
   orderType = this.formBuilder.control<string | null>(null);

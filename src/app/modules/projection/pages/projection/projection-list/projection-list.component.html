@@ -9,7 +9,17 @@
       <app-trimester-selector></app-trimester-selector>
       <app-year-selector></app-year-selector>
       <app-filter-options>
-        <filters-form></filters-form>
+        <ng-container resetButton>
+          <button
+            (click)="resetFilterForm()"
+            class="bg-bright-blue rounded-sm px-2 py-1 text-white">
+            Reset
+          </button>
+        </ng-container>
+        <ng-container filters>
+          <projection-filters-form></projection-filters-form>
+        </ng-container>
+        <projection-filters-form></projection-filters-form>
       </app-filter-options>
     </div>
     <app-rounded-button

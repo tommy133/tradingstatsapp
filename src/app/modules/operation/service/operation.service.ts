@@ -116,7 +116,7 @@ export class OperationService {
   );
 
   private year$ = this.activatedRoute.queryParams.pipe(
-    map((queryParams) => queryParams['year']),
+    map((queryParams) => parseInt(queryParams['year'])),
   );
 
   public filterOperationsByPeriod(operations$: Observable<Operation[]>) {
@@ -126,9 +126,13 @@ export class OperationService {
           if (operation.dateOpen) {
             const operationDate = new Date(operation.dateOpen);
             const quarter = Math.floor(operationDate.getMonth() / 3) + 1;
+
+            if (!quarters.q1 && !quarters.q2 && !quarters.q3 && !quarters.q4)
+              return operationDate.getFullYear() === year;
+
             return (
               (quarters as { [key: string]: boolean })[`q${quarter}`] &&
-              operationDate.getFullYear() == year
+              operationDate.getFullYear() === year
             );
           }
           return false;

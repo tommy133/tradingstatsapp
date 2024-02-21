@@ -9,7 +9,7 @@ import { TableProjectionComponent } from './pages/projection/projection-list/tab
 import { ProjectionMutationComponent } from './pages/projection/projection-mutation/projection-mutation.component';
 import { ViewChartComponent } from './pages/view-chart/view-chart.component';
 import { ProjectionRoutingModule } from './projection-routing.module';
-import { FiltersFormComponent } from './pages/projection/projection-list/filters-form/filters-form.component';
+import { ProjectionFiltersFormComponent } from './pages/projection/projection-list/projection-filters-form/projection-filters-form.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +18,7 @@ import { FiltersFormComponent } from './pages/projection/projection-list/filters
     ProjectionMutationComponent,
     ProjectionDetailsComponent,
     ViewChartComponent,
-    FiltersFormComponent,
+    ProjectionFiltersFormComponent,
   ],
   imports: [
     CommonModule,

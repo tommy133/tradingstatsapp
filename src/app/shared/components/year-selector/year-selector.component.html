@@ -5,7 +5,9 @@
     [disabled]="isPrevDisabled"
     [iconSvgStyle]="{ 'width.px':32 ,'opacity': isPrevDisabled ? 0.4 : 1  }"></app-icon-button>
 
-  <h5>{{ this.year }}</h5>
+  <h5
+    (click)="dropQuarters()"
+    class="cursor-pointer">{{ this.year }}</h5>
 
   <app-icon-button
     iconSource="assets/svg/go-right.svg"
