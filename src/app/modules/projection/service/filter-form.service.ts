@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { StatusService } from 'src/app/data/service/status.service';
 
 @Injectable({
   providedIn: 'root',
@@ -8,10 +7,10 @@ import { StatusService } from 'src/app/data/service/status.service';
 export class FilterFormService {
   private formBuilder = inject(FormBuilder);
 
-  orderType = this.formBuilder.control<number | null>(null);
-  timeframe = this.formBuilder.control<string | null>('M1');
-  status = this.formBuilder.control<number>(StatusService.STATUS_CLOSED);
-  market = this.formBuilder.control<number>(1);
+  orderType = this.formBuilder.control<string | null>(null);
+  timeframe = this.formBuilder.control<string | null>(null);
+  status = this.formBuilder.control<string | null>(null);
+  market = this.formBuilder.control<string | null>(null);
 
   filtersForm = this.formBuilder.group({
     orderType: this.orderType,
@@ -19,4 +18,12 @@ export class FilterFormService {
     status: this.status,
     market: this.market,
   });
+
+  resetForm() {
+    this.filtersForm.reset();
+  }
+
+  static checkNullSelectControl(input: string | null | undefined) {
+    return !input || input === 'null';
+  }
 }

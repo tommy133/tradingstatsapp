@@ -5,7 +5,7 @@ import { Symbol } from 'src/app/data/models/symbol';
 export interface Operation {
   id: number;
   symbol: Symbol;
-  updown: boolean;
+  updown: number;
   dateOpen?: string;
   dateClose?: string;
   timeframe: string;
