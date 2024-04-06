@@ -48,19 +48,6 @@ export class TrimesterSelectorComponent {
     ]),
   );
 
-  ngOnInit() {
-    const initialTrimester = this.getInitialTrimester();
-    const queryParams = this.activatedRoute.snapshot.queryParams;
-    if (
-      !queryParams['q1'] &&
-      !queryParams['q2'] &&
-      !queryParams['q3'] &&
-      !queryParams['q4']
-    ) {
-      this.navigateSelectedTrimester(initialTrimester, true);
-    }
-  }
-
   navigateSelectedTrimester(selectedTrimester: string, state: boolean) {
     const queryParams = {
       ...this.activatedRoute.snapshot.queryParams,
@@ -71,18 +58,5 @@ export class TrimesterSelectorComponent {
       relativeTo: this.activatedRoute,
       queryParams,
     });
-  }
-
-  private getInitialTrimester() {
-    const currentMonth = new Date().getMonth();
-    if (currentMonth < 3) {
-      return 'q1';
-    } else if (currentMonth < 6) {
-      return 'q2';
-    } else if (currentMonth < 9) {
-      return 'q3';
-    } else {
-      return 'q4';
-    }
   }
 }
