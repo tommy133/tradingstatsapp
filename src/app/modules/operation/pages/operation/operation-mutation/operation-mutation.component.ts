@@ -87,7 +87,7 @@ export class OperationMutationComponent implements OnInit {
   status = this.formBuilder.control<number>(this.initialStatus);
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
-  points = this.formBuilder.control<number | null>(null);
+  revenue = this.formBuilder.control<number | null>(null);
   comment = this.formBuilder.control<string | null>(null);
 
   operationForm = this.formBuilder.group({
@@ -101,7 +101,7 @@ export class OperationMutationComponent implements OnInit {
     account: this.account,
     volume: this.volume,
     ratio: this.ratio,
-    points: this.points,
+    revenue: this.revenue,
     comment: this.comment,
   });
 
@@ -214,7 +214,7 @@ export class OperationMutationComponent implements OnInit {
       account: { id_ac },
       volume,
       ratio,
-      points,
+      revenue,
     } = operationDetails;
     this.id.setValue(id);
     this.symbol.setValue(id_sym);
@@ -231,7 +231,7 @@ export class OperationMutationComponent implements OnInit {
     this.account.setValue(id_ac);
     this.volume.setValue(volume!);
     this.ratio.setValue(ratio!);
-    this.points.setValue(points!);
+    this.revenue.setValue(revenue!);
   }
 
   private setInitialFormStateComment(comment: OperationComment) {
@@ -304,7 +304,7 @@ export class OperationMutationComponent implements OnInit {
       account,
       volume,
       ratio,
-      points,
+      revenue,
     } = this.operationForm.value;
     return {
       id_sym: symbol!,
@@ -317,7 +317,7 @@ export class OperationMutationComponent implements OnInit {
       id_ac: account!,
       rr_ratio: ratio!,
       volume: volume!,
-      points: points!,
+      revenue: revenue!,
     };
   }
 
@@ -333,7 +333,7 @@ export class OperationMutationComponent implements OnInit {
       account,
       volume,
       ratio,
-      points,
+      revenue,
     } = this.operationForm.value;
     return {
       id_op: id!,
@@ -347,7 +347,7 @@ export class OperationMutationComponent implements OnInit {
       id_ac: account!,
       rr_ratio: ratio!,
       volume: volume!,
-      points: points!,
+      revenue: revenue!,
     };
   }
 

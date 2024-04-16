@@ -93,7 +93,7 @@ export class OperationDetailsComponent implements OnInit {
     });
   }
 
-  getPointsColorClass(points: number): string {
-    return points > 0 ? 'text-dark-green' : 'text-red';
+  getRevenueColorClass(revenue: number): string {
+    return revenue > 0 ? 'text-dark-green' : 'text-red';
   }
 }

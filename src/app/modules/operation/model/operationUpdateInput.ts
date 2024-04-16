@@ -10,5 +10,5 @@ export interface OperationUpdateInput {
   id_ac?: number;
   rr_ratio?: number;
   volume?: number;
-  points?: number;
+  revenue?: number;
 }

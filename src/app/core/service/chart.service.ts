@@ -23,7 +23,7 @@ export class ChartService {
       },
       yAxis: {
         title: {
-          text: 'Points',
+          text: 'Revenue',
           style: {
             color: '#fff',
             fontSize: '1.2rem',

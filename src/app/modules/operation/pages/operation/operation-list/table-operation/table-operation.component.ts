@@ -25,12 +25,12 @@ export class TableOperationComponent {
     { name: 'Date close' },
     { name: 'Timeframe' },
     { name: 'Status' },
-    { name: 'Points' },
+    { name: 'Revenue' },
     { name: 'Actions' },
   ];
 
-  getPointsColorClass(points: number): string {
-    return points > 0 ? 'text-green' : 'text-red';
+  getRevenueColorClass(revenue: number): string {
+    return revenue > 0 ? 'text-green' : 'text-red';
   }
 
   goToDetails(operationId: number) {

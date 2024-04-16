@@ -45,8 +45,8 @@ export class ChartComponent implements OnInit {
                     accumulatedData.length > 0
                       ? accumulatedData[accumulatedData.length - 1]
                       : 0;
-                  const currentPoints = operation.points ?? 0;
-                  const newTotal = previousTotal + currentPoints;
+                  const currentRevenue = operation.revenue ?? 0;
+                  const newTotal = previousTotal + currentRevenue;
                   accumulatedData.push(newTotal);
                   return accumulatedData;
                 }, []);
@@ -66,7 +66,7 @@ export class ChartComponent implements OnInit {
                 .filter(
                   (operation) => operation.account.id_ac === parseInt(account),
                 )
-                .map(({ points }) => points ?? null);
+                .map(({ revenue }) => revenue ?? null);
 
               this.chartService.updateChart(this.data, this.chartType);
               resolve();

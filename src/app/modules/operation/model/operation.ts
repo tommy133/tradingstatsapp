@@ -16,5 +16,5 @@ export interface Operation {
   market: Market;
   volume?: number;
   ratio?: number;
-  points?: number;
+  revenue?: number;
 }

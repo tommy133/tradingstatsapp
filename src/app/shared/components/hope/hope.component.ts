@@ -32,7 +32,7 @@ import { OperationService } from 'src/app/modules/operation/service/operation.se
               >
                 {{ counterValue }}
               </p>
-              <p class="pl-1">points</p></app-label
+              <p class="pl-1">€</p></app-label
             >
           </div>
         </app-label>
@@ -72,7 +72,7 @@ export class HopeComponent implements OnInit {
           this.activatedRoute.snapshot.queryParams['account'] ?? '1';
         this.data = operations
           .filter((operation) => operation.account.id_ac === parseInt(account))
-          .map(({ points }) => points ?? null);
+          .map(({ revenue }) => revenue ?? null);
         this.targetValue = this.calculateHope(this.data);
         this.startCounter();
         resolve();

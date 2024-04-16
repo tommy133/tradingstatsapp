@@ -96,13 +96,13 @@
     </div>
 
     <div
-      *ngIf="operation.points"
+      *ngIf="operation.revenue"
       class="flex flex-row items-center pt-5">
-      <app-form-label text="Points"></app-form-label>
+      <app-form-label text="Revenue"></app-form-label>
       <div class="pl-[50px]">
         <app-label
-          [text]="operation.points.toString()"
-          [textColor]="getPointsColorClass(operation.points)"></app-label>
+          [text]="operation.revenue.toString()"
+          [textColor]="getRevenueColorClass(operation.revenue)"></app-label>
       </div>
     </div>
 
@@ -114,7 +114,8 @@
             cols="30"
             rows="5"
             class="rounded"
-            readonly>{{comment.opcomment}}
+            readonly>
+            {{comment.opcomment}}
           </textarea>
         </ng-container>
       </div>

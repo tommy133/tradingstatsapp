@@ -97,23 +97,23 @@ export class OperationListComponent {
           ? true
           : operation.market.id_mkt === parseInt(market!);
 
-        const checkOperationPoints = (
+        const checkOperationRevenue = (
           result: string | null | undefined,
           operation: Operation,
         ) => {
-          if (operation.points) {
+          if (operation.revenue) {
             return parseInt(result!)
-              ? operation.points > 0
-              : operation.points < 0;
+              ? operation.revenue > 0
+              : operation.revenue < 0;
           }
           return;
         };
         const checkResult =
           checkNullSelectControl(result) ||
-          operation.points == null ||
-          operation.points == undefined
+          operation.revenue == null ||
+          operation.revenue == undefined
             ? true
-            : checkOperationPoints(result, operation);
+            : checkOperationRevenue(result, operation);
 
         return (
           checkOrderType &&
