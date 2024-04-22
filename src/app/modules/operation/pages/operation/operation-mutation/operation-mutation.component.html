@@ -24,158 +24,115 @@
       </div>
     </div>
 
-    <div class="p-8">
+    <div class="p-10">
       <p class="text-white font-semibold">{{formType}} OPERATION</p>
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select symbol"></app-form-label>
-        <div class="pl-10">
-          <select
-            name="symbolSelect"
-            class="rounded"
-            formControlName="symbol">
-            <ng-container *ngFor="let symbol of symbols$ | async">
-              <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
-            </ng-container>
-          </select>
-          <app-validation-error
-            for="symbol"
-            fieldName="symbol"></app-validation-error>
-        </div>
+        <select
+          name="symbolSelect"
+          class="rounded"
+          formControlName="symbol">
+          <ng-container *ngFor="let symbol of symbols$ | async">
+            <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
+          </ng-container>
+        </select>
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select order type"></app-form-label>
-        <div class="pl-[17px]">
-          <select
-            name="orderTypeSelect"
-            class="rounded"
-            formControlName="orderType">
-            <option [value]="1">BUY</option>
-            <option [value]="0">SELL</option>
-          </select>
-          <app-validation-error
-            for="orderType"
-            fieldName="order type"></app-validation-error>
-        </div>
+        <select
+          name="orderTypeSelect"
+          class="rounded"
+          formControlName="orderType">
+          <option [value]="1">BUY</option>
+          <option [value]="0">SELL</option>
+        </select>
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select date open"></app-form-label>
-        <div class="pl-[20px]">
-          <input
-            class="rounded"
-            type="datetime-local"
-            formControlName="dateOpen">
-          <app-validation-error
-            for="dateOpen"
-            fieldName="date open"></app-validation-error>
-        </div>
+        <input
+          class="rounded"
+          type="datetime-local"
+          formControlName="dateOpen">
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select date close"></app-form-label>
-        <div class="pl-[20px]">
-          <input
-            class="rounded"
-            type="datetime-local"
-            formControlName="dateClose">
-          <app-validation-error
-            for="dateClose"
-            fieldName="date close"></app-validation-error>
-        </div>
+        <input
+          class="rounded"
+          type="datetime-local"
+          formControlName="dateClose">
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select timeframe"></app-form-label>
-        <div class="pl-5">
-          <select
-            name="timeframeSelect"
-            class="rounded"
-            formControlName="timeframe">
-            <ng-container *ngFor="let timeframe of timeframes">
-              <option [value]="timeframe">{{timeframe}}</option>
-            </ng-container>
-          </select>
-          <app-validation-error
-            for="timeframe"
-            fieldName="timeframe"></app-validation-error>
-        </div>
+        <select
+          name="timeframeSelect"
+          class="rounded"
+          formControlName="timeframe">
+          <ng-container *ngFor="let timeframe of timeframes">
+            <option [value]="timeframe">{{timeframe}}</option>
+          </ng-container>
+        </select>
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select status"></app-form-label>
-        <div class="pl-[50px]">
-          <select
-            name="statusSelect"
-            class="rounded"
-            formControlName="status">
-            <ng-container *ngFor="let status of statuses$ | async">
-              <option [value]="status.id_st">{{status.name_st}}</option>
-            </ng-container>
-          </select>
-          <app-validation-error
-            for="status"
-            fieldName="status"></app-validation-error>
-        </div>
+        <select
+          name="statusSelect"
+          class="rounded"
+          formControlName="status">
+          <ng-container *ngFor="let status of statuses$ | async">
+            <option [value]="status.id_st">{{status.name_st}}</option>
+          </ng-container>
+        </select>
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select account"></app-form-label>
-        <div class="pl-9">
-          <select
-            name="accountType"
-            class="rounded"
-            formControlName="account">
-            <ng-container *ngFor="let account of accountTypes; index as i">
-              <option [value]="i+1">{{account}}</option>
-            </ng-container>
-          </select>
-          <app-validation-error
-            for="status"
-            fieldName="status"></app-validation-error>
-        </div>
+        <select
+          name="accountType"
+          class="rounded"
+          formControlName="account">
+          <ng-container *ngFor="let account of accountTypes; index as i">
+            <option [value]="i+1">{{account}}</option>
+          </ng-container>
+        </select>
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Volume"></app-form-label>
-        <div class="pl-[85px]">
-          <input
-            class="w-[100px] rounded"
-            type="number"
-            formControlName="volume">
-        </div>
+        <input
+          class="w-[100px] rounded"
+          type="number"
+          formControlName="volume">
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Risk reward %"></app-form-label>
-        <div class="pl-[40px]">
-          <input
-            class="w-[100px] rounded"
-            type="number"
-            formControlName="ratio">
-        </div>
+        <input
+          class="w-[100px] rounded"
+          type="number"
+          formControlName="ratio">
       </div>
 
-      <div class="flex flex-row pt-5">
+      <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Revenue"></app-form-label>
-        <div class="pl-[95px]">
-          <input
-            class="w-[100px] rounded"
-            type="number"
-            formControlName="revenue">
-        </div>
+        <input
+          class="w-[100px] rounded"
+          type="number"
+          formControlName="revenue">
       </div>
 
-      <div class="flex items-center flex-row pt-5">
+      <div class="flex items-center justify-between pt-5">
         <app-form-label text="Comment"></app-form-label>
-        <div class="pl-[68px]">
-          <textarea
-            name="commentSelect"
-            class="rounded"
-            formControlName="comment"
-            cols="30"
-            rows="5"></textarea>
-        </div>
+        <textarea
+          name="commentSelect"
+          class="rounded"
+          formControlName="comment"
+          cols="30"
+          rows="5"></textarea>
       </div>
       <div class="flex items-center flex-row justify-end pt-10">
         <button type="button">

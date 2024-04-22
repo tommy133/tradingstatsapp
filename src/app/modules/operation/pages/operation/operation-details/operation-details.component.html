@@ -21,104 +21,80 @@
     </div>
   </div>
 
-  <div class="p-8">
+  <div class="p-10">
     <p class="text-white font-semibold">OPERATION DETAILS</p>
-    <div class="flex flex-row items-center pt-5">
+    <div class="flex items-center justify-between pt-5">
       <app-form-label text="Symbol"></app-form-label>
-      <div class="pl-10">
-        <app-label [text]="operation.symbol.name_sym"></app-label>
-      </div>
+      <app-label [text]="operation.symbol.name_sym"></app-label>
     </div>
 
-    <div class="flex flex-row items-center pt-5">
+    <div class="flex items-center justify-between pt-5">
       <app-form-label text="Order type"></app-form-label>
-      <div class="pl-[17px]">
-        <app-label [text]="operation.updown ? 'LONG' : 'SHORT'"></app-label>
-
-      </div>
+      <app-label [text]="operation.updown ? 'LONG' : 'SHORT'"></app-label>
     </div>
 
     <div
       *ngIf="operation.dateOpen"
-      class="flex flex-row items-center pt-5">
+      class="flex items-center justify-between pt-5">
       <app-form-label text="Opened"></app-form-label>
-      <div class="pl-[35px]">
-        <app-label [text]="(operation.dateOpen | date: 'yyyy-MM-dd HH:mm':'UTC')!"></app-label>
-      </div>
+      <app-label [text]="(operation.dateOpen | date: 'yyyy-MM-dd HH:mm':'UTC')!"></app-label>
     </div>
 
     <div
       *ngIf="operation.dateClose"
-      class="flex flex-row items-center pt-5">
+      class="flex items-center justify-between pt-5">
       <app-form-label text="Close"></app-form-label>
-      <div class="pl-[53px]">
-        <app-label [text]="(operation.dateClose | date: 'yyyy-MM-dd HH:mm':'UTC')!"></app-label>
-      </div>
+      <app-label [text]="(operation.dateClose | date: 'yyyy-MM-dd HH:mm':'UTC')!"></app-label>
     </div>
 
-    <div class="flex flex-row items-center pt-5">
+    <div class="flex items-center justify-between pt-5">
       <app-form-label text="Timeframe"></app-form-label>
-      <div class="pl-4">
-        <app-label [text]="operation.timeframe"></app-label>
-      </div>
+      <app-label [text]="operation.timeframe"></app-label>
     </div>
 
-    <div class="flex flex-row items-center pt-5">
+    <div class="flex items-center justify-between pt-5">
       <app-form-label text="Account"></app-form-label>
-      <div class="pl-[35px]">
-        <app-label [text]="operation.account.account_type"></app-label>
-      </div>
+      <app-label [text]="operation.account.account_type"></app-label>
     </div>
 
-    <div class="flex flex-row items-center pt-5">
+    <div class="flex items-center justify-between pt-5">
       <app-form-label text="Status"></app-form-label>
-      <div class="pl-[50px]">
-        <app-label [text]="operation.status.name_st"></app-label>
-      </div>
+      <app-label [text]="operation.status.name_st"></app-label>
     </div>
 
     <div
       *ngIf="operation.volume"
-      class="flex flex-row items-center pt-5">
+      class="flex items-center justify-between pt-5">
       <app-form-label text="Volume"></app-form-label>
-      <div class="pl-[40px]">
-        <app-label [text]="operation.volume.toString()"></app-label>
-      </div>
+      <app-label [text]="operation.volume.toString()"></app-label>
     </div>
 
     <div
       *ngIf="operation.ratio"
-      class="flex flex-row items-center pt-5">
+      class="flex items-center justify-between pt-5">
       <app-form-label text="Ratio"></app-form-label>
-      <div class="pl-[55px]">
-        <app-label [text]="operation.ratio.toString()"></app-label>
-      </div>
+      <app-label [text]="operation.ratio.toString()"></app-label>
     </div>
 
     <div
       *ngIf="operation.revenue"
-      class="flex flex-row items-center pt-5">
+      class="flex items-center justify-between pt-5">
       <app-form-label text="Revenue"></app-form-label>
-      <div class="pl-[50px]">
-        <app-label
-          [text]="operation.revenue.toString()"
-          [textColor]="getRevenueColorClass(operation.revenue)"></app-label>
-      </div>
+      <app-label
+        [text]="operation.revenue.toString()"
+        [textColor]="getRevenueColorClass(operation.revenue)"></app-label>
     </div>
 
-    <div class="flex flex-row items-center pt-5">
+    <div class="flex items-center justify-between pt-5">
       <app-form-label text="Comment"></app-form-label>
-      <div class="pl-7">
-        <ng-container *ngIf="comment$ | async as comment;">
-          <textarea
-            cols="30"
-            rows="5"
-            class="rounded"
-            readonly>
-            {{comment.opcomment}}
-          </textarea>
-        </ng-container>
-      </div>
+      <ng-container *ngIf="comment$ | async as comment;">
+        <textarea
+          cols="30"
+          rows="5"
+          class="rounded"
+          readonly>{{comment.opcomment}}
+        </textarea>
+      </ng-container>
     </div>
 
     <div
