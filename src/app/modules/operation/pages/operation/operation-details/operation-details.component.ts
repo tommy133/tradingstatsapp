@@ -24,7 +24,6 @@ export class OperationDetailsComponent implements OnInit {
   @Input() extended: boolean = true;
   @Input() viewChartMode: boolean = false;
 
-  private editPath = this.activatedRoute.snapshot.data['editPath'];
   private postDeletePath = this.activatedRoute.snapshot.data['postDeletePath'];
   closeSidebarRedirect =
     this.activatedRoute.snapshot.data['closeSidebarRedirect'];
@@ -64,7 +63,7 @@ export class OperationDetailsComponent implements OnInit {
 
   goToEdit(operationId: number) {
     navigatePreservingQueryParams(
-      [this.editPath, operationId],
+      ['../' + operationId, 'edit'],
       this.router,
       this.activatedRoute,
     );

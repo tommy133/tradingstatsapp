@@ -43,7 +43,6 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   backToQueryParams: { [key: string]: any } = {};
 
   ngOnInit() {
-    this.isLoading = true;
     this.sidebarService.openSidebarLeft(); //default open
 
     this.setBackToQueryParams();
@@ -64,6 +63,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   private imageSubscription: Subscription = this.image$.subscribe(
     (fileName) => {
       if (fileName) {
+        this.isLoading = true;
         this.fileService.getImage(fileName).then((url) => {
           if (url) {
             this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(url);

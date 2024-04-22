@@ -36,6 +36,11 @@ export class OperationMutationComponent implements OnInit {
   private fileService = inject(FileService);
   private datePipe = inject(DatePipe);
 
+  //Take route from operation/:id or operation/view-chart/:id
+  paramId =
+    this.activatedRoute.snapshot.params['id'] ??
+    this.activatedRoute.snapshot.parent?.params['id'];
+
   isLoading: boolean = false;
   errors: Array<string> = [];
 
@@ -106,16 +111,17 @@ export class OperationMutationComponent implements OnInit {
   });
 
   async ngOnInit() {
-    const id = this.activatedRoute.snapshot.params['id'];
     this.account.setValue(this.activatedRoute.snapshot.queryParams['account']);
-    if (id) {
+    if (this.paramId) {
       const operationDetails = await firstValueFrom(
-        this.operationService.getOperation(id),
+        this.operationService.getOperation(this.paramId),
       );
       if (operationDetails) {
         this.setInitialFormState(operationDetails);
       }
-      const comment = await firstValueFrom(this.commentService.getComment(id));
+      const comment = await firstValueFrom(
+        this.commentService.getComment(this.paramId),
+      );
       if (comment) {
         this.setInitialFormStateComment(comment);
       }
@@ -126,7 +132,7 @@ export class OperationMutationComponent implements OnInit {
   }
 
   get mutation(): MutationType {
-    if (this.activatedRoute.snapshot.params['id']) {
+    if (this.paramId) {
       return MutationType.EDIT;
     }
     return MutationType.ADD;

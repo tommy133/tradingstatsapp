@@ -15,19 +15,12 @@ const routes: Routes = [
         path: '',
         component: OperationDetailsComponent,
         data: {
-          editPath: '../edit',
           postDeletePath: '../../',
           showViewChartBtn: false,
         },
       },
-    ],
-  },
-  {
-    path: 'view-chart/edit',
-    component: ViewChartComponent,
-    children: [
       {
-        path: ':id',
+        path: 'edit',
         component: OperationMutationComponent,
       },
     ],
@@ -41,14 +34,13 @@ const routes: Routes = [
         component: OperationMutationComponent,
       },
       {
-        path: 'edit/:id',
+        path: ':id/edit',
         component: OperationMutationComponent,
       },
       {
         path: ':id',
         component: OperationDetailsComponent,
         data: {
-          editPath: '../edit',
           postDeletePath: '../',
           closeSidebarRedirect: true,
         },
