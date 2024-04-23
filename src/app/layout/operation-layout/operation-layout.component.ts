@@ -34,14 +34,9 @@ export class OperationLayoutComponent {
 
   account!: AccountType;
   accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
+
   accountControl: FormControl<AccountType | null> =
-    this.formBuilder.control<AccountType>(
-      this.activatedRoute.snapshot.queryParams['account']
-        ? this.accountTypes[
-            parseInt(this.activatedRoute.snapshot.queryParams['account']) - 1
-          ]
-        : this.accountTypes[0],
-    );
+    this.formBuilder.control<AccountType>(this.getDefaultAccount());
 
   ngOnInit() {
     const account = this.activatedRoute.snapshot.queryParams['account'];
@@ -52,6 +47,8 @@ export class OperationLayoutComponent {
 
   private accountSubscription = this.accountControl.valueChanges.subscribe(
     (account) => {
+      console.log(account);
+
       if (account) {
         this.switchAccount(account);
         this.operationService.refetch();
@@ -75,12 +72,50 @@ export class OperationLayoutComponent {
 
   redirectDefaultAccount() {
     const queryParams = { ...this.activatedRoute.snapshot.queryParams };
-    this.router.navigate([], {
-      queryParams: {
-        ...queryParams,
-        account: 1,
-      },
-    });
+    try {
+      const account = localStorage.getItem('defaultAccount') as AccountType;
+      const accountNumber = this.accountTypes.indexOf(account) + 1;
+      this.accountControl.setValue(
+        accountNumber
+          ? this.accountTypes[accountNumber - 1]
+          : this.accountTypes[0],
+      );
+      this.router.navigate([], {
+        queryParams: {
+          ...queryParams,
+          account: accountNumber,
+        },
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  setDefaultAccount() {
+    const account = this.accountControl.value;
+    if (account) {
+      try {
+        localStorage.setItem('defaultAccount', account);
+        this.toastService.info({
+          message: `${account} account set as default`,
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+
+  getDefaultAccount() {
+    try {
+      const account = localStorage.getItem('defaultAccount') as AccountType;
+      const accountNumber = this.accountTypes.indexOf(account) + 1;
+      return accountNumber
+        ? this.accountTypes[accountNumber - 1]
+        : this.accountTypes[0];
+    } catch (err) {
+      console.log(err);
+      return this.accountTypes[0];
+    }
   }
 
   ngOnDestroy() {
