@@ -11,7 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { environment } from 'src/environments/environment';
 import { LoginLayoutComponent } from './layout/login-layout/login-layout.component';
-import { ToastPopupComponent } from './layout/main-layout/components/toast-popup/toast-popup.component';
+import { ToastMessageComponent } from './layout/main-layout/components/toast-message/toast-message.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { OperationLayoutComponent } from './layout/operation-layout/operation-layout.component';
 import { ProjectionLayoutComponent } from './layout/projection-layout/projection-layout.component';
@@ -28,7 +28,7 @@ import { SharedModule } from './shared/shared.module';
     MainLayoutComponent,
     ProjectionLayoutComponent,
     OperationLayoutComponent,
-    ToastPopupComponent,
+    ToastMessageComponent,
     StatsLayoutComponent,
     LoginLayoutComponent,
     LoginComponent,

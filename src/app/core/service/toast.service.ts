@@ -50,4 +50,8 @@ export class ToastService {
   public info({ title = '', ...restOfOptions }: ToastOptions) {
     this.showToast({ type: 'info', title, ...restOfOptions });
   }
+
+  public warn({ title = 'Warning!', ...restOfOptions }: ToastOptions) {
+    this.showToast({ type: 'warning', title, ...restOfOptions });
+  }
 }

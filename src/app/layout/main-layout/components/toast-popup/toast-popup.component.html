@@ -1,9 +1,0 @@
-<div
-  *ngIf="toast$ | async as toast"
-  [ngClass]="toast.type">
-  <p
-    *ngIf="toast.title!==''"
-    [ngClass]="titleStyle">{{toast.title}}</p>
-
-  <p [ngClass]="getmessageStyle(toast.type!)">{{toast.message}}</p>
-</div>
