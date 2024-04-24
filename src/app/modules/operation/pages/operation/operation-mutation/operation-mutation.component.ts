@@ -45,6 +45,8 @@ export class OperationMutationComponent implements OnInit {
   errors: Array<string> = [];
 
   readonly DEFAULT_SYMBOL = 20; //FDXS
+  readonly DEFAULT_STATUS: number = 2; //CLOSED
+
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
   idComment?: number = undefined;
   graphFileName: string | null = null;
@@ -65,8 +67,6 @@ export class OperationMutationComponent implements OnInit {
     (value) => typeof value !== 'number',
   );
 
-  initialStatus: number = 0;
-
   //CONTROLS
   id = this.formBuilder.control<number | null>(null);
   symbol = this.formBuilder.control<number | null>(
@@ -77,9 +77,12 @@ export class OperationMutationComponent implements OnInit {
     null,
     Validators.required,
   );
-  dateOpen = this.formBuilder.control<string | null>(null, Validators.required);
+  dateOpen = this.formBuilder.control<string | null>(
+    this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm', 'UTC+2'),
+    Validators.required,
+  );
   dateClose = this.formBuilder.control<string | null>(
-    null,
+    this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm', 'UTC+2'),
     Validators.required,
   );
   timeframe = this.formBuilder.control<string | null>(
@@ -89,7 +92,10 @@ export class OperationMutationComponent implements OnInit {
   account = this.formBuilder.control<number>(
     this.activatedRoute.snapshot.queryParams['account'] ?? 1,
   );
-  status = this.formBuilder.control<number>(this.initialStatus);
+  status = this.formBuilder.control<number>(
+    this.DEFAULT_STATUS,
+    Validators.required,
+  );
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
   revenue = this.formBuilder.control<number | null>(null);
@@ -126,9 +132,6 @@ export class OperationMutationComponent implements OnInit {
         this.setInitialFormStateComment(comment);
       }
     }
-    const statuses = await firstValueFrom(this.statuses$);
-    this.initialStatus =
-      statuses.find((status) => status.name_st === 'Open')?.id_st ?? 0;
   }
 
   get mutation(): MutationType {
