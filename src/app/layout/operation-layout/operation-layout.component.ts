@@ -32,7 +32,6 @@ export class OperationLayoutComponent {
     },
   ];
 
-  account!: AccountType;
   accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
 
   accountControl: FormControl<AccountType | null> =
@@ -47,8 +46,6 @@ export class OperationLayoutComponent {
 
   private accountSubscription = this.accountControl.valueChanges.subscribe(
     (account) => {
-      console.log(account);
-
       if (account) {
         this.switchAccount(account);
         this.operationService.refetch();
@@ -72,23 +69,14 @@ export class OperationLayoutComponent {
 
   redirectDefaultAccount() {
     const queryParams = { ...this.activatedRoute.snapshot.queryParams };
-    try {
-      const account = localStorage.getItem('defaultAccount') as AccountType;
-      const accountNumber = this.accountTypes.indexOf(account) + 1;
-      this.accountControl.setValue(
-        accountNumber
-          ? this.accountTypes[accountNumber - 1]
-          : this.accountTypes[0],
-      );
-      this.router.navigate([], {
-        queryParams: {
-          ...queryParams,
-          account: accountNumber,
-        },
-      });
-    } catch (err) {
-      console.error(err);
-    }
+    const accountNumber =
+      this.accountTypes.indexOf(this.accountControl.value ?? 'Demo') + 1;
+    this.router.navigate([], {
+      queryParams: {
+        ...queryParams,
+        account: accountNumber,
+      },
+    });
   }
 
   setDefaultAccount() {
@@ -107,11 +95,18 @@ export class OperationLayoutComponent {
 
   getDefaultAccount() {
     try {
-      const account = localStorage.getItem('defaultAccount') as AccountType;
-      const accountNumber = this.accountTypes.indexOf(account) + 1;
-      return accountNumber
-        ? this.accountTypes[accountNumber - 1]
-        : this.accountTypes[0];
+      const accountParams = this.activatedRoute.snapshot.queryParams['account'];
+      if (accountParams) {
+        const accountParamsId = parseInt(accountParams);
+        const index =
+          accountParamsId > 0 && accountParamsId <= this.accountTypes.length
+            ? accountParamsId - 1
+            : 0;
+
+        return this.accountTypes[index];
+      } else {
+        return localStorage.getItem('defaultAccount') as AccountType;
+      }
     } catch (err) {
       console.log(err);
       return this.accountTypes[0];
