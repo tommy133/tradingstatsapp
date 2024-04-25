@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import { AccountType, NavButton } from 'src/app/shared/utils/custom-types';
@@ -35,7 +36,17 @@ export class OperationLayoutComponent {
   accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
 
   accountControl: FormControl<AccountType | null> =
-    this.formBuilder.control<AccountType>(this.getDefaultAccount());
+    this.formBuilder.control<AccountType>(this.getInitialAccount() ?? 'Demo');
+
+  isDefaultAccount$ = this.activatedRoute.queryParams.pipe(
+    map((params) => {
+      const currentAccount = params['account'];
+      const defaultAccount =
+        this.accountTypes.indexOf(this.getDefaultAccount() ?? 'Demo') + 1;
+
+      return parseInt(currentAccount) === defaultAccount;
+    }),
+  );
 
   ngOnInit() {
     const account = this.activatedRoute.snapshot.queryParams['account'];
@@ -93,20 +104,38 @@ export class OperationLayoutComponent {
     }
   }
 
-  getDefaultAccount() {
-    try {
-      const accountParams = this.activatedRoute.snapshot.queryParams['account'];
-      if (accountParams) {
-        const accountParamsId = parseInt(accountParams);
-        const index =
-          accountParamsId > 0 && accountParamsId <= this.accountTypes.length
-            ? accountParamsId - 1
-            : 0;
-
-        return this.accountTypes[index];
-      } else {
-        return localStorage.getItem('defaultAccount') as AccountType;
+  deleteDefaultAccount() {
+    const account = this.accountControl.value;
+    if (account) {
+      try {
+        localStorage.removeItem('defaultAccount');
+        this.toastService.info({
+          message: `${account} deleted as default`,
+        });
+      } catch (err) {
+        console.error(err);
       }
+    }
+  }
+
+  private getInitialAccount() {
+    const accountParams = this.activatedRoute.snapshot.queryParams['account'];
+    if (accountParams) {
+      const accountParamsId = parseInt(accountParams);
+      const index =
+        accountParamsId > 0 && accountParamsId <= this.accountTypes.length
+          ? accountParamsId - 1
+          : 0;
+
+      return this.accountTypes[index];
+    } else {
+      return this.getDefaultAccount();
+    }
+  }
+
+  private getDefaultAccount() {
+    try {
+      return localStorage.getItem('defaultAccount') as AccountType | null;
     } catch (err) {
       console.log(err);
       return this.accountTypes[0];

@@ -13,11 +13,14 @@
         {{account}}
       </option>
     </select>
-    <app-rounded-button
-      text="set default"
-      bgColor="bg-gray-400"
-      styles="rounded text-white text-sm p-1"
-      (clickEvent)="setDefaultAccount()"></app-rounded-button>
+    <ng-container *ngIf="(isDefaultAccount$ | async); else setDefault">
+      <app-rounded-button
+        text="default"
+        bgColor="bg-blue-turquoise"
+        styles="rounded text-white text-sm p-1"
+        (clickEvent)="deleteDefaultAccount()"></app-rounded-button>
+    </ng-container>
+
     <app-icon-button
       iconSource="assets\svg\logout.svg"
       class="svg-white"
@@ -25,3 +28,11 @@
   </div>
 </app-navbar>
 <router-outlet></router-outlet>
+
+<ng-template #setDefault>
+  <app-rounded-button
+    text="set default"
+    bgColor="bg-gray-400"
+    styles="rounded text-white text-sm p-1"
+    (clickEvent)="setDefaultAccount()"></app-rounded-button>
+</ng-template>
