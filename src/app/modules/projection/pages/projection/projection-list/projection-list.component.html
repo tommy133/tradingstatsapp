@@ -1,36 +1,38 @@
 <ng-container *ngIf="filteredProjections$ | async as projections; else loading">
-  <div class="flex justify-between items-center p-5">
-    <div class="flex  items-center space-x-4">
-      <div class="pb-2">
-        <app-search-by-text
-          [searchControl]="searchProjectionsControl"
-          placeholder="Search by symbol"></app-search-by-text>
+  <div class="flex flex-col gap-7">
+    <div class="flex justify-between items-center p-5">
+      <div class="flex items-center gap-7">
+        <div class="pb-2">
+          <app-search-by-text
+            [searchControl]="searchProjectionsControl"
+            placeholder="Search by symbol"></app-search-by-text>
+        </div>
+        <app-trimester-selector></app-trimester-selector>
+        <app-year-selector></app-year-selector>
+        <app-filter-options>
+          <ng-container resetButton>
+            <button
+              (click)="resetFilterForm()"
+              class="bg-bright-blue rounded-sm px-2 py-1 text-white">
+              Reset
+            </button>
+          </ng-container>
+          <ng-container filters>
+            <projection-filters-form></projection-filters-form>
+          </ng-container>
+        </app-filter-options>
       </div>
-      <app-trimester-selector></app-trimester-selector>
-      <app-year-selector></app-year-selector>
-      <app-filter-options>
-        <ng-container resetButton>
-          <button
-            (click)="resetFilterForm()"
-            class="bg-bright-blue rounded-sm px-2 py-1 text-white">
-            Reset
-          </button>
-        </ng-container>
-        <ng-container filters>
-          <projection-filters-form></projection-filters-form>
-        </ng-container>
-      </app-filter-options>
+      <app-rounded-button
+        [text]="'Add projection'"
+        [bgColor]="'bg-green'"
+        (clickEvent)="goToAdd()">
+      </app-rounded-button>
     </div>
-    <app-rounded-button
-      [text]="'Add projection'"
-      [bgColor]="'bg-green'"
-      (clickEvent)="goToAdd()">
-    </app-rounded-button>
-  </div>
-  <div class="p-5">
-    <app-table-projection
-      [rows]="projections"
-      (deleteEvent)="onDeleteProjection($event)"></app-table-projection>
+    <div class="px-5">
+      <app-table-projection
+        [rows]="projections"
+        (deleteEvent)="onDeleteProjection($event)"></app-table-projection>
+    </div>
   </div>
   <app-sidebar
     [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"
