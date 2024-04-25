@@ -13,7 +13,7 @@
         {{account}}
       </option>
     </select>
-    <ng-container *ngIf="(isDefaultAccount$ | async); else setDefault">
+    <ng-container *ngIf="isDefaultAccount; else setDefault">
       <app-rounded-button
         text="default"
         bgColor="bg-blue-turquoise"
