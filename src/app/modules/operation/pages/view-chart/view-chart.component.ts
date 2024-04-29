@@ -26,7 +26,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
     map((operations) => operations.filter((operation) => operation.graph)),
   );
   operationSubscription = this.operationsWithChart$.subscribe((operations) => {
-    this.operations = operations;
+    this.operations = operations.reverse();
     this.navigationIndex = this.getNavigationIndex();
   });
   navigationIndex!: number;
@@ -93,6 +93,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   navigateToOperation(operationId: number) {
     this.router.navigate(['../' + operationId], {
       relativeTo: this.activatedRoute,
+      queryParams: { account: this.backToQueryParams['account'] },
     });
   }
 
