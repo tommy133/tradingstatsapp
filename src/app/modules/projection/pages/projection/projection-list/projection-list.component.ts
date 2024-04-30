@@ -1,7 +1,7 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, map, Observable, shareReplay, startWith } from 'rxjs';
+import { Observable, combineLatest, map, shareReplay, startWith } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
@@ -13,17 +13,14 @@ import { ProjectionService } from '../../../service/projection.service';
   selector: 'app-projection-list',
   templateUrl: './projection-list.component.html',
 })
-export class ProjectionListComponent implements OnInit {
+export class ProjectionListComponent {
   private projectionService = inject(ProjectionService);
   private formService = inject(FormService);
   private fileService = inject(FileService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private projectionFilterFormService = inject(ProjectionFilterFormService);
-
-  ngOnInit() {
-    this.projectionFilterFormService.resetForm();
-  }
+  readonly DEFAULT_STATUS = '3'; //WATCHING
 
   projections$ = this.projectionService.projections$;
   searchProjectionsControl = new FormControl<string>('');
@@ -51,7 +48,12 @@ export class ProjectionListComponent implements OnInit {
   );
 
   filterForm$ = this.projectionFilterFormService.filtersForm.valueChanges.pipe(
-    startWith(null),
+    startWith({
+      orderType: null,
+      timeframe: null,
+      status: this.DEFAULT_STATUS,
+      market: null,
+    }),
     shareReplay(1),
   );
 
