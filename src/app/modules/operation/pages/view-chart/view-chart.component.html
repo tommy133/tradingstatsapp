@@ -6,24 +6,24 @@
       [queryParams]="backToQueryParams"></app-back-to>
   </div>
 
-  <div
-    *ngIf="!isLoading; else loading"
-    class="flex items-center p-10">
-    <app-icon-button
-      iconSource="assets/svg/go-left.svg"
-      [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
-      (clickEvent)="navigatePreviousOperation()"></app-icon-button>
-    <div class="flex">
-
+  <div *ngIf="!isLoading; else loading">
+    <div class="fixed top-1/2">
+      <app-icon-button
+        iconSource="assets/svg/go-left.svg"
+        [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
+        (clickEvent)="navigatePreviousOperation()"></app-icon-button>
+    </div>
+    <div class="flex m-20">
       <img
         [src]="imageUrl"
         alt="chart image">
-
     </div>
-    <app-icon-button
-      iconSource="assets/svg/go-right.svg"
-      [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
-      (clickEvent)="navigateNextOperation()"></app-icon-button>
+    <div class="fixed top-1/2 right-0 z-10">
+      <app-icon-button
+        iconSource="assets/svg/go-right.svg"
+        [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
+        (clickEvent)="navigateNextOperation()"></app-icon-button>
+    </div>
   </div>
 </div>
 
