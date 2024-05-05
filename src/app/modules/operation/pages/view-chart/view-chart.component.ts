@@ -29,13 +29,9 @@ export class ViewChartComponent implements OnInit, OnDestroy {
     this.operations = operations.reverse();
     this.navigationIndex = this.getNavigationIndex();
   });
-  navigationIndex!: number;
 
+  navigationIndex!: number;
   imageUrl?: SafeUrl;
-  // widgetConfig: ITradingViewWidget = {
-  //   symbol: 'EURUSD',
-  //   widgetType: 'widget',
-  // };
   isLoading!: boolean;
 
   sidebarLeftState$ = this.sidebarService.sidebarLeftState$;

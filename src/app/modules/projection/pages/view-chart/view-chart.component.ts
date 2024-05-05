@@ -1,49 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription, combineLatest, map, switchMap } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest, map, Subscription, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
+import { ToastService } from 'src/app/core/service/toast.service';
+import { Projection } from '../../model/projection';
 import { ProjectionService } from '../../service/projection.service';
-
-type Interval =
-  | '1'
-  | '3'
-  | '5'
-  | '15'
-  | '30'
-  | '60'
-  | '120'
-  | '180'
-  | IntervalTypes.D
-  | IntervalTypes.W;
-
-enum IntervalTypes {
-  D = 'D',
-  W = 'W',
-}
-
-enum Themes {
-  LIGHT = 'Light',
-  DARK = 'Dark',
-}
 
 @Component({
   selector: 'app-view-chart',
   templateUrl: './view-chart.component.html',
 })
 export class ViewChartComponent {
-  projectionSubscription?: Subscription;
+  private projectionService = inject(ProjectionService);
+  private fileService = inject(FileService);
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private sanitizer = inject(DomSanitizer);
+  private toastService = inject(ToastService);
+
+  projections: Projection[] = [];
+  projectionsWithChart$ = this.projectionService.projections$.pipe(
+    map((projections) => projections.filter((projection) => projection.graph)),
+  );
+  projectionSubscription = this.projectionsWithChart$.subscribe(
+    (projections) => {
+      this.projections = projections.reverse();
+      this.navigationIndex = this.getNavigationIndex();
+    },
+  );
+
+  navigationIndex!: number;
   imageUrl?: SafeUrl;
   isLoading!: boolean;
 
   backToQueryParams: { [key: string]: any } = {};
-
-  constructor(
-    private projectionService: ProjectionService,
-    private fileService: FileService,
-    private activatedRoute: ActivatedRoute,
-    private sanitizer: DomSanitizer,
-  ) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -83,31 +74,6 @@ export class ViewChartComponent {
     },
   );
 
-  //Widget deaprecated
-
-  // ngOnInit() {
-  // const intervalMapping: Record<string, Interval> = {
-  //   M1: '1',
-  //   M3: '3',
-  //   M5: '5',
-  //   M15: '15',
-  //   M30: '30',
-  //   H1: '60',
-  //   H2: '120',
-  //   H3: '180',
-  //   D: IntervalTypes.D,
-  //   W: IntervalTypes.W,
-  // };
-  // this.projection$.subscribe((projection) => {
-  //   this.widgetConfig = {
-  //     symbol: projection.symbol.name_sym,
-  //     interval: intervalMapping[projection.timeframe],
-  //     theme: Themes.DARK,
-  //     widgetType: 'widget',
-  //   };
-  // });
-  // }
-
   private setBackToQueryParams() {
     ['q1', 'q2', 'q3', 'q4'].forEach((quarter) => {
       if (this.activatedRoute.snapshot.queryParams[quarter]) {
@@ -120,6 +86,47 @@ export class ViewChartComponent {
       this.backToQueryParams['year'] =
         this.activatedRoute.snapshot.queryParams['year'];
     }
+  }
+
+  navigatePreviousProjection() {
+    if (this.navigationIndex > 0) {
+      this.navigationIndex--;
+      const id = this.projections[this.navigationIndex].id;
+      this.navigateToProjection(id);
+    } else {
+      this.toastService.warn({
+        message: 'No previous projection',
+        duration: 1500,
+      });
+    }
+  }
+
+  navigateNextProjection() {
+    if (this.navigationIndex < this.projections.length - 1) {
+      this.navigationIndex++;
+      const id = this.projections[this.navigationIndex].id;
+      this.navigateToProjection(id);
+    } else {
+      this.toastService.warn({
+        message: 'No further projection',
+        duration: 1500,
+      });
+    }
+  }
+
+  navigateToProjection(projectionId: number) {
+    this.router.navigate(['../' + projectionId], {
+      relativeTo: this.activatedRoute,
+    });
+  }
+
+  private getNavigationIndex() {
+    const paramId = parseInt(this.activatedRoute.snapshot.params['id']);
+    const item = this.projections.find(
+      (projection) => projection.id === paramId,
+    );
+
+    return this.projections.indexOf(item!);
   }
 
   ngOnDestroy() {
