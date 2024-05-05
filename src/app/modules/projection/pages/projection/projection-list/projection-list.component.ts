@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, combineLatest, map, shareReplay, startWith } from 'rxjs';
+import { combineLatest, map, Observable, shareReplay, startWith } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
@@ -103,6 +103,8 @@ export class ProjectionListComponent {
       });
     }),
   );
+
+  n_projections$ = this.filteredProjections$.pipe(map((projs) => projs.length));
 
   goToAdd() {
     navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);

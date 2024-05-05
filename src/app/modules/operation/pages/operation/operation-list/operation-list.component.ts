@@ -126,6 +126,8 @@ export class OperationListComponent {
     }),
   );
 
+  n_operations$ = this.filteredOperations$.pipe(map((ops) => ops.length));
+
   goToAdd() {
     navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
   }
