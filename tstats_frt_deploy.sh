@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "*** REMEMBER TO BE CONNECTED TO VPN ***"
 DOCKER_IMAGE="tommy1997/tstats_frt_img"
 DOCKER_CONTAINER_NAME="tstats_frt_container"
 
