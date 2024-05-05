@@ -1,11 +1,11 @@
-<div class="pt-5 pl-5">
-  <app-back-to
-    backText="BACK TO PROJECTIONS"
-    backTo="../../"
-    [queryParams]="backToQueryParams"></app-back-to>
-</div>
+<app-back-to
+  backText="BACK TO PROJECTIONS"
+  backTo="../../"
+  [queryParams]="backToQueryParams"></app-back-to>
+<div
+  *ngIf="!isLoading; else loading"
+  class="flex items-center p-10">
 
-<div class="flex flex-row items-center p-10">
   <app-icon-button
     iconSource="assets/svg/go-left.svg"
     [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
@@ -50,12 +50,9 @@
 
       </app-card>
     </ng-container>
-    <ng-container *ngIf="!isLoading; else loading">
-      <img
-        [src]="imageUrl"
-        alt="chart image">
-    </ng-container>
-
+    <img
+      [src]="imageUrl"
+      alt="chart image">
   </div>
   <app-icon-button
     iconSource="assets/svg/go-right.svg"

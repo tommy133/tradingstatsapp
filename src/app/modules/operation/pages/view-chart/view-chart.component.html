@@ -1,27 +1,30 @@
-<div
-  *ngIf="!isLoading; else loading"
-  class="flex flex-row items-center p-10">
-  <app-icon-button
-    iconSource="assets/svg/go-left.svg"
-    [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
-    (clickEvent)="navigatePreviousOperation()"></app-icon-button>
-  <div class="flex flex-col gap-5 h-full">
-    <div class="flex justify-end">
-      <app-back-to
-        backText="BACK TO OPERATIONS"
-        backTo="../../"
-        [queryParams]="backToQueryParams"></app-back-to>
-    </div>
-
-    <img
-      [src]="imageUrl"
-      alt="chart image">
-
+<div class="flex flex-col">
+  <div class="flex justify-end pr-20">
+    <app-back-to
+      backText="BACK TO OPERATIONS"
+      backTo="../../"
+      [queryParams]="backToQueryParams"></app-back-to>
   </div>
-  <app-icon-button
-    iconSource="assets/svg/go-right.svg"
-    [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
-    (clickEvent)="navigateNextOperation()"></app-icon-button>
+
+  <div
+    *ngIf="!isLoading; else loading"
+    class="flex items-center p-10">
+    <app-icon-button
+      iconSource="assets/svg/go-left.svg"
+      [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
+      (clickEvent)="navigatePreviousOperation()"></app-icon-button>
+    <div class="flex">
+
+      <img
+        [src]="imageUrl"
+        alt="chart image">
+
+    </div>
+    <app-icon-button
+      iconSource="assets/svg/go-right.svg"
+      [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
+      (clickEvent)="navigateNextOperation()"></app-icon-button>
+  </div>
 </div>
 
 <ng-template #loading>

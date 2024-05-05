@@ -37,8 +37,6 @@ export class ViewChartComponent {
   backToQueryParams: { [key: string]: any } = {};
 
   ngOnInit() {
-    this.isLoading = true;
-
     this.setBackToQueryParams();
   }
 
@@ -64,6 +62,7 @@ export class ViewChartComponent {
   private imageSubscription: Subscription = this.image$.subscribe(
     (fileName) => {
       if (fileName) {
+        this.isLoading = true;
         this.fileService.getImage(fileName).then((url) => {
           if (url) {
             this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(url);
