@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, Subscription } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
+import { ToastService } from 'src/app/core/service/toast.service';
 import { sidebarLeftAnimationSlide } from 'src/app/shared/utils/sidebar-left-animation';
 import { Operation } from '../../model/operation';
 import { OperationService } from '../../service/operation.service';
@@ -20,6 +21,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   private sanitizer = inject(DomSanitizer);
   private operationService = inject(OperationService);
   private sidebarService = inject(SidebarService);
+  private toastService = inject(ToastService);
 
   operations: Operation[] = [];
   operationsWithChart$ = this.operationService.operations$.pipe(
@@ -75,6 +77,11 @@ export class ViewChartComponent implements OnInit, OnDestroy {
       this.navigationIndex--;
       const id = this.operations[this.navigationIndex].id;
       this.navigateToOperation(id);
+    } else {
+      this.toastService.warn({
+        message: 'No previous operation',
+        duration: 1500,
+      });
     }
   }
 
@@ -83,6 +90,11 @@ export class ViewChartComponent implements OnInit, OnDestroy {
       this.navigationIndex++;
       const id = this.operations[this.navigationIndex].id;
       this.navigateToOperation(id);
+    } else {
+      this.toastService.warn({
+        message: 'No further operation',
+        duration: 1500,
+      });
     }
   }
 
