@@ -17,13 +17,17 @@
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.timeframe }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">{{ row.status.name_st }}</div>
             <div class="py-3 px-6 text-center flex-1 whitespace-nowrap font-semibold">
-              <div class="flex justify-center space-x-2 items-center">
+              <div class="flex justify-center gap-4 items-center">
                 <app-icon-button
                   iconSource="assets/svg/edit-32.svg"
                   [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32 }"
                   iconSvgClass="hover:bg-gray-300 rounded-md"
                   class="svg-white"
                   (clickEvent)="gotoEditProjection(row.id, $event)"></app-icon-button>
+                <app-icon-button
+                  iconSource="assets/svg/trading_stats_notitle.svg"
+                  iconSvgClass="hover:bg-gray-300 rounded-md"
+                  (clickEvent)="goToChart(row.id, $event)"></app-icon-button>
                 <app-icon-button
                   iconSource="assets/svg/delete.svg"
                   iconSvgClass="hover:bg-gray-300 rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"

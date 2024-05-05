@@ -50,6 +50,15 @@ export class TableOperationComponent {
     );
   }
 
+  goToChart(operationId: number, event: any) {
+    event.stopPropagation();
+    navigatePreservingQueryParams(
+      ['view-chart', operationId],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
   deleteOperation(operation: Operation, event: any) {
     event.stopPropagation();
     if (confirm('Are you sure you want to delete this operation?')) {

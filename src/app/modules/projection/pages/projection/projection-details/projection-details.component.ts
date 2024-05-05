@@ -62,12 +62,11 @@ export class ProjectionDetailsComponent implements OnInit {
     );
   }
 
-  goToChart(projection: Projection) {
-    this.router.navigate(['../view-chart', projection.id], {
+  goToChart(projectionId: number) {
+    this.router.navigate(['../view-chart', projectionId], {
       relativeTo: this.activatedRoute,
       queryParams: {
         ...this.activatedRoute.snapshot.queryParams,
-        fileName: projection.graph,
       },
       queryParamsHandling: 'merge',
     });

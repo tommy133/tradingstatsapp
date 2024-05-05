@@ -44,6 +44,15 @@ export class TableProjectionComponent {
     );
   }
 
+  goToChart(projectionId: number, event: any) {
+    event.stopPropagation();
+    navigatePreservingQueryParams(
+      ['view-chart', projectionId],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
   deleteProjection(projection: Projection, event: any) {
     event.stopPropagation();
     if (confirm('Are you sure you want to delete this projection?')) {

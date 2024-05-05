@@ -92,7 +92,8 @@
           cols="30"
           rows="5"
           class="rounded"
-          readonly>{{comment.opcomment}}
+          readonly>
+          {{comment.opcomment}}
         </textarea>
       </ng-container>
     </div>
@@ -102,7 +103,7 @@
       class="flex items-center flex-row pt-10">
       <button
         type="button"
-        (click)="goToChart(operation)">
+        (click)="goToChart(operation.id)">
         <label class="flex flex-row bg-blue-turquoise rounded text-white items-center font-semibold p-3">
           <svg-icon
             [svgStyle]="{'height.px': 32, 'width.px': 32}"

@@ -1,8 +1,10 @@
-<nav class="sticky top-0 bg-gray-800">
+<nav class="sticky top-0 z-10 bg-gray-800">
   <div class="sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
       <div class="flex items-baseline space-x-5">
-        <a routerLink class="text-white text-lg font-semibold">
+        <a
+          routerLink
+          class="text-white text-lg font-semibold">
           {{ title }}
         </a>
         <a
@@ -10,8 +12,7 @@
           [routerLink]="btn.link"
           queryParamsHandling="preserve"
           class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-          routerLinkActive="text-white"
-        >
+          routerLinkActive="text-white">
           {{ btn.text }}
         </a>
       </div>

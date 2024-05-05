@@ -81,12 +81,11 @@ export class OperationDetailsComponent implements OnInit {
     this.sidebarService.closeSidebarLeft();
   }
 
-  goToChart(operation: Operation) {
-    this.router.navigate(['../view-chart', operation.id], {
+  goToChart(operationId: number) {
+    this.router.navigate(['../view-chart', operationId], {
       relativeTo: this.activatedRoute,
       queryParams: {
         ...this.activatedRoute.snapshot.queryParams,
-        fileName: operation.graph,
       },
       queryParamsHandling: 'merge',
     });
