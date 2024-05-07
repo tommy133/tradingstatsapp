@@ -1,12 +1,13 @@
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, map, Observable, shareReplay, startWith } from 'rxjs';
+import { map } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionFilterFormService } from '../../../service/projection-filter-form.service';
+import { ProjectionFilterService } from '../../../service/projection-filter.service';
 import { ProjectionService } from '../../../service/projection.service';
 
 @Component({
@@ -19,8 +20,8 @@ export class ProjectionListComponent {
   private fileService = inject(FileService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private projectionFilter = inject(ProjectionFilterService);
   private projectionFilterFormService = inject(ProjectionFilterFormService);
-  readonly DEFAULT_STATUS = '3'; //WATCHING
 
   projections$ = this.projectionService.projections$;
   searchProjectionsControl = new FormControl<string>('');
@@ -34,74 +35,8 @@ export class ProjectionListComponent {
     ({ symbol }) => symbol.name_sym,
   );
 
-  quarters$ = this.activatedRoute.queryParams.pipe(
-    map((quarters) => ({
-      q1: quarters['q1'] === 'true',
-      q2: quarters['q2'] === 'true',
-      q3: quarters['q3'] === 'true',
-      q4: quarters['q4'] === 'true',
-    })),
-  );
-
-  year$: Observable<number> = this.activatedRoute.queryParams.pipe(
-    map((queryParams) => parseInt(queryParams['year'])),
-  );
-
-  filterForm$ = this.projectionFilterFormService.filtersForm.valueChanges.pipe(
-    startWith({
-      orderType: null,
-      timeframe: null,
-      status: this.DEFAULT_STATUS,
-      market: null,
-    }),
-    shareReplay(1),
-  );
-
-  filteredProjections$ = combineLatest([
+  filteredProjections$ = this.projectionFilter.getFilteredProjections(
     this.filteredProjectionsByName$,
-    this.quarters$,
-    this.year$,
-    this.filterForm$,
-  ]).pipe(
-    map(([projections, quarters, year, filterForm]) => {
-      const filteredByPeriod = projections.filter((projection) => {
-        if (projection.date) {
-          const projectionDate = new Date(projection.date);
-          const quarter = Math.floor(projectionDate.getMonth() / 3) + 1;
-
-          if (!quarters.q1 && !quarters.q2 && !quarters.q3 && !quarters.q4)
-            return projectionDate.getFullYear() === year;
-
-          return (
-            (quarters as { [key: string]: boolean })[`q${quarter}`] &&
-            projectionDate.getFullYear() === year
-          );
-        }
-        return false;
-      });
-
-      if (!filterForm) return filteredByPeriod;
-
-      return filteredByPeriod.filter((projection) => {
-        const { orderType, status, timeframe, market } = filterForm;
-        const checkNullSelectControl: (
-          input: string | null | undefined,
-        ) => boolean = ProjectionFilterFormService.checkNullSelectControl;
-        const checkOrderType = checkNullSelectControl(orderType)
-          ? true
-          : projection.updown === parseInt(orderType!);
-        const checkStatus = checkNullSelectControl(status)
-          ? true
-          : projection.status.id_st === parseInt(status!);
-        const checkTimeframe = checkNullSelectControl(timeframe)
-          ? true
-          : projection.timeframe === timeframe;
-        const checkMarket = checkNullSelectControl(market)
-          ? true
-          : projection.market.id_mkt === parseInt(market!);
-        return checkOrderType && checkStatus && checkTimeframe && checkMarket;
-      });
-    }),
   );
 
   n_projections$ = this.filteredProjections$.pipe(map((projs) => projs.length));

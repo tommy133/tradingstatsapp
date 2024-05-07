@@ -2,6 +2,7 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ChartService, ChartType } from 'src/app/core/service/chart.service';
+import { OperationFilterService } from 'src/app/modules/operation/service/operation-filter.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { OperationService } from 'src/app/modules/operation/service/operation.se
 export class ChartComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private operationService = inject(OperationService);
+  private operationFilterService = inject(OperationFilterService);
   private chartService = inject(ChartService);
 
   private subscription?: Subscription;
@@ -20,7 +22,7 @@ export class ChartComponent implements OnInit {
 
   operationData$ = this.operationService.operations$;
 
-  filteredOperations$ = this.operationService.filterOperationsByPeriod(
+  filteredOperations$ = this.operationFilterService.getFilteredOperations(
     this.operationData$,
   );
 

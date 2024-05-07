@@ -9,12 +9,13 @@ import { Component, Input } from '@angular/core';
       iconSource="assets/svg/arrow-left.svg"
       [routerLink]="backTo"
       [queryParams]="queryParams"
-    >
-    </app-text-icon-button>
+      [queryParamsHandling]="queryParamsHandling ?? 'preserve'"
+    />
   `,
 })
 export class BackToComponent {
   @Input() backText = 'Back previous';
   @Input() backTo = '../';
   @Input() queryParams: any;
+  @Input() queryParamsHandling?: any;
 }

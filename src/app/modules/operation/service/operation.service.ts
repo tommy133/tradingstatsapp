@@ -3,7 +3,6 @@ import { inject, Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   BehaviorSubject,
-  combineLatest,
   map,
   Observable,
   Subscription,
@@ -104,40 +103,5 @@ export class OperationService {
           });
         },
       );
-  }
-
-  private quarters$ = this.activatedRoute.queryParams.pipe(
-    map((quarters) => ({
-      q1: quarters['q1'] === 'true',
-      q2: quarters['q2'] === 'true',
-      q3: quarters['q3'] === 'true',
-      q4: quarters['q4'] === 'true',
-    })),
-  );
-
-  private year$ = this.activatedRoute.queryParams.pipe(
-    map((queryParams) => parseInt(queryParams['year'])),
-  );
-
-  public filterOperationsByPeriod(operations$: Observable<Operation[]>) {
-    return combineLatest([operations$, this.quarters$, this.year$]).pipe(
-      map(([operations, quarters, year]) => {
-        return operations.filter((operation) => {
-          if (operation.dateOpen) {
-            const operationDate = new Date(operation.dateOpen);
-            const quarter = Math.floor(operationDate.getMonth() / 3) + 1;
-
-            if (!quarters.q1 && !quarters.q2 && !quarters.q3 && !quarters.q4)
-              return operationDate.getFullYear() === year;
-
-            return (
-              (quarters as { [key: string]: boolean })[`q${quarter}`] &&
-              operationDate.getFullYear() === year
-            );
-          }
-          return false;
-        });
-      }),
-    );
   }
 }

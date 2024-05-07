@@ -4,7 +4,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, Subscription, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../model/projection';
+import { ProjectionFilterService } from '../../service/projection-filter.service';
 import { ProjectionService } from '../../service/projection.service';
 
 @Component({
@@ -18,9 +20,14 @@ export class ViewChartComponent {
   private activatedRoute = inject(ActivatedRoute);
   private sanitizer = inject(DomSanitizer);
   private toastService = inject(ToastService);
+  private projectionFilter = inject(ProjectionFilterService);
 
   projections: Projection[] = [];
-  projectionsWithChart$ = this.projectionService.projections$.pipe(
+  filteredProjections$ = this.projectionFilter.getFilteredProjections(
+    this.projectionService.projections$,
+  );
+
+  projectionsWithChart$ = this.filteredProjections$.pipe(
     map((projections) => projections.filter((projection) => projection.graph)),
   );
   projectionSubscription = this.projectionsWithChart$.subscribe(
@@ -49,7 +56,7 @@ export class ViewChartComponent {
 
   private image$ = combineLatest([
     this.activatedRoute.params,
-    this.projectionService.projections$,
+    this.projectionsWithChart$,
   ]).pipe(
     map(([params, projections]) => {
       const fileName = projections.find(
@@ -114,9 +121,11 @@ export class ViewChartComponent {
   }
 
   navigateToProjection(projectionId: number) {
-    this.router.navigate(['../' + projectionId], {
-      relativeTo: this.activatedRoute,
-    });
+    navigatePreservingQueryParams(
+      ['../' + projectionId],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   private getNavigationIndex() {

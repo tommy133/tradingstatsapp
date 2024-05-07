@@ -6,8 +6,10 @@ import { combineLatest, map, Subscription } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { sidebarLeftAnimationSlide } from 'src/app/shared/utils/sidebar-left-animation';
 import { Operation } from '../../model/operation';
+import { OperationFilterService } from '../../service/operation-filter.service';
 import { OperationService } from '../../service/operation.service';
 @Component({
   selector: 'app-view-chart',
@@ -22,9 +24,13 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   private operationService = inject(OperationService);
   private sidebarService = inject(SidebarService);
   private toastService = inject(ToastService);
+  private operationFilter = inject(OperationFilterService);
 
   operations: Operation[] = [];
-  operationsWithChart$ = this.operationService.operations$.pipe(
+  filteredOperations$ = this.operationFilter.getFilteredOperations(
+    this.operationService.operations$,
+  );
+  operationsWithChart$ = this.filteredOperations$.pipe(
     map((operations) => operations.filter((operation) => operation.graph)),
   );
   operationSubscription = this.operationsWithChart$.subscribe((operations) => {
@@ -38,17 +44,13 @@ export class ViewChartComponent implements OnInit, OnDestroy {
 
   sidebarLeftState$ = this.sidebarService.sidebarLeftState$;
 
-  backToQueryParams: { [key: string]: any } = {};
-
   ngOnInit() {
     this.sidebarService.openSidebarLeft(); //default open
-
-    this.setBackToQueryParams();
   }
 
   private image$ = combineLatest([
     this.activatedRoute.params,
-    this.operationService.operations$,
+    this.operationsWithChart$,
   ]).pipe(
     map(([params, operations]) => {
       const fileName = operations.find(
@@ -99,10 +101,11 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   }
 
   navigateToOperation(operationId: number) {
-    this.router.navigate(['../' + operationId], {
-      relativeTo: this.activatedRoute,
-      queryParams: { account: this.backToQueryParams['account'] },
-    });
+    navigatePreservingQueryParams(
+      ['../' + operationId],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   openSidebarLeft() {
@@ -118,25 +121,6 @@ export class ViewChartComponent implements OnInit, OnDestroy {
     const item = this.operations.find((operation) => operation.id === paramId);
 
     return this.operations.indexOf(item!);
-  }
-
-  private setBackToQueryParams() {
-    if (this.activatedRoute.snapshot.queryParams['account']) {
-      this.backToQueryParams['account'] =
-        this.activatedRoute.snapshot.queryParams['account'];
-    }
-
-    ['q1', 'q2', 'q3', 'q4'].forEach((quarter) => {
-      if (this.activatedRoute.snapshot.queryParams[quarter]) {
-        this.backToQueryParams[quarter] =
-          this.activatedRoute.snapshot.queryParams[quarter];
-      }
-    });
-
-    if (this.activatedRoute.snapshot.queryParams['year']) {
-      this.backToQueryParams['year'] =
-        this.activatedRoute.snapshot.queryParams['year'];
-    }
   }
 
   ngOnDestroy() {
