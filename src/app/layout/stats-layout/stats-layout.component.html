@@ -1,24 +1,37 @@
 <app-navbar
   [title]="title"
   [buttons]="buttons">
-  <div class="flex flex-row space-x-2 items-center">
-    <p class="text-white font-medium">Account: Demo</p>
-    <div class="flex flex-row space-x-5">
-      <select
-        name="accontTypeSelect"
-        class="rounded"
-        [formControl]="accountControl">
-        <option
-          *ngFor="let account of accountTypes"
-          [value]="account">
-          {{account}}
-        </option>
-      </select>
-      <!-- <app-icon-button
-        iconSource="assets\svg\logout.svg"
-        class="svg-white"
-        routerLink="/authentication"></app-icon-button> -->
-    </div>
+  <div class="flex items-center gap-5">
+    <p class="text-white font-medium">Account type:</p>
+    <select
+      name="accontTypeSelect"
+      class="rounded h-8"
+      [formControl]="accountService.accountControl">
+      <option
+        *ngFor="let account of accountService.accountTypes"
+        [value]="account">
+        {{account}}
+      </option>
+    </select>
+    <ng-container *ngIf="isDefaultAccount; else setDefault">
+      <app-rounded-button
+        text="default"
+        bgColor="bg-blue-turquoise"
+        styles="rounded text-white text-sm p-1"
+        (clickEvent)="accountService.deleteDefaultAccount()"></app-rounded-button>
+    </ng-container>
+    <!-- <app-icon-button
+      iconSource="assets\svg\logout.svg"
+      class="svg-white"
+      routerLink="/authentication"></app-icon-button> -->
   </div>
 </app-navbar>
 <router-outlet></router-outlet>
+
+<ng-template #setDefault>
+  <app-rounded-button
+    text="set default"
+    bgColor="bg-gray-400"
+    styles="rounded text-white text-sm p-1"
+    (clickEvent)="accountService.setDefaultAccount()"></app-rounded-button>
+</ng-template>
