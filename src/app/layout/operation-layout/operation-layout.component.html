@@ -8,7 +8,7 @@
       class="rounded h-8"
       [formControl]="accountService.accountControl">
       <option
-        *ngFor="let account of accountTypes"
+        *ngFor="let account of accountService.accountTypes"
         [value]="account">
         {{account}}
       </option>

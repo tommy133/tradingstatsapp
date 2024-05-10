@@ -5,6 +5,7 @@ import { OperationLayoutComponent } from './layout/operation-layout/operation-la
 import { ProjectionLayoutComponent } from './layout/projection-layout/projection-layout.component';
 import { StatsLayoutComponent } from './layout/stats-layout/stats-layout.component';
 import { LoginComponent } from './modules/authentication/pages/login/login.component';
+import { OperationsGuard } from './modules/operation/guards/operations.guard';
 
 const pageRoutes: Routes = [
   { path: '', redirectTo: 'projections', pathMatch: 'full' },
@@ -19,6 +20,7 @@ const pageRoutes: Routes = [
   {
     path: 'operations',
     component: OperationLayoutComponent,
+    canActivate: [OperationsGuard],
     loadChildren: () =>
       import('./modules/operation/operation.module').then(
         (m) => m.OperationModule,

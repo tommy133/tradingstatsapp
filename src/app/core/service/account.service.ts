@@ -78,7 +78,7 @@ export class AccountService {
     }
   }
 
-  private getInitialAccount() {
+  getInitialAccount() {
     const accountParams = this.activatedRoute.snapshot.queryParams['account'];
     if (accountParams) {
       const accountParamsId = parseInt(accountParams);

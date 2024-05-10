@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -6,26 +6,18 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './year-selector.component.html',
 })
 export class YearSelectorComponent implements OnInit {
-  year: number = this.getInitialYear();
+  year!: number;
   minYear = 2000;
   maxYear = 2100;
-  @Output() onchangeEvent: EventEmitter<number> = new EventEmitter<number>();
+
+  @Input() initialYear?: number;
 
   constructor(private router: Router, private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     const initialYear = this.activatedRoute.snapshot.queryParams['year'];
     if (initialYear) this.year = initialYear;
-    else this.navigateOnDateChange();
-  }
-
-  private getInitialYear(): number {
-    const initialYear = new Date().getFullYear();
-    return initialYear;
-  }
-
-  private emitYearChange() {
-    this.onchangeEvent.emit(this.year);
+    else if (this.initialYear) this.year = this.initialYear;
   }
 
   previousYear = () => {

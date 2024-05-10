@@ -9,7 +9,6 @@ import { NavButton } from 'src/app/shared/utils/custom-types';
 })
 export class OperationLayoutComponent {
   private operationService = inject(OperationService);
-
   accountService = inject(AccountService);
 
   title: string = 'Trading Stats';
@@ -27,8 +26,6 @@ export class OperationLayoutComponent {
       link: '/stats',
     },
   ];
-
-  accountTypes = this.accountService.accountTypes;
 
   private accountSubscription =
     this.accountService.accountControl.valueChanges.subscribe((account) => {
