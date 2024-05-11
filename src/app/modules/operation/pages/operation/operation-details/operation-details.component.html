@@ -104,13 +104,9 @@
     <div class="flex items-center justify-between pt-5">
       <app-form-label text="Comment"></app-form-label>
       <ng-container *ngIf="comment$ | async as comment;">
-        <textarea
-          cols="30"
-          rows="5"
-          class="rounded"
-          readonly>
-          {{comment.opcomment}}
-        </textarea>
+        <app-text-area
+          [text]="comment.opcomment"
+          [cols]="30"></app-text-area>
       </ng-container>
     </div>
 

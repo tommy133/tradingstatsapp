@@ -14,7 +14,6 @@
       <app-card>
         <h2 class="text-xl font-bold mb-2">Projection</h2>
         <div class="flex flex-row space-x-8">
-
           <div class="flex flex-col space-y-2">
             <label class="font-semibold">Symbol</label>
             <label class="font-semibold">Type</label>
@@ -45,6 +44,10 @@
               bgColor="bg-dark-gray"
               textColor="text-white"></app-label>
           </div>
+          <app-text-area
+            [text]="(projectionComment$ |async) ?? ''"
+            [cols]="100"></app-text-area>
+
         </div>
 
       </app-card>

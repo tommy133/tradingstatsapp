@@ -80,13 +80,9 @@
       <app-form-label text="Comment"></app-form-label>
       <div class="pl-7">
         <ng-container *ngIf="comment$ | async as comment;">
-          <textarea
-            class="rounded"
-            cols="30"
-            rows="5"
-            readonly>
-            {{comment.pcomment}}
-          </textarea>
+          <app-text-area
+            [text]="comment.pcomment"
+            [cols]="30"></app-text-area>
         </ng-container>
       </div>
     </div>

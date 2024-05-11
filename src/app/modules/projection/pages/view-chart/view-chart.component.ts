@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, Subscription, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
+import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../model/projection';
 import { ProjectionFilterService } from '../../service/projection-filter.service';
@@ -21,6 +22,7 @@ export class ViewChartComponent {
   private sanitizer = inject(DomSanitizer);
   private toastService = inject(ToastService);
   private projectionFilter = inject(ProjectionFilterService);
+  private commentService = inject(ProjectionCommentService);
 
   projections: Projection[] = [];
   filteredProjections$ = this.projectionFilter.getFilteredProjections(
@@ -35,6 +37,13 @@ export class ViewChartComponent {
       this.projections = projections.reverse();
       this.navigationIndex = this.getNavigationIndex();
     },
+  );
+  projectionComment$ = this.activatedRoute.params.pipe(
+    switchMap((params) => {
+      const id = params['id'];
+      return this.commentService.getComment(id);
+    }),
+    map((pcomment) => pcomment.pcomment),
   );
 
   navigationIndex!: number;

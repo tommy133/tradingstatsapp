@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
+import { AutosizeModule } from 'ngx-autosize';
 import { BackToComponent } from './components/back-to/back-to.component';
 import { CardComponent } from './components/card/card.component';
 import { ChartComponent } from './components/chart/chart.component';
@@ -19,6 +20,7 @@ import { RoundedButtonComponent } from './components/rounded-button/rounded-butt
 import { SearchByTextComponent } from './components/search-by-text/search-by-text.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { TextAreaComponent } from './components/text-area/text-area.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
 import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
 import { TrimesterBtnComponent } from './components/trimester-selector/trimester-btn/trimester-btn.component';
@@ -50,6 +52,7 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
     YearSelectorComponent,
     TrimesterBtnComponent,
     FilterOptionsComponent,
+    TextAreaComponent,
   ],
   imports: [
     CommonModule,
@@ -57,6 +60,7 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
     FormsModule,
     ReactiveFormsModule,
     AngularSvgIconModule.forRoot(),
+    AutosizeModule,
   ],
   exports: [
     ReactiveFormsModule,
@@ -82,6 +86,7 @@ import { YearSelectorComponent } from './components/year-selector/year-selector.
     TrimesterSelectorComponent,
     YearSelectorComponent,
     FilterOptionsComponent,
+    TextAreaComponent,
   ],
 })
 export class SharedModule {}
