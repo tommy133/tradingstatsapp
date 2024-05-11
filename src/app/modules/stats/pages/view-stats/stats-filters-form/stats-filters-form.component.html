@@ -1,0 +1,47 @@
+<div class="flex space-x-6">
+  <div class="flex flex-col gap-4">
+    <label>Select order type</label>
+    <label>Select timeframe</label>
+    <label>Select market</label>
+    <label>Select result</label>
+  </div>
+  <div class="flex flex-col gap-3.5">
+    <select
+      name="orderTypeSelect"
+      class="rounded border-2"
+      [formControl]="orderTypeControl">
+      <ng-container [ngTemplateOutlet]="blank"></ng-container>
+      <option value="1">BUY</option>
+      <option value="0">SELL</option>
+    </select>
+    <select
+      name="timeframeSelect"
+      class="rounded border-2"
+      [formControl]="timeframeControl">
+      <ng-container [ngTemplateOutlet]="blank"></ng-container>
+      <ng-container *ngFor="let timeframe of timeframes">
+        <option [value]="timeframe">{{ timeframe }}</option>
+      </ng-container>
+    </select>
+    <select
+      name="marketSelect"
+      class="rounded border-2"
+      [formControl]="marketControl">
+      <ng-container [ngTemplateOutlet]="blank"></ng-container>
+      <ng-container *ngFor="let market of markets$ | async">
+        <option [value]="market.id_mkt">{{ market.name_mkt }}</option>
+      </ng-container>
+    </select>
+    <select
+      name="resultSelect"
+      class="rounded border-2"
+      [formControl]="resultControl">
+      <ng-container [ngTemplateOutlet]="blank"></ng-container>
+      <option value="1">POSITIVE</option>
+      <option value="0">NEGATIVE</option>
+    </select>
+  </div>
+</div>
+<ng-template #blank>
+  <option [value]="null">None</option>
+</ng-template>
