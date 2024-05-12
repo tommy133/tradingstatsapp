@@ -1,6 +1,10 @@
 import { inject, Injectable, signal, WritableSignal } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {
+  ActivatedRoute,
+  ActivatedRouteSnapshot,
+  Router,
+} from '@angular/router';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { AccountType } from 'src/app/shared/utils/custom-types';
 
@@ -17,10 +21,15 @@ export class AccountService {
     this.getDefaultAccount() ?? null,
   );
 
+  initializeAccountControl(snapshot: ActivatedRouteSnapshot) {
+    this.accountControl = this.formBuilder.control<AccountType>(
+      this.getInitialAccount(snapshot) ?? 'Demo',
+    );
+  }
+
   accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
 
-  accountControl: FormControl<AccountType | null> =
-    this.formBuilder.control<AccountType>(this.getInitialAccount() ?? 'Demo');
+  accountControl!: FormControl<AccountType | null>;
 
   isDefaultAccount() {
     const defaultAccount = this.defaultAccount();
@@ -78,15 +87,14 @@ export class AccountService {
     }
   }
 
-  getInitialAccount() {
-    const accountParams = this.activatedRoute.snapshot.queryParams['account'];
+  getInitialAccount(snapshot: ActivatedRouteSnapshot) {
+    const accountParams = snapshot.queryParams['account'];
     if (accountParams) {
       const accountParamsId = parseInt(accountParams);
       const index =
         accountParamsId > 0 && accountParamsId <= this.accountTypes.length
           ? accountParamsId - 1
           : 0;
-
       return this.accountTypes[index];
     } else {
       return this.defaultAccount();

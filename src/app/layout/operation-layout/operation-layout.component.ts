@@ -1,4 +1,6 @@
 import { Component, inject } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/core/service/account.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import { NavButton } from 'src/app/shared/utils/custom-types';
@@ -10,6 +12,21 @@ import { NavButton } from 'src/app/shared/utils/custom-types';
 export class OperationLayoutComponent {
   private operationService = inject(OperationService);
   accountService = inject(AccountService);
+
+  private accountSubscription!: Subscription;
+
+  constructor() {
+    this.accountService.initializeAccountControl(
+      inject(ActivatedRoute).snapshot,
+    );
+    this.accountSubscription =
+      this.accountService.accountControl.valueChanges.subscribe((account) => {
+        if (account) {
+          this.accountService.switchAccount(account);
+          this.operationService.refetch();
+        }
+      });
+  }
 
   title: string = 'Trading Stats';
   buttons: NavButton[] = [
@@ -26,14 +43,6 @@ export class OperationLayoutComponent {
       link: '/stats',
     },
   ];
-
-  private accountSubscription =
-    this.accountService.accountControl.valueChanges.subscribe((account) => {
-      if (account) {
-        this.accountService.switchAccount(account);
-        this.operationService.refetch();
-      }
-    });
 
   get isDefaultAccount() {
     return this.accountService.isDefaultAccount();
