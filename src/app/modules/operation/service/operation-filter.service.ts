@@ -55,7 +55,7 @@ export class OperationFilterService {
 
         if (!filterForm) return filteredByPeriod;
 
-        return filteredByPeriod.filter((operation) => {
+        return filteredByPeriod.filter((operation: Operation) => {
           const { orderType, status, timeframe, market, result } = filterForm;
           const checkNullSelectControl: (
             input: string | null | undefined,
@@ -71,7 +71,7 @@ export class OperationFilterService {
             : operation.timeframe === timeframe;
           const checkMarket = checkNullSelectControl(market)
             ? true
-            : operation.market.id_mkt === parseInt(market!);
+            : operation.symbol.market.id_mkt === parseInt(market!);
 
           const checkOperationRevenue = (
             result: string | null | undefined,
