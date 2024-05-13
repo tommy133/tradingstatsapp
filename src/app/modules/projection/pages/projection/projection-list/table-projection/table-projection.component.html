@@ -27,6 +27,7 @@
                 <app-icon-button
                   iconSource="assets/svg/trading_stats_notitle.svg"
                   iconSvgClass="hover:bg-gray-300 rounded-md"
+                  [disabled]="!row.graph"
                   (clickEvent)="goToChart(row.id, $event)"></app-icon-button>
                 <app-icon-button
                   iconSource="assets/svg/delete.svg"

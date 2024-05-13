@@ -6,6 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   template: `<button
     type="button"
     (click)="clickEvent.emit($event)"
+    [ngClass]="disabled ? 'opacity-20' : ''"
     [disabled]="disabled"
   >
     <svg-icon
