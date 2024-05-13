@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/core/service/account.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
-import { NavButton } from 'src/app/shared/utils/custom-types';
+import { MainLayoutComponent } from '../main-layout/main-layout.component';
 
 @Component({
   selector: 'app-operation-layout',
@@ -28,21 +28,8 @@ export class OperationLayoutComponent {
       });
   }
 
-  title: string = 'Trading Stats';
-  buttons: NavButton[] = [
-    {
-      text: 'Projections',
-      link: '/projections',
-    },
-    {
-      text: 'Operations',
-      link: '/operations',
-    },
-    {
-      text: 'Stats',
-      link: '/stats',
-    },
-  ];
+  title = MainLayoutComponent.title;
+  buttons = MainLayoutComponent.buttons;
 
   get isDefaultAccount() {
     return this.accountService.isDefaultAccount();
