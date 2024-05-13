@@ -1,1 +1,27 @@
-<p>asset-list works!</p>
+<div class="flex flex-col gap-2">
+  <div class="flex justify-between items-center p-5">
+    <div class="flex items-center gap-2">
+      <app-search-by-text placeholder="Search by symbol"></app-search-by-text>
+
+      <app-filter-options>
+        <!-- <ng-container resetButton>
+        <button
+          (click)="resetFilterForm()"
+          class="bg-bright-blue rounded-sm px-2 py-1 text-white">
+          Reset
+        </button>
+      </ng-container>
+      <ng-container filters>
+        <operation-filters-form></operation-filters-form>
+      </ng-container> -->
+      </app-filter-options>
+    </div>
+    <app-rounded-button
+      [text]="'Add asset'"
+      [bgColor]="'bg-green'"
+      (clickEvent)="goToAdd()">
+    </app-rounded-button>
+  </div>
+  <p class="text-white font-semibold pl-5">Result: </p>
+  <div class="px-5 pb-10">table</div>
+</div>

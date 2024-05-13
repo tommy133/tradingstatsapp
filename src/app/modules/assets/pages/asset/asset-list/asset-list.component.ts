@@ -3,9 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-asset-list',
   templateUrl: './asset-list.component.html',
-  styles: [
-  ]
+  styles: [],
 })
 export class AssetListComponent {
-
+  goToAdd() {}
 }
