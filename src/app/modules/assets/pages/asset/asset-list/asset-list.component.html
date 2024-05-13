@@ -25,3 +25,10 @@
   <p class="text-white font-semibold pl-5">Result: </p>
   <div class="px-5 pb-10">table</div>
 </div>
+<app-sidebar
+  [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"
+  (closeEvent)="onCloseSidebar()">
+  <ng-container right-content>
+    <router-outlet #sidebarRight="outlet"></router-outlet>
+  </ng-container>
+</app-sidebar>

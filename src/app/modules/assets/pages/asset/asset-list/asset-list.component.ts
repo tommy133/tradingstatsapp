@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 
 @Component({
   selector: 'app-asset-list',
@@ -6,5 +8,14 @@ import { Component } from '@angular/core';
   styles: [],
 })
 export class AssetListComponent {
-  goToAdd() {}
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+
+  goToAdd() {
+    navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
+  }
+
+  onCloseSidebar() {
+    navigatePreservingQueryParams(['.'], this.router, this.activatedRoute);
+  }
 }
