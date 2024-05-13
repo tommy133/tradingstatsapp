@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { ToastService } from 'src/app/core/service/toast.service';
-import { NavButton } from '../../utils/custom-types';
+import { MainLayoutComponent } from 'src/app/layout/main-layout/main-layout.component';
 
 @Component({
   selector: 'app-not-found',
@@ -8,21 +8,8 @@ import { NavButton } from '../../utils/custom-types';
 })
 export class NotFoundComponent {
   private toastService = inject(ToastService);
-  title: string = 'Trading Stats';
-  buttons: NavButton[] = [
-    {
-      text: 'Projections',
-      link: '/projections',
-    },
-    {
-      text: 'Operations',
-      link: '/operations',
-    },
-    {
-      text: 'Stats',
-      link: '/stats',
-    },
-  ];
+  title = MainLayoutComponent.title;
+  buttons = MainLayoutComponent.buttons;
   ngOnInit() {
     this.toastService.error({ message: 'Page not found' });
   }
