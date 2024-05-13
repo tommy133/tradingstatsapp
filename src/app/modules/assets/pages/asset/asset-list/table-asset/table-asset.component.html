@@ -1,0 +1,47 @@
+<div class="overflow-x-auto rounded">
+  <div class="w-full">
+    <div class="flex flex-col">
+      <div class="flex justify-between items-center bg-dark text-white">
+        <ng-container *ngFor="let column of columns">
+          <div class="p-4 text-center flex-1 font-bold">{{ column.name }}</div>
+        </ng-container>
+      </div>
+
+      <div class="bg-gray-900 text-white text-sm font-light">
+        <ng-container *ngFor="let row of rows">
+          <div
+            class="flex flex-row items-center not-last:border-b hover:bg-gray-500 cursor-pointer"
+            (click)="goToDetails(row.id_sym)"
+          >
+            <div [ngClass]="commonCellStyle" class="font-bold">
+              {{ row.name_sym }}
+            </div>
+            <div [ngClass]="commonCellStyle" class="font-semibold">
+              {{ row.market.name_mkt }}
+            </div>
+            <div [ngClass]="commonCellStyle" class="font-semibold">230</div>
+            <div [ngClass]="commonCellStyle" class="font-semibold">78%</div>
+            <div [ngClass]="commonCellStyle" class="font-semibold">
+              <div class="flex flex-row justify-center space-x-2 items-center">
+                <app-icon-button
+                  iconSource="assets/svg/edit-32.svg"
+                  [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32 }"
+                  iconSvgClass="hover:bg-gray-300 rounded-md"
+                  class="svg-white"
+                  (clickEvent)="gotoEditAsset(row.id_sym, $event)"
+                ></app-icon-button>
+
+                <app-icon-button
+                  iconSource="assets/svg/delete.svg"
+                  iconSvgClass="hover:bg-gray-300 rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"
+                  [iconSvgStyle]="{ 'width.px': 20, 'height.px': 20 }"
+                  (clickEvent)="deleteAsset(row, $event)"
+                ></app-icon-button>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
