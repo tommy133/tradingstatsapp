@@ -49,7 +49,7 @@ export class OperationDetailsComponent implements OnInit {
     );
   }
 
-  public onDeleteOperation(operation: Operation): void {
+  onDeleteOperation(operation: Operation): void {
     const { id, graph } = operation;
 
     if (confirm('Are you sure you want to delete this operation?')) {

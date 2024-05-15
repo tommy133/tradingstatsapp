@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AssetDetailsComponent } from './pages/asset/asset-details/asset-details.component';
 import { AssetListComponent } from './pages/asset/asset-list/asset-list.component';
 import { AssetMutationComponent } from './pages/asset/asset-mutation/asset-mutation.component';
 
@@ -11,6 +12,14 @@ const routes: Routes = [
       {
         path: 'add',
         component: AssetMutationComponent,
+      },
+      /*       {
+        path: ':id/edit',
+        component:
+      }, */
+      {
+        path: ':id',
+        component: AssetDetailsComponent,
       },
     ],
   },

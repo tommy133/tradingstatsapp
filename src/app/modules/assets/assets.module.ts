@@ -7,9 +7,10 @@ import { AssetsRoutingModule } from './assets-routing.module';
 import { AssetListComponent } from './pages/asset/asset-list/asset-list.component';
 import { AssetMutationComponent } from './pages/asset/asset-mutation/asset-mutation.component';
 import { TableAssetComponent } from './pages/asset/asset-list/table-asset/table-asset.component';
+import { AssetDetailsComponent } from './pages/asset/asset-details/asset-details.component';
 
 @NgModule({
-  declarations: [AssetListComponent, AssetMutationComponent, TableAssetComponent],
+  declarations: [AssetListComponent, AssetMutationComponent, TableAssetComponent, AssetDetailsComponent],
   imports: [
     CommonModule,
     AssetsRoutingModule,
