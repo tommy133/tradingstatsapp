@@ -10,6 +10,13 @@ interface TableColumn {
 @Component({
   selector: 'app-table-asset',
   templateUrl: './table-asset.component.html',
+  styles: [
+    `
+      .cell {
+        @apply p-4 text-center flex-1 whitespace-nowrap;
+      }
+    `,
+  ],
 })
 export class TableAssetComponent {
   private router = inject(Router);
@@ -17,8 +24,6 @@ export class TableAssetComponent {
 
   @Input() rows!: Symbol[];
   @Output() deleteEvent = new EventEmitter<Symbol>();
-
-  readonly commonCellStyle = 'p-4 text-center flex-1 whitespace-nowrap';
 
   columns: TableColumn[] = [
     { name: 'Symbol name' },
