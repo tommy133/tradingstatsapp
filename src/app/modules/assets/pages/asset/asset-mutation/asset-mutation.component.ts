@@ -15,6 +15,13 @@ import { SymbolUpdateInput } from '../../../model/symbolUpdateInput';
 @Component({
   selector: 'app-asset-mutation',
   templateUrl: './asset-mutation.component.html',
+  styles: [
+    `
+      .row {
+        @apply flex items-center justify-between;
+      }
+    `,
+  ],
 })
 export class AssetMutationComponent {
   private formBuilder = inject(FormBuilder);
@@ -59,10 +66,12 @@ export class AssetMutationComponent {
   private setInitialFormState(assetDetails: Symbol) {
     const {
       id_sym,
+      name_sym,
       market: { id_mkt },
-      description: description,
+      description,
     } = assetDetails;
     this.id.setValue(id_sym);
+    this.name.setValue(name_sym);
     this.market.setValue(id_mkt);
     this.description.setValue(description ?? null);
   }
@@ -91,15 +100,16 @@ export class AssetMutationComponent {
   }
 
   goToList() {
-    navigatePreservingQueryParams(['..'], this.router, this.activatedRoute);
+    let route: string;
+    if (this.activatedRoute.snapshot.routeConfig?.path?.includes('edit'))
+      route = '../..';
+    else route = '..';
+
+    navigatePreservingQueryParams([route], this.router, this.activatedRoute);
   }
 
   goToDetails() {
-    navigatePreservingQueryParams(
-      [this.paramId],
-      this.router,
-      this.activatedRoute,
-    );
+    navigatePreservingQueryParams(['..'], this.router, this.activatedRoute);
   }
 
   onAddAsset(symbolCreateInput: SymbolCreateInput) {
