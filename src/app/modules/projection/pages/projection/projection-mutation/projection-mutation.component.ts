@@ -221,7 +221,7 @@ export class ProjectionMutationComponent {
           );
       if (result) {
         this.isLoading = false;
-        return result as number;
+        return result;
       }
     } catch (e: any) {
       this.errors = [...this.errors, e.message as string];
@@ -240,7 +240,7 @@ export class ProjectionMutationComponent {
         : await firstValueFrom(this.onUpdateComment(commentInput));
       if (result) {
         this.isLoading = false;
-        return result as number;
+        return result;
       }
     } catch (e: any) {
       this.errors = [...this.errors, e.message as string];

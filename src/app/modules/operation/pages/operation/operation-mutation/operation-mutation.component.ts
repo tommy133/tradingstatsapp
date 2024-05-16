@@ -274,7 +274,7 @@ export class OperationMutationComponent implements OnInit {
           );
       if (result) {
         this.isLoading = false;
-        return result as number;
+        return result;
       }
     } catch (e: any) {
       this.errors = [...this.errors, e.message as string];
@@ -293,7 +293,7 @@ export class OperationMutationComponent implements OnInit {
         : await firstValueFrom(this.onUpdateComment(commentInput));
       if (result) {
         this.isLoading = false;
-        return result as number;
+        return result;
       }
     } catch (e: any) {
       this.errors = [...this.errors, e.message as string];

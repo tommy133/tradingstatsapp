@@ -54,24 +54,26 @@ export class OperationService {
   }
 
   public addOperation(operationCreateInput: OperationCreateInput) {
-    return this.http.post(`${this.apiServerUrl}`, operationCreateInput).pipe(
-      map(
-        (res) => {
-          this.refetch();
-          return res;
-        },
-        (error: HttpErrorResponse) => {
-          this.toastService.error({
-            message: error.message,
-          });
-        },
-      ),
-    );
+    return this.http
+      .post<number>(`${this.apiServerUrl}`, operationCreateInput)
+      .pipe(
+        map(
+          (res) => {
+            this.refetch();
+            return res;
+          },
+          (error: HttpErrorResponse) => {
+            this.toastService.error({
+              message: error.message,
+            });
+          },
+        ),
+      );
   }
 
   public updateOperation(operation: OperationUpdateInput) {
     return this.http
-      .put(`${this.apiServerUrl}/${operation.id_op}`, operation)
+      .put<number>(`${this.apiServerUrl}/${operation.id_op}`, operation)
       .pipe(
         map(
           (res) => {

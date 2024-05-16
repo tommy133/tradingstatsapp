@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SymbolCreateInput } from 'src/app/modules/assets/model/symbolCreateInput';
+import { SymbolUpdateInput } from 'src/app/modules/assets/model/symbolUpdateInput';
 import { environment } from 'src/environments/environment';
 import { Symbol } from '../../modules/assets/model/symbol';
 
@@ -20,12 +22,12 @@ export class SymbolService {
     return this.http.get<Symbol>(`${this.apiServerUrl}/${symbolId}`);
   }
 
-  public addSymbol(symbol: Symbol): Observable<Symbol> {
-    return this.http.post<Symbol>(`${this.apiServerUrl}`, symbol);
+  public addSymbol(symbol: SymbolCreateInput) {
+    return this.http.post<number>(`${this.apiServerUrl}`, symbol);
   }
 
-  public updateSymbol(symbol: Symbol): Observable<Symbol> {
-    return this.http.put<Symbol>(
+  public updateSymbol(symbol: SymbolUpdateInput) {
+    return this.http.put<number>(
       `${this.apiServerUrl}/${symbol.id_sym}`,
       symbol,
     );
