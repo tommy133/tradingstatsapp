@@ -1,1 +1,60 @@
-<p>asset-mutation works!</p>
+<ng-container *ngIf="true; else loading">
+  <form
+    [formGroup]="assetForm"
+    (ngSubmit)="onSubmit()">
+    <div class="p-8 bg-dark">
+      <div class="flex justify-between">
+        <app-close-button (closeEvent)="goToList()"></app-close-button>
+
+        <div
+          class="flex flex-row items-center space-x-5"
+          *ngIf="!isMutationAdd; else addSingleBtn">
+          <app-rounded-button
+            text="Cancel"
+            bgColor="bg-gray-400"
+            (clickEvent)="goToDetails()">
+          </app-rounded-button>
+
+          <app-rounded-button
+            [text]="buttonType"
+            [bgColor]="buttonColor"
+            type="submit">
+          </app-rounded-button>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-10">
+      <p class="text-white font-semibold">{{formType}} ASSET</p>
+      <div class="flex flex-row items-center justify-between pt-5">
+        <app-form-label text="Symbol name"></app-form-label>
+        <input
+          formControlName="name"
+          type="text">
+      </div>
+      <div class="flex flex-row items-center justify-between pt-5">
+        <app-form-label text="Select market"></app-form-label>
+        <select
+          name="marketSelect"
+          class="rounded"
+          formControlName="market">
+          <ng-container *ngFor="let market of markets$ | async">
+            <option [value]="market.id_mkt">{{market.name_mkt}}</option>
+          </ng-container>
+        </select>
+      </div>
+    </div>
+  </form>
+</ng-container>
+
+<ng-template #loading>
+  <app-loading-template></app-loading-template>
+</ng-template>
+
+<ng-template #addSingleBtn>
+  <app-rounded-button
+    [text]="buttonType"
+    [bgColor]="buttonColor"
+    type="submit">
+  </app-rounded-button>
+</ng-template>

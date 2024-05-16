@@ -13,10 +13,10 @@ const routes: Routes = [
         path: 'add',
         component: AssetMutationComponent,
       },
-      /*       {
+      {
         path: ':id/edit',
-        component:
-      }, */
+        component: AssetMutationComponent,
+      },
       {
         path: ':id',
         component: AssetDetailsComponent,
