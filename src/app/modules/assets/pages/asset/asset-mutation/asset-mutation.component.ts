@@ -148,12 +148,18 @@ export class AssetMutationComponent {
     return {
       name_sym: name!,
       id_mkt: market!,
-      description: description ?? undefined,
+      description: description!,
     };
   }
 
-  private getSymbolUpdateInput() {
-    return {} as SymbolUpdateInput;
+  private getSymbolUpdateInput(): SymbolUpdateInput {
+    const { id, name, market, description } = this.assetForm.value;
+    return {
+      id_sym: id!,
+      name_sym: name!,
+      id_mkt: market!,
+      description: description!,
+    };
   }
   async onSubmit() {
     if (this.assetForm.invalid) {
