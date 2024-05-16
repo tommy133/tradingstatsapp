@@ -1,4 +1,4 @@
-import { Market } from './market';
+import { Market } from '../../../data/models/market';
 
 export interface Symbol {
   id_sym: number;

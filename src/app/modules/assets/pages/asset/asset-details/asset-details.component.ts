@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
-import { Symbol } from 'src/app/data/models/symbol';
 import { SymbolService } from 'src/app/data/service/symbol.service';
+import { Symbol } from 'src/app/modules/assets/model/symbol';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 
 @Component({

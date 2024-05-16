@@ -6,11 +6,11 @@ import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { Status } from 'src/app/data/models/status';
-import { Symbol } from 'src/app/data/models/symbol';
 import { Timeframe } from 'src/app/data/models/timeframe';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
+import { Symbol } from 'src/app/modules/assets/model/symbol';
 import { MutationType } from 'src/app/shared/utils/custom-types';
 import {
   formatDate,

@@ -1,6 +1,6 @@
 import { Account } from 'src/app/data/models/account';
 import { Status } from 'src/app/data/models/status';
-import { Symbol } from 'src/app/data/models/symbol';
+import { Symbol } from 'src/app/modules/assets/model/symbol';
 
 export interface Operation {
   id: number;

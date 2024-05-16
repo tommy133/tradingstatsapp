@@ -1,6 +1,6 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Symbol } from 'src/app/data/models/symbol';
+import { Symbol } from 'src/app/modules/assets/model/symbol';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 
 interface TableColumn {
