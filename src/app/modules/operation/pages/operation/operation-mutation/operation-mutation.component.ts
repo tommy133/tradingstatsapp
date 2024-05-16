@@ -405,11 +405,7 @@ export class OperationMutationComponent implements OnInit {
       this.toastService.success({
         message: `Operation ${operation} successfully`,
       });
-      navigatePreservingQueryParams(
-        [`${this.closeRoute}${operationId}`],
-        this.router,
-        this.activatedRoute,
-      );
+      this.goToList();
     } else {
       this.errors.forEach((error) => {
         this.toastService.error({

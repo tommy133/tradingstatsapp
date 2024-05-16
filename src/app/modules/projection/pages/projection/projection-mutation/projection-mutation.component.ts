@@ -321,11 +321,7 @@ export class ProjectionMutationComponent {
       this.toastService.success({
         message: `Projection ${operation} successfully`,
       });
-      navigatePreservingQueryParams(
-        [`${this.closeRoute}${projId}`],
-        this.router,
-        this.activatedRoute,
-      );
+      this.goToList();
     } else {
       this.errors.forEach((error) => {
         this.toastService.error({
