@@ -52,7 +52,7 @@ export class OperationMutationComponent implements OnInit {
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
 
-  symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
+  symbols$: Observable<Symbol[]> = this.symbolService.assets$;
   statuses$: Observable<Status[]> = this.statusService
     .getStatuses()
     .pipe(

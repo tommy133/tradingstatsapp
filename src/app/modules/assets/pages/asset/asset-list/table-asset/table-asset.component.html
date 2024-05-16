@@ -14,8 +14,8 @@
             (click)="goToDetails(row.id_sym)">
             <div class="font-bold cell">{{ row.name_sym }}</div>
             <div class="font-semibold cell">{{ row.market.name_mkt }}</div>
-            <div class="font-semibold cell">230</div>
-            <div class="font-semibold cell">78%</div>
+            <div class="font-semibold cell">{{getNumberOfTrades(row.id_sym)}}</div>
+            <div class="font-semibold cell">{{getHitRatio(row.id_sym)}}</div>
             <div class="font-semibold cell">
               <div class="flex flex-row justify-center space-x-2 items-center">
                 <app-icon-button
@@ -29,7 +29,7 @@
                   iconSource="assets/svg/delete.svg"
                   iconSvgClass="hover:bg-gray-300 rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"
                   [iconSvgStyle]="{ 'width.px': 20, 'height.px': 20 }"
-                  (clickEvent)="deleteAsset(row, $event)"></app-icon-button>
+                  (clickEvent)="deleteAsset(row.id_sym, $event)"></app-icon-button>
               </div>
             </div>
           </div>

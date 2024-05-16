@@ -44,7 +44,7 @@ export class OperationListComponent {
     navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
   }
 
-  public onDeleteOperation(operation: Operation): void {
+  onDeleteOperation(operation: Operation): void {
     const { id, graph } = operation;
     if (graph) {
       this.fileService.deleteImage(graph);

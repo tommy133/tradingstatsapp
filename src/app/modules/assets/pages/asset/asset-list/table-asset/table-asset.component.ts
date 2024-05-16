@@ -1,6 +1,9 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { firstValueFrom } from 'rxjs';
 import { Symbol } from 'src/app/modules/assets/model/symbol';
+import { Operation } from 'src/app/modules/operation/model/operation';
+import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 
 interface TableColumn {
@@ -21,9 +24,10 @@ interface TableColumn {
 export class TableAssetComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private operationService = inject(OperationService);
 
   @Input() rows!: Symbol[];
-  @Output() deleteEvent = new EventEmitter<Symbol>();
+  @Output() deleteEvent = new EventEmitter<number>();
 
   columns: TableColumn[] = [
     { name: 'Symbol name' },
@@ -32,6 +36,26 @@ export class TableAssetComponent {
     { name: 'Hit ratio' },
     { name: 'Actions' },
   ];
+
+  operations: Operation[] = [];
+
+  async ngOnInit() {
+    this.operations = await firstValueFrom(this.operationService.operations$);
+  }
+
+  getNumberOfTrades(symbolId: number) {
+    return this.operations.filter((op) => op.symbol.id_sym === symbolId).length;
+  }
+
+  getHitRatio(symbolId: number) {
+    const n_trades = this.getNumberOfTrades(symbolId);
+    const n_profit_trades = this.operations.filter(
+      (op) => op.symbol.id_sym === symbolId && (op.revenue ?? 0) > 0,
+    ).length;
+
+    if (n_trades === 0) return '-';
+    return (n_profit_trades / n_trades).toFixed(2);
+  }
 
   goToDetails(symbolId: number) {
     navigatePreservingQueryParams(
@@ -50,10 +74,10 @@ export class TableAssetComponent {
     );
   }
 
-  deleteAsset(symbol: Symbol, event: any) {
+  deleteAsset(symbolId: number, event: any) {
     event.stopPropagation();
     if (confirm('Are you sure you want to delete this symbol?')) {
-      this.deleteEvent.emit(symbol);
+      this.deleteEvent.emit(symbolId);
     }
   }
 }

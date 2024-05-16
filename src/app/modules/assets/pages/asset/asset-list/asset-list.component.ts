@@ -14,11 +14,15 @@ export class AssetListComponent {
   private activatedRoute = inject(ActivatedRoute);
   private assetService = inject(SymbolService);
 
-  assets$ = this.assetService.getSymbols().pipe(shareReplay(1));
+  assets$ = this.assetService.assets$.pipe(shareReplay(1));
   n_assets$ = this.assets$.pipe(map((ass) => ass.length));
 
   goToAdd() {
     navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
+  }
+
+  onDeleteAsset(symbolId: number) {
+    this.assetService.deleteSymbol(symbolId);
   }
 
   onCloseSidebar() {

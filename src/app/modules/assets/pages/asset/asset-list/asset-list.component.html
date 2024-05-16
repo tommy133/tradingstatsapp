@@ -26,7 +26,8 @@
   <div class="px-5 pb-10">
     <app-table-asset
       *ngIf="assets$ | async as assets"
-      [rows]="assets"></app-table-asset>
+      [rows]="assets"
+      (deleteEvent)="onDeleteAsset($event)"></app-table-asset>
   </div>
 </div>
 <app-sidebar
