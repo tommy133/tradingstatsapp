@@ -1,0 +1,21 @@
+<div class="flex space-x-6">
+  <div class="flex flex-col gap-4">
+    <label>Select market</label>
+  </div>
+  <div class="flex flex-col gap-3.5">
+
+    <select
+      name="marketSelect"
+      class="rounded border-2"
+      [formControl]="marketControl">
+      <ng-container [ngTemplateOutlet]="blank"></ng-container>
+      <ng-container *ngFor="let market of markets$ | async">
+        <option [value]="market.id_mkt">{{ market.name_mkt }}</option>
+      </ng-container>
+    </select>
+
+  </div>
+</div>
+<ng-template #blank>
+  <option [value]="null">None</option>
+</ng-template>

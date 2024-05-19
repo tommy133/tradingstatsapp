@@ -8,9 +8,10 @@ import { AssetListComponent } from './pages/asset/asset-list/asset-list.componen
 import { AssetMutationComponent } from './pages/asset/asset-mutation/asset-mutation.component';
 import { TableAssetComponent } from './pages/asset/asset-list/table-asset/table-asset.component';
 import { AssetDetailsComponent } from './pages/asset/asset-details/asset-details.component';
+import { AssetFiltersFormComponent } from './pages/asset/asset-list/asset-filters-form/asset-filters-form.component';
 
 @NgModule({
-  declarations: [AssetListComponent, AssetMutationComponent, TableAssetComponent, AssetDetailsComponent],
+  declarations: [AssetListComponent, AssetMutationComponent, TableAssetComponent, AssetDetailsComponent, AssetFiltersFormComponent],
   imports: [
     CommonModule,
     AssetsRoutingModule,

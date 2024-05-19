@@ -1,39 +1,45 @@
-<div class="flex flex-col gap-2">
-  <div class="flex justify-between items-center p-5">
-    <div class="flex items-center gap-4">
-      <app-search-by-text placeholder="Search by symbol"></app-search-by-text>
+<ng-container *ngIf="filteredAssets$ | async as assets; else loading">
+  <div class="flex flex-col gap-2">
+    <div class="flex justify-between items-center p-5">
+      <div class="flex items-center gap-4">
+        <app-search-by-text
+          [searchControl]="searchAssetsControl"
+          placeholder="Search by symbol"></app-search-by-text>
 
-      <app-filter-options>
-        <!-- <ng-container resetButton>
-        <button
-          (click)="resetFilterForm()"
-          class="bg-bright-blue rounded-sm px-2 py-1 text-white">
-          Reset
-        </button>
-      </ng-container>
-      <ng-container filters>
-        <operation-filters-form></operation-filters-form>
-      </ng-container> -->
-      </app-filter-options>
+        <app-filter-options>
+          <ng-container resetButton>
+            <button
+              (click)="resetFilterForm()"
+              class="bg-bright-blue rounded-sm px-2 py-1 text-white">
+              Reset
+            </button>
+          </ng-container>
+          <ng-container filters>
+            <asset-filters-form></asset-filters-form>
+          </ng-container>
+        </app-filter-options>
+      </div>
+      <app-rounded-button
+        [text]="'Add asset'"
+        [bgColor]="'bg-green'"
+        (clickEvent)="goToAdd()">
+      </app-rounded-button>
     </div>
-    <app-rounded-button
-      [text]="'Add asset'"
-      [bgColor]="'bg-green'"
-      (clickEvent)="goToAdd()">
-    </app-rounded-button>
+    <p class="text-white font-semibold pl-5">Result: {{n_assets$ | async}}</p>
+    <div class="px-5 pb-10">
+      <app-table-asset
+        [rows]="assets"
+        (deleteEvent)="onDeleteAsset($event)"></app-table-asset>
+    </div>
   </div>
-  <p class="text-white font-semibold pl-5">Result: {{n_assets$ | async}}</p>
-  <div class="px-5 pb-10">
-    <app-table-asset
-      *ngIf="assets$ | async as assets"
-      [rows]="assets"
-      (deleteEvent)="onDeleteAsset($event)"></app-table-asset>
-  </div>
-</div>
-<app-sidebar
-  [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"
-  (closeEvent)="onCloseSidebar()">
-  <ng-container right-content>
-    <router-outlet #sidebarRight="outlet"></router-outlet>
-  </ng-container>
-</app-sidebar>
+  <app-sidebar
+    [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"
+    (closeEvent)="onCloseSidebar()">
+    <ng-container right-content>
+      <router-outlet #sidebarRight="outlet"></router-outlet>
+    </ng-container>
+  </app-sidebar>
+</ng-container>
+<ng-template #loading>
+  <app-loading-template></app-loading-template>
+</ng-template>
