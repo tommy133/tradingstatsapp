@@ -121,16 +121,16 @@ export class AssetMutationComponent {
   }
 
   private async handleMutationAsset(
-    operationInput: SymbolCreateInput | SymbolUpdateInput,
+    symbolInput: SymbolCreateInput | SymbolUpdateInput,
   ): Promise<number | void> {
     try {
       this.isLoading = true;
       const result = this.isMutationAdd
         ? await firstValueFrom(
-            this.onAddAsset(operationInput as SymbolCreateInput),
+            this.onAddAsset(symbolInput as SymbolCreateInput),
           )
         : await firstValueFrom(
-            this.onUpdateAsset(operationInput as SymbolUpdateInput),
+            this.onUpdateAsset(symbolInput as SymbolUpdateInput),
           );
       if (result) {
         this.isLoading = false;
@@ -176,9 +176,9 @@ export class AssetMutationComponent {
 
     const symbolId = await this.handleMutationAsset(symbolInput);
     if (this.errors.length === 0 && symbolId) {
-      const operation = this.isMutationAdd ? 'created' : 'updated';
+      const asset = this.isMutationAdd ? 'created' : 'updated';
       this.toastService.success({
-        message: `Operation ${operation} successfully`,
+        message: `Asset ${asset} successfully`,
       });
       this.goToList();
     } else {
