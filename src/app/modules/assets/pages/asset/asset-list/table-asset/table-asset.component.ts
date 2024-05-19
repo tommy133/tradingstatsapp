@@ -33,7 +33,6 @@ export class TableAssetComponent {
     { name: 'Symbol name' },
     { name: 'Market' },
     { name: 'Number trades' },
-    { name: 'Hit ratio' },
     { name: 'Actions' },
   ];
 
@@ -47,7 +46,7 @@ export class TableAssetComponent {
     return this.operations.filter((op) => op.symbol.id_sym === symbolId).length;
   }
 
-  getHitRatio(symbolId: number) {
+  /*   getHitRatio(symbolId: number) {
     const n_trades = this.getNumberOfTrades(symbolId);
     const n_profit_trades = this.operations.filter(
       (op) => op.symbol.id_sym === symbolId && (op.revenue ?? 0) > 0,
@@ -55,7 +54,7 @@ export class TableAssetComponent {
 
     if (n_trades === 0) return '-';
     return (n_profit_trades / n_trades).toFixed(2);
-  }
+  } */
 
   goToDetails(symbolId: number) {
     navigatePreservingQueryParams(
