@@ -28,6 +28,9 @@ export class ProjectionListComponent {
   searchProjections$ = this.formService.applyDebounceOnSearch(
     this.searchProjectionsControl.valueChanges,
   );
+  isSearchActive$ = this.searchProjectionsControl.valueChanges.pipe(
+    map((search) => (search?.length ?? 0) > 0),
+  );
 
   filteredProjectionsByName$ = this.formService.filterItems(
     this.projections$,

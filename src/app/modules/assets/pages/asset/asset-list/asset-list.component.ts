@@ -24,6 +24,10 @@ export class AssetListComponent {
   searchAssets$ = this.formService.applyDebounceOnSearch(
     this.searchAssetsControl.valueChanges,
   );
+  isSearchActive$ = this.searchAssetsControl.valueChanges.pipe(
+    map((search) => (search?.length ?? 0) > 0),
+  );
+
   filteredAssetsByName$ = this.formService.filterItems(
     this.assets$,
     this.searchAssets$,
@@ -34,10 +38,6 @@ export class AssetListComponent {
     startWith(null),
     shareReplay(1),
   );
-
-  constructor() {
-    this.filteredAssetsByName$.subscribe(console.log);
-  }
 
   filteredAssets$ = combineLatest([
     this.filteredAssetsByName$,
@@ -57,7 +57,7 @@ export class AssetListComponent {
     }),
   );
 
-  n_assets$ = this.assets$.pipe(map((ass) => ass.length));
+  n_assets$ = this.filteredAssets$.pipe(map((ass) => ass.length));
 
   goToAdd() {
     navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);

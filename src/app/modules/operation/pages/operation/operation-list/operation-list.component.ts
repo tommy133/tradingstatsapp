@@ -28,6 +28,10 @@ export class OperationListComponent {
   searchOperations$ = this.formService.applyDebounceOnSearch(
     this.searchOperationsControl.valueChanges,
   );
+  isSearchActive$ = this.searchOperationsControl.valueChanges.pipe(
+    map((search) => (search?.length ?? 0) > 0),
+  );
+
   filteredOperationsByName$ = this.formService.filterItems(
     this.operations$,
     this.searchOperations$,

@@ -5,6 +5,7 @@
         <div class="pb-2">
           <app-search-by-text
             [searchControl]="searchProjectionsControl"
+            [isSearchActive]="(isSearchActive$ | async)!"
             placeholder="Search by symbol"></app-search-by-text>
         </div>
         <app-trimester-selector></app-trimester-selector>

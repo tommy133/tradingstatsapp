@@ -7,10 +7,9 @@ import { FormControl } from '@angular/forms';
     <div
       class="pl-4 flex justify-between space-x-2 h-10 items-center bg-white mt-2 rounded"
     >
-      <app-icon-button
-        iconSource="assets/svg/search.svg"
-        [iconSvgStyle]="{ 'width.px': 24, 'height.px': 24, 'opacity': 0.4 }"
-      ></app-icon-button>
+      <ng-container
+        [ngTemplateOutlet]="isSearchActive ? clearSearch : search"
+      ></ng-container>
       <input
         class="small appearance-none bg-transparent w-full border-none focus:outline-none"
         type="text"
@@ -19,9 +18,25 @@ import { FormControl } from '@angular/forms';
         autocomplete="off"
       />
     </div>
+    <ng-template #search>
+      <app-icon-button
+        iconSource="assets/svg/search.svg"
+        [iconSvgStyle]="{ 'width.px': 24, 'height.px': 24, 'opacity': 0.4 }"
+      />
+    </ng-template>
+    <ng-template #clearSearch>
+      <button (click)="searchControl.reset()">
+        <app-icon-button
+          iconSource="assets/svg/close.svg"
+          iconSvgClass="bg-dark rounded"
+          [iconSvgStyle]="{ 'width.px': 24, 'height.px': 24, 'opacity': 0.4 }"
+        />
+      </button>
+    </ng-template>
   `,
 })
 export class SearchByTextComponent {
   @Input() searchControl = new FormControl<string>('');
   @Input() placeholder: string = '';
+  @Input() isSearchActive: boolean = false;
 }

@@ -4,6 +4,7 @@
       <div class="flex items-center gap-4">
         <app-search-by-text
           [searchControl]="searchAssetsControl"
+          [isSearchActive]="(isSearchActive$ | async)!"
           placeholder="Search by symbol"></app-search-by-text>
 
         <app-filter-options>
