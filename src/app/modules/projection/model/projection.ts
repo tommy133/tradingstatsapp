@@ -1,6 +1,5 @@
-import { Market } from 'src/app/data/models/market';
 import { Status } from 'src/app/data/models/status';
-import { Symbol } from 'src/app/data/models/symbol';
+import { Symbol } from 'src/app/modules/assets/model/symbol';
 
 export interface Projection {
   id: number;
@@ -10,5 +9,4 @@ export interface Projection {
   graph?: string;
   timeframe: string;
   status: Status;
-  market: Market;
 }

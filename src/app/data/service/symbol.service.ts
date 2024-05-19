@@ -1,14 +1,36 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import {
+  BehaviorSubject,
+  map,
+  Observable,
+  Subscription,
+  switchMap,
+} from 'rxjs';
+import { ToastService } from 'src/app/core/service/toast.service';
+import { SymbolCreateInput } from 'src/app/modules/assets/model/symbolCreateInput';
+import { SymbolUpdateInput } from 'src/app/modules/assets/model/symbolUpdateInput';
 import { environment } from 'src/environments/environment';
-import { Symbol } from '../models/symbol';
+import { Symbol } from '../../modules/assets/model/symbol';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SymbolService {
+  private toastService = inject(ToastService);
+
   private apiServerUrl = `${environment.apiBaseUrl}/symbols`;
+
+  private fetchSignal = new BehaviorSubject(null);
+  public refetch() {
+    this.fetchSignal.next(null);
+  }
+
+  deleteSubscription?: Subscription;
+
+  assets$ = this.fetchSignal
+    .asObservable()
+    .pipe(switchMap(() => this.getSymbols()));
 
   constructor(private http: HttpClient) {}
 
@@ -20,18 +42,59 @@ export class SymbolService {
     return this.http.get<Symbol>(`${this.apiServerUrl}/${symbolId}`);
   }
 
-  public addSymbol(symbol: Symbol): Observable<Symbol> {
-    return this.http.post<Symbol>(`${this.apiServerUrl}`, symbol);
-  }
-
-  public updateSymbol(symbol: Symbol): Observable<Symbol> {
-    return this.http.put<Symbol>(
-      `${this.apiServerUrl}/${symbol.id_sym}`,
-      symbol,
+  public addSymbol(symbol: SymbolCreateInput) {
+    return this.http.post<number>(`${this.apiServerUrl}`, symbol).pipe(
+      map(
+        (res) => {
+          this.refetch();
+          return res;
+        },
+        (error: HttpErrorResponse) => {
+          this.toastService.error({
+            message: error.message,
+          });
+        },
+      ),
     );
   }
 
-  public deleteSymbol(symbolId: number): Observable<Symbol> {
-    return this.http.delete<Symbol>(`${this.apiServerUrl}/${symbolId}`);
+  public updateSymbol(symbol: SymbolUpdateInput) {
+    return this.http
+      .put<number>(`${this.apiServerUrl}/${symbol.id_sym}`, symbol)
+      .pipe(
+        map(
+          (res) => {
+            this.refetch();
+            return res;
+          },
+          (error: HttpErrorResponse) => {
+            this.toastService.error({
+              message: error.message,
+            });
+          },
+        ),
+      );
+  }
+
+  public deleteSymbol(symbolId: number) {
+    this.deleteSubscription = this.http
+      .delete(`${this.apiServerUrl}/${symbolId}`)
+      .subscribe(
+        () => {
+          this.toastService.success({
+            message: 'Symbol deleted successfully',
+          });
+          this.refetch();
+        },
+        (error: HttpErrorResponse) => {
+          this.toastService.error({
+            message: error.message,
+          });
+        },
+      );
+  }
+
+  ngOnDestroy() {
+    this.deleteSubscription?.unsubscribe();
   }
 }

@@ -7,11 +7,11 @@ import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { Status } from 'src/app/data/models/status';
-import { Symbol } from 'src/app/data/models/symbol';
 import { Timeframe } from 'src/app/data/models/timeframe';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
+import { Symbol } from 'src/app/modules/assets/model/symbol';
 import { AccountType, MutationType } from 'src/app/shared/utils/custom-types';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
@@ -52,7 +52,7 @@ export class OperationMutationComponent implements OnInit {
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
 
-  symbols$: Observable<Symbol[]> = this.symbolService.getSymbols();
+  symbols$: Observable<Symbol[]> = this.symbolService.assets$;
   statuses$: Observable<Status[]> = this.statusService
     .getStatuses()
     .pipe(
@@ -274,7 +274,7 @@ export class OperationMutationComponent implements OnInit {
           );
       if (result) {
         this.isLoading = false;
-        return result as number;
+        return result;
       }
     } catch (e: any) {
       this.errors = [...this.errors, e.message as string];
@@ -293,7 +293,7 @@ export class OperationMutationComponent implements OnInit {
         : await firstValueFrom(this.onUpdateComment(commentInput));
       if (result) {
         this.isLoading = false;
-        return result as number;
+        return result;
       }
     } catch (e: any) {
       this.errors = [...this.errors, e.message as string];
@@ -405,11 +405,7 @@ export class OperationMutationComponent implements OnInit {
       this.toastService.success({
         message: `Operation ${operation} successfully`,
       });
-      navigatePreservingQueryParams(
-        [`${this.closeRoute}${operationId}`],
-        this.router,
-        this.activatedRoute,
-      );
+      this.goToList();
     } else {
       this.errors.forEach((error) => {
         this.toastService.error({

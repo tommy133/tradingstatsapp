@@ -21,11 +21,11 @@ export class ProjectionCommentService {
   }
 
   public addComment(comment: ProjectionComment) {
-    return this.http.post(`${this.serverUrl}`, comment);
+    return this.http.post<number>(`${this.serverUrl}`, comment);
   }
 
   public updateComment(comment: ProjectionComment) {
-    return this.http.put(`${this.serverUrl}/${comment.id_pc}`, comment);
+    return this.http.put<number>(`${this.serverUrl}/${comment.id_pc}`, comment);
   }
 
   public deleteComment(projId: number) {

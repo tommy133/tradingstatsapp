@@ -28,6 +28,10 @@ export class OperationListComponent {
   searchOperations$ = this.formService.applyDebounceOnSearch(
     this.searchOperationsControl.valueChanges,
   );
+  isSearchActive$ = this.searchOperationsControl.valueChanges.pipe(
+    map((search) => (search?.length ?? 0) > 0),
+  );
+
   filteredOperationsByName$ = this.formService.filterItems(
     this.operations$,
     this.searchOperations$,
@@ -44,7 +48,7 @@ export class OperationListComponent {
     navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
   }
 
-  public onDeleteOperation(operation: Operation): void {
+  onDeleteOperation(operation: Operation): void {
     const { id, graph } = operation;
     if (graph) {
       this.fileService.deleteImage(graph);

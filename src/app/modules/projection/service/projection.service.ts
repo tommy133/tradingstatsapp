@@ -43,24 +43,26 @@ export class ProjectionService {
   }
 
   public addProjection(projectionCreateInput: ProjectionCreateInput) {
-    return this.http.post(`${this.apiServerUrl}`, projectionCreateInput).pipe(
-      map(
-        (res) => {
-          this.refetch();
-          return res;
-        },
-        (error: HttpErrorResponse) => {
-          this.toastService.error({
-            message: error.message,
-          });
-        },
-      ),
-    );
+    return this.http
+      .post<number>(`${this.apiServerUrl}`, projectionCreateInput)
+      .pipe(
+        map(
+          (res) => {
+            this.refetch();
+            return res;
+          },
+          (error: HttpErrorResponse) => {
+            this.toastService.error({
+              message: error.message,
+            });
+          },
+        ),
+      );
   }
 
   public updateProjection(projection: ProjectionUpdateInput) {
     return this.http
-      .put(`${this.apiServerUrl}/${projection.id_proj}`, projection)
+      .put<number>(`${this.apiServerUrl}/${projection.id_proj}`, projection)
       .pipe(
         map(
           (res) => {

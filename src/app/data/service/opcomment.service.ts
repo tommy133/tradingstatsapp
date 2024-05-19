@@ -21,11 +21,14 @@ export class OperationCommentService {
   }
 
   public addComment(comment: OperationComment) {
-    return this.http.post(`${this.serverUrl}`, comment);
+    return this.http.post<number>(`${this.serverUrl}`, comment);
   }
 
   public updateComment(comment: OperationComment) {
-    return this.http.put(`${this.serverUrl}/${comment.id_opc}`, comment);
+    return this.http.put<number>(
+      `${this.serverUrl}/${comment.id_opc}`,
+      comment,
+    );
   }
 
   public deleteComment(operationId: number) {

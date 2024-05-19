@@ -16,7 +16,7 @@ export class ProjectionGuard implements CanActivate {
     let year = next.queryParamMap.get('year');
 
     if (year) return true;
-    if (!year) year = this.getInitialYear();
+    year = this.getInitialYear();
 
     //redirect Ok route
     this.router.navigate(['projections'], {

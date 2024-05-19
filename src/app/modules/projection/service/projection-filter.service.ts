@@ -83,7 +83,7 @@ export class ProjectionFilterService {
             : projection.timeframe === timeframe;
           const checkMarket = checkNullSelectControl(market)
             ? true
-            : projection.market.id_mkt === parseInt(market!);
+            : projection.symbol.market.id_mkt === parseInt(market!);
           return checkOrderType && checkStatus && checkTimeframe && checkMarket;
         });
       }),

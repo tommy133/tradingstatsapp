@@ -6,5 +6,23 @@ import { Component } from '@angular/core';
   styles: [],
 })
 export class MainLayoutComponent {
-  constructor() {}
+  static title: string = 'Trading Stats';
+  static buttons = [
+    {
+      text: 'Projections',
+      link: '/projections',
+    },
+    {
+      text: 'Operations',
+      link: '/operations',
+    },
+    {
+      text: 'Stats',
+      link: '/stats',
+    },
+    {
+      text: 'Assets',
+      link: '/assets',
+    },
+  ];
 }

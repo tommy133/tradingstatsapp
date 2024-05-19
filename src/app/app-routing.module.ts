@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AssetLayoutComponent } from './layout/asset-layout/asset-layout.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { OperationLayoutComponent } from './layout/operation-layout/operation-layout.component';
 import { ProjectionLayoutComponent } from './layout/projection-layout/projection-layout.component';
@@ -36,6 +37,12 @@ const pageRoutes: Routes = [
     component: StatsLayoutComponent,
     loadChildren: () =>
       import('./modules/stats/stats.module').then((m) => m.StatsModule),
+  },
+  {
+    path: 'assets',
+    component: AssetLayoutComponent,
+    loadChildren: () =>
+      import('./modules/assets/assets.module').then((m) => m.AssetsModule),
   },
 ];
 

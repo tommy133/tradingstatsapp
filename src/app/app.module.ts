@@ -21,6 +21,7 @@ import { OperationModule } from './modules/operation/operation.module';
 import { ProjectionModule } from './modules/projection/projection.module';
 import { StatsModule } from './modules/stats/stats.module';
 import { SharedModule } from './shared/shared.module';
+import { AssetLayoutComponent } from './layout/asset-layout/asset-layout.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SharedModule } from './shared/shared.module';
     StatsLayoutComponent,
     LoginLayoutComponent,
     LoginComponent,
+    AssetLayoutComponent,
   ],
   imports: [
     BrowserModule,
