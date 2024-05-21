@@ -23,7 +23,9 @@
                   iconSvgClass="hover:bg-gray-300 rounded-md"
                   class="svg-white"
                   (clickEvent)="gotoEditAsset(row.id_sym, $event)"></app-icon-button>
-
+                <app-tradingview-button
+                  [symbolName]="row.name_sym"
+                  iconSvgClass="bg-white rounded border-4 border-black"></app-tradingview-button>
                 <app-icon-button
                   iconSource="assets/svg/delete.svg"
                   iconSvgClass="hover:bg-gray-300 rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"

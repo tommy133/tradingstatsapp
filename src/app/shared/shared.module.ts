@@ -24,6 +24,7 @@ import { SpinnerComponent } from './components/spinner/spinner.component';
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
 import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
+import { TradingviewButtonComponent } from './components/tradingview-button/tradingview-button.component';
 import { TrimesterBtnComponent } from './components/trimester-selector/trimester-btn/trimester-btn.component';
 import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
@@ -54,6 +55,7 @@ const componentsAndPipes = [
   FilterOptionsComponent,
   TextAreaComponent,
   NotFoundComponent,
+  TradingviewButtonComponent,
 ];
 
 const sharedModules = [

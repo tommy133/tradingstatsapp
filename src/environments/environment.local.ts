@@ -5,6 +5,8 @@
 export const environment = {
   production: false,
   apiBaseUrl: 'http://localhost:8080',
+  tradingViewUrl:
+    'https://es.tradingview.com/chart/svq2CwMv/?symbol=IBROKER%3A',
   firebaseConfig: {
     apiKey: 'AIzaSyCCy4wR_lfkri2QGzRoPUcXTZtsFXV1Rhs',
     authDomain: 'trading-stats-31429.firebaseapp.com',
