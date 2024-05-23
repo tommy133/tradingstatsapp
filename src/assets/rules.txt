@@ -1,0 +1,27 @@
+
+REGLAS FUNDAMENTALES
+
+  1. Puede ocurrir cualquier cosa
+  2. No hay necesidad de saber lo que va a ocurrir para ganar dinero
+  3. Existe una distribución aleatoria entre las ganancias y las pérdidas para todo conjunto de variables dado que define una ventaja
+  4. Una ventaja no es nada más que la indicación de una probabilidad más importante para que una cosa suceda en vez de que suceda otra
+  5. Cada instante en el mercado es único
+
+REGLAS ESPECÍFICAS
+
+  1. Si la zona en la que queremos entrar es rota con alto volumen o vela grande NO operar, si no rompe (volumen de parada) SÍ operar
+  2. Si llegamos a 2 pérdidas automáticamente dejamos de operar al estar vacía la cuenta emocional
+  3. Si el precio recorre 1/2 del stop ajustamos take hasta entrada (0 puntos). Igual al revés. En cualquier caso manter 1:1
+  4. Si en 1min sale volumen exagerado mirar temporalidades mayores y si el mercado va a la dirección de la señal podremos tomar esa operación acompañados de esa gran fuerza
+  5. Si la media móvil lleva mucho tiempo sin tocar el precio, no operaremos ya que hay riesgo de retroceso en V
+  6. Si el volumen es fuerte pero la vela pequeña no la tomaremos en cuenta
+  7. Cuidado con las velas con mechas grandes
+  8. Si la vela MADRE rompe una zona importante en temporalidades mayores NO operar, buscamos velas de parada y no de ruptura
+  9. Si la vela madre es demasiado grande y el stop queda lejos podemos poner stop por debajo de 61,8 de los niveles de Fibonacci retracements
+  10. Si el precio de entrada de la vela madre es roto no operar
+  11. Si el precio llega al nivel 5 de Fibonacci extensions y no corrige salir automáticamente
+  12. Operar solo la primera oportunidad que se presenta, la segunda la podemos operar solo si es realmente clara y nuestra experiencia dice que es una buena oportunidad
+  13. Si la primera oportunidad es vaga, podemos operar la segunda oportunidad haciendo un ABC
+  14. Si el contexto es lateral (1min) no operar, la estrategia es tendencial
+  15. Ratio mínimo 1, de los contrario me fríen a comisiones :`(
+  16. No ponemos take, puede ocurrir cualquier cosa

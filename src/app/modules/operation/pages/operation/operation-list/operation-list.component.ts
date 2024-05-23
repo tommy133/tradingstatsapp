@@ -48,6 +48,10 @@ export class OperationListComponent {
     navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
   }
 
+  goToRules() {
+    navigatePreservingQueryParams(['rules'], this.router, this.activatedRoute);
+  }
+
   onDeleteOperation(operation: Operation): void {
     const { id, graph } = operation;
     if (graph) {

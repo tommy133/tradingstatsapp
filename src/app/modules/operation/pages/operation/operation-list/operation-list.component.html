@@ -23,11 +23,17 @@
           </ng-container>
         </app-filter-options>
       </div>
-      <app-rounded-button
-        [text]="'Add operation'"
-        [bgColor]="'bg-green'"
-        (clickEvent)="goToAdd()">
-      </app-rounded-button>
+      <div class="flex items-center gap-4">
+        <icon-button
+          iconSource="assets/svg/pergamin.svg"
+          [iconSvgStyle]="{ 'height.px': 60, 'width.px': 60 }"
+          (clickEvent)="goToRules()"></icon-button>
+        <app-rounded-button
+          [text]="'Add operation'"
+          [bgColor]="'bg-green'"
+          (clickEvent)="goToAdd()">
+        </app-rounded-button>
+      </div>
     </div>
     <p class="text-white font-semibold pl-5">Result: {{n_operations$ | async}}</p>
     <div class="px-5 pb-10">
