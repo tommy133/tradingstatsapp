@@ -27,6 +27,14 @@ export class TableProjectionComponent {
     { name: 'Actions' },
   ];
 
+  getStatusColorClass(status: number) {
+    switch (status) {
+      case 3: return 'text-yellow-300'
+      default: return ''
+    }
+  }
+
+
   goToDetails(operationId: number) {
     navigatePreservingQueryParams(
       ['.', operationId],

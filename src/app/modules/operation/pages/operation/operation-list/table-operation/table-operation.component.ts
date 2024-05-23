@@ -33,6 +33,13 @@ export class TableOperationComponent {
     return revenue > 0 ? 'text-green' : 'text-red';
   }
 
+  getStatusColorClass(status: number) {
+    switch (status) {
+      case 1: return 'text-blue-300'
+      default: return ''
+    }
+  }
+
   goToDetails(operationId: number) {
     navigatePreservingQueryParams(
       ['.', operationId],
