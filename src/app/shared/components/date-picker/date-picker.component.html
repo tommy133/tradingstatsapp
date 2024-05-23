@@ -1,7 +1,7 @@
 <div [ngClass]="'flex flex-nowrap justify-between items-center border border-dark/[.08] rounded-md px-4 gap-4 hover:border-dark ' + bgColor">
-  <app-icon-button
+  <icon-button
     iconSource="assets/svg/go-left.svg"
-    (clickEvent)="previousMonth()"></app-icon-button>
+    (clickEvent)="previousMonth()"></icon-button>
 
   <input
     #date
@@ -10,8 +10,8 @@
     [value]="value"
     [ngClass]="'text-center ' + bgColor">
 
-  <app-icon-button
+  <icon-button
     iconSource="assets/svg/go-right.svg"
     (clickEvent)="nextMonth()">
-  </app-icon-button>
+  </icon-button>
 </div>

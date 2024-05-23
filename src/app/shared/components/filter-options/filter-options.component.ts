@@ -3,10 +3,7 @@ import { ClickAwayService } from 'src/app/core/service/click-away.service';
 
 @Component({
   selector: 'app-filter-options',
-  template: `<app-icon-button
-      [iconSource]="buttonIcon"
-      (click)="toggleButton()"
-    />
+  template: `<icon-button [iconSource]="buttonIcon" (click)="toggleButton()" />
     <div
       *ngIf="buttonToggle"
       class="absolute top-0 left-10 rounded-md bg-white shadow-dropshadow z-50"

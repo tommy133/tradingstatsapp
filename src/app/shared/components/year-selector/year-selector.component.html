@@ -1,17 +1,17 @@
 <div class="h-[48px] justify-between items-center flex flex-nowrap border border-dark/[.08] rounded-md px-4 gap-4 bg-white">
-  <app-icon-button
+  <icon-button
     iconSource="assets/svg/go-left.svg"
     (clickEvent)="previousYear()"
     [disabled]="isPrevDisabled"
-    [iconSvgStyle]="{ 'width.px':32 ,'opacity': isPrevDisabled ? 0.4 : 1  }"></app-icon-button>
+    [iconSvgStyle]="{ 'width.px':32 ,'opacity': isPrevDisabled ? 0.4 : 1  }"></icon-button>
 
   <h5
     (click)="dropQuarters()"
     class="cursor-pointer hover:bg-gray-300 rounded-md p-2">{{ this.year }}</h5>
 
-  <app-icon-button
+  <icon-button
     iconSource="assets/svg/go-right.svg"
     (clickEvent)="nextYear()"
     [disabled]="isNextDisabled"
-    [iconSvgStyle]="{ 'width.px':32 ,'opacity': isNextDisabled ? 0.4 : 1  }"></app-icon-button>
+    [iconSvgStyle]="{ 'width.px':32 ,'opacity': isNextDisabled ? 0.4 : 1  }"></icon-button>
 </div>

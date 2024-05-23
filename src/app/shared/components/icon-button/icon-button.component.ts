@@ -2,7 +2,7 @@ import { BooleanInput, coerceBooleanProperty } from '@angular/cdk/coercion';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-icon-button',
+  selector: 'icon-button',
   template: `<button
     type="button"
     (click)="clickEvent.emit($event)"

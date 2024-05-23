@@ -7,10 +7,10 @@
 
   <div *ngIf="!isLoading; else loading">
     <div class="fixed top-1/2">
-      <app-icon-button
+      <icon-button
         iconSource="assets/svg/go-left.svg"
         [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
-        (clickEvent)="navigatePreviousOperation()"></app-icon-button>
+        (clickEvent)="navigatePreviousOperation()"></icon-button>
     </div>
     <div class="flex m-20">
       <img
@@ -18,10 +18,10 @@
         alt="chart image">
     </div>
     <div class="fixed top-1/2 right-0 z-10">
-      <app-icon-button
+      <icon-button
         iconSource="assets/svg/go-right.svg"
         [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
-        (clickEvent)="navigateNextOperation()"></app-icon-button>
+        (clickEvent)="navigateNextOperation()"></icon-button>
     </div>
   </div>
 </div>
@@ -39,8 +39,8 @@
     <router-outlet></router-outlet>
   </ng-container>
 </app-sidebar>
-<app-icon-button
+<icon-button
   class="fixed top-16 bottom-0 right-0"
   iconSource="assets/svg/sidebar-icon-21.svg"
   [iconSvgStyle]="{'height.px': 50, 'width.px': 50}"
-  (clickEvent)="openSidebarLeft()"></app-icon-button>
+  (clickEvent)="openSidebarLeft()"></icon-button>
