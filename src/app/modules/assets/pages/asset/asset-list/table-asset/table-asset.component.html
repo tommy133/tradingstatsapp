@@ -3,23 +3,22 @@
     <div class="flex flex-col">
       <div class="flex justify-between items-center bg-dark text-white">
         <ng-container *ngFor="let column of columns">
-          <div class="p-4 text-center flex-1 font-bold">{{ column.name }}</div>
+          <div class="font-bold cell">{{ column.name }}</div>
         </ng-container>
       </div>
 
       <div class="bg-gray-900 text-white text-sm font-light">
         <ng-container *ngFor="let row of rows">
           <div
-            class="flex flex-row items-center not-last:border-b hover:bg-gray-500 cursor-pointer"
+            class="flex justify-between items-center not-last:border-b hover:bg-gray-500 cursor-pointer"
             (click)="goToDetails(row.id_sym)">
             <div class="font-bold cell">{{ row.name_sym }}</div>
             <div class="font-semibold cell">{{ row.market.name_mkt }}</div>
             <div class="font-semibold cell">{{getNumberOfTrades(row.id_sym)}}</div>
             <div class="font-semibold cell">
-              <div class="flex flex-row justify-center space-x-2 items-center">
+              <div class="flex justify-center space-x-2 items-center">
                 <icon-button
                   iconSource="assets/svg/edit-32.svg"
-                  [iconSvgStyle]="{ 'height.px': 32, 'width.px': 32 }"
                   iconSvgClass="hover:bg-gray-300 rounded-md"
                   class="svg-white"
                   (clickEvent)="gotoEditAsset(row.id_sym, $event)"></icon-button>

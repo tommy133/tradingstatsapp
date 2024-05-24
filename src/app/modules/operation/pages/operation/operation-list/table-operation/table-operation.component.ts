@@ -10,6 +10,13 @@ export interface TableColumn {
 @Component({
   selector: 'app-table-operation',
   templateUrl: './table-operation.component.html',
+  styles: [
+    `
+      .cell {
+        @apply p-4 text-center flex-1 whitespace-nowrap;
+      }
+    `,
+  ],
 })
 export class TableOperationComponent {
   private router = inject(Router);

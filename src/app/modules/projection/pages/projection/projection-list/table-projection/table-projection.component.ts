@@ -10,6 +10,13 @@ export interface TableColumn {
 @Component({
   selector: 'app-table-projection',
   templateUrl: './table-projection.component.html',
+  styles: [
+    `
+      .cell {
+        @apply p-4 text-center flex-1 whitespace-nowrap;
+      }
+    `,
+  ],
 })
 export class TableProjectionComponent {
   private router = inject(Router);
