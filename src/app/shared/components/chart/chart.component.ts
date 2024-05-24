@@ -27,16 +27,12 @@ export class ChartComponent implements OnInit {
   );
 
   async ngOnInit() {
-    const account = this.activatedRoute.snapshot.queryParams['account'] ?? '1';
     switch (this.chartType) {
       case 'line':
         await new Promise<void>((resolve) => {
           this.subscription = this.filteredOperations$.subscribe(
             (operations) => {
               this.data = operations
-                .filter(
-                  (operation) => operation.account.id_ac === parseInt(account),
-                )
                 .sort(
                   (a, b) =>
                     new Date(a.dateOpen!).getTime() -
@@ -65,9 +61,6 @@ export class ChartComponent implements OnInit {
           this.subscription = this.filteredOperations$.subscribe(
             (operations) => {
               this.data = operations
-                .filter(
-                  (operation) => operation.account.id_ac === parseInt(account),
-                )
                 .map(({ revenue }) => revenue ?? null);
 
               this.chartService.updateChart(this.data, this.chartType);

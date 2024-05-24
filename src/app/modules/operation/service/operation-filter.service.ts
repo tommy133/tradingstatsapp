@@ -11,6 +11,10 @@ export class OperationFilterService {
   private activatedRoute = inject(ActivatedRoute);
   private operationFilterFormService = inject(OperationFilterFormService);
 
+  private account$ = this.activatedRoute.queryParams.pipe(
+    map((params) => params['account'])
+  )
+
   private quarters$ = this.activatedRoute.queryParams.pipe(
     map((quarters) => ({
       q1: quarters['q1'] === 'true',
@@ -32,12 +36,16 @@ export class OperationFilterService {
   public getFilteredOperations(initialList$: Observable<Operation[]>) {
     return combineLatest([
       initialList$,
+      this.account$,
       this.quarters$,
       this.year$,
       this.filterForm$,
     ]).pipe(
-      map(([operations, quarters, year, filterForm]) => {
-        const filteredByPeriod = operations.filter((operation) => {
+      map(([operations, accountId, quarters, year, filterForm]) => {
+        const filteredByAccount = accountId ? operations.filter(
+          (operation) => operation.account.id_ac.toString() === accountId,
+        ) : operations
+        const filteredByPeriod = filteredByAccount.filter((operation) => {
           if (operation.dateOpen) {
             const operationDate = new Date(operation.dateOpen);
             const quarter = Math.floor(operationDate.getMonth() / 3) + 1;
@@ -86,8 +94,8 @@ export class OperationFilterService {
           };
           const checkResult =
             checkNullSelectControl(result) ||
-            operation.revenue == null ||
-            operation.revenue == undefined
+              operation.revenue == null ||
+              operation.revenue == undefined
               ? true
               : checkOperationRevenue(result, operation);
 

@@ -3,7 +3,7 @@ import {
   state,
   style,
   transition,
-  trigger,
+  trigger
 } from '@angular/animations';
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
@@ -70,10 +70,7 @@ export class HopeComponent implements OnInit {
   async ngOnInit() {
     await new Promise<void>((resolve) => {
       this.subscription = this.filteredOperations$.subscribe((operations) => {
-        const account =
-          this.activatedRoute.snapshot.queryParams['account'] ?? '1';
         this.data = operations
-          .filter((operation) => operation.account.id_ac === parseInt(account))
           .map(({ revenue }) => revenue ?? null);
         this.targetValue = this.calculateHope(this.data);
         this.startCounter();
