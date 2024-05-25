@@ -19,8 +19,8 @@ export class ProjectionCommentService {
     return this.http.get<ProjectionComment[]>(`${this.serverUrl}`);
   }
 
-  public getComment(projId: number): Observable<ProjectionComment> {
-    return this.http.get<ProjectionComment>(`${this.serverUrl}/${projId}`);
+  public getCommentsById(projId: number): Observable<ProjectionComment[]> {
+    return this.http.get<ProjectionComment[]>(`${this.serverUrl}/${projId}`);
   }
 
   public addComment(comment: CreateProjectionCommentInput) {

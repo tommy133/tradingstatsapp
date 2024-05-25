@@ -42,6 +42,7 @@ export class ProjectionMutationComponent {
 
   readonly STATUS_WATCHING = 3;
   idComment?: number = undefined;
+  comments: ProjectionComment[] = [];
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
   selectedSymbol: string = '';
@@ -91,12 +92,11 @@ export class ProjectionMutationComponent {
       const projectionDetails = await firstValueFrom(
         this.projectionService.getProjection(id),
       );
+      this.comments = await firstValueFrom(
+        this.commentService.getCommentsById(id),
+      );
       if (projectionDetails) {
         this.setInitialFormStateProj(projectionDetails);
-      }
-      const comment = await firstValueFrom(this.commentService.getComment(id));
-      if (comment) {
-        this.setInitialFormStateComment(comment);
       }
     }
   }
@@ -186,11 +186,6 @@ export class ProjectionMutationComponent {
     this.graphFileName = projectionDetails.graph!;
     this.timeframe.setValue(projectionDetails.timeframe);
     this.status.setValue(projectionDetails.status.id_st);
-  }
-
-  private setInitialFormStateComment(comment: ProjectionComment) {
-    this.idComment = comment.id_pc;
-    this.comment.setValue(comment.pcomment);
   }
 
   uploadFileMemory($event: any) {
