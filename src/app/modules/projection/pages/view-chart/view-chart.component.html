@@ -44,10 +44,9 @@
               bgColor="bg-dark-gray"
               textColor="text-white"></app-label>
           </div>
-          <app-text-area
-            *ngIf="projectionComment$ | async as pcomment"
-            [text]="pcomment"
-            [cols]="100"></app-text-area>
+          <comments-thread
+            class="w-full"
+            [comments]="(comments$ | async) ?? []"></comments-thread>
         </div>
       </app-card>
     </ng-container>

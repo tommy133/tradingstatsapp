@@ -38,12 +38,11 @@ export class ViewChartComponent {
       this.navigationIndex = this.getNavigationIndex();
     },
   );
-  projectionComment$ = this.activatedRoute.params.pipe(
+  comments$ = this.activatedRoute.params.pipe(
     switchMap((params) => {
       const id = params['id'];
-      return this.commentService.getComment(id);
+      return this.commentService.getCommentsById(id);
     }),
-    map((pcomment) => pcomment.pcomment),
   );
 
   navigationIndex!: number;
