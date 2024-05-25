@@ -8,7 +8,7 @@ import { OperationComment } from '../models/opcomment';
   providedIn: 'root',
 })
 export class OperationCommentService {
-  private serverUrl = `${environment.apiBaseUrl}/opcomment`;
+  private serverUrl = `${environment.apiBaseUrl}/opcomments`;
 
   constructor(private http: HttpClient) {}
 

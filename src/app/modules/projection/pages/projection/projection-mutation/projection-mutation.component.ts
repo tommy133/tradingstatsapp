@@ -4,7 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
-import { ProjectionComment } from 'src/app/data/models/pcomment';
+import {
+  CreateProjectionCommentInput,
+  ProjectionComment,
+} from 'src/app/data/models/pcomment';
 import { Status } from 'src/app/data/models/status';
 import { Timeframe } from 'src/app/data/models/timeframe';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
@@ -109,11 +112,6 @@ export class ProjectionMutationComponent {
     return this.mutation === MutationType.ADD;
   }
 
-  //if is add projection OR we are on edit and we don't have a comment, we create one
-  get isCreateCommentFromEdit(): boolean {
-    return this.isMutationAdd || !this.idComment;
-  }
-
   get closeRoute(): string {
     return this.isMutationAdd ? '../' : '../../';
   }
@@ -171,11 +169,8 @@ export class ProjectionMutationComponent {
     return this.projectionService.updateProjection(projectionUpdateInput);
   }
 
-  onAddComment(commentCreateInput: ProjectionComment) {
+  onAddComment(commentCreateInput: CreateProjectionCommentInput) {
     return this.commentService.addComment(commentCreateInput);
-  }
-  onUpdateComment(commentUpdateInput: ProjectionComment) {
-    return this.commentService.updateComment(commentUpdateInput);
   }
 
   setSymbolForm(symbol: Symbol) {
@@ -234,13 +229,11 @@ export class ProjectionMutationComponent {
   }
 
   private async handleMutationComment(
-    commentInput: ProjectionComment,
+    commentInput: CreateProjectionCommentInput,
   ): Promise<number | void> {
     try {
       this.isLoading = true;
-      const result = this.isCreateCommentFromEdit
-        ? await firstValueFrom(this.onAddComment(commentInput))
-        : await firstValueFrom(this.onUpdateComment(commentInput));
+      const result = await firstValueFrom(this.onAddComment(commentInput));
       if (result) {
         this.isLoading = false;
         return result;
@@ -279,20 +272,11 @@ export class ProjectionMutationComponent {
     };
   }
 
-  private getCommentCreateInput(idProj: number): ProjectionComment {
+  private getCommentCreateInput(idProj: number): CreateProjectionCommentInput {
     const { comment } = this.projectionForm.value;
     return {
       pcomment: comment!,
       id_proj: idProj!,
-    };
-  }
-
-  private getCommentUpdateInput(): ProjectionComment {
-    const { id, comment } = this.projectionForm.value;
-    return {
-      id_pc: this.idComment!,
-      pcomment: comment!,
-      id_proj: id!,
     };
   }
 
@@ -313,9 +297,8 @@ export class ProjectionMutationComponent {
     const comment = this.projectionForm.value.comment;
 
     if (projId && comment) {
-      const commentInput: ProjectionComment = this.isCreateCommentFromEdit
-        ? this.getCommentCreateInput(projId)
-        : this.getCommentUpdateInput();
+      const commentInput: CreateProjectionCommentInput =
+        this.getCommentCreateInput(projId);
       this.handleMutationComment(commentInput);
     }
 
