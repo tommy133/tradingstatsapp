@@ -21,6 +21,7 @@ import { RoundedButtonComponent } from './components/rounded-button/rounded-butt
 import { SearchByTextComponent } from './components/search-by-text/search-by-text.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SpinnerComponent } from './components/spinner/spinner.component';
+import { SymbolSearchComponent } from './components/symbol-search/symbol-search.component';
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
 import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
@@ -56,6 +57,7 @@ const componentsAndPipes = [
   TextAreaComponent,
   NotFoundComponent,
   TradingviewButtonComponent,
+  SymbolSearchComponent,
 ];
 
 const sharedModules = [
@@ -67,7 +69,7 @@ const sharedModules = [
 ];
 
 @NgModule({
-  declarations: [componentsAndPipes],
+  declarations: [componentsAndPipes, SymbolSearchComponent],
   imports: [...sharedModules, AngularSvgIconModule.forRoot(), AutosizeModule],
   exports: [...componentsAndPipes, ...sharedModules],
 })

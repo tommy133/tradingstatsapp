@@ -28,14 +28,9 @@
       <p class="text-white font-semibold">{{formType}} OPERATION</p>
       <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select symbol"></app-form-label>
-        <select
-          name="symbolSelect"
-          class="rounded"
-          formControlName="symbol">
-          <ng-container *ngFor="let symbol of symbols$ | async">
-            <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
-          </ng-container>
-        </select>
+        <app-symbol-search
+          [selected]="selectedSymbol"
+          (symbolSelected)="setSymbolForm($event)"></app-symbol-search>
       </div>
 
       <div class="flex flex-row items-center justify-between pt-5">

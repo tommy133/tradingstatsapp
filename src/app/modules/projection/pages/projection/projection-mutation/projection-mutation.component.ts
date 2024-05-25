@@ -9,7 +9,6 @@ import { Status } from 'src/app/data/models/status';
 import { Timeframe } from 'src/app/data/models/timeframe';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { StatusService } from 'src/app/data/service/status.service';
-import { SymbolService } from 'src/app/data/service/symbol.service';
 import { Symbol } from 'src/app/modules/assets/model/symbol';
 import { MutationType } from 'src/app/shared/utils/custom-types';
 import {
@@ -27,7 +26,6 @@ import { ProjectionService } from '../../../service/projection.service';
 })
 export class ProjectionMutationComponent {
   private formBuilder = inject(FormBuilder);
-  private symbolService = inject(SymbolService);
   private statusService = inject(StatusService);
   private projectionService = inject(ProjectionService);
   private commentService = inject(ProjectionCommentService);
@@ -43,8 +41,8 @@ export class ProjectionMutationComponent {
   idComment?: number = undefined;
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
+  selectedSymbol: string = '';
 
-  symbols$: Observable<Symbol[]> = this.symbolService.assets$;
   statuses$: Observable<Status[]> = this.statusService
     .getStatuses()
     .pipe(
@@ -180,9 +178,14 @@ export class ProjectionMutationComponent {
     return this.commentService.updateComment(commentUpdateInput);
   }
 
+  setSymbolForm(symbol: Symbol) {
+    this.projectionForm.controls.symbol.setValue(symbol.id_sym);
+  }
+
   private setInitialFormStateProj(projectionDetails: Projection) {
     this.id.setValue(projectionDetails.id);
     this.symbol.setValue(projectionDetails.symbol.id_sym);
+    this.selectedSymbol = projectionDetails.symbol.name_sym;
     this.orderType.setValue(projectionDetails.updown);
     this.date.setValue(formatDate(projectionDetails.date!));
     this.graphFileName = projectionDetails.graph!;

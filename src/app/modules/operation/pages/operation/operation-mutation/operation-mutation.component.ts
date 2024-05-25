@@ -51,6 +51,7 @@ export class OperationMutationComponent implements OnInit {
   idComment?: number = undefined;
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
+  selectedSymbol: string = '';
 
   symbols$: Observable<Symbol[]> = this.symbolService.assets$;
   statuses$: Observable<Status[]> = this.statusService
@@ -210,6 +211,10 @@ export class OperationMutationComponent implements OnInit {
     return this.commentService.updateComment(commentUpdateInput);
   }
 
+  setSymbolForm(symbol: Symbol) {
+    this.operationForm.controls.symbol.setValue(symbol.id_sym);
+  }
+
   private setInitialFormState(operationDetails: Operation) {
     const {
       id,
@@ -227,6 +232,7 @@ export class OperationMutationComponent implements OnInit {
     } = operationDetails;
     this.id.setValue(id);
     this.symbol.setValue(id_sym);
+    this.selectedSymbol = operationDetails.symbol.name_sym;
     this.orderType.setValue(updown);
     this.dateOpen.setValue(
       this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm', 'UTC'),

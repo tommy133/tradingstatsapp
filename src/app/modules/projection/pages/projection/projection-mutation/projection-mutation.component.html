@@ -28,19 +28,9 @@
       <p class="text-white font-semibold">{{formType}} PROJECTION</p>
       <div class="flex items-center justify-between pt-5">
         <app-form-label text="Select symbol"></app-form-label>
-        <div class="pl-10">
-          <select
-            name="symbolSelect"
-            class="rounded"
-            formControlName="symbol">
-            <ng-container *ngFor="let symbol of symbols$ | async">
-              <option [value]="symbol.id_sym">{{symbol.name_sym}}</option>
-            </ng-container>
-          </select>
-          <app-validation-error
-            for="symbol"
-            fieldName="symbol"></app-validation-error>
-        </div>
+        <app-symbol-search
+          [selected]="selectedSymbol"
+          (symbolSelected)="setSymbolForm($event)"></app-symbol-search>
       </div>
 
       <div class="flex items-center justify-between pt-5">
@@ -108,14 +98,12 @@
       </div>
       <div class="flex items-center justify-between pt-5">
         <app-form-label text="Comment"></app-form-label>
-        <div class="pl-[68px]">
-          <textarea
-            name="commentSelect"
-            class="rounded"
-            formControlName="comment"
-            cols="30"
-            rows="5"></textarea>
-        </div>
+        <textarea
+          name="commentSelect"
+          class="rounded"
+          formControlName="comment"
+          cols="30"
+          rows="5"></textarea>
       </div>
       <div class="flex items-center flex-row justify-end pt-10">
         <button type="button">

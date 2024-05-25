@@ -1,21 +1,30 @@
-import { Component, Input } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  Output,
+  ViewChild,
+} from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-search-by-text',
   template: `
     <div
-      class="pl-4 flex justify-between space-x-2 h-10 items-center bg-white mt-2 rounded"
-    >
+      class="pl-4 flex justify-between space-x-2 h-10 items-center bg-white mt-2 rounded">
       <ng-container
         [ngTemplateOutlet]="isSearchActive ? clearSearch : search"
       ></ng-container>
       <input
+        #searchInput
         class="small appearance-none bg-transparent w-full border-none focus:outline-none"
         type="text"
         [formControl]="searchControl"
         [placeholder]="placeholder"
         autocomplete="off"
+        (focus)="onFocus()"
+        (focusout)="onFocusOut()"
       />
     </div>
     <ng-template #search>
@@ -25,7 +34,7 @@ import { FormControl } from '@angular/forms';
       />
     </ng-template>
     <ng-template #clearSearch>
-      <button (click)="searchControl.reset()">
+      <button (click)="focusAndResetInput()">
         <icon-button
           iconSource="assets/svg/close.svg"
           iconSvgClass="bg-dark rounded"
@@ -39,4 +48,27 @@ export class SearchByTextComponent {
   @Input() searchControl = new FormControl<string>('');
   @Input() placeholder: string = '';
   @Input() isSearchActive: boolean = false;
+
+  @Input() set value(value: string) {
+    this.searchControl.setValue(value);
+  }
+
+  @Output() showSuggestions = new EventEmitter<boolean>();
+
+  @ViewChild('searchInput') searchInput!: ElementRef;
+
+  focusAndResetInput() {
+    this.searchControl.reset();
+    this.searchInput.nativeElement.focus();
+  }
+
+  onFocus() {
+    this.showSuggestions.emit(true);
+  }
+
+  onFocusOut() {
+    setTimeout(() => {
+      this.showSuggestions.emit(false);
+    }, 200);
+  }
 }
