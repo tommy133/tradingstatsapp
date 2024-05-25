@@ -35,43 +35,49 @@
 
       <div class="flex items-center justify-between pt-5">
         <app-form-label text="Select order type"></app-form-label>
-        <select
-          name="orderTypeSelect"
-          class="rounded"
-          formControlName="orderType">
-          <option [value]="1">BUY</option>
-          <option [value]="0">SELL</option>
-        </select>
-        <app-validation-error
-          for="orderType"
-          fieldName="order type"></app-validation-error>
+        <div class="flex gap-1">
+          <select
+            name="orderTypeSelect"
+            class="rounded"
+            formControlName="orderType">
+            <option [value]="1">BUY</option>
+            <option [value]="0">SELL</option>
+          </select>
+          <app-validation-error
+            for="orderType"
+            fieldName="order type"></app-validation-error>
+        </div>
       </div>
 
       <div class="flex items-center justify-between pt-5">
         <app-form-label text="Select date"></app-form-label>
-        <input
-          [value]="dateValue"
-          type="date"
-          class="rounded"
-          formControlName="date">
-        <app-validation-error
-          for="date"
-          fieldName="date"></app-validation-error>
+        <div class="flex gap-1">
+          <input
+            [value]="dateValue"
+            type="date"
+            class="rounded"
+            formControlName="date">
+          <app-validation-error
+            for="date"
+            fieldName="date"></app-validation-error>
+        </div>
       </div>
 
       <div class="flex items-center justify-between pt-5">
         <app-form-label text="Select timeframe"></app-form-label>
-        <select
-          name="timeframeSelect"
-          class="rounded"
-          formControlName="timeframe">
-          <ng-container *ngFor="let timeframe of timeframes">
-            <option [value]="timeframe">{{timeframe}}</option>
-          </ng-container>
-        </select>
-        <app-validation-error
-          for="timeframe"
-          fieldName="timeframe"></app-validation-error>
+        <div class="flex gap-1">
+          <select
+            name="timeframeSelect"
+            class="rounded"
+            formControlName="timeframe">
+            <ng-container *ngFor="let timeframe of timeframes">
+              <option [value]="timeframe">{{timeframe}}</option>
+            </ng-container>
+          </select>
+          <app-validation-error
+            for="timeframe"
+            fieldName="timeframe"></app-validation-error>
+        </div>
       </div>
 
       <div class="flex items-center justify-between pt-5">
@@ -84,9 +90,6 @@
             <option [value]="status.id_st">{{status.name_st}}</option>
           </ng-container>
         </select>
-        <app-validation-error
-          for="status"
-          fieldName="status"></app-validation-error>
       </div>
       <div class="flex items-center justify-between pt-5">
         <div class="flex flex-col gap-2">
