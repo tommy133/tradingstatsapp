@@ -14,15 +14,9 @@
     </div>
 
     <div class="flex-grow -mt-2 pb-4">
-      <label class="text-dark-400">
-        {{ comment.inserted_at | date: 'd MMMM y  h:mm a' }}
-      </label>
-
-      <div class="flex space-x-2 mt-1">
-        <div class="flex-grow rounded-b-lg rounded-tr-lg p-4 bg-blue-400">
-          <p class="text-white">{{ comment.pcomment }}</p>
-        </div>
-      </div>
+      <comment-entry
+        [comment]="comment"
+        [isOpen]="i === 0"></comment-entry>
     </div>
   </div>
 </div>

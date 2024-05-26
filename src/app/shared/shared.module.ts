@@ -8,6 +8,7 @@ import { BackToComponent } from './components/back-to/back-to.component';
 import { CardComponent } from './components/card/card.component';
 import { ChartComponent } from './components/chart/chart.component';
 import { CloseButtonComponent } from './components/close-button/close-button.component';
+import { CommentEntryComponent } from './components/comments-thread/comment-entry/comment-entry.component';
 import { CommentsThreadComponent } from './components/comments-thread/comments-thread.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { FilterOptionsComponent } from './components/filter-options/filter-options.component';
@@ -60,6 +61,7 @@ const componentsAndPipes = [
   TradingviewButtonComponent,
   SymbolSearchComponent,
   CommentsThreadComponent,
+  CommentEntryComponent,
 ];
 
 const sharedModules = [
@@ -71,11 +73,7 @@ const sharedModules = [
 ];
 
 @NgModule({
-  declarations: [
-    componentsAndPipes,
-    SymbolSearchComponent,
-    CommentsThreadComponent,
-  ],
+  declarations: [componentsAndPipes],
   imports: [...sharedModules, AngularSvgIconModule.forRoot(), AutosizeModule],
   exports: [...componentsAndPipes, ...sharedModules],
 })
