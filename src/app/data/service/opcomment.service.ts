@@ -2,7 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { OperationComment } from '../models/opcomment';
+import {
+  CreateOperationCommentInput,
+  OperationComment,
+} from '../models/opcomment';
 
 @Injectable({
   providedIn: 'root',
@@ -16,19 +19,16 @@ export class OperationCommentService {
     return this.http.get<OperationComment[]>(`${this.serverUrl}`);
   }
 
+  public getCommentsById(projId: number): Observable<OperationComment[]> {
+    return this.http.get<OperationComment[]>(`${this.serverUrl}/${projId}`);
+  }
+
   public getComment(operationId: number): Observable<OperationComment> {
     return this.http.get<OperationComment>(`${this.serverUrl}/${operationId}`);
   }
 
-  public addComment(comment: OperationComment) {
+  public addComment(comment: CreateOperationCommentInput) {
     return this.http.post<number>(`${this.serverUrl}`, comment);
-  }
-
-  public updateComment(comment: OperationComment) {
-    return this.http.put<number>(
-      `${this.serverUrl}/${comment.id_opc}`,
-      comment,
-    );
   }
 
   public deleteComment(operationId: number) {

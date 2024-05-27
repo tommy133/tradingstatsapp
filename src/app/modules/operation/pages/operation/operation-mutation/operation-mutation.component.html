@@ -135,14 +135,19 @@
           formControlName="revenue">
       </div>
 
-      <div class="flex items-center justify-between pt-5">
+      <div class="flex flex-col gap-4 pt-5">
         <app-form-label text="Comment"></app-form-label>
-        <textarea
-          name="commentSelect"
-          class="rounded"
-          formControlName="comment"
-          cols="30"
-          rows="5"></textarea>
+
+        <comments-thread [comments]="comments"></comments-thread>
+
+        <div class="flex justify-end">
+          <textarea
+            name="commentSelect"
+            class="rounded"
+            formControlName="comment"
+            cols="50"
+            rows="5"></textarea>
+        </div>
       </div>
       <div class="flex items-center flex-row justify-end pt-10">
         <button type="button">

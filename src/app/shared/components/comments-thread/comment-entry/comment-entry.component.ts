@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
-import { ProjectionComment } from 'src/app/data/models/pcomment';
+import { Comment } from '../comments-thread.component';
 
 @Component({
   selector: 'comment-entry',
-  template: `<button (click)="isOpen = !isOpen">
+  template: `<button type="button" (click)="isOpen = !isOpen">
       <div class="flex items-center">
         <label class="text-dark-400 cursor-pointer">
           {{ comment.inserted_at | date : 'd MMMM y  h:mm a' }}
@@ -17,11 +17,11 @@ import { ProjectionComment } from 'src/app/data/models/pcomment';
 
     <div *ngIf="isOpen" class="flex space-x-2 mt-1">
       <div class="flex-grow rounded-b-lg rounded-tr-lg p-4 bg-blue-400">
-        <p class="text-white">{{ comment.pcomment }}</p>
+        <p class="text-white">{{ comment.comment }}</p>
       </div>
     </div>`,
 })
 export class CommentEntryComponent {
-  @Input() comment!: ProjectionComment;
+  @Input() comment!: Comment;
   @Input() isOpen = false;
 }

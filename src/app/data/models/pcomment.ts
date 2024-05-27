@@ -1,12 +1,11 @@
 export interface ProjectionComment {
   id_pc?: number;
-  inserted_at: string;
-  pcomment: string;
+  comment: string;
   id_proj: number;
+  inserted_at: string;
 }
 
 export interface CreateProjectionCommentInput {
-  id_pc?: number;
-  pcomment: string;
+  comment: string;
   id_proj: number;
 }

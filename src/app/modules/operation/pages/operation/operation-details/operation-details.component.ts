@@ -36,7 +36,7 @@ export class OperationDetailsComponent implements OnInit {
     this.activatedRoute.snapshot.data['showViewChartBtn'] ?? true;
 
   operation$?: Observable<Operation>;
-  comment$?: Observable<OperationComment>;
+  comments$?: Observable<OperationComment[]>;
 
   ngOnInit() {
     this.operation$ = this.activatedRoute.params.pipe(
@@ -46,10 +46,10 @@ export class OperationDetailsComponent implements OnInit {
       }),
     );
 
-    this.comment$ = this.activatedRoute.params.pipe(
+    this.comments$ = this.activatedRoute.params.pipe(
       switchMap((params) => {
         const id = params['id'];
-        return this.commentService.getComment(id);
+        return this.commentService.getCommentsById(id);
       }),
     );
   }

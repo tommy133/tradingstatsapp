@@ -41,8 +41,9 @@ export class ProjectionMutationComponent {
   errors: Array<string> = [];
 
   readonly STATUS_WATCHING = 3;
-  idComment?: number = undefined;
+
   comments: ProjectionComment[] = [];
+
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
   selectedSymbol: string = '';
@@ -270,7 +271,7 @@ export class ProjectionMutationComponent {
   private getCommentCreateInput(idProj: number): CreateProjectionCommentInput {
     const { comment } = this.projectionForm.value;
     return {
-      pcomment: comment!,
+      comment: comment!,
       id_proj: idProj!,
     };
   }
