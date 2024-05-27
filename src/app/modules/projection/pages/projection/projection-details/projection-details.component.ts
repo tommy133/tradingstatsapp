@@ -4,7 +4,10 @@ import { Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
-import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
+import {
+  getStatusColorClass,
+  navigatePreservingQueryParams,
+} from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionService } from '../../../service/projection.service';
 
@@ -14,6 +17,8 @@ import { ProjectionService } from '../../../service/projection.service';
 })
 export class ProjectionDetailsComponent implements OnInit {
   private fileService = inject(FileService);
+
+  getStatusColorClass = getStatusColorClass;
 
   projection$?: Observable<Projection>;
   comment$?: Observable<ProjectionComment>;

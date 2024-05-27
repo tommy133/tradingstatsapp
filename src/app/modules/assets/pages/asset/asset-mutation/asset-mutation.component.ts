@@ -99,7 +99,7 @@ export class AssetMutationComponent {
   }
 
   get buttonColor(): string {
-    return this.isMutationAdd ? 'bg-green' : 'bg-orange';
+    return this.isMutationAdd ? 'bg-green' : 'bg-light-orange';
   }
 
   goToList() {

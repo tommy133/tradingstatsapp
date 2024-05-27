@@ -7,7 +7,7 @@
         class="flex flex-row items-center space-x-5">
         <app-rounded-button
           text="Edit"
-          bgColor="bg-orange"
+          bgColor="bg-light-orange"
           type="submit"
           (clickEvent)="goToEdit(operation.id)">
         </app-rounded-button>
@@ -75,7 +75,11 @@
 
     <div class="flex items-center justify-between pt-5">
       <app-form-label text="Status"></app-form-label>
-      <app-label [text]="operation.status.name_st"></app-label>
+      <app-label
+        [text]="operation.status.name_st"
+        bgColor="bg-dark"
+        [textColor]="getStatusColorClass(operation.status.id_st)"></app-label>
+
     </div>
 
     <div

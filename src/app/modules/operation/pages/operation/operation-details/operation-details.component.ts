@@ -5,7 +5,10 @@ import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
-import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
+import {
+  getStatusColorClass,
+  navigatePreservingQueryParams,
+} from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
 
@@ -20,6 +23,8 @@ export class OperationDetailsComponent implements OnInit {
   private router = inject(Router);
   private sidebarService = inject(SidebarService);
   private fileService = inject(FileService);
+
+  getStatusColorClass = getStatusColorClass;
 
   @Input() extended: boolean = true;
   @Input() viewChartMode: boolean = false;

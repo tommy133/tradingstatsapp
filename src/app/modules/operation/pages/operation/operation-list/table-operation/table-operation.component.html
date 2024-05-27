@@ -20,7 +20,12 @@
               {{ row.dateClose | date: 'dd/MM/yyyy HH:mm':'UTC' }}
             </div>
             <div class="font-semibold cell">{{ row.timeframe }}</div>
-            <div [ngClass]="'font-semibold cell ' + getStatusColorClass(row.status.id_st)">{{ row.status.name_st }}</div>
+            <div class="font-semibold cell">
+              <app-label
+                [text]="row.status.name_st"
+                bgColor="bg-dark"
+                [textColor]="getStatusColorClass(row.status.id_st)"></app-label>
+            </div>
             <div [ngClass]="'font-semibold cell ' + getRevenueColorClass(row.revenue!)">{{ row.revenue }}</div>
             <div class="font-semibold cell">
               <div class="flex justify-center space-x-2 items-center">

@@ -1,7 +1,10 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Projection } from 'src/app/modules/projection/model/projection';
-import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
+import {
+  getStatusColorClass,
+  navigatePreservingQueryParams,
+} from 'src/app/shared/utils/shared-utils';
 
 export interface TableColumn {
   name: string;
@@ -22,6 +25,8 @@ export class TableProjectionComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
 
+  getStatusColorClass = getStatusColorClass;
+
   @Input() rows!: Projection[];
   @Output() deleteEvent = new EventEmitter<Projection>();
 
@@ -33,14 +38,6 @@ export class TableProjectionComponent {
     { name: 'Status' },
     { name: 'Actions' },
   ];
-
-  getStatusColorClass(status: number) {
-    switch (status) {
-      case 3: return 'text-yellow-300'
-      default: return ''
-    }
-  }
-
 
   goToDetails(operationId: number) {
     navigatePreservingQueryParams(

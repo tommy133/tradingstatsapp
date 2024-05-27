@@ -15,3 +15,14 @@ export function navigatePreservingQueryParams(
     queryParamsHandling: 'preserve',
   });
 }
+
+export function getStatusColorClass(status: number) {
+  switch (status) {
+    case 1:
+      return 'text-blue-300';
+    case 3:
+      return 'text-orange-600';
+    default:
+      return '';
+  }
+}

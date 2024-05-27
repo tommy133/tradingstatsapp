@@ -131,7 +131,7 @@ export class ProjectionMutationComponent {
   }
 
   get buttonColor(): string {
-    return this.isMutationAdd ? 'bg-green' : 'bg-orange';
+    return this.isMutationAdd ? 'bg-green' : 'bg-light-orange';
   }
 
   get dateValue(): string {

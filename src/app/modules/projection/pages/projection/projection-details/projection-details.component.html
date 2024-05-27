@@ -6,7 +6,7 @@
       <div class="flex flex-row items-center space-x-5">
         <app-rounded-button
           text="Edit"
-          bgColor="bg-orange"
+          bgColor="bg-light-orange"
           type="submit"
           (clickEvent)="goToEdit(projection.id)">
         </app-rounded-button>
@@ -71,9 +71,9 @@
 
     <div class="flex items-center justify-between pt-5">
       <app-form-label text="Status"></app-form-label>
-      <div class="pl-[50px]">
-        <app-label [text]="projection.status.name_st"></app-label>
-      </div>
+      <app-label
+        [text]="projection.status.name_st"
+        [textColor]="getStatusColorClass(projection.status.id_st)"></app-label>
     </div>
 
     <div class="flex items-center justify-between pt-5">
