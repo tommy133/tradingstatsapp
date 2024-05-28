@@ -2,13 +2,16 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { ProjectionComment } from '../models/pcomment';
+import {
+  CreateProjectionCommentInput,
+  ProjectionComment,
+} from '../models/pcomment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProjectionCommentService {
-  private serverUrl = `${environment.apiBaseUrl}/pcomment`;
+  private serverUrl = `${environment.apiBaseUrl}/pcomments`;
 
   constructor(private http: HttpClient) {}
 
@@ -16,16 +19,12 @@ export class ProjectionCommentService {
     return this.http.get<ProjectionComment[]>(`${this.serverUrl}`);
   }
 
-  public getComment(projId: number): Observable<ProjectionComment> {
-    return this.http.get<ProjectionComment>(`${this.serverUrl}/${projId}`);
+  public getCommentsById(projId: number): Observable<ProjectionComment[]> {
+    return this.http.get<ProjectionComment[]>(`${this.serverUrl}/${projId}`);
   }
 
-  public addComment(comment: ProjectionComment) {
+  public addComment(comment: CreateProjectionCommentInput) {
     return this.http.post<number>(`${this.serverUrl}`, comment);
-  }
-
-  public updateComment(comment: ProjectionComment) {
-    return this.http.put<number>(`${this.serverUrl}/${comment.id_pc}`, comment);
   }
 
   public deleteComment(projId: number) {

@@ -35,7 +35,7 @@
 
       <div class="flex items-center justify-between pt-5">
         <app-form-label text="Select order type"></app-form-label>
-        <div class="pl-[17px]">
+        <div class="flex gap-1">
           <select
             name="orderTypeSelect"
             class="rounded"
@@ -51,7 +51,7 @@
 
       <div class="flex items-center justify-between pt-5">
         <app-form-label text="Select date"></app-form-label>
-        <div class="pl-[60px]">
+        <div class="flex gap-1">
           <input
             [value]="dateValue"
             type="date"
@@ -65,7 +65,7 @@
 
       <div class="flex items-center justify-between pt-5">
         <app-form-label text="Select timeframe"></app-form-label>
-        <div class="pl-5">
+        <div class="flex gap-1">
           <select
             name="timeframeSelect"
             class="rounded"
@@ -82,28 +82,28 @@
 
       <div class="flex items-center justify-between pt-5">
         <app-form-label text="Select status"></app-form-label>
-        <div class="pl-[50px]">
-          <select
-            name="statusSelect"
-            class="rounded"
-            formControlName="status">
-            <ng-container *ngFor="let status of statuses$ | async">
-              <option [value]="status.id_st">{{status.name_st}}</option>
-            </ng-container>
-          </select>
-          <app-validation-error
-            for="status"
-            fieldName="status"></app-validation-error>
-        </div>
-      </div>
-      <div class="flex items-center justify-between pt-5">
-        <app-form-label text="Comment"></app-form-label>
-        <textarea
-          name="commentSelect"
+        <select
+          name="statusSelect"
           class="rounded"
-          formControlName="comment"
-          cols="30"
-          rows="5"></textarea>
+          formControlName="status">
+          <ng-container *ngFor="let status of statuses$ | async">
+            <option [value]="status.id_st">{{status.name_st}}</option>
+          </ng-container>
+        </select>
+      </div>
+      <div class="flex flex-col gap-4 pt-5">
+        <app-form-label text="Comments"></app-form-label>
+
+        <comments-thread [comments]="comments"></comments-thread>
+
+        <div class="flex justify-end">
+          <textarea
+            name="commentSelect"
+            class="rounded"
+            formControlName="comment"
+            cols="50"
+            rows="5"></textarea>
+        </div>
       </div>
       <div class="flex items-center flex-row justify-end pt-10">
         <button type="button">

@@ -5,7 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
-import { OperationComment } from 'src/app/data/models/opcomment';
+import {
+  CreateOperationCommentInput,
+  OperationComment,
+} from 'src/app/data/models/opcomment';
 import { Status } from 'src/app/data/models/status';
 import { Timeframe } from 'src/app/data/models/timeframe';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
@@ -48,7 +51,9 @@ export class OperationMutationComponent implements OnInit {
   readonly DEFAULT_STATUS: number = 2; //CLOSED
 
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
-  idComment?: number = undefined;
+
+  comments: OperationComment[] = [];
+
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
   selectedSymbol: string = '';
@@ -123,14 +128,11 @@ export class OperationMutationComponent implements OnInit {
       const operationDetails = await firstValueFrom(
         this.operationService.getOperation(this.paramId),
       );
+      this.comments = await firstValueFrom(
+        this.commentService.getCommentsById(this.paramId),
+      );
       if (operationDetails) {
         this.setInitialFormState(operationDetails);
-      }
-      const comment = await firstValueFrom(
-        this.commentService.getComment(this.paramId),
-      );
-      if (comment) {
-        this.setInitialFormStateComment(comment);
       }
     }
   }
@@ -144,11 +146,6 @@ export class OperationMutationComponent implements OnInit {
 
   get isMutationAdd(): boolean {
     return this.mutation === MutationType.ADD;
-  }
-
-  //if is add operation OR we are on edit and we don't have a comment, we create one
-  get isCreateCommentFromEdit(): boolean {
-    return this.isMutationAdd || !this.idComment;
   }
 
   get closeRoute(): string {
@@ -204,11 +201,8 @@ export class OperationMutationComponent implements OnInit {
     return this.operationService.updateOperation(operationUpdateInput);
   }
 
-  onAddComment(commentCreateInput: OperationComment) {
+  onAddComment(commentCreateInput: CreateOperationCommentInput) {
     return this.commentService.addComment(commentCreateInput);
-  }
-  onUpdateComment(commentUpdateInput: OperationComment) {
-    return this.commentService.updateComment(commentUpdateInput);
   }
 
   setSymbolForm(symbol: Symbol) {
@@ -249,11 +243,6 @@ export class OperationMutationComponent implements OnInit {
     this.revenue.setValue(revenue!);
   }
 
-  private setInitialFormStateComment(comment: OperationComment) {
-    this.idComment = comment.id_opc;
-    this.comment.setValue(comment.opcomment);
-  }
-
   uploadFileMemory($event: any) {
     this.uploadedFile = $event.target.files[0];
   }
@@ -290,13 +279,11 @@ export class OperationMutationComponent implements OnInit {
   }
 
   private async handleMutationComment(
-    commentInput: OperationComment,
+    commentInput: CreateOperationCommentInput,
   ): Promise<number | void> {
     try {
       this.isLoading = true;
-      const result = this.isCreateCommentFromEdit
-        ? await firstValueFrom(this.onAddComment(commentInput))
-        : await firstValueFrom(this.onUpdateComment(commentInput));
+      const result = await firstValueFrom(this.onAddComment(commentInput));
       if (result) {
         this.isLoading = false;
         return result;
@@ -366,20 +353,13 @@ export class OperationMutationComponent implements OnInit {
     };
   }
 
-  private getCommentCreateInput(idOperation: number): OperationComment {
+  private getCommentCreateInput(
+    idOperation: number,
+  ): CreateOperationCommentInput {
     const { comment } = this.operationForm.value;
     return {
-      opcomment: comment!,
+      comment: comment!,
       id_op: idOperation!,
-    };
-  }
-
-  private getCommentUpdateInput(): OperationComment {
-    const { id, comment } = this.operationForm.value;
-    return {
-      id_opc: this.idComment!,
-      opcomment: comment!,
-      id_op: id!,
     };
   }
 
@@ -400,9 +380,8 @@ export class OperationMutationComponent implements OnInit {
     const comment = this.operationForm.value.comment;
 
     if (operationId && comment) {
-      const commentInput: OperationComment = this.isCreateCommentFromEdit
-        ? this.getCommentCreateInput(operationId)
-        : this.getCommentUpdateInput();
+      const commentInput: CreateOperationCommentInput =
+        this.getCommentCreateInput(operationId);
       this.handleMutationComment(commentInput);
     }
 

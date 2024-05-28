@@ -21,7 +21,7 @@ export class ProjectionDetailsComponent implements OnInit {
   getStatusColorClass = getStatusColorClass;
 
   projection$?: Observable<Projection>;
-  comment$?: Observable<ProjectionComment>;
+  comments$?: Observable<ProjectionComment[]>;
   isLoading: boolean = false;
   errors: Array<string> = [];
 
@@ -40,10 +40,10 @@ export class ProjectionDetailsComponent implements OnInit {
       }),
     );
 
-    this.comment$ = this.activatedRoute.params.pipe(
+    this.comments$ = this.activatedRoute.params.pipe(
       switchMap((params) => {
         const id = params['id'];
-        return this.commentService.getComment(id);
+        return this.commentService.getCommentsById(id);
       }),
     );
   }

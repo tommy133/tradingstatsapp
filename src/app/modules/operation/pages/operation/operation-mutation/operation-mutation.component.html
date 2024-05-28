@@ -35,29 +35,44 @@
 
       <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select order type"></app-form-label>
-        <select
-          name="orderTypeSelect"
-          class="rounded"
-          formControlName="orderType">
-          <option [value]="1">BUY</option>
-          <option [value]="0">SELL</option>
-        </select>
+        <div class="flex gap-1">
+          <select
+            name="orderTypeSelect"
+            class="rounded"
+            formControlName="orderType">
+            <option [value]="1">BUY</option>
+            <option [value]="0">SELL</option>
+          </select>
+          <app-validation-error
+            for="orderType"
+            fieldName="order type"></app-validation-error>
+        </div>
       </div>
 
       <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select date open"></app-form-label>
-        <input
-          class="rounded"
-          type="datetime-local"
-          formControlName="dateOpen">
+        <div class="flex gap-1">
+          <input
+            class="rounded"
+            type="datetime-local"
+            formControlName="dateOpen">
+          <app-validation-error
+            for="dateOpen"
+            fieldName="Date open"></app-validation-error>
+        </div>
       </div>
 
       <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select date close"></app-form-label>
-        <input
-          class="rounded"
-          type="datetime-local"
-          formControlName="dateClose">
+        <div class="flex gap-1">
+          <input
+            class="rounded"
+            type="datetime-local"
+            formControlName="dateClose">
+          <app-validation-error
+            for="dateClose"
+            fieldName="Date close"></app-validation-error>
+        </div>
       </div>
 
       <div class="flex flex-row items-center justify-between pt-5">
@@ -120,14 +135,19 @@
           formControlName="revenue">
       </div>
 
-      <div class="flex items-center justify-between pt-5">
+      <div class="flex flex-col gap-4 pt-5">
         <app-form-label text="Comment"></app-form-label>
-        <textarea
-          name="commentSelect"
-          class="rounded"
-          formControlName="comment"
-          cols="30"
-          rows="5"></textarea>
+
+        <comments-thread [comments]="comments"></comments-thread>
+
+        <div class="flex justify-end">
+          <textarea
+            name="commentSelect"
+            class="rounded"
+            formControlName="comment"
+            cols="50"
+            rows="5"></textarea>
+        </div>
       </div>
       <div class="flex items-center flex-row justify-end pt-10">
         <button type="button">

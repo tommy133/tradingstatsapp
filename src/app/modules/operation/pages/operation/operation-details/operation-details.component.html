@@ -75,10 +75,7 @@
 
     <div class="flex items-center justify-between pt-5">
       <app-form-label text="Status"></app-form-label>
-      <app-label
-        [text]="operation.status.name_st"
-        bgColor="bg-dark"
-        [textColor]="getStatusColorClass(operation.status.id_st)"></app-label>
+      <app-label [text]="operation.status.name_st"></app-label>
 
     </div>
 
@@ -105,12 +102,9 @@
         [textColor]="getRevenueColorClass(operation.revenue)"></app-label>
     </div>
 
-    <div class="flex items-center justify-between pt-5">
-      <app-form-label text="Comment"></app-form-label>
-      <app-text-area
-        *ngIf="comment$ | async as comment;"
-        [text]="comment.opcomment"
-        [cols]="30"></app-text-area>
+    <div class="flex flex-col gap-2 pt-5">
+      <app-form-label text="Comments"></app-form-label>
+      <comments-thread [comments]="(comments$ | async) ?? []"></comments-thread>
     </div>
 
   </div>

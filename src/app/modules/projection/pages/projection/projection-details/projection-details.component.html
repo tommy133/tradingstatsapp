@@ -40,33 +40,24 @@
     </div>
     <div class="flex items-center justify-between pt-5">
       <app-form-label text="Symbol"></app-form-label>
-      <div class="pl-10">
-        <app-label [text]="projection.symbol.name_sym"></app-label>
-      </div>
+      <app-label [text]="projection.symbol.name_sym"></app-label>
     </div>
 
     <div class="flex items-center justify-between pt-5">
       <app-form-label text="Order type"></app-form-label>
-      <div class="pl-[17px]">
-        <app-label [text]="projection.updown ? 'LONG' : 'SHORT'"></app-label>
-
-      </div>
+      <app-label [text]="projection.updown ? 'LONG' : 'SHORT'"></app-label>
     </div>
 
     <div
       *ngIf="projection.date"
       class="flex items-center justify-between pt-5">
       <app-form-label text="Date"></app-form-label>
-      <div class="pl-[60px]">
-        <app-label [text]="(projection.date | date: 'yyyy-MM-dd')!"></app-label>
-      </div>
+      <app-label [text]="(projection.date | date: 'yyyy-MM-dd')!"></app-label>
     </div>
 
     <div class="flex items-center justify-between pt-5">
       <app-form-label text="Timeframe"></app-form-label>
-      <div class="pl-5">
-        <app-label [text]="projection.timeframe"></app-label>
-      </div>
+      <app-label [text]="projection.timeframe"></app-label>
     </div>
 
     <div class="flex items-center justify-between pt-5">
@@ -76,14 +67,9 @@
         [textColor]="getStatusColorClass(projection.status.id_st)"></app-label>
     </div>
 
-    <div class="flex items-center justify-between pt-5">
-      <app-form-label text="Comment"></app-form-label>
-      <div class="pl-7">
-        <app-text-area
-          *ngIf="comment$ | async as comment;"
-          [text]="comment.pcomment"
-          [cols]="30"></app-text-area>
-      </div>
+    <div class="flex flex-col gap-2 pt-5">
+      <app-form-label text="Comments"></app-form-label>
+      <comments-thread [comments]="(comments$ | async) ?? []"></comments-thread>
     </div>
 
   </div>

@@ -5,10 +5,7 @@ import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
-import {
-  getStatusColorClass,
-  navigatePreservingQueryParams,
-} from 'src/app/shared/utils/shared-utils';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
 
@@ -24,8 +21,6 @@ export class OperationDetailsComponent implements OnInit {
   private sidebarService = inject(SidebarService);
   private fileService = inject(FileService);
 
-  getStatusColorClass = getStatusColorClass;
-
   @Input() extended: boolean = true;
   @Input() viewChartMode: boolean = false;
 
@@ -36,7 +31,7 @@ export class OperationDetailsComponent implements OnInit {
     this.activatedRoute.snapshot.data['showViewChartBtn'] ?? true;
 
   operation$?: Observable<Operation>;
-  comment$?: Observable<OperationComment>;
+  comments$?: Observable<OperationComment[]>;
 
   ngOnInit() {
     this.operation$ = this.activatedRoute.params.pipe(
@@ -46,10 +41,10 @@ export class OperationDetailsComponent implements OnInit {
       }),
     );
 
-    this.comment$ = this.activatedRoute.params.pipe(
+    this.comments$ = this.activatedRoute.params.pipe(
       switchMap((params) => {
         const id = params['id'];
-        return this.commentService.getComment(id);
+        return this.commentService.getCommentsById(id);
       }),
     );
   }
