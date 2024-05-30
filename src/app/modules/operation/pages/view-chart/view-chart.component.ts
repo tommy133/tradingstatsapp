@@ -5,7 +5,13 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  inject,
+} from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, combineLatest, map } from 'rxjs';
@@ -42,6 +48,16 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   private sidebarService = inject(SidebarService);
   private toastService = inject(ToastService);
   private operationFilter = inject(OperationFilterService);
+
+  @HostListener('window:keydown', ['$event'])
+  keyboardInput(event: any) {
+    event.stopPropagation();
+    if (event.key === 'ArrowLeft') {
+      this.navigatePreviousOperation();
+    } else if (event.key === 'ArrowRight') {
+      this.navigateNextOperation();
+    }
+  }
 
   operations: Operation[] = [];
   filteredOperations$ = this.operationFilter.getFilteredOperations(
@@ -110,11 +126,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   }
 
   navigateNextOperation() {
-    console.log('hola');
-
     if (this.navigationIndex < this.operations.length - 1) {
-      console.log('hola2');
-
       this.slideState = 'right';
 
       this.navigationIndex++;

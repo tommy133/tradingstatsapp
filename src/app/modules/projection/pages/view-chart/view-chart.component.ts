@@ -5,7 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import { Component, inject } from '@angular/core';
+import { Component, HostListener, inject } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription, combineLatest, map, switchMap } from 'rxjs';
@@ -41,6 +41,16 @@ export class ViewChartComponent {
   private toastService = inject(ToastService);
   private projectionFilter = inject(ProjectionFilterService);
   private commentService = inject(ProjectionCommentService);
+
+  @HostListener('window:keydown', ['$event'])
+  keyboardInput(event: any) {
+    event.stopPropagation();
+    if (event.key === 'ArrowLeft') {
+      this.navigatePreviousProjection();
+    } else if (event.key === 'ArrowRight') {
+      this.navigateNextProjection();
+    }
+  }
 
   projections: Projection[] = [];
   filteredProjections$ = this.projectionFilter.getFilteredProjections(
