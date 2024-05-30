@@ -2,7 +2,7 @@
   backText="BACK TO PROJECTIONS"
   backTo="../../"
   [queryParams]="backToQueryParams"></app-back-to>
-<div *ngIf="!isLoading; else loading">
+<div *ngIf="!isLoading; else loading" [@slideAnimation]="slideState" class="overflow-hidden">
   <div class="fixed top-1/2">
     <icon-button
       iconSource="assets/svg/go-left.svg"
@@ -44,9 +44,11 @@
               bgColor="bg-dark-gray"
               textColor="text-white"></app-label>
           </div>
-          <comments-thread
-            class="w-full"
-            [comments]="(comments$ | async) ?? []"></comments-thread>
+          <ng-container *ngIf="comments$ | async as comments; else loading">
+            <comments-thread
+              class="w-full"
+              [comments]="comments"></comments-thread>
+          </ng-container>
         </div>
       </app-card>
     </ng-container>

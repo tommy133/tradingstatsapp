@@ -1,8 +1,14 @@
-import { trigger } from '@angular/animations';
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, map, Subscription } from 'rxjs';
+import { Subscription, combineLatest, map } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -14,7 +20,18 @@ import { OperationService } from '../../service/operation.service';
 @Component({
   selector: 'app-view-chart',
   templateUrl: './view-chart.component.html',
-  animations: [trigger('sidebarLeftInOut', sidebarLeftAnimationSlide)],
+  animations: [
+    trigger('sidebarLeftInOut', sidebarLeftAnimationSlide),
+    trigger('slideAnimation', [
+      state('left', style({ transform: 'translateX(-100%)' })),
+      state('center', style({ transform: 'translateX(0)' })),
+      state('right', style({ transform: 'translateX(100%)' })),
+      transition('left => center', [animate('300ms ease-in')]),
+      transition('center => left', [animate('300ms ease-out')]),
+      transition('right => center', [animate('300ms ease-in')]),
+      transition('center => right', [animate('300ms ease-out')]),
+    ]),
+  ],
 })
 export class ViewChartComponent implements OnInit, OnDestroy {
   private fileService = inject(FileService);
@@ -41,6 +58,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   navigationIndex!: number;
   imageUrl?: SafeUrl;
   isLoading!: boolean;
+  slideState = 'center';
 
   sidebarLeftState$ = this.sidebarService.sidebarLeftState$;
 
@@ -76,9 +94,13 @@ export class ViewChartComponent implements OnInit, OnDestroy {
 
   navigatePreviousOperation() {
     if (this.navigationIndex > 0) {
+      this.slideState = 'left';
+
       this.navigationIndex--;
       const id = this.operations[this.navigationIndex].id;
       this.navigateToOperation(id);
+
+      setTimeout(() => (this.slideState = 'center'), 300);
     } else {
       this.toastService.warn({
         message: 'No previous operation',
@@ -88,10 +110,18 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   }
 
   navigateNextOperation() {
+    console.log('hola');
+
     if (this.navigationIndex < this.operations.length - 1) {
+      console.log('hola2');
+
+      this.slideState = 'right';
+
       this.navigationIndex++;
       const id = this.operations[this.navigationIndex].id;
       this.navigateToOperation(id);
+
+      setTimeout(() => (this.slideState = 'center'), 300);
     } else {
       this.toastService.warn({
         message: 'No further operation',

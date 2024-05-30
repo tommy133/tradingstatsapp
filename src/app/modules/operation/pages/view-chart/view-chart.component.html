@@ -5,14 +5,14 @@
       backTo="../../"></app-back-to>
   </div>
 
-  <div *ngIf="!isLoading; else loading">
+<div *ngIf="!isLoading; else loading" class="overflow-hidden">
     <div class="fixed top-1/2">
       <icon-button
         iconSource="assets/svg/go-left.svg"
         [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
         (clickEvent)="navigatePreviousOperation()"></icon-button>
     </div>
-    <div class="flex m-20">
+    <div class="flex m-20" [@slideAnimation]="slideState">
       <img
         [src]="imageUrl"
         alt="chart image">

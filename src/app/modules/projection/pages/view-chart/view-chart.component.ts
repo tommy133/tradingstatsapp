@@ -1,7 +1,14 @@
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, map, Subscription, switchMap } from 'rxjs';
+import { Subscription, combineLatest, map, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
@@ -13,6 +20,17 @@ import { ProjectionService } from '../../service/projection.service';
 @Component({
   selector: 'app-view-chart',
   templateUrl: './view-chart.component.html',
+  animations: [
+    trigger('slideAnimation', [
+      state('left', style({ transform: 'translateX(-100%)' })),
+      state('center', style({ transform: 'translateX(0)' })),
+      state('right', style({ transform: 'translateX(100%)' })),
+      transition('left => center', [animate('300ms ease-in')]),
+      transition('center => left', [animate('300ms ease-out')]),
+      transition('right => center', [animate('300ms ease-in')]),
+      transition('center => right', [animate('300ms ease-out')]),
+    ]),
+  ],
 })
 export class ViewChartComponent {
   private projectionService = inject(ProjectionService);
@@ -48,6 +66,7 @@ export class ViewChartComponent {
   navigationIndex!: number;
   imageUrl?: SafeUrl;
   isLoading!: boolean;
+  slideState = 'center';
 
   backToQueryParams: { [key: string]: any } = {};
 
@@ -101,12 +120,15 @@ export class ViewChartComponent {
         this.activatedRoute.snapshot.queryParams['year'];
     }
   }
-
   navigatePreviousProjection() {
     if (this.navigationIndex > 0) {
+      this.slideState = 'left';
+
       this.navigationIndex--;
       const id = this.projections[this.navigationIndex].id;
       this.navigateToProjection(id);
+
+      setTimeout(() => (this.slideState = 'center'), 300);
     } else {
       this.toastService.warn({
         message: 'No previous projection',
@@ -117,9 +139,13 @@ export class ViewChartComponent {
 
   navigateNextProjection() {
     if (this.navigationIndex < this.projections.length - 1) {
+      this.slideState = 'right';
+
       this.navigationIndex++;
       const id = this.projections[this.navigationIndex].id;
       this.navigateToProjection(id);
+
+      setTimeout(() => (this.slideState = 'center'), 300);
     } else {
       this.toastService.warn({
         message: 'No further projection',
