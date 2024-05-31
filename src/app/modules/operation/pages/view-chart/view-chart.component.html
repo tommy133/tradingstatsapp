@@ -5,14 +5,18 @@
       backTo="../../"></app-back-to>
   </div>
 
-<div *ngIf="!isLoading; else loading" class="overflow-hidden">
+  <div
+    *ngIf="!isLoading; else loading"
+    class="overflow-hidden">
     <div class="fixed top-1/2">
       <icon-button
         iconSource="assets/svg/go-left.svg"
-        [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
+        [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
         (clickEvent)="navigatePreviousOperation()"></icon-button>
     </div>
-    <div class="flex m-20" [@slideAnimation]="slideState">
+    <div
+      class="flex m-20"
+      [@slideAnimation]="slideState">
       <img
         [src]="imageUrl"
         alt="chart image">
@@ -20,7 +24,7 @@
     <div class="fixed top-1/2 right-0 z-10">
       <icon-button
         iconSource="assets/svg/go-right.svg"
-        [iconSvgStyle]="{'width.px': 50, 'height.px': 50}"
+        [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
         (clickEvent)="navigateNextOperation()"></icon-button>
     </div>
   </div>
@@ -42,5 +46,12 @@
 <icon-button
   class="fixed top-16 bottom-0 right-0"
   iconSource="assets/svg/sidebar-icon-21.svg"
-  [iconSvgStyle]="{'height.px': 50, 'width.px': 50}"
+  [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+  iconSvgClass="bg-gray-300 rounded-md p-1"
   (clickEvent)="openSidebarLeft()"></icon-button>
+<icon-button
+  class="fixed top-32 bottom-0 right-0"
+  iconSource="assets/svg/bookmark-plus.svg"
+  [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+  iconSvgClass="bg-gray-300 rounded-md p-1"
+  (clickEvent)="setBookmark()"></icon-button>

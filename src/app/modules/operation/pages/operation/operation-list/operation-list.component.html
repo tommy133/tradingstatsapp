@@ -28,6 +28,10 @@
           iconSource="assets/svg/pergamin.svg"
           [iconSvgStyle]="{ 'height.px': 60, 'width.px': 60 }"
           (clickEvent)="goToRules()"></icon-button>
+        <icon-button
+          iconSource="assets/svg/bookmark-plus.svg"
+          [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+          (clickEvent)="goToBookmark()"></icon-button>
         <app-rounded-button
           [text]="'Add operation'"
           [bgColor]="'bg-green'"
@@ -35,7 +39,9 @@
         </app-rounded-button>
       </div>
     </div>
-    <p class="text-white font-semibold pl-5">Result: {{n_operations$ | async}}</p>
+    <p class="text-white font-semibold pl-5">
+      Result: {{ n_operations$ | async }}
+    </p>
     <app-table-operation
       class="px-5 pb-10"
       [rows]="operations"

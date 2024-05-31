@@ -8,13 +8,13 @@ import {
 import {
   Component,
   HostListener,
+  inject,
   OnDestroy,
   OnInit,
-  inject,
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, combineLatest, map } from 'rxjs';
+import { combineLatest, map, Subscription } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -163,6 +163,25 @@ export class ViewChartComponent implements OnInit, OnDestroy {
     const item = this.operations.find((operation) => operation.id === paramId);
 
     return this.operations.indexOf(item!);
+  }
+
+  setBookmark() {
+    try {
+      const url = this.router.url;
+      console.log(url);
+      if (url) {
+        localStorage.setItem('bookmarkOperation', url);
+        this.toastService.success({
+          message: `Current operation set as bookmark`,
+        });
+      } else {
+        this.toastService.error({
+          message: 'Error with url',
+        });
+      }
+    } catch (err) {
+      console.error(err);
+    }
   }
 
   ngOnDestroy() {

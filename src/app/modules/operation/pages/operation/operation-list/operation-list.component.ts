@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { map } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
+import { ToastService } from 'src/app/core/service/toast.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationFilterFormService } from '../../../service/operation-filter-form.service';
@@ -20,6 +21,7 @@ export class OperationListComponent {
   private operationService = inject(OperationService);
   private formService = inject(FormService);
   private fileService = inject(FileService);
+  private toastService = inject(ToastService);
   private operationFilterService = inject(OperationFilterService);
   private operationFilterFormService = inject(OperationFilterFormService);
 
@@ -48,6 +50,18 @@ export class OperationListComponent {
     navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
   }
 
+  goToBookmark() {
+    const bookmark = this.getBookmark();
+
+    if (bookmark) {
+      this.router.navigateByUrl(bookmark);
+    } else {
+      this.toastService.warn({
+        message: 'No bookmark available',
+      });
+    }
+  }
+
   goToRules() {
     navigatePreservingQueryParams(['rules'], this.router, this.activatedRoute);
   }
@@ -62,6 +76,17 @@ export class OperationListComponent {
 
   onCloseSidebar() {
     navigatePreservingQueryParams(['.'], this.router, this.activatedRoute);
+  }
+
+  private getBookmark() {
+    try {
+      return localStorage.getItem('bookmarkOperation');
+    } catch (err) {
+      this.toastService.error({
+        message: 'Error getting bookmark',
+      });
+      return null;
+    }
   }
 
   resetFilterForm() {
