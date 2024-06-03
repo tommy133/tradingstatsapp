@@ -29,13 +29,20 @@
   ],
   "dataGroups": [
     {
-      "name": "projections-perform",
-      "urls": ["/projections"],
+      "name": "api-perform",
+      "urls": ["/projections",
+            "/pcomments",
+      "/operations",
+            "/opcomments",
+      "/markets",
+      "/symbols",
+      "/statuses",
+      "firebasestorage.googleapis.com/v0/b/trading-stats-31429.appspot.com"],
       "cacheConfig": {
-        "strategy": "performance",
+        "strategy": "freshness",
         "maxSize": 100,
         "maxAge": "1d",
-        "timeout": "10s"
+        "timeout": "5s"
       }
     }
   ]
