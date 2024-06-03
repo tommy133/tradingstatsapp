@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
+import { map, shareReplay } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -25,7 +25,7 @@ export class OperationListComponent {
   private operationFilterService = inject(OperationFilterService);
   private operationFilterFormService = inject(OperationFilterFormService);
 
-  operations$ = this.operationService.operations$;
+  operations$ = this.operationService.operations$.pipe(shareReplay(1));
   searchOperationsControl = new FormControl<string>('');
   searchOperations$ = this.formService.applyDebounceOnSearch(
     this.searchOperationsControl.valueChanges,

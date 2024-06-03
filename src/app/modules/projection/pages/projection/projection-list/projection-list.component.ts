@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
+import { map, shareReplay } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
@@ -23,7 +23,7 @@ export class ProjectionListComponent {
   private projectionFilter = inject(ProjectionFilterService);
   private projectionFilterFormService = inject(ProjectionFilterFormService);
 
-  projections$ = this.projectionService.projections$;
+  projections$ = this.projectionService.projections$.pipe(shareReplay(1));
   searchProjectionsControl = new FormControl<string>('');
   searchProjections$ = this.formService.applyDebounceOnSearch(
     this.searchProjectionsControl.valueChanges,

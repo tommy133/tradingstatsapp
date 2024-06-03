@@ -14,7 +14,7 @@ import {
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, map, Subscription } from 'rxjs';
+import { combineLatest, map, shareReplay, Subscription } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -61,7 +61,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
 
   operations: Operation[] = [];
   filteredOperations$ = this.operationFilter.getFilteredOperations(
-    this.operationService.operations$,
+    this.operationService.operations$.pipe(shareReplay(1)),
   );
   operationsWithChart$ = this.filteredOperations$.pipe(
     map((operations) => operations.filter((operation) => operation.graph)),

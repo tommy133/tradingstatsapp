@@ -8,7 +8,7 @@ import {
 import { Component, HostListener, inject } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, combineLatest, map, switchMap } from 'rxjs';
+import { combineLatest, map, shareReplay, Subscription, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
@@ -54,7 +54,7 @@ export class ViewChartComponent {
 
   projections: Projection[] = [];
   filteredProjections$ = this.projectionFilter.getFilteredProjections(
-    this.projectionService.projections$,
+    this.projectionService.projections$.pipe(shareReplay(1)),
   );
 
   projectionsWithChart$ = this.filteredProjections$.pipe(
