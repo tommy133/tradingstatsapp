@@ -4,7 +4,13 @@ import { NavButton } from '../../utils/custom-types';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.css'],
+  styles: [
+    `
+      :host {
+        @apply flex bg-gray-800;
+      }
+    `,
+  ],
 })
 export class NavbarComponent {
   @Input() title: string | null = '';

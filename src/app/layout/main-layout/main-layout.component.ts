@@ -5,7 +5,13 @@ import { ToastService } from 'src/app/core/service/toast.service';
 @Component({
   selector: 'app-main-layout',
   templateUrl: './main-layout.component.html',
-  styles: [],
+  styles: [
+    `
+      :host {
+        @apply flex w-full h-full;
+      }
+    `,
+  ],
 })
 export class MainLayoutComponent {
   static title: string = 'Trading Stats';
@@ -28,15 +34,18 @@ export class MainLayoutComponent {
     },
   ];
 
-  hasBeenOffline: boolean = false
+  hasBeenOffline: boolean = false;
 
-  constructor(private netStatus: NetworkStatusService, private toastService: ToastService) {
+  constructor(
+    private netStatus: NetworkStatusService,
+    private toastService: ToastService,
+  ) {
     this.netStatus.onlineStatus$.subscribe((status) => {
       if (status === 'offline') {
-        this.toastService.warn({ message: "Network unavailable!" });
+        this.toastService.warn({ message: 'Network unavailable!' });
         this.hasBeenOffline = true;
-      } else if (this.hasBeenOffline) this.toastService.success({ message: "Conection reestablished" })
-    }
-    )
+      } else if (this.hasBeenOffline)
+        this.toastService.success({ message: 'Conection reestablished' });
+    });
   }
 }
