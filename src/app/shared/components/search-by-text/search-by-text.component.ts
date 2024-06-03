@@ -12,7 +12,8 @@ import { FormControl } from '@angular/forms';
   selector: 'app-search-by-text',
   template: `
     <div
-      class="pl-4 flex justify-between space-x-2 h-10 items-center bg-white mt-2 rounded">
+      class="pl-4 flex justify-between space-x-2 min-w-[200px] h-10 items-center bg-white mt-2 rounded"
+    >
       <ng-container
         [ngTemplateOutlet]="isSearchActive ? clearSearch : search"
       ></ng-container>
