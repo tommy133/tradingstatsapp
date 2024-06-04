@@ -1,6 +1,7 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
+import { TouchableStatusService } from 'src/app/core/service/touchable-status.service';
 import { Symbol } from 'src/app/modules/assets/model/symbol';
 import { Operation } from 'src/app/modules/operation/model/operation';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
@@ -25,6 +26,8 @@ export class TableAssetComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private operationService = inject(OperationService);
+
+  isTouchable = TouchableStatusService.isTouchable;
 
   @Input() rows!: Symbol[];
   @Output() deleteEvent = new EventEmitter<number>();

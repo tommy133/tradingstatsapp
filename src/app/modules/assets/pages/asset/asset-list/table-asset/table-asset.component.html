@@ -1,7 +1,7 @@
-<div class="overflow-x-auto rounded">
+<div class="overflow-x-auto max-h-[70vh] no-scrollbar rounded">
   <div class="w-full">
     <div class="flex flex-col">
-      <div class="flex justify-between items-center bg-dark text-white">
+      <div class="flex justify-between items-center bg-dark text-white sticky top-0">
         <ng-container *ngFor="let column of columns">
           <div class="font-bold cell">{{ column.name }}</div>
         </ng-container>
@@ -10,7 +10,8 @@
       <div class="bg-gray-900 text-white text-sm font-light">
         <ng-container *ngFor="let row of rows">
           <div
-            class="flex justify-between items-center not-last:border-b hover:bg-gray-500 cursor-pointer"
+            class="flex justify-between items-center not-last:border-b cursor-pointer"
+            [ngClass]="{'hover:bg-gray-500': !isTouchable}"
             (click)="goToDetails(row.id_sym)">
             <div class="font-bold cell">{{ row.name_sym }}</div>
             <div class="font-semibold cell">{{ row.market.name_mkt }}</div>

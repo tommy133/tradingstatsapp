@@ -9,7 +9,8 @@
       <div class="bg-gray-900 text-white text-sm font-light">
         <ng-container *ngFor="let row of rows">
           <div
-            class="flex justify-between items-center not-last:border-b hover:bg-gray-500 cursor-pointer"
+            class="flex justify-between items-center not-last:border-b cursor-pointer"
+            [ngClass]="{'hover:bg-gray-500': !isTouchable}"
             (click)="goToDetails(row.id)">
             <div class="font-bold cell">{{ row.symbol.name_sym }}</div>
             <div class="font-semibold cell">{{ row.updown ? 'LONG' : 'SHORT' }}</div>

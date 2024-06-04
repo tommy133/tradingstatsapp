@@ -1,5 +1,6 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TouchableStatusService } from 'src/app/core/service/touchable-status.service';
 import { Operation } from 'src/app/modules/operation/model/operation';
 import {
   getStatusColorClass,
@@ -26,6 +27,7 @@ export class TableOperationComponent {
   private activatedRoute = inject(ActivatedRoute);
 
   getStatusColorClass = getStatusColorClass;
+  isTouchable = TouchableStatusService.isTouchable;
 
   @Input() rows!: Operation[];
   @Output() deleteEvent = new EventEmitter<Operation>();

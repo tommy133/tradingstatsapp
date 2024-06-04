@@ -1,5 +1,6 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TouchableStatusService } from 'src/app/core/service/touchable-status.service';
 import { Projection } from 'src/app/modules/projection/model/projection';
 import {
   getStatusColorClass,
@@ -26,6 +27,7 @@ export class TableProjectionComponent {
   private activatedRoute = inject(ActivatedRoute);
 
   getStatusColorClass = getStatusColorClass;
+  isTouchable = TouchableStatusService.isTouchable;
 
   @Input() rows!: Projection[];
   @Output() deleteEvent = new EventEmitter<Projection>();
