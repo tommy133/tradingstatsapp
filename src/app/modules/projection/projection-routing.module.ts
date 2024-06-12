@@ -9,6 +9,12 @@ const routes: Routes = [
   {
     path: 'view-chart/:id',
     component: ViewChartComponent,
+    children: [
+      {
+        path: '',
+        component: ProjectionMutationComponent,
+      },
+    ],
   },
   {
     path: '',

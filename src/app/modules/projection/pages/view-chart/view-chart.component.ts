@@ -10,6 +10,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, shareReplay, Subscription, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
+import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
@@ -41,6 +42,7 @@ export class ViewChartComponent {
   private toastService = inject(ToastService);
   private projectionFilter = inject(ProjectionFilterService);
   private commentService = inject(ProjectionCommentService);
+  private sidebarService = inject(SidebarService);
 
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: any) {
@@ -78,12 +80,17 @@ export class ViewChartComponent {
   isLoading!: boolean;
   slideState = 'center';
 
+  sidebarLeftState$ = this.sidebarService.sidebarLeftState$;
+
   backToQueryParams: { [key: string]: any } = {};
 
   ngOnInit() {
     this.setBackToQueryParams();
+    this.sidebarService.closeSidebarLeft();
   }
-
+  constructor() {
+    this.projection$.subscribe(console.log);
+  }
   projection$ = this.activatedRoute.params.pipe(
     switchMap((params) => {
       const id = params['id'];
@@ -170,6 +177,14 @@ export class ViewChartComponent {
       this.router,
       this.activatedRoute,
     );
+  }
+
+  openSidebarLeft() {
+    this.sidebarService.openSidebarLeft();
+  }
+
+  closeSidebarLeft() {
+    this.sidebarService.closeSidebarLeft();
   }
 
   private getNavigationIndex() {

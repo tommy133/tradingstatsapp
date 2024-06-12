@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map, Observable } from 'rxjs';
@@ -27,7 +27,7 @@ import { ProjectionService } from '../../../service/projection.service';
   selector: 'app-projection-mutation',
   templateUrl: './projection-mutation.component.html',
 })
-export class ProjectionMutationComponent {
+export class ProjectionMutationComponent implements OnDestroy {
   private formBuilder = inject(FormBuilder);
   private statusService = inject(StatusService);
   private projectionService = inject(ProjectionService);
@@ -87,8 +87,8 @@ export class ProjectionMutationComponent {
     comment: this.comment,
   });
 
-  async ngOnInit() {
-    const id = this.activatedRoute.snapshot.params['id'];
+  activatedRouteSubs = this.activatedRoute.params.subscribe(async (params) => {
+    const id = params['id'];
     if (id) {
       const projectionDetails = await firstValueFrom(
         this.projectionService.getProjection(id),
@@ -100,6 +100,10 @@ export class ProjectionMutationComponent {
         this.setInitialFormStateProj(projectionDetails);
       }
     }
+  });
+
+  ngOnDestroy() {
+    this.activatedRouteSubs.unsubscribe();
   }
 
   get mutation(): MutationType {

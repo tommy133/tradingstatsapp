@@ -21,12 +21,10 @@ export class TradingviewButtonComponent {
   @Input() iconSvgStyle?: any = { 'height.px': 32, 'width.px': 32 };
   @Input() iconSvgClass?: string;
 
-  @Input() symbolName: string = '';
-  tradingViewUrl: string = '';
-
-  ngOnInit() {
-    this.tradingViewUrl = `${environment.tradingViewUrl}${this.symbolName}`;
+  @Input() set symbolName(symbolName: string) {
+    this.tradingViewUrl = `${environment.tradingViewUrl}${symbolName}`;
   }
+  tradingViewUrl: string = '';
 
   @Input()
   get disabled() {
