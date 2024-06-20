@@ -45,7 +45,7 @@
 
     <div class="flex items-center justify-between pt-5">
       <app-form-label text="Order type"></app-form-label>
-      <app-label [text]="projection.updown ? 'LONG' : 'SHORT'"></app-label>
+      <app-label [text]="getUpdownLabel(projection.updown ?? null)"></app-label>
     </div>
 
     <div

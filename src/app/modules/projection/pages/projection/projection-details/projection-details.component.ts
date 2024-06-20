@@ -78,10 +78,18 @@ export class ProjectionDetailsComponent implements OnInit {
   }
 
   private goBackDelete() {
-    this.router.navigate(['../'], { relativeTo: this.activatedRoute });
+    this.router.navigate(['../'], {
+      relativeTo: this.activatedRoute,
+      queryParamsHandling: 'preserve',
+    });
+  }
+
+  getUpdownLabel(updown: number | null) {
+    if (updown === null) return 'Not defined';
+    return updown ? 'LONG' : 'SHORT';
   }
 
   onCloseSidebar() {
-    navigatePreservingQueryParams(['.'], this.router, this.activatedRoute);
+    navigatePreservingQueryParams(['..'], this.router, this.activatedRoute);
   }
 }

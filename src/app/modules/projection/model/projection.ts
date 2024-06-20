@@ -4,7 +4,7 @@ import { Symbol } from 'src/app/modules/assets/model/symbol';
 export interface Projection {
   id: number;
   symbol: Symbol;
-  updown: number;
+  updown?: number;
   date?: string;
   graph?: string;
   timeframe: string;

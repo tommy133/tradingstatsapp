@@ -40,8 +40,9 @@
             name="orderTypeSelect"
             class="rounded"
             formControlName="orderType">
-            <option [value]="1">BUY</option>
-            <option [value]="0">SELL</option>
+            <option [ngValue]="null">Not defined</option>
+            <option [ngValue]="1">BUY</option>
+            <option [ngValue]="0">SELL</option>
           </select>
           <app-validation-error
             for="orderType"

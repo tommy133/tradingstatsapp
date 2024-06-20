@@ -65,10 +65,7 @@ export class ProjectionMutationComponent implements OnDestroy {
   //CONTROLS
   id = this.formBuilder.control<number | null>(null);
   symbol = this.formBuilder.control<number | null>(null, Validators.required);
-  orderType = this.formBuilder.control<number | null>(
-    null,
-    Validators.required,
-  );
+  orderType = this.formBuilder.control<number | null>(null);
   date = this.formBuilder.control<string | null>(null, Validators.required);
   timeframe = this.formBuilder.control<string | null>(
     null,
@@ -186,7 +183,7 @@ export class ProjectionMutationComponent implements OnDestroy {
     this.id.setValue(projectionDetails.id);
     this.symbol.setValue(projectionDetails.symbol.id_sym);
     this.selectedSymbol = projectionDetails.symbol.name_sym;
-    this.orderType.setValue(projectionDetails.updown);
+    this.orderType.setValue(projectionDetails.updown!);
     this.date.setValue(formatDate(projectionDetails.date!));
     this.graphFileName = projectionDetails.graph!;
     this.timeframe.setValue(projectionDetails.timeframe);
