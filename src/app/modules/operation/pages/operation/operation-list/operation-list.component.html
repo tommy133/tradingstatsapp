@@ -1,4 +1,4 @@
-<ng-container *ngIf="filteredOperations$ | async as operations; else loading">
+<ng-container *ngIf="orderedOperations$ | async as operations; else loading">
   <div class="flex flex-col gap-2">
     <div class="flex justify-between items-center p-5">
       <div class="flex items-center gap-7">
@@ -20,6 +20,15 @@
           </ng-container>
           <ng-container filters>
             <operation-filters-form></operation-filters-form>
+          </ng-container>
+          <ng-container orderBy>
+            <select
+              name="orderBySelect"
+              class="rounded border-2"
+              [formControl]="orderBySelect">
+              <option value="Date open">Date open</option>
+              <option value="Timeframe">Timeframe</option>
+            </select>
           </ng-container>
         </app-filter-options>
       </div>

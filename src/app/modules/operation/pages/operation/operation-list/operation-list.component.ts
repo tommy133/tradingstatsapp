@@ -1,7 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { AfterViewInit, Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, shareReplay } from 'rxjs';
+import { combineLatest, map, shareReplay } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -11,11 +11,23 @@ import { OperationFilterFormService } from '../../../service/operation-filter-fo
 import { OperationFilterService } from '../../../service/operation-filter.service';
 import { OperationService } from '../../../service/operation.service';
 
+const timeframeOrder: { [key: string]: number } = {
+  M: 1,
+  W: 2,
+  D: 3,
+  H4: 4,
+  H1: 5,
+  M30: 6,
+  M15: 7,
+  M5: 8,
+  M1: 9,
+};
+
 @Component({
   selector: 'app-operation-list',
   templateUrl: './operation-list.component.html',
 })
-export class OperationListComponent {
+export class OperationListComponent implements AfterViewInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private operationService = inject(OperationService);
@@ -42,6 +54,27 @@ export class OperationListComponent {
 
   filteredOperations$ = this.operationFilterService.getFilteredOperations(
     this.filteredOperationsByName$,
+  );
+
+  orderBySelect = new FormControl<string>('');
+  ngAfterViewInit() {
+    this.orderBySelect.setValue('Date open');
+  }
+
+  orderedOperations$ = combineLatest([
+    this.orderBySelect.valueChanges,
+    this.filteredOperations$,
+  ]).pipe(
+    map(([orderBy, operations]) => {
+      if (orderBy === 'Timeframe') {
+        const unsortedOperations = [...operations];
+        return unsortedOperations.sort(
+          (a, b) => timeframeOrder[a.timeframe] - timeframeOrder[b.timeframe],
+        );
+      }
+
+      return operations;
+    }),
   );
 
   n_operations$ = this.filteredOperations$.pipe(map((ops) => ops.length));
