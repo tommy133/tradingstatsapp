@@ -93,9 +93,7 @@ export class OperationFilterService {
             return;
           };
           const checkResult =
-            checkNullSelectControl(result) ||
-              operation.revenue == null ||
-              operation.revenue == undefined
+            checkNullSelectControl(result) || !operation.revenue
               ? true
               : checkOperationRevenue(result, operation);
 

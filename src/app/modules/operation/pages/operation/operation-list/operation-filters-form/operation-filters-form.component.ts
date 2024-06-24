@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable } from 'rxjs';
 import { Status } from 'src/app/data/models/status';
 import { Timeframe } from 'src/app/data/models/timeframe';
 import { MarketService } from 'src/app/data/service/market.service';
@@ -25,6 +25,13 @@ export class OperationFiltersFormComponent {
   statusControl = this.filterFormService.status;
   marketControl = this.filterFormService.market;
   resultControl = this.filterFormService.result;
+
+  async ngOnInit() {
+    const idStatusOpen = (await firstValueFrom(this.statuses$)).find(
+      (status) => status.name_st === 'OPEN',
+    )?.id_st;
+    this.statusControl.setValue(idStatusOpen?.toString() ?? null);
+  }
 
   statuses$: Observable<Status[]> = this.statusService
     .getStatuses()

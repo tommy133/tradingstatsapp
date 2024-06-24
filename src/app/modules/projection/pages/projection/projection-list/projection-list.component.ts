@@ -55,7 +55,7 @@ export class ProjectionListComponent implements AfterViewInit {
   );
   orderBySelect = new FormControl<string>('');
   ngAfterViewInit() {
-    this.orderBySelect.setValue('Date');
+    this.orderBySelect.setValue('Timeframe'); //default projection ordered by timeframe
   }
   orderedProjections$ = combineLatest([
     this.orderBySelect.valueChanges,

@@ -168,7 +168,6 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   setBookmark() {
     try {
       const url = this.router.url;
-      console.log(url);
       if (url) {
         localStorage.setItem('bookmarkOperation', url);
         this.toastService.success({
