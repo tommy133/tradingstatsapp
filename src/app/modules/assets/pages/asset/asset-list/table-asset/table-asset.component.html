@@ -24,7 +24,7 @@
                   class="svg-white"
                   (clickEvent)="gotoEditAsset(row.id_sym, $event)"></icon-button>
                 <app-tradingview-button
-                  [symbolName]="row.name_sym"
+                  [data]="{symbolName: row.name_sym}"
                   iconSvgClass="bg-white rounded border-4 border-black"></app-tradingview-button>
                 <icon-button
                   iconSource="assets/svg/delete.svg"

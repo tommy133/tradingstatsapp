@@ -61,3 +61,17 @@ export function textToHyperlink(
   }
   textFormControl?.setValue(textEntry.value);
 }
+
+export const TimeframeTradingViewIntervalMap: {
+  [key: string]: number | string;
+} = {
+  M1: 1,
+  M5: 5,
+  M15: 15,
+  M30: 30,
+  H1: 60,
+  H4: 240,
+  D: 'D',
+  W: 'W',
+  M: 'M',
+};

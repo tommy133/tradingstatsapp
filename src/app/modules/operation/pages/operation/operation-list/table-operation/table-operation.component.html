@@ -41,7 +41,7 @@
                   [disabled]="!row.graph"
                   (clickEvent)="goToChart(row.id, $event)"></icon-button>
                 <app-tradingview-button
-                  [symbolName]="row.symbol.name_sym"
+                  [data]="{symbolName: row.symbol.name_sym, timeframe: row.timeframe}"
                   iconSvgClass="bg-white rounded border-4 border-black"></app-tradingview-button>
                 <icon-button
                   iconSource="assets/svg/delete.svg"
