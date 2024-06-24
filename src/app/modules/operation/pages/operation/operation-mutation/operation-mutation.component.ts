@@ -94,7 +94,6 @@ export class OperationMutationComponent implements OnInit {
   );
   dateClose = this.formBuilder.control<string | null>(
     this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm', 'UTC+2'),
-    Validators.required,
   );
   timeframe = this.formBuilder.control<string | null>(
     'M1',
@@ -234,10 +233,16 @@ export class OperationMutationComponent implements OnInit {
     this.selectedSymbol = operationDetails.symbol.name_sym;
     this.orderType.setValue(updown);
     this.dateOpen.setValue(
-      this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm', 'UTC'),
+      this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm', 'UTC+2'),
     );
     this.dateClose.setValue(
-      this.datePipe.transform(new Date(dateClose!), 'yyyy-MM-ddTHH:mm', 'UTC'),
+      dateClose
+        ? this.datePipe.transform(
+            new Date(dateClose),
+            'yyyy-MM-ddTHH:mm',
+            'UTC+2',
+          )
+        : null,
     );
     this.graphFileName = graph!;
     this.timeframe.setValue(timeframe);
@@ -317,7 +322,7 @@ export class OperationMutationComponent implements OnInit {
       id_sym: symbol!,
       updown: orderType!,
       time_op: dateOpen!,
-      time_close: dateClose!,
+      time_close: dateClose === '' ? undefined : dateClose!,
       graph: this.uploadedFile?.name,
       name_tf: timeframe!.toString(),
       id_st: status!,
