@@ -41,6 +41,11 @@ export class TableProjectionComponent {
     { name: 'Actions' },
   ];
 
+  getUpdownLabel(updown: number | null) {
+    if (updown === null) return 'Not defined';
+    return updown ? 'LONG' : 'SHORT';
+  }
+
   goToDetails(operationId: number) {
     navigatePreservingQueryParams(
       ['.', operationId],

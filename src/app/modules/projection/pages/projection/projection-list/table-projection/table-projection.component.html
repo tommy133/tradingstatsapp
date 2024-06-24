@@ -13,7 +13,9 @@
             [ngClass]="{'hover:bg-gray-500': !isTouchable}"
             (click)="goToDetails(row.id)">
             <div class="font-bold cell">{{ row.symbol.name_sym }}</div>
-            <div class="font-semibold cell">{{ row.updown ? 'LONG' : 'SHORT' }}</div>
+            <div class="font-semibold cell">
+              {{ getUpdownLabel(row.updown ?? null) }}
+            </div>
             <div class="font-semibold cell">{{ row.date | date: 'dd/MM/yyyy' }}</div>
             <div class="font-semibold cell">{{ row.timeframe }}</div>
 
