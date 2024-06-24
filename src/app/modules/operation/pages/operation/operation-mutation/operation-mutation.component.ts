@@ -16,7 +16,10 @@ import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { Symbol } from 'src/app/modules/assets/model/symbol';
 import { AccountType, MutationType } from 'src/app/shared/utils/custom-types';
-import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
+import {
+  navigatePreservingQueryParams,
+  textToHyperlink,
+} from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationCreateInput } from '../../../model/operationCreateInput';
 import { OperationUpdateInput } from '../../../model/operationUpdateInput';
@@ -38,6 +41,8 @@ export class OperationMutationComponent implements OnInit {
   private toastService = inject(ToastService);
   private fileService = inject(FileService);
   private datePipe = inject(DatePipe);
+
+  textToHyperLink = textToHyperlink;
 
   //Take route from operation/:id or operation/view-chart/:id
   paramId =
@@ -375,7 +380,6 @@ export class OperationMutationComponent implements OnInit {
       .isMutationAdd
       ? this.getOperationCreateInput()
       : this.getOperationUpdateInput();
-
     const operationId = await this.handleMutationOperation(operationInput);
     const comment = this.operationForm.value.comment;
 

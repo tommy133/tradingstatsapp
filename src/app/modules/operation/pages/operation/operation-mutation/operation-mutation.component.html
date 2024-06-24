@@ -141,13 +141,20 @@
         <comments-thread [comments]="comments"></comments-thread>
 
         <div class="flex justify-end">
-          <textarea
-            name="commentSelect"
-            class="rounded"
-            formControlName="comment"
-            cols="50"
-            rows="5"></textarea>
+          <icon-button
+            iconSource="assets/svg/link-chain.svg"
+            iconSvgClass="hover:bg-gray-300 rounded-md"
+            (click)="textToHyperLink(commentOperationInput, comment, 'operations')">
+          </icon-button>
         </div>
+        <textarea
+          #commentOperationInput
+          name="commentOperationInput"
+          class="rounded"
+          formControlName="comment"
+          cols="50"
+          rows="5"></textarea>
+
       </div>
       <div class="flex items-center flex-row justify-end pt-10">
         <button type="button">

@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { Comment } from '../comments-thread.component';
 
 @Component({
@@ -17,11 +18,25 @@ import { Comment } from '../comments-thread.component';
 
     <div *ngIf="isOpen" class="flex space-x-2 mt-1">
       <div class="flex-grow rounded-b-lg rounded-tr-lg p-4 bg-blue-400">
-        <p class="text-white">{{ comment.comment }}</p>
+        <p
+          [innerHTML]="comment.comment"
+          class="text-white"
+          (click)="processLinks($event)"
+        ></p>
       </div>
     </div>`,
 })
 export class CommentEntryComponent {
+  private router = inject(Router);
   @Input() comment!: Comment;
   @Input() isOpen = false;
+
+  processLinks(e: any) {
+    const element: HTMLElement = e.target;
+    if (element.nodeName === 'A') {
+      e.preventDefault();
+      const link = element.getAttribute('href');
+      this.router.navigate([link], { queryParamsHandling: 'preserve' });
+    }
+  }
 }

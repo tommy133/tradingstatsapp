@@ -17,6 +17,7 @@ import { MutationType } from 'src/app/shared/utils/custom-types';
 import {
   formatDate,
   navigatePreservingQueryParams,
+  textToHyperlink,
 } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionCreateInput } from '../../../model/projectionCreateInput';
@@ -36,6 +37,8 @@ export class ProjectionMutationComponent implements OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private toastService = inject(ToastService);
   private fileService = inject(FileService);
+
+  textToHyperLink = textToHyperlink;
 
   isLoading: boolean = false;
   errors: Array<string> = [];
