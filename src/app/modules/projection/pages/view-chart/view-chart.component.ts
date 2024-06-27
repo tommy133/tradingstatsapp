@@ -88,9 +88,7 @@ export class ViewChartComponent {
     this.setBackToQueryParams();
     this.sidebarService.closeSidebarLeft();
   }
-  constructor() {
-    this.projection$.subscribe(console.log);
-  }
+
   projection$ = this.activatedRoute.params.pipe(
     switchMap((params) => {
       const id = params['id'];

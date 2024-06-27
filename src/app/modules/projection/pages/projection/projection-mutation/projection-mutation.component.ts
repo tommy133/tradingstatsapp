@@ -1,8 +1,9 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
+import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import {
   CreateProjectionCommentInput,
@@ -28,7 +29,7 @@ import { ProjectionService } from '../../../service/projection.service';
   selector: 'app-projection-mutation',
   templateUrl: './projection-mutation.component.html',
 })
-export class ProjectionMutationComponent implements OnDestroy {
+export class ProjectionMutationComponent {
   private formBuilder = inject(FormBuilder);
   private statusService = inject(StatusService);
   private projectionService = inject(ProjectionService);
@@ -37,8 +38,14 @@ export class ProjectionMutationComponent implements OnDestroy {
   private activatedRoute = inject(ActivatedRoute);
   private toastService = inject(ToastService);
   private fileService = inject(FileService);
+  private sidebarService = inject(SidebarService);
 
   textToHyperLink = textToHyperlink;
+
+  //Take route from operation/:id or operation/view-chart/:id
+  paramId =
+    this.activatedRoute.snapshot.params['id'] ??
+    this.activatedRoute.snapshot.parent?.params['id'];
 
   isLoading: boolean = false;
   errors: Array<string> = [];
@@ -87,8 +94,8 @@ export class ProjectionMutationComponent implements OnDestroy {
     comment: this.comment,
   });
 
-  activatedRouteSubs = this.activatedRoute.params.subscribe(async (params) => {
-    const id = params['id'];
+  async ngOnInit() {
+    const id = this.paramId;
     if (id) {
       const projectionDetails = await firstValueFrom(
         this.projectionService.getProjection(id),
@@ -96,18 +103,16 @@ export class ProjectionMutationComponent implements OnDestroy {
       this.comments = await firstValueFrom(
         this.commentService.getCommentsById(id),
       );
+      console.log(id);
+
       if (projectionDetails) {
         this.setInitialFormStateProj(projectionDetails);
       }
     }
-  });
-
-  ngOnDestroy() {
-    this.activatedRouteSubs.unsubscribe();
   }
 
   get mutation(): MutationType {
-    if (this.activatedRoute.snapshot.params['id']) {
+    if (this.paramId) {
       return MutationType.EDIT;
     }
     return MutationType.ADD;
@@ -155,6 +160,18 @@ export class ProjectionMutationComponent implements OnDestroy {
       this.router,
       this.activatedRoute,
     );
+  }
+
+  goBackDelete() {
+    navigatePreservingQueryParams(
+      [this.postDeletePath],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
+  closeSidebarLeft() {
+    this.sidebarService.closeSidebarLeft();
   }
 
   onAddProjection(projectionCreateInput: ProjectionCreateInput) {

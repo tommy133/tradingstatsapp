@@ -2,6 +2,7 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
+import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import {
@@ -16,6 +17,11 @@ import { ProjectionService } from '../../../service/projection.service';
   templateUrl: './projection-details.component.html',
 })
 export class ProjectionDetailsComponent implements OnInit {
+  private projectionService = inject(ProjectionService);
+  private commentService = inject(ProjectionCommentService);
+  private activatedRoute = inject(ActivatedRoute);
+  private router = inject(Router);
+  private sidebarService = inject(SidebarService);
   private fileService = inject(FileService);
 
   getStatusColorClass = getStatusColorClass;
@@ -25,12 +31,11 @@ export class ProjectionDetailsComponent implements OnInit {
   isLoading: boolean = false;
   errors: Array<string> = [];
 
-  constructor(
-    private projectionService: ProjectionService,
-    private commentService: ProjectionCommentService,
-    private activatedRoute: ActivatedRoute,
-    private router: Router,
-  ) {}
+  private postDeletePath = this.activatedRoute.snapshot.data['postDeletePath'];
+  closeSidebarRedirect =
+    this.activatedRoute.snapshot.data['closeSidebarRedirect'];
+  showViewChartBtn =
+    this.activatedRoute.snapshot.data['showViewChartBtn'] ?? true;
 
   ngOnInit() {
     this.projection$ = this.activatedRoute.params.pipe(
@@ -61,7 +66,7 @@ export class ProjectionDetailsComponent implements OnInit {
 
   goToEdit(projectionId: number) {
     navigatePreservingQueryParams(
-      ['../edit/', projectionId],
+      ['../' + projectionId, 'edit'],
       this.router,
       this.activatedRoute,
     );
@@ -77,11 +82,16 @@ export class ProjectionDetailsComponent implements OnInit {
     });
   }
 
-  private goBackDelete() {
-    this.router.navigate(['../'], {
-      relativeTo: this.activatedRoute,
-      queryParamsHandling: 'preserve',
-    });
+  goBackDelete() {
+    navigatePreservingQueryParams(
+      [this.postDeletePath],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
+  closeSidebarLeft() {
+    this.sidebarService.closeSidebarLeft();
   }
 
   getUpdownLabel(updown: number | null) {

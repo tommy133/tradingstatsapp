@@ -12,6 +12,15 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        component: ProjectionDetailsComponent,
+        data: {
+          postDeletePath: '../../',
+          showViewChartBtn: false,
+        },
+      },
+      {
+        path: 'edit',
+
         component: ProjectionMutationComponent,
       },
     ],
@@ -31,6 +40,10 @@ const routes: Routes = [
       {
         path: ':id',
         component: ProjectionDetailsComponent,
+        data: {
+          postDeletePath: '../',
+          closeSidebarRedirect: true,
+        },
       },
     ],
   },

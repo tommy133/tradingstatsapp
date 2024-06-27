@@ -26,6 +26,9 @@ const routes: Routes = [
       {
         path: 'edit',
         component: OperationMutationComponent,
+        data: {
+          closeSidebarRedirect: true,
+        },
       },
     ],
   },
