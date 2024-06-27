@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TouchableStatusService } from 'src/app/core/service/touchable-status.service';
 import { Projection } from 'src/app/modules/projection/model/projection';
+import { getUpdownLabel } from 'src/app/modules/projection/utils/shared-utils';
 import {
   getStatusColorClass,
   navigatePreservingQueryParams,
@@ -27,6 +28,8 @@ export class TableProjectionComponent {
   private activatedRoute = inject(ActivatedRoute);
 
   getStatusColorClass = getStatusColorClass;
+  getUpdownLabel = getUpdownLabel;
+
   isTouchable = TouchableStatusService.isTouchable;
 
   @Input() rows!: Projection[];
@@ -40,11 +43,6 @@ export class TableProjectionComponent {
     { name: 'Status' },
     { name: 'Actions' },
   ];
-
-  getUpdownLabel(updown: number | null) {
-    if (updown === null) return 'Not defined';
-    return updown ? 'LONG' : 'SHORT';
-  }
 
   goToDetails(operationId: number) {
     navigatePreservingQueryParams(

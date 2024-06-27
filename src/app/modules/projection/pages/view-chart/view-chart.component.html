@@ -42,7 +42,7 @@
               bgColor="bg-dark-gray"
               textColor="text-white"></app-label>
             <app-label
-              [text]="projection.updown ? 'LONG' : 'SHORT'"
+              [text]="getUpdownLabel(projection.updown ?? null)"
               bgColor="bg-dark-gray"
               textColor="text-white"></app-label>
             <app-label

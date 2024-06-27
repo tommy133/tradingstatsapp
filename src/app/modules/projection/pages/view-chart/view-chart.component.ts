@@ -17,6 +17,7 @@ import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils
 import { Projection } from '../../model/projection';
 import { ProjectionFilterService } from '../../service/projection-filter.service';
 import { ProjectionService } from '../../service/projection.service';
+import { getUpdownLabel } from '../../utils/shared-utils';
 
 @Component({
   selector: 'app-view-chart',
@@ -53,6 +54,8 @@ export class ViewChartComponent {
       this.navigateNextProjection();
     }
   }
+
+  getUpdownLabel = getUpdownLabel;
 
   projections: Projection[] = [];
   filteredProjections$ = this.projectionFilter.getFilteredProjections(

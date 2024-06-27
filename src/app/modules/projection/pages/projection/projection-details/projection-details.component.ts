@@ -10,6 +10,7 @@ import {
 } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionService } from '../../../service/projection.service';
+import { getUpdownLabel } from '../../../utils/shared-utils';
 
 @Component({
   selector: 'app-projection-details',
@@ -19,6 +20,7 @@ export class ProjectionDetailsComponent implements OnInit {
   private fileService = inject(FileService);
 
   getStatusColorClass = getStatusColorClass;
+  getUpdownLabel = getUpdownLabel;
 
   projection$?: Observable<Projection>;
   comments$?: Observable<ProjectionComment[]>;
@@ -82,11 +84,6 @@ export class ProjectionDetailsComponent implements OnInit {
       relativeTo: this.activatedRoute,
       queryParamsHandling: 'preserve',
     });
-  }
-
-  getUpdownLabel(updown: number | null) {
-    if (updown === null) return 'Not defined';
-    return updown ? 'LONG' : 'SHORT';
   }
 
   onCloseSidebar() {
