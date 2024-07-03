@@ -1,7 +1,9 @@
 <div class="overflow-x-auto max-h-[70vh] no-scrollbar rounded">
   <div class="w-full">
     <div class="flex flex-col">
-      <div class="flex justify-between items-center bg-dark text-white sticky top-0 z-10">
+      <div
+        class="flex justify-between items-center bg-dark text-white sticky top-0 z-10"
+      >
         <ng-container *ngFor="let column of columns">
           <div class="font-bold cell">{{ column.name }}</div>
         </ng-container>
@@ -10,44 +12,61 @@
         <ng-container *ngFor="let row of rows">
           <div
             class="flex justify-between items-center not-last:border-b cursor-pointer"
-            [ngClass]="{'hover:bg-gray-500': !isTouchable}"
-            (click)="goToDetails(row.id)">
+            [ngClass]="{ 'hover:bg-gray-500': !isTouchable }"
+            (click)="goToDetails(row.id)"
+          >
             <div class="font-bold cell">{{ row.symbol.name_sym }}</div>
-            <div class="font-semibold cell">{{ row.updown ? 'LONG' : 'SHORT' }}</div>
             <div class="font-semibold cell">
-              {{ row.dateOpen | date: 'dd/MM/yyyy HH:mm':'UTC+2'  }}
+              {{ row.updown ? 'LONG' : 'SHORT' }}
             </div>
             <div class="font-semibold cell">
-              {{ row.dateClose | date: 'dd/MM/yyyy HH:mm':'UTC+2' }}
+              {{ row.dateOpen | date : 'dd/MM/yyyy HH:mm' : 'UTC' }}
+            </div>
+            <div class="font-semibold cell">
+              {{ row.dateClose | date : 'dd/MM/yyyy HH:mm' : 'UTC' }}
             </div>
             <div class="font-semibold cell">{{ row.timeframe }}</div>
             <div class="font-semibold cell">
               <app-label
                 [text]="row.status.name_st"
                 bgColor="bg-dark"
-                [textColor]="getStatusColorClass(row.status.id_st)"></app-label>
+                [textColor]="getStatusColorClass(row.status.id_st)"
+              ></app-label>
             </div>
-            <div [ngClass]="'font-semibold cell ' + getRevenueColorClass(row.revenue!)">{{ row.revenue }}</div>
+            <div
+              [ngClass]="
+                'font-semibold cell ' + getRevenueColorClass(row.revenue!)
+              "
+            >
+              {{ row.revenue }}
+            </div>
             <div class="font-semibold cell">
               <div class="flex justify-center space-x-2 items-center">
                 <icon-button
                   iconSource="assets/svg/edit-32.svg"
                   iconSvgClass="hover:bg-gray-300 rounded-md"
                   class="svg-white"
-                  (clickEvent)="gotoEditOperation(row.id, $event)"></icon-button>
+                  (clickEvent)="gotoEditOperation(row.id, $event)"
+                ></icon-button>
                 <icon-button
                   iconSource="assets/svg/trading_stats_notitle.svg"
                   iconSvgClass="hover:bg-gray-300 rounded-md"
                   [disabled]="!row.graph"
-                  (clickEvent)="goToChart(row.id, $event)"></icon-button>
+                  (clickEvent)="goToChart(row.id, $event)"
+                ></icon-button>
                 <app-tradingview-button
-                  [data]="{symbolName: row.symbol.name_sym, timeframe: row.timeframe}"
-                  iconSvgClass="bg-white rounded border-4 border-black"></app-tradingview-button>
+                  [data]="{
+                    symbolName: row.symbol.name_sym,
+                    timeframe: row.timeframe
+                  }"
+                  iconSvgClass="bg-white rounded border-4 border-black"
+                ></app-tradingview-button>
                 <icon-button
                   iconSource="assets/svg/delete.svg"
                   iconSvgClass="hover:bg-gray-300 rounded-full w-[20px] h-[20px] bg-red svg-red-stroke"
                   [iconSvgStyle]="{ 'width.px': 20, 'height.px': 20 }"
-                  (clickEvent)="deleteOperation(row, $event)"></icon-button>
+                  (clickEvent)="deleteOperation(row, $event)"
+                ></icon-button>
               </div>
             </div>
           </div>

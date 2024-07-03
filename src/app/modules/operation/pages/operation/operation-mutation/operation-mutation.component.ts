@@ -89,11 +89,11 @@ export class OperationMutationComponent implements OnInit {
     Validators.required,
   );
   dateOpen = this.formBuilder.control<string | null>(
-    this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm', 'UTC+2'),
+    this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm', 'UTC'),
     Validators.required,
   );
   dateClose = this.formBuilder.control<string | null>(
-    this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm', 'UTC+2'),
+    this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm', 'UTC'),
   );
   timeframe = this.formBuilder.control<string | null>(
     'M1',
@@ -233,14 +233,14 @@ export class OperationMutationComponent implements OnInit {
     this.selectedSymbol = operationDetails.symbol.name_sym;
     this.orderType.setValue(updown);
     this.dateOpen.setValue(
-      this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm', 'UTC+2'),
+      this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm', 'UTC'),
     );
     this.dateClose.setValue(
       dateClose
         ? this.datePipe.transform(
             new Date(dateClose),
             'yyyy-MM-ddTHH:mm',
-            'UTC+2',
+            'UTC',
           )
         : null,
     );
