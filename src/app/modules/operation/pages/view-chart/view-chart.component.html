@@ -21,7 +21,7 @@
         [src]="imageUrl"
         alt="chart image">
     </div>
-    <div class="fixed top-1/2 right-0 z-10">
+    <div class="fixed top-1/2 right-0">
       <icon-button
         iconSource="assets/svg/go-right.svg"
         [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
@@ -44,13 +44,13 @@
   </ng-container>
 </app-sidebar>
 <icon-button
-  class="fixed top-16 bottom-0 right-0"
+  class="fixed top-16 right-0"
   iconSource="assets/svg/sidebar-icon-21.svg"
   [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
   iconSvgClass="bg-gray-300 rounded-md p-1"
   (clickEvent)="openSidebarLeft()"></icon-button>
 <icon-button
-  class="fixed top-32 bottom-0 right-0"
+  class="fixed top-32 right-0"
   iconSource="assets/svg/bookmark-plus.svg"
   [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
   iconSvgClass="bg-gray-300 rounded-md p-1"
