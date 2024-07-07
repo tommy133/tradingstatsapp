@@ -69,6 +69,14 @@ export class ProjectionDetailsComponent implements OnInit {
     );
   }
 
+  goToCreateOperation(projectionId: number) {
+    navigatePreservingQueryParams(
+      ['../../operations/addFromProj', projectionId],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
   goToChart(projectionId: number) {
     this.router.navigate(['../view-chart', projectionId], {
       relativeTo: this.activatedRoute,

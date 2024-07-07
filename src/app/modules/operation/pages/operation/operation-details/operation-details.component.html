@@ -6,17 +6,16 @@
         *ngIf="extended"
         class="flex flex-row items-center space-x-5">
         <app-rounded-button
+          text="Delete"
+          bgColor="bg-red"
+          type="submit"
+          (clickEvent)="onDeleteOperation(operation)"></app-rounded-button>
+        <app-rounded-button
           text="Edit"
           bgColor="bg-light-orange"
           type="submit"
           (clickEvent)="goToEdit(operation.id)">
         </app-rounded-button>
-
-        <app-rounded-button
-          text="Delete"
-          bgColor="bg-red"
-          type="submit"
-          (clickEvent)="onDeleteOperation(operation)"></app-rounded-button>
       </div>
     </div>
   </div>

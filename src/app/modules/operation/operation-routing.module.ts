@@ -34,6 +34,10 @@ const routes: Routes = [
     component: OperationListComponent,
     children: [
       {
+        path: 'addFromProj/:projId',
+        component: OperationMutationComponent,
+      },
+      {
         path: 'add',
         component: OperationMutationComponent,
       },

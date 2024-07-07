@@ -174,7 +174,7 @@ export class OperationMutationComponent implements OnInit {
 
   goToList() {
     navigatePreservingQueryParams(
-      [this.closeRoute],
+      ['/operations'],
       this.router,
       this.activatedRoute,
     );
@@ -188,10 +188,18 @@ export class OperationMutationComponent implements OnInit {
     );
   }
 
-  onAddOperation(operationCreateInput: OperationCreateInput) {
+  onAddOperation(
+    operationCreateInput: OperationCreateInput,
+    projectionId: number | null,
+  ) {
     if (this.uploadedFile) {
       this.uploadFileStorage(this.uploadedFile);
     }
+    if (projectionId)
+      return this.operationService.addOperationFromProjection(
+        operationCreateInput,
+        projectionId,
+      );
     return this.operationService.addOperation(operationCreateInput);
   }
 
@@ -266,9 +274,14 @@ export class OperationMutationComponent implements OnInit {
   ): Promise<number | void> {
     try {
       this.isLoading = true;
+      const projId = this.activatedRoute.snapshot.paramMap.get('projId');
+      const parsedProjId = projId ? parseInt(projId) : null;
       const result = this.isMutationAdd
         ? await firstValueFrom(
-            this.onAddOperation(operationInput as OperationCreateInput),
+            this.onAddOperation(
+              operationInput as OperationCreateInput,
+              parsedProjId,
+            ),
           )
         : await firstValueFrom(
             this.onUpdateOperation(operationInput as OperationUpdateInput),

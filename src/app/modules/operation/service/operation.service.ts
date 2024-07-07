@@ -5,7 +5,7 @@ import {
   map,
   Observable,
   Subscription,
-  switchMap
+  switchMap,
 } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { environment } from 'src/environments/environment';
@@ -28,7 +28,7 @@ export class OperationService {
 
   deleteSubscription?: Subscription;
 
-  constructor(private http: HttpClient, private toastService: ToastService) { }
+  constructor(private http: HttpClient, private toastService: ToastService) {}
 
   public refetch() {
     this.fetchSignal.next(null);
@@ -40,6 +40,30 @@ export class OperationService {
 
   public getOperation(operationId: number): Observable<Operation> {
     return this.http.get<Operation>(`${this.apiServerUrl}/${operationId}`);
+  }
+
+  public addOperationFromProjection(
+    operationCreateInput: OperationCreateInput,
+    projectionId: number,
+  ) {
+    return this.http
+      .post<number>(
+        `${this.apiServerUrl}/addFromProj/${projectionId}`,
+        operationCreateInput,
+      )
+      .pipe(
+        map(
+          (res) => {
+            this.refetch();
+            return res;
+          },
+          (error: HttpErrorResponse) => {
+            this.toastService.error({
+              message: error.message,
+            });
+          },
+        ),
+      );
   }
 
   public addOperation(operationCreateInput: OperationCreateInput) {
