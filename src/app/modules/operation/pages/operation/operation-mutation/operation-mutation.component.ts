@@ -15,6 +15,8 @@ import { OperationCommentService } from 'src/app/data/service/opcomment.service'
 import { StatusService } from 'src/app/data/service/status.service';
 import { SymbolService } from 'src/app/data/service/symbol.service';
 import { Symbol } from 'src/app/modules/assets/model/symbol';
+import { Projection } from 'src/app/modules/projection/model/projection';
+import { ProjectionService } from 'src/app/modules/projection/service/projection.service';
 import { AccountType, MutationType } from 'src/app/shared/utils/custom-types';
 import {
   navigatePreservingQueryParams,
@@ -35,6 +37,7 @@ export class OperationMutationComponent implements OnInit {
   private symbolService = inject(SymbolService);
   private statusService = inject(StatusService);
   private operationService = inject(OperationService);
+  private projectionService = inject(ProjectionService);
   private commentService = inject(OperationCommentService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -45,9 +48,10 @@ export class OperationMutationComponent implements OnInit {
   textToHyperLink = textToHyperlink;
 
   //Take route from operation/:id or operation/view-chart/:id
-  paramId =
+  operationParamId =
     this.activatedRoute.snapshot.params['id'] ??
     this.activatedRoute.snapshot.parent?.params['id'];
+  projectionParamId = this.activatedRoute.snapshot.params['projId'];
 
   isLoading: boolean = false;
   errors: Array<string> = [];
@@ -128,21 +132,28 @@ export class OperationMutationComponent implements OnInit {
 
   async ngOnInit() {
     this.account.setValue(this.activatedRoute.snapshot.queryParams['account']);
-    if (this.paramId) {
+    if (this.operationParamId) {
       const operationDetails = await firstValueFrom(
-        this.operationService.getOperation(this.paramId),
+        this.operationService.getOperation(this.operationParamId),
       );
       this.comments = await firstValueFrom(
-        this.commentService.getCommentsById(this.paramId),
+        this.commentService.getCommentsById(this.operationParamId),
       );
       if (operationDetails) {
-        this.setInitialFormState(operationDetails);
+        this.setInitialFormStateOperation(operationDetails);
+      }
+    } else if (this.projectionParamId) {
+      const projectionDetails = await firstValueFrom(
+        this.projectionService.getProjection(this.projectionParamId),
+      );
+      if (projectionDetails) {
+        this.setInitialFormStateOperationFromProjection(projectionDetails);
       }
     }
   }
 
   get mutation(): MutationType {
-    if (this.paramId) {
+    if (this.operationParamId) {
       return MutationType.EDIT;
     }
     return MutationType.ADD;
@@ -221,7 +232,7 @@ export class OperationMutationComponent implements OnInit {
     this.operationForm.controls.symbol.setValue(symbol.id_sym);
   }
 
-  private setInitialFormState(operationDetails: Operation) {
+  private setInitialFormStateOperation(operationDetails: Operation) {
     const {
       id,
       symbol: { id_sym },
@@ -255,6 +266,28 @@ export class OperationMutationComponent implements OnInit {
     this.volume.setValue(volume!);
     this.ratio.setValue(ratio!);
     this.revenue.setValue(revenue!);
+  }
+
+  private setInitialFormStateOperationFromProjection(
+    projectionDetails: Projection,
+  ) {
+    const {
+      symbol: { id_sym },
+      updown,
+      timeframe,
+    } = projectionDetails;
+
+    const statusOpen = 1;
+
+    this.symbol.setValue(id_sym);
+    this.selectedSymbol = projectionDetails.symbol.name_sym;
+    this.orderType.setValue(updown ?? null);
+    this.dateOpen.setValue(
+      this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm'),
+    );
+    this.dateClose.setValue(null);
+    this.timeframe.setValue(timeframe);
+    this.status.setValue(statusOpen);
   }
 
   uploadFileMemory($event: any) {
