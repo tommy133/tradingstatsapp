@@ -1,10 +1,11 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
+import { ProjectionService } from 'src/app/modules/projection/service/projection.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
@@ -15,6 +16,7 @@ import { OperationService } from '../../../service/operation.service';
 })
 export class OperationDetailsComponent implements OnInit {
   private operationService = inject(OperationService);
+  private projectionService = inject(ProjectionService);
   private commentService = inject(OperationCommentService);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
@@ -31,6 +33,7 @@ export class OperationDetailsComponent implements OnInit {
     this.activatedRoute.snapshot.data['showViewChartBtn'] ?? true;
 
   operation$?: Observable<Operation>;
+  projectionAssocId$?: Observable<number>;
   comments$?: Observable<OperationComment[]>;
 
   ngOnInit() {
@@ -45,6 +48,15 @@ export class OperationDetailsComponent implements OnInit {
       switchMap((params) => {
         const id = params['id'];
         return this.commentService.getCommentsById(id);
+      }),
+    );
+
+    this.projectionAssocId$ = this.activatedRoute.params.pipe(
+      switchMap((params) => {
+        const id = params['id'];
+        return this.projectionService
+          .getProjectionFromOperation(id)
+          .pipe(map((proj) => proj?.id));
       }),
     );
   }
@@ -64,6 +76,14 @@ export class OperationDetailsComponent implements OnInit {
   goToEdit(operationId: number) {
     navigatePreservingQueryParams(
       ['../' + operationId, 'edit'],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
+  goToProjection(projectionId: number) {
+    navigatePreservingQueryParams(
+      ['../../projections', projectionId],
       this.router,
       this.activatedRoute,
     );

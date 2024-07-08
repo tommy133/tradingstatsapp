@@ -143,7 +143,7 @@ export class ProjectionMutationComponent implements OnDestroy {
 
   goToList() {
     navigatePreservingQueryParams(
-      [this.closeRoute],
+      ['/projections'],
       this.router,
       this.activatedRoute,
     );

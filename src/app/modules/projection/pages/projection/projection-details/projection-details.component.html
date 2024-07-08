@@ -5,17 +5,30 @@
 
       <div class="flex flex-row items-center space-x-5">
         <app-rounded-button
-          text="Edit"
-          bgColor="bg-light-orange"
-          type="submit"
-          (clickEvent)="goToEdit(projection.id)">
-        </app-rounded-button>
-
-        <app-rounded-button
           text="Delete"
           bgColor="bg-red"
-          type="submit"
+          type="button"
           (click)="onDeleteProjection(projection)"></app-rounded-button>
+        <app-rounded-button
+          *ngIf="operationAssocId$ | async as opId; else createOperation"
+          text="Operation"
+          bgColor="bg-bright-blue"
+          type="button"
+          (clickEvent)="goToOperation(opId)"></app-rounded-button>
+        <ng-template #createOperation>
+          <app-rounded-button
+            text="To Operation"
+            bgColor="bg-green"
+            type="button"
+            (clickEvent)="goToCreateOperation(projection.id)">
+          </app-rounded-button>
+        </ng-template>
+        <app-rounded-button
+          text="Edit"
+          bgColor="bg-light-orange"
+          type="button"
+          (clickEvent)="goToEdit(projection.id)">
+        </app-rounded-button>
       </div>
     </div>
   </div>
