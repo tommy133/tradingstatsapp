@@ -10,11 +10,19 @@
           type="button"
           (click)="onDeleteProjection(projection)"></app-rounded-button>
         <app-rounded-button
-          text="To Operation"
-          bgColor="bg-green"
+          *ngIf="operationAssocId$ | async as opId; else createOperation"
+          text="Operation"
+          bgColor="bg-bright-blue"
           type="button"
-          (clickEvent)="goToCreateOperation(projection.id)">
-        </app-rounded-button>
+          (clickEvent)="goToOperation(opId)"></app-rounded-button>
+        <ng-template #createOperation>
+          <app-rounded-button
+            text="To Operation"
+            bgColor="bg-green"
+            type="button"
+            (clickEvent)="goToCreateOperation(projection.id)">
+          </app-rounded-button>
+        </ng-template>
         <app-rounded-button
           text="Edit"
           bgColor="bg-light-orange"

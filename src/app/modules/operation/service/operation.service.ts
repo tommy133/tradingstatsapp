@@ -42,6 +42,14 @@ export class OperationService {
     return this.http.get<Operation>(`${this.apiServerUrl}/${operationId}`);
   }
 
+  public getOperationFromProjection(
+    projectionId: number,
+  ): Observable<Operation> {
+    return this.http.get<Operation>(
+      `${this.apiServerUrl}/projectionAssoc/${projectionId}`,
+    );
+  }
+
   public addOperationFromProjection(
     operationCreateInput: OperationCreateInput,
     projectionId: number,

@@ -1,9 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, switchMap } from 'rxjs';
+import { map, Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
+import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import {
   getStatusColorClass,
   navigatePreservingQueryParams,
@@ -23,12 +24,14 @@ export class ProjectionDetailsComponent implements OnInit {
   getUpdownLabel = getUpdownLabel;
 
   projection$?: Observable<Projection>;
+  operationAssocId$?: Observable<number>;
   comments$?: Observable<ProjectionComment[]>;
   isLoading: boolean = false;
   errors: Array<string> = [];
 
   constructor(
     private projectionService: ProjectionService,
+    private operationService: OperationService,
     private commentService: ProjectionCommentService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
@@ -46,6 +49,15 @@ export class ProjectionDetailsComponent implements OnInit {
       switchMap((params) => {
         const id = params['id'];
         return this.commentService.getCommentsById(id);
+      }),
+    );
+
+    this.operationAssocId$ = this.activatedRoute.params.pipe(
+      switchMap((params) => {
+        const id = params['id'];
+        return this.operationService
+          .getOperationFromProjection(id)
+          .pipe(map((op) => op.id));
       }),
     );
   }
@@ -72,6 +84,14 @@ export class ProjectionDetailsComponent implements OnInit {
   goToCreateOperation(projectionId: number) {
     navigatePreservingQueryParams(
       ['../../operations/addFromProj', projectionId],
+      this.router,
+      this.activatedRoute,
+    );
+  }
+
+  goToOperation(operationId: number) {
+    navigatePreservingQueryParams(
+      ['../../operations', operationId],
       this.router,
       this.activatedRoute,
     );

@@ -11,6 +11,12 @@
           type="submit"
           (clickEvent)="onDeleteOperation(operation)"></app-rounded-button>
         <app-rounded-button
+          *ngIf="projectionAssocId$ | async as projId;"
+          text="Projection"
+          bgColor="bg-bright-blue"
+          type="button"
+          (clickEvent)="goToProjection(projId)"></app-rounded-button>
+        <app-rounded-button
           text="Edit"
           bgColor="bg-light-orange"
           type="submit"
