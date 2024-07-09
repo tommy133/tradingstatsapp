@@ -15,10 +15,10 @@
             <div class="font-bold cell">{{ row.symbol.name_sym }}</div>
             <div class="font-semibold cell">{{ row.updown ? 'LONG' : 'SHORT' }}</div>
             <div class="font-semibold cell">
-              {{ row.dateOpen | date : 'dd/MM/yyyy HH:mm' }}
+              {{ row.dateOpen | date : 'dd/MM/yyyy HH:mm' : 'UTC' }}
             </div>
             <div class="font-semibold cell">
-              {{ row.dateClose | date : 'dd/MM/yyyy HH:mm' }}
+              {{ row.dateClose | date : 'dd/MM/yyyy HH:mm'  : 'UTC' }}
             </div>
             <div class="font-semibold cell">{{ row.timeframe }}</div>
             <div class="font-semibold cell">

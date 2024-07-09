@@ -58,14 +58,14 @@
       *ngIf="operation.dateOpen"
       class="flex items-center justify-between pt-5">
       <app-form-label text="Opened"></app-form-label>
-      <app-label [text]="(operation.dateOpen | date : 'yyyy-MM-dd HH:mm')!"></app-label>
+      <app-label [text]="(operation.dateOpen | date : 'yyyy-MM-dd HH:mm' :'UTC')!"></app-label>
     </div>
 
     <div
       *ngIf="operation.dateClose"
       class="flex items-center justify-between pt-5">
       <app-form-label text="Close"></app-form-label>
-      <app-label [text]="(operation.dateClose | date : 'yyyy-MM-dd HH:mm')!"></app-label>
+      <app-label [text]="(operation.dateClose | date : 'yyyy-MM-dd HH:mm' : 'UTC')!"></app-label>
     </div>
 
     <div class="flex items-center justify-between pt-5">

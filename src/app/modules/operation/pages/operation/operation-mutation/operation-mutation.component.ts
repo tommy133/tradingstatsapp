@@ -248,11 +248,15 @@ export class OperationMutationComponent implements OnInit {
     this.selectedSymbol = operationDetails.symbol.name_sym;
     this.orderType.setValue(updown);
     this.dateOpen.setValue(
-      this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm'),
+      this.datePipe.transform(new Date(dateOpen!), 'yyyy-MM-ddTHH:mm', 'UTC'),
     );
     this.dateClose.setValue(
       dateClose
-        ? this.datePipe.transform(new Date(dateClose), 'yyyy-MM-ddTHH:mm')
+        ? this.datePipe.transform(
+            new Date(dateClose),
+            'yyyy-MM-ddTHH:mm',
+            'UTC',
+          )
         : null,
     );
     this.graphFileName = graph!;
