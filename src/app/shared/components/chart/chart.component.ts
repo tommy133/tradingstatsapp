@@ -1,7 +1,7 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { ChartService, ChartType } from 'src/app/core/service/chart.service';
+import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationFilterService } from 'src/app/modules/operation/service/operation-filter.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 
@@ -10,7 +10,6 @@ import { OperationService } from 'src/app/modules/operation/service/operation.se
   template: '<div [id]="chartType"></div>',
 })
 export class ChartComponent implements OnInit {
-  private activatedRoute = inject(ActivatedRoute);
   private operationService = inject(OperationService);
   private operationFilterService = inject(OperationFilterService);
   private chartService = inject(ChartService);
@@ -25,6 +24,8 @@ export class ChartComponent implements OnInit {
   filteredOperations$ = this.operationFilterService.getFilteredOperations(
     this.operationData$,
   );
+
+  toastService = inject(ToastService);
 
   async ngOnInit() {
     switch (this.chartType) {
@@ -60,8 +61,7 @@ export class ChartComponent implements OnInit {
         await new Promise<void>((resolve) => {
           this.subscription = this.filteredOperations$.subscribe(
             (operations) => {
-              this.data = operations
-                .map(({ revenue }) => revenue ?? null);
+              this.data = operations.map(({ revenue }) => revenue ?? null);
 
               this.chartService.updateChart(this.data, this.chartType);
               resolve();
