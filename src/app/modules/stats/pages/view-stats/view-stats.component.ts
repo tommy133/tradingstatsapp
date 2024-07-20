@@ -16,20 +16,23 @@ export class ViewStatsComponent implements OnDestroy {
   private toastService = inject(ToastService);
   private hasOperationSubs!: Subscription;
 
-  operationData$ = this.operationService.operations$;
-  hasOperations$ = this.operationFilterService
-    .getFilteredOperations(this.operationData$)
-    .pipe(
-      map((operations) => operations.length > 0),
-      distinctUntilChanged(),
-      shareReplay(1),
-    );
+  operationData$ = this.operationFilterService.getFilteredOperations(
+    this.operationService.operations$.pipe(shareReplay(1)),
+  );
+
+  operationRevenueData$ = this.operationData$.pipe(
+    map((data) => data.map(({ revenue }) => revenue ?? null)),
+  );
+  hasOperations$ = this.operationData$.pipe(
+    map((operations) => operations.length > 0),
+    distinctUntilChanged(),
+  );
 
   constructor() {
     this.hasOperationSubs = this.hasOperations$.subscribe((hasOperations) => {
       if (!hasOperations)
         this.toastService.info({
-          message: `No data for this period`,
+          message: `No data for this filters`,
         });
     });
   }

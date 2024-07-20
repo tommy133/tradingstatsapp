@@ -17,9 +17,21 @@
   </div>
   <div
     *ngIf="hasOperations$ | async"
-    class="mt-10 p-10 bg-light-gray rounded">
-    <app-chart chartType="line"></app-chart>
-    <app-chart chartType="pie"></app-chart>
-    <app-hope></app-hope>
+    class="flex flex-col mt-10 p-10 bg-light-gray rounded">
+    <div class="flex">
+      <app-line-chart
+        chartType="line"
+        *ngIf="operationData$ | async as operationData"
+        [data]="operationData"></app-line-chart>
+      <app-pie-chart
+        *ngIf="operationRevenueData$ | async as operationRevenueData"
+        [data]="operationRevenueData"></app-pie-chart>
+    </div>
+    <div class="flex justify-center items-center">
+      <app-hope
+        *ngIf="operationRevenueData$ | async as operationRevenueData"
+        [data]="operationRevenueData"></app-hope>
+      <app-averages></app-averages>
+    </div>
   </div>
 </div>

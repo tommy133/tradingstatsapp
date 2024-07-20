@@ -3,13 +3,9 @@ import {
   state,
   style,
   transition,
-  trigger
+  trigger,
 } from '@angular/animations';
-import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { OperationFilterService } from 'src/app/modules/operation/service/operation-filter.service';
-import { OperationService } from 'src/app/modules/operation/service/operation.service';
+import { Component, Input, OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-hope',
@@ -50,33 +46,15 @@ import { OperationService } from 'src/app/modules/operation/service/operation.se
     ]),
   ],
 })
-export class HopeComponent implements OnInit {
-  private activatedRoute = inject(ActivatedRoute);
-  private operationService = inject(OperationService);
-  private operationFilterService = inject(OperationFilterService);
-
-  private subscription?: Subscription;
-  private data: (number | null)[] = [];
-
-  operationData$ = this.operationService.operations$;
-
-  filteredOperations$ = this.operationFilterService.getFilteredOperations(
-    this.operationData$,
-  );
+export class HopeComponent implements OnChanges {
+  @Input() data: (number | null)[] = [];
 
   targetValue: number = 0;
   counterValue: number = 0;
 
-  async ngOnInit() {
-    await new Promise<void>((resolve) => {
-      this.subscription = this.filteredOperations$.subscribe((operations) => {
-        this.data = operations
-          .map(({ revenue }) => revenue ?? null);
-        this.targetValue = this.calculateHope(this.data);
-        this.startCounter();
-        resolve();
-      });
-    });
+  ngOnChanges() {
+    this.targetValue = this.calculateHope(this.data);
+    this.startCounter();
   }
 
   private calculateHope(data: (number | null)[]): number {
@@ -121,11 +99,5 @@ export class HopeComponent implements OnInit {
         clearInterval(interval);
       }
     }, delay);
-  }
-
-  ngOnDestroy() {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 }

@@ -4,9 +4,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AngularSvgIconModule } from 'angular-svg-icon';
 import { AutosizeModule } from 'ngx-autosize';
+import { AveragesComponent } from './components/averages/averages.component';
 import { BackToComponent } from './components/back-to/back-to.component';
 import { CardComponent } from './components/card/card.component';
-import { ChartComponent } from './components/chart/chart.component';
 import { CloseButtonComponent } from './components/close-button/close-button.component';
 import { CommentEntryComponent } from './components/comments-thread/comment-entry/comment-entry.component';
 import { CommentsThreadComponent } from './components/comments-thread/comments-thread.component';
@@ -50,7 +50,6 @@ const componentsAndPipes = [
   CardComponent,
   BackToComponent,
   DatePickerComponent,
-  ChartComponent,
   HopeComponent,
   TrimesterSelectorComponent,
   YearSelectorComponent,
@@ -62,6 +61,7 @@ const componentsAndPipes = [
   SymbolSearchComponent,
   CommentsThreadComponent,
   CommentEntryComponent,
+  AveragesComponent,
 ];
 
 const sharedModules = [
