@@ -17,6 +17,7 @@
           (clickEvent)="goToOperation(opId)"></app-rounded-button>
         <ng-template #createOperation>
           <app-rounded-button
+            *ngIf="projection.status.name_st === 'WATCHING'"
             text="To Operation"
             bgColor="bg-green"
             type="button"
