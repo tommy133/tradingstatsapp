@@ -199,15 +199,15 @@ export class OperationMutationComponent implements OnInit {
     operationCreateInput: OperationCreateInput,
     projectionId: number | null,
   ) {
-    debugger;
     if (this.uploadedFile) {
       this.uploadFileStorage(this.uploadedFile);
     }
-    if (projectionId)
+    if (projectionId) {
       return this.operationService.addOperationFromProjection(
         operationCreateInput,
         projectionId,
       );
+    }
     return this.operationService.addOperation(operationCreateInput);
   }
 
@@ -310,6 +310,8 @@ export class OperationMutationComponent implements OnInit {
       this.isLoading = true;
       const projId = this.activatedRoute.snapshot.paramMap.get('projId');
       const parsedProjId = projId ? parseInt(projId) : null;
+      const statuses = await firstValueFrom(this.statusService.statuses$);
+
       const result = this.isMutationAdd
         ? await firstValueFrom(
             this.onAddOperation(
@@ -320,6 +322,16 @@ export class OperationMutationComponent implements OnInit {
         : await firstValueFrom(
             this.onUpdateOperation(operationInput as OperationUpdateInput),
           );
+
+      if (parsedProjId) {
+        await firstValueFrom(
+          this.projectionService.updateProjection({
+            id_proj: parsedProjId,
+            id_st: statuses['EXPIRED'],
+          }),
+        );
+      }
+
       if (result) {
         this.isLoading = false;
         return result;
