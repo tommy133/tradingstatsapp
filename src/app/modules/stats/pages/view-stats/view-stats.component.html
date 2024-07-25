@@ -20,9 +20,11 @@
     class="flex flex-col mt-10 p-10 gap-4 bg-light-gray rounded">
     <div class="flex">
       <app-line-chart
+        class="w-full"
         *ngIf="operationData$ | async as operationData"
         [data]="operationData"></app-line-chart>
       <app-pie-chart
+        class="w-full"
         *ngIf="operationRevenueData$ | async as operationRevenueData"
         [data]="operationRevenueData"></app-pie-chart>
     </div>

@@ -32,9 +32,6 @@ export class AveragesComponent {
       //assume we evaluate always closed positions
       const startTime = new Date(op.dateOpen!).getTime();
       const endTime = new Date(op.dateClose!).getTime();
-      if (endTime - startTime < 0) {
-        console.log(op.dateOpen + ' ' + op.dateClose);
-      }
 
       return endTime - startTime;
     });
