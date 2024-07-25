@@ -199,6 +199,7 @@ export class OperationMutationComponent implements OnInit {
     operationCreateInput: OperationCreateInput,
     projectionId: number | null,
   ) {
+    debugger;
     if (this.uploadedFile) {
       this.uploadFileStorage(this.uploadedFile);
     }
