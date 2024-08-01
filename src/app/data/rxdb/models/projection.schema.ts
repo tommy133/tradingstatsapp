@@ -5,6 +5,8 @@ import {
   RxJsonSchema,
   toTypedRxJsonSchema,
 } from 'rxdb';
+import { replicateRxCollection } from 'rxdb/plugins/replication';
+import { environment } from 'src/environments/environment';
 
 export const PROJECTION_COLLECTION_NAME = 'projections';
 export const PROJECTION_SCHEMA_LITERAL = {
@@ -66,3 +68,22 @@ export type RxProjectionCollection = RxCollection<
   RxProjectionDocMethods,
   RxProjectionCollectionMethods
 >;
+const replicationState = (collection: RxProjectionCollection) =>
+  replicateRxCollection({
+    collection: collection,
+    replicationIdentifier: 'pull-projections',
+    pull: {
+      async handler(checkpointOrNull: any, batchSize: any) {
+        const updatedAt = checkpointOrNull ? checkpointOrNull.updatedAt : 0;
+        const id = checkpointOrNull ? checkpointOrNull.id : '';
+        const response = await fetch(
+          `${environment.apiBaseUrl}/pull?updatedAt=${updatedAt}&id=${id}&limit=${batchSize}`,
+        );
+        const data = await response.json();
+        return {
+          documents: data.documents,
+          checkpoint: data.checkpoint,
+        };
+      },
+    },
+  });
