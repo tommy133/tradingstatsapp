@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { addRxPlugin, createRxDatabase } from 'rxdb';
+import { RxReplicationState } from 'rxdb/dist/types/plugins/replication';
 import { getRxStorageDexie } from 'rxdb/plugins/storage-dexie';
 import { environment } from 'src/environments/environment';
 import {
@@ -8,6 +9,7 @@ import {
   RxTstatsCollections,
   RxTstatsDatabase,
 } from '../config';
+import { replicationStateProjections } from '../models/projection.schema';
 
 function doSync(): boolean {
   if (window.location.hash == '#nosync') {
@@ -71,30 +73,29 @@ export async function initDatabase(password: string) {
     console.log('initDatabase()');
     initState = _create(password).then((db) => (DB_INSTANCE = db));
   }
-  // await initState;
-  // initReplication();
+  await initState;
+  initReplication();
 }
-
 async function initReplication() {
   if (!doSync()) {
     console.warn('DatabaseService: sync disabled');
     return;
   }
-  // let replicationsActive: RxGraphQLReplicationState<
-  //   any, // data type
-  //   {
-  //     id: string;
-  //     updatedAt: number;
-  //   } // checkpoint type
-  // >[] = [];
+  let replicationsActive: RxReplicationState<
+    any, // data type
+    {
+      id: string;
+      updatedAt: number;
+    } // checkpoint type
+  >[] = [];
 
   console.log('DatabaseService: start ongoing replication');
+  console.log(DB_INSTANCE.projections);
 
-  // https://rxdb.info/replication.html
-  // replicationsActive.push(
-  //   replicateComments(DB_INSTANCE.comments, headers),
-  //   replicateRevenueTableChanges(DB_INSTANCE.revenue_table_changes, headers),
-  //   replicateEbitdaTableChanges(DB_INSTANCE.ebitda_table_changes, headers))
+  //rxdb.info/replication.html
+  https: replicationsActive.push(
+    replicationStateProjections(DB_INSTANCE.projections),
+  );
 }
 
 @Injectable()

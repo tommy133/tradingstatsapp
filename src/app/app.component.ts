@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { initDatabase } from './data/rxdb/service/rxdb-database.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,7 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'tradingstatsapp';
+  constructor() {
+    initDatabase('');
+  }
 }

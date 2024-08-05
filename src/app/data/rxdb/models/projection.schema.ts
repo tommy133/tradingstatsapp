@@ -17,7 +17,7 @@ export const PROJECTION_SCHEMA_LITERAL = {
   primaryKey: 'id',
   properties: {
     id: {
-      type: 'string',
+      type: 'number',
       primary: true,
     },
     symbol: {
@@ -68,7 +68,9 @@ export type RxProjectionCollection = RxCollection<
   RxProjectionDocMethods,
   RxProjectionCollectionMethods
 >;
-const replicationState = (collection: RxProjectionCollection) =>
+export const replicationStateProjections = (
+  collection: RxProjectionCollection,
+) =>
   replicateRxCollection({
     collection: collection,
     replicationIdentifier: 'pull-projections',
