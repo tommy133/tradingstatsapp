@@ -17,8 +17,9 @@ export const PROJECTION_SCHEMA_LITERAL = {
   primaryKey: 'id',
   properties: {
     id: {
-      type: 'number',
+      type: 'string',
       primary: true,
+      maxLength: 4,
     },
     symbol: {
       type: 'string',
@@ -79,9 +80,10 @@ export const replicationStateProjections = (
         const updatedAt = checkpointOrNull ? checkpointOrNull.updatedAt : 0;
         const id = checkpointOrNull ? checkpointOrNull.id : '';
         const response = await fetch(
-          `${environment.apiBaseUrl}/pull?updatedAt=${updatedAt}&id=${id}&limit=${batchSize}`,
+          `${environment.apiBaseUrl}/projections/pull?updatedAt=${updatedAt}&id=${id}&limit=${batchSize}`,
         );
         const data = await response.json();
+
         return {
           documents: data.documents,
           checkpoint: data.checkpoint,

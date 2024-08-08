@@ -92,13 +92,10 @@ async function initReplication() {
   console.log('DatabaseService: start ongoing replication');
   console.log(DB_INSTANCE.projections);
 
-  //rxdb.info/replication.html
-  https: replicationsActive.push(
-    replicationStateProjections(DB_INSTANCE.projections),
-  );
+  replicationsActive.push(replicationStateProjections(DB_INSTANCE.projections));
 }
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class RxdbDatabaseService {
   get db(): RxTstatsDatabase {
     return DB_INSTANCE;

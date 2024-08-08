@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
-import { initDatabase } from './data/rxdb/service/rxdb-database.service';
+import { Component, inject } from '@angular/core';
+import {
+  initDatabase,
+  RxdbDatabaseService as RxDB,
+} from './data/rxdb/service/rxdb-database.service';
 
 @Component({
   selector: 'app-root',
@@ -7,8 +10,11 @@ import { initDatabase } from './data/rxdb/service/rxdb-database.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
+  private rxDb = inject(RxDB);
+
   title = 'tradingstatsapp';
   constructor() {
     initDatabase('');
+    this.rxDb.db.projections.$.subscribe(console.log);
   }
 }
