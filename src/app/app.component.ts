@@ -1,4 +1,5 @@
 import { Component, inject } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
 import {
   initDatabase,
   RxdbDatabaseService as RxDB,
@@ -11,10 +12,18 @@ import {
 })
 export class AppComponent {
   private rxDb = inject(RxDB);
-
+  projections$: any;
   title = 'tradingstatsapp';
-  constructor() {
-    initDatabase('');
-    this.rxDb.db.projections.$.subscribe(console.log);
+  async ngOnInit() {
+    await initDatabase('');
+    this.fetchProjections();
+  }
+
+  async fetchProjections() {
+    const db = await this.rxDb.db;
+    firstValueFrom(db.projections.find().$).then((projections) => {
+       
+    })
+    console.log(await firstValueFrom(db.projections.find().$));
   }
 }

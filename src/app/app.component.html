@@ -1,1 +1,3 @@
-<router-outlet></router-outlet>
+<div *ngIf="projections$ | async as projections">
+  {{ projections | json }}
+</div>

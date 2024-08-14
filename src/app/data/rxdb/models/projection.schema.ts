@@ -75,6 +75,14 @@ export const replicationStateProjections = (
   replicateRxCollection({
     collection: collection,
     replicationIdentifier: 'pull-projections',
+    live: false,
+
+    retryTime: 5 * 1000,
+
+    waitForLeadership: true,
+
+    autoStart: true,
+    deletedField: 'deleted',
     pull: {
       async handler(checkpointOrNull: any, batchSize: any) {
         const updatedAt = checkpointOrNull ? checkpointOrNull.updatedAt : 0;
@@ -89,5 +97,8 @@ export const replicationStateProjections = (
           checkpoint: data.checkpoint,
         };
       },
+      batchSize: 10,
+
+      modifier: (d) => d,
     },
   });

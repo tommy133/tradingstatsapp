@@ -90,7 +90,6 @@ async function initReplication() {
   >[] = [];
 
   console.log('DatabaseService: start ongoing replication');
-  console.log(DB_INSTANCE.projections);
 
   replicationsActive.push(replicationStateProjections(DB_INSTANCE.projections));
 }
