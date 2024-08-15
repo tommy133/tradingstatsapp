@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { OperationCommentService } from './data/service/opcomment.service';
+import { ProjectionCommentService } from './data/service/pcomment.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +9,12 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'tradingstatsapp';
+
+  constructor(
+    pcommentService: ProjectionCommentService,
+    opcommentService: OperationCommentService,
+  ) {
+    pcommentService.getComments().subscribe();
+    opcommentService.getComments().subscribe();
+  }
 }
