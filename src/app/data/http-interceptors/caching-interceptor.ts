@@ -75,8 +75,14 @@ export class CachingInterceptor implements HttpInterceptor {
             const id = idMatch[1];
             const baseUrl = req.url.replace(/\/\d+$/, '');
             const cachedData = JSON.parse(localStorage.getItem(baseUrl)!);
-            const item = this.getItemFromCache(cachedData, id);
-
+            let item;
+            if (baseUrl.includes('pcomments')) {
+              item = this.getProjectionComments(cachedData, id);
+            } else if (baseUrl.includes('opcomments')) {
+              item = this.getOpcomments(cachedData, id);
+            } else {
+              item = this.getItemFromCache(cachedData, id);
+            }
             if (cachedData && item) {
               const cachedResponse = new HttpResponse({
                 body: item,
@@ -98,8 +104,14 @@ export class CachingInterceptor implements HttpInterceptor {
       (item) =>
         item.id === Number(id) ||
         item.id_st === Number(id) ||
-        item.id_mkt === Number(id) ||
-        item.id_opc === Number(id),
+        item.id_mkt === Number(id),
     );
+  }
+
+  private getProjectionComments(data: any[], id: string) {
+    return data.filter((item) => item.id_proj === Number(id));
+  }
+  private getOpcomments(data: any[], id: string) {
+    return data.filter((item) => item.id_op === Number(id));
   }
 }
