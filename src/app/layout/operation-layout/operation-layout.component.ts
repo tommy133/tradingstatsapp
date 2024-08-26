@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AccountService } from 'src/app/core/service/account.service';
+import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 
@@ -15,7 +16,9 @@ export class OperationLayoutComponent {
 
   private accountSubscription!: Subscription;
 
-  constructor() {
+  constructor(opcommentService: OperationCommentService) {
+    opcommentService.getComments().subscribe(); //caching purposes
+
     this.accountService.initializeAccountControl(
       inject(ActivatedRoute).snapshot,
     );

@@ -5,12 +5,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { environment } from 'src/environments/environment';
+import { CachingInterceptor } from './data/http-interceptors/caching-interceptor';
 import { AssetLayoutComponent } from './layout/asset-layout/asset-layout.component';
 import { LoginLayoutComponent } from './layout/login-layout/login-layout.component';
 import { ToastMessageComponent } from './layout/main-layout/components/toast-message/toast-message.component';
@@ -56,7 +58,9 @@ import { SharedModule } from './shared/shared.module';
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: CachingInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

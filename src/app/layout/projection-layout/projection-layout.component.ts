@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
 
 @Component({
@@ -9,4 +10,8 @@ import { MainLayoutComponent } from '../main-layout/main-layout.component';
 export class ProjectionLayoutComponent {
   title = MainLayoutComponent.title;
   buttons = MainLayoutComponent.buttons;
+
+  constructor(pcommentService: ProjectionCommentService) {
+    pcommentService.getComments().subscribe(); //caching purposes
+  }
 }
