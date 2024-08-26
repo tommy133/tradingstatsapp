@@ -76,10 +76,10 @@ export class CachingInterceptor implements HttpInterceptor {
             const baseUrl = req.url.replace(/\/\d+$/, '');
             const cachedData = JSON.parse(localStorage.getItem(baseUrl)!);
             let item;
-            if (baseUrl.includes('pcomments')) {
-              item = this.getProjectionComments(cachedData, id);
-            } else if (baseUrl.includes('opcomments')) {
+            if (baseUrl.includes('opcomments')) {
               item = this.getOpcomments(cachedData, id);
+            } else if (baseUrl.includes('pcomments')) {
+              item = this.getProjectionComments(cachedData, id);
             } else {
               item = this.getItemFromCache(cachedData, id);
             }
