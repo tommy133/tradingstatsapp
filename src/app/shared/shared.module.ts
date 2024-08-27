@@ -27,6 +27,7 @@ import { SymbolSearchComponent } from './components/symbol-search/symbol-search.
 import { TextAreaComponent } from './components/text-area/text-area.component';
 import { TextButtonComponent } from './components/text-button/text-button.component';
 import { TextIconButtonComponent } from './components/text-icon-button/text-icon-button.component';
+import { TotalComponent } from './components/total/total.component';
 import { TradingviewButtonComponent } from './components/tradingview-button/tradingview-button.component';
 import { TrimesterBtnComponent } from './components/trimester-selector/trimester-btn/trimester-btn.component';
 import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
@@ -62,6 +63,7 @@ const componentsAndPipes = [
   CommentsThreadComponent,
   CommentEntryComponent,
   AveragesComponent,
+  TotalComponent,
 ];
 
 const sharedModules = [

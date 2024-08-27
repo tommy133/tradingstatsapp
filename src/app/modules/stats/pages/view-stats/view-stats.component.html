@@ -15,26 +15,30 @@
       </ng-container>
     </app-filter-options>
   </div>
-  <div
-    *ngIf="hasOperations$ | async"
-    class="flex flex-col mt-10 p-10 gap-4 bg-light-gray rounded">
-    <div class="flex">
-      <app-line-chart
-        class="w-full"
-        *ngIf="operationData$ | async as operationData"
-        [data]="operationData"></app-line-chart>
-      <app-pie-chart
-        class="w-full"
-        *ngIf="operationRevenueData$ | async as operationRevenueData"
-        [data]="operationRevenueData"></app-pie-chart>
+  <ng-container *ngIf="operationData$ | async as operationData; else loading">
+    <div
+      *ngIf="hasOperations$ | async"
+      class="flex flex-col mt-10 p-10 gap-4 bg-light-gray rounded">
+      <div class="flex">
+        <app-line-chart
+          class="w-full"
+          [data]="operationData"></app-line-chart>
+        <app-pie-chart
+          class="w-full"
+          *ngIf="operationRevenueData$ | async as operationRevenueData"
+          [data]="operationRevenueData"></app-pie-chart>
+      </div>
+      <div class="flex justify-center items-center gap-4">
+        <app-hope
+          *ngIf="operationRevenueData$ | async as operationRevenueData"
+          [data]="operationRevenueData"></app-hope>
+        <app-averages [data]="operationData"></app-averages>
+        <app-total [data]="operationData"></app-total>
+      </div>
     </div>
-    <div class="flex justify-center items-center gap-4">
-      <app-hope
-        *ngIf="operationRevenueData$ | async as operationRevenueData"
-        [data]="operationRevenueData"></app-hope>
-      <app-averages
-        *ngIf="operationData$ | async as operationData"
-        [data]="operationData"></app-averages>
-    </div>
-  </div>
+  </ng-container>
+
 </div>
+<ng-template #loading>
+  <app-loading-template></app-loading-template>
+</ng-template>
