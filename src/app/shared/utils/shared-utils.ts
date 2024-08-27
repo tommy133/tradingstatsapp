@@ -75,3 +75,9 @@ export const TimeframeTradingViewIntervalMap: {
   W: 'W',
   M: 'M',
 };
+
+export function sortDataByInsertedAt(res: any[]) {
+  return res.sort(
+    (a, b) => Date.parse(b.inserted_at) - Date.parse(a.inserted_at),
+  );
+}

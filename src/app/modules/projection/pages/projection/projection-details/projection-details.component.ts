@@ -8,6 +8,7 @@ import { OperationService } from 'src/app/modules/operation/service/operation.se
 import {
   getStatusColorClass,
   navigatePreservingQueryParams,
+  sortDataByInsertedAt,
 } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionService } from '../../../service/projection.service';
@@ -48,7 +49,11 @@ export class ProjectionDetailsComponent implements OnInit {
     this.comments$ = this.activatedRoute.params.pipe(
       switchMap((params) => {
         const id = params['id'];
-        return this.commentService.getCommentsById(id);
+        return this.commentService.getCommentsById(id).pipe(
+          map(
+            (res) => sortDataByInsertedAt(res), //it comes already sorted from the backend but need it for cached data
+          ),
+        );
       }),
     );
 

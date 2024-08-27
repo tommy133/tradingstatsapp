@@ -6,7 +6,10 @@ import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { ProjectionService } from 'src/app/modules/projection/service/projection.service';
-import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
+import {
+  navigatePreservingQueryParams,
+  sortDataByInsertedAt,
+} from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
 
@@ -47,7 +50,11 @@ export class OperationDetailsComponent implements OnInit {
     this.comments$ = this.activatedRoute.params.pipe(
       switchMap((params) => {
         const id = params['id'];
-        return this.commentService.getCommentsById(id);
+        return this.commentService.getCommentsById(id).pipe(
+          map(
+            (res) => sortDataByInsertedAt(res), //it comes already sorted from the backend but need it for cached data
+          ),
+        );
       }),
     );
 

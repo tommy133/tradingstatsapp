@@ -17,6 +17,7 @@ import { MutationType } from 'src/app/shared/utils/custom-types';
 import {
   formatDate,
   navigatePreservingQueryParams,
+  sortDataByInsertedAt,
   textToHyperlink,
 } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
@@ -96,6 +97,7 @@ export class ProjectionMutationComponent implements OnDestroy {
       this.comments = await firstValueFrom(
         this.commentService.getCommentsById(id),
       );
+      this.comments = sortDataByInsertedAt(this.comments); //it comes already sorted from the backend but need it for cached data
       if (projectionDetails) {
         this.setInitialFormStateProj(projectionDetails);
       }

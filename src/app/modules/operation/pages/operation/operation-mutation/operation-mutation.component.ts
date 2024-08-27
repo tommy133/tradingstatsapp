@@ -20,6 +20,7 @@ import { ProjectionService } from 'src/app/modules/projection/service/projection
 import { AccountType, MutationType } from 'src/app/shared/utils/custom-types';
 import {
   navigatePreservingQueryParams,
+  sortDataByInsertedAt,
   textToHyperlink,
 } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
@@ -139,6 +140,8 @@ export class OperationMutationComponent implements OnInit {
       this.comments = await firstValueFrom(
         this.commentService.getCommentsById(this.operationParamId),
       );
+      this.comments = sortDataByInsertedAt(this.comments); //it comes already sorted from the backend but need it for cached data
+
       if (operationDetails) {
         this.setInitialFormStateOperation(operationDetails);
       }
