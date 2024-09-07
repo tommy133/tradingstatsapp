@@ -8,13 +8,13 @@ import {
 import {
   Component,
   HostListener,
-  inject,
   OnDestroy,
   OnInit,
+  inject,
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, map, shareReplay, Subscription } from 'rxjs';
+import { Subscription, combineLatest, map, shareReplay } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -118,7 +118,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
 
       setTimeout(() => (this.slideState = 'center'), 300);
     } else {
-      this.toastService.warn({
+      this.toastService.info({
         message: 'No previous operation',
         duration: 1500,
       });
@@ -135,7 +135,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
 
       setTimeout(() => (this.slideState = 'center'), 300);
     } else {
-      this.toastService.warn({
+      this.toastService.info({
         message: 'No further operation',
         duration: 1500,
       });

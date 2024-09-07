@@ -8,7 +8,7 @@ import {
 import { Component, HostListener, inject } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, map, shareReplay, Subscription, switchMap } from 'rxjs';
+import { Subscription, combineLatest, map, shareReplay, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -148,7 +148,7 @@ export class ViewChartComponent {
 
       setTimeout(() => (this.slideState = 'center'), 300);
     } else {
-      this.toastService.warn({
+      this.toastService.info({
         message: 'No previous projection',
         duration: 1500,
       });
@@ -165,7 +165,7 @@ export class ViewChartComponent {
 
       setTimeout(() => (this.slideState = 'center'), 300);
     } else {
-      this.toastService.warn({
+      this.toastService.info({
         message: 'No further projection',
         duration: 1500,
       });

@@ -89,7 +89,7 @@ export class OperationListComponent implements AfterViewInit {
     if (bookmark) {
       this.router.navigateByUrl(bookmark);
     } else {
-      this.toastService.warn({
+      this.toastService.info({
         message: 'No bookmark available',
       });
     }
