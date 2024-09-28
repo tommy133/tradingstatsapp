@@ -9,16 +9,19 @@ REGLAS FUNDAMENTALES
 
 REGLAS ESPECÍFICAS
 
-  1. Si la zona en la que queremos entrar es rota con alto volumen o vela grande NO operar, si no rompe (volumen de parada) SÍ operar
-  2. Si llegamos a 2 pérdidas automáticamente dejamos de operar al estar vacía la cuenta emocional
-  3. Si tenemos un ratio R/B muy alto (> 3:1) podemos permitirnos el stop en breakeven, pero por lo general dejamos espacio para que el precio corra
-  4. Si en 1min sale volumen exagerado mirar temporalidades mayores y si el mercado va a la dirección de la señal podremos tomar esa operación acompañados de esa gran fuerza
-  5. Si la media móvil lleva mucho tiempo sin tocar el precio, no operaremos ya que hay riesgo de retroceso en V
-  6. Si el volumen es fuerte pero la vela pequeña no la tomaremos en cuenta
-  7. Cuidado con las velas con mechas grandes
-  8. Si la vela MADRE rompe una zona importante en temporalidades mayores NO operar, buscamos velas de parada y no de ruptura
-  9. Si la vela madre es demasiado grande y el stop queda lejos podemos poner stop por debajo de 61,8 de los niveles de Fibonacci retracements
-  10. Si el precio llega al nivel 5 de Fibonacci extensions y no corrige salir automáticamente
-  11. Operar solo la primera oportunidad que se presenta, la segunda la podemos operar solo si es realmente clara y nuestra experiencia dice que es una buena oportunidad
-  12. Si la primera oportunidad es vaga, podemos operar la segunda oportunidad haciendo un ABC
-  13. Ratio mínimo 1, de los contrario me fríen a comisiones :`(
+  OPERATIVA
+
+    1. Empezar siempre por el contexto, si en temporalidades mayores tendencia alcista favorecemos las compras
+    2. Fuera del mercado con noticias fuertes en temporalidades menores
+    3. Esperar zonas operativas de alta negociación para buscar nuestro gatillo de entrada
+    4. Usar ordenes stop para confirmar el disparo hacia la dirección que queremos
+    5. Si llegamos a 2 pérdidas automáticamente dejamos de operar al estar vacía la cuenta emocional
+    6. Si el volumen es fuerte pero la vela pequeña no la tomaremos en cuenta
+
+  GESTIÓN DE LA POSICIÓN
+
+    1. Ratio mínimo R/B 1/2
+    2. Stop en breakeven a 3/4 TP
+    3. Si puedo tener el grafico delante durante el desarrollo de TODA la operación, puedo permitirme poner solo stop loss (antifragilidad)
+
+
