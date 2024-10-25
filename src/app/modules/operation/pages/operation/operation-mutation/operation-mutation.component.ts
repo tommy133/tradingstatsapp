@@ -63,7 +63,10 @@ export class OperationMutationComponent implements OnInit {
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
 
   comments: OperationComment[] = [];
-
+  constructor(router: Router) {
+    const navigation = this.router.getCurrentNavigation();
+    console.log(navigation?.extras.state?.['data']);
+  }
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
   selectedSymbol: string = '';
@@ -182,12 +185,8 @@ export class OperationMutationComponent implements OnInit {
     return this.isMutationAdd ? 'bg-green' : 'bg-light-orange';
   }
 
-  goToList() {
-    navigatePreservingQueryParams(
-      ['/operations'],
-      this.router,
-      this.activatedRoute,
-    );
+  goBack() {
+    navigatePreservingQueryParams(['..'], this.router, this.activatedRoute);
   }
 
   goToDetails() {
@@ -457,7 +456,7 @@ export class OperationMutationComponent implements OnInit {
       this.toastService.success({
         message: `Operation ${operation} successfully`,
       });
-      this.goToList();
+      this.goBack();
     } else {
       this.errors.forEach((error) => {
         this.toastService.error({
