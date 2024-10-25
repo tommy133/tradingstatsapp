@@ -11,6 +11,7 @@ import { TableOperationComponent } from './pages/operation/operation-list/table-
 import { OperationMutationComponent } from './pages/operation/operation-mutation/operation-mutation.component';
 import { ViewChartComponent } from './pages/view-chart/view-chart.component';
 import { RulesComponent } from './pages/rules/rules/rules.component';
+import { ChecklistComponent } from './pages/rules/checklist/checklist.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { RulesComponent } from './pages/rules/rules/rules.component';
     ViewChartComponent,
     OperationFiltersFormComponent,
     RulesComponent,
+    ChecklistComponent,
   ],
   imports: [
     CommonModule,

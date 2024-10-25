@@ -1,0 +1,29 @@
+<div class="bg-white rounded p-3">
+  <form [formGroup]="checklistForm">
+    <table>
+      <tbody>
+        <tr>
+          <th></th>
+          <th>A</th>
+          <th>D</th>
+        </tr>
+        <tr *ngFor="let field of fields">
+          <td>{{ field.label }}</td>
+          <td>
+            <input
+              type="radio"
+              [formControlName]="field.name"
+              [value]="true">
+          </td>
+          <td>
+            <input
+              type="radio"
+              [formControlName]="field.name"
+              [value]="false">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <a (click)="goToddOperation()">A/D</a>
+  </form>
+</div>
