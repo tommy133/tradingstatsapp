@@ -384,7 +384,7 @@ export class OperationMutationComponent implements OnInit {
       timeframe,
       status,
       account,
-      volume,
+      checklist,
       ratio,
       revenue,
     } = this.operationForm.value;
@@ -398,7 +398,7 @@ export class OperationMutationComponent implements OnInit {
       id_st: status!,
       id_ac: account!,
       rr_ratio: ratio!,
-      volume: volume!,
+      checklist: checklist!,
       revenue: revenue!,
     };
   }
