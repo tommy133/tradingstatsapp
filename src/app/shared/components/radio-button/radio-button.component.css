@@ -1,0 +1,30 @@
+input[type='radio'] {
+  /* reset browser appearances  */
+  cursor: pointer;
+  appearance: none;
+  border: 2px solid;
+  width: 20px;
+  height: 20px;
+  border-radius: 19px;
+  @apply border-dark/40;
+  background-color: white;
+}
+
+input[type='radio']:checked {
+  border: none;
+  background-image: url('src/assets/svg/radio-checked.svg');
+}
+
+input[type='radio']:hover {
+  @apply border-dark;
+  opacity: 80%;
+}
+
+input[type='radio']:focus {
+  @apply border-dark;
+  opacity: 80%;
+}
+
+input[type='radio']:disabled {
+  opacity: 20%;
+}
