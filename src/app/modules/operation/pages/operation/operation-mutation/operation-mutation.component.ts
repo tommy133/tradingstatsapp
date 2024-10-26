@@ -63,10 +63,6 @@ export class OperationMutationComponent implements OnInit {
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
 
   comments: OperationComment[] = [];
-  constructor(router: Router) {
-    const navigation = this.router.getCurrentNavigation();
-    console.log(navigation?.extras.state?.['data']);
-  }
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
   selectedSymbol: string = '';
@@ -117,6 +113,7 @@ export class OperationMutationComponent implements OnInit {
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
   revenue = this.formBuilder.control<number | null>(null);
+  checklist = this.formBuilder.control<string | null>(this.getChecklistData());
   comment = this.formBuilder.control<string | null>(null);
 
   operationForm = this.formBuilder.group({
@@ -131,6 +128,7 @@ export class OperationMutationComponent implements OnInit {
     volume: this.volume,
     ratio: this.ratio,
     revenue: this.revenue,
+    checklist: this.checklist,
     comment: this.comment,
   });
 
@@ -158,6 +156,11 @@ export class OperationMutationComponent implements OnInit {
     }
   }
 
+  private getChecklistData() {
+    const navigation = this.router.getCurrentNavigation();
+    return navigation?.extras.state?.['data'];
+  }
+
   get mutation(): MutationType {
     if (this.operationParamId) {
       return MutationType.EDIT;
@@ -183,6 +186,16 @@ export class OperationMutationComponent implements OnInit {
 
   get buttonColor(): string {
     return this.isMutationAdd ? 'bg-green' : 'bg-light-orange';
+  }
+
+  get checklistLoaded(): boolean {
+    return this.checklist.value != null && this.checklist != undefined;
+  }
+
+  get uploadButtonText(): string {
+    return this.graphFileName != null && this.graphFileName != undefined
+      ? 'Replace chart'
+      : 'Upload chart';
   }
 
   goBack() {

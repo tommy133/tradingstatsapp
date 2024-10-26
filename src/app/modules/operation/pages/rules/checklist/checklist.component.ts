@@ -42,6 +42,7 @@ export class ChecklistComponent {
   goToddOperation() {
     this.router.navigate(['add'], {
       relativeTo: this.activatedRoute,
+      queryParamsHandling: 'preserve',
       state: { data: this.checklistForm.value },
     });
   }
