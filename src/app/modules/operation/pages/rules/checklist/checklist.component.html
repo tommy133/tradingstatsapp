@@ -30,7 +30,18 @@
         </div>
       </div>
     </div>
-
-    <a (click)="goToddOperation()">A/D</a>
+    <div class="flex justify-center mt-5">
+      <button
+        type="button"
+        *ngIf="(accumulationOrDistribution$ | async)  as accumulationOrDistribution"
+        [disabled]="isEquilibrium(accumulationOrDistribution)"
+        class="rounded-md p-3 bg-red"
+        [ngClass]="{'bg-green': isAccumulation(accumulationOrDistribution) ,
+      'bg-red': isDistribution(accumulationOrDistribution) ,
+      'bg-blue-400': isEquilibrium(accumulationOrDistribution)}"
+        (click)="goToddOperation()">
+        {{accumulationOrDistribution }}
+      </button>
+    </div>
   </form>
 </div>

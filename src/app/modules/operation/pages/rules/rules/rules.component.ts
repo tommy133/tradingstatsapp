@@ -13,7 +13,7 @@ import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils
       backTo=".."
     ></app-back-to>
     <div
-      class="flex flex-col h-full justify-center items-center whitespace-pre"
+      class="flex flex-col h-full justify-center items-center whitespace-pre gap-3 p-5"
     >
       <textarea
         class="font-semibold rounded-md no-scrollbar p-4 bg-yellow-200"

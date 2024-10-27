@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-checklist',
@@ -28,6 +29,26 @@ export class ChecklistComponent {
     volume: this.volume,
     delta: this.delta,
   });
+
+  accumulationOrDistribution$ = this.checklistForm.valueChanges.pipe(
+    map((checklist) =>
+      checklist.context === true ? 'ACCUMULATION' : 'EQUILIBRIUM',
+    ),
+  );
+
+  isAccumulation$$ = this.checklistForm.valueChanges
+    .pipe(map((checklist) => checklist.context === true))
+    .subscribe(console.log);
+
+  isAccumulation(state: string) {
+    return state === 'ACCUMULATION';
+  }
+  isDistribution(state: string) {
+    return state === 'DISTRIBUTION';
+  }
+  isEquilibrium(state: string) {
+    return state === 'EQUILIBRIUM';
+  }
 
   fields = [
     { name: 'context', label: 'Context' },
