@@ -16,7 +16,7 @@ import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils
       class="flex flex-col h-full justify-center items-center whitespace-pre"
     >
       <textarea
-        class="font-semibold rounded-md no-scrollbar p-4"
+        class="font-semibold rounded-md no-scrollbar p-4 bg-yellow-200"
         rows="20"
         cols="100"
       >
