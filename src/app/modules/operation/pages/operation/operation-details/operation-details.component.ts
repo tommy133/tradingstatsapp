@@ -38,6 +38,7 @@ export class OperationDetailsComponent implements OnInit {
   operation$?: Observable<Operation>;
   projectionAssocId$?: Observable<number>;
   comments$?: Observable<OperationComment[]>;
+  checklist$?: Observable<{ key: string; value: string }[]>;
 
   ngOnInit() {
     this.operation$ = this.activatedRoute.params.pipe(
@@ -45,6 +46,15 @@ export class OperationDetailsComponent implements OnInit {
         const id = params['id'];
         return this.operationService.getOperation(id);
       }),
+    );
+
+    this.checklist$ = this.operation$.pipe(
+      map((operation) =>
+        Object.entries(operation.checklist ?? {}).map(([key, value]) => ({
+          key: key,
+          value: value,
+        })),
+      ),
     );
 
     this.comments$ = this.activatedRoute.params.pipe(

@@ -106,6 +106,29 @@
         [textColor]="getRevenueColorClass(operation.revenue)"></app-label>
     </div>
 
+    <div
+      *ngIf="checklist$ | async as checklist"
+      class="flex items-center justify-between pt-5">
+      <app-form-label text="Checklist"></app-form-label>
+      <!-- simple-table.component.html -->
+
+      <table>
+        <thead>
+          <tr>
+            <th>Calculation</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let row of checklist"
+            class="border border-dark">
+            <td [ngClass]="{'bg-green': row.value, 'bg-red': !row.value}">{{ row.key }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+
     <div class="flex flex-col gap-2 pt-5">
       <app-form-label text="Comments"></app-form-label>
       <ng-container *ngIf="comments$ | async as comments; else loadingComments">
