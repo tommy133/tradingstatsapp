@@ -110,7 +110,6 @@ export class OperationMutationComponent implements OnInit {
     this.DEFAULT_STATUS,
     Validators.required,
   );
-  volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
   revenue = this.formBuilder.control<number | null>(null);
   checklist = this.formBuilder.control<string | null>(this.getChecklistData());
@@ -125,7 +124,6 @@ export class OperationMutationComponent implements OnInit {
     timeframe: this.timeframe,
     status: this.status,
     account: this.account,
-    volume: this.volume,
     ratio: this.ratio,
     revenue: this.revenue,
     checklist: this.checklist,
@@ -255,7 +253,6 @@ export class OperationMutationComponent implements OnInit {
       timeframe,
       status: { id_st },
       account: { id_ac },
-      volume,
       ratio,
       revenue,
     } = operationDetails;
@@ -279,7 +276,6 @@ export class OperationMutationComponent implements OnInit {
     this.timeframe.setValue(timeframe);
     this.status.setValue(id_st);
     this.account.setValue(id_ac);
-    this.volume.setValue(volume!);
     this.ratio.setValue(ratio!);
     this.revenue.setValue(revenue!);
   }
@@ -413,7 +409,6 @@ export class OperationMutationComponent implements OnInit {
       timeframe,
       status,
       account,
-      volume,
       ratio,
       revenue,
     } = this.operationForm.value;
@@ -428,7 +423,6 @@ export class OperationMutationComponent implements OnInit {
       id_st: status!,
       id_ac: account!,
       rr_ratio: ratio!,
-      volume: volume!,
       revenue: revenue!,
     };
   }

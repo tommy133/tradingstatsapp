@@ -13,7 +13,6 @@ export interface Operation {
   status: Status;
   account: Account;
   checklist?: any;
-  volume?: number;
   ratio?: number;
   revenue?: number;
 }
