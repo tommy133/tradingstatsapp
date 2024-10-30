@@ -35,28 +35,32 @@ export class ProjectionListComponent implements AfterViewInit {
   private projectionFilter = inject(ProjectionFilterService);
   private projectionFilterFormService = inject(ProjectionFilterFormService);
 
-  projections$ = this.projectionService.projections$.pipe(shareReplay(1));
+  private projections$ = this.projectionService.projections$.pipe(
+    shareReplay(1),
+  );
   searchProjectionsControl = new FormControl<string>('');
-  searchProjections$ = this.formService.applyDebounceOnSearch(
+  private searchProjections$ = this.formService.applyDebounceOnSearch(
     this.searchProjectionsControl.valueChanges,
   );
   isSearchActive$ = this.searchProjectionsControl.valueChanges.pipe(
     map((search) => (search?.length ?? 0) > 0),
   );
 
-  filteredProjectionsByName$ = this.formService.filterItems(
+  private filteredProjectionsByName$ = this.formService.filterItems(
     this.projections$,
     this.searchProjections$,
     ({ symbol }) => symbol.name_sym,
   );
 
-  filteredProjections$ = this.projectionFilter.getFilteredProjections(
+  private filteredProjections$ = this.projectionFilter.getFilteredProjections(
     this.filteredProjectionsByName$,
   );
+
   orderBySelect = new FormControl<string>('');
   ngAfterViewInit() {
     this.orderBySelect.setValue('Timeframe'); //default projection ordered by timeframe
   }
+
   orderedProjections$ = combineLatest([
     this.orderBySelect.valueChanges,
     this.filteredProjections$,
@@ -72,6 +76,7 @@ export class ProjectionListComponent implements AfterViewInit {
       return projections;
     }),
   );
+
   n_projections$ = this.filteredProjections$.pipe(map((projs) => projs.length));
 
   goToAdd() {

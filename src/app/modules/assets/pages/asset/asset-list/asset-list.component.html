@@ -1,4 +1,4 @@
-<ng-container *ngIf="filteredAssets$ | async as assets; else loading">
+<ng-container *ngIf="orderedAssets$ | async as assets; else loading">
   <div class="flex flex-col gap-2">
     <div class="flex justify-between items-center p-5">
       <div class="flex items-center gap-4">
@@ -17,6 +17,15 @@
           </ng-container>
           <ng-container filters>
             <asset-filters-form></asset-filters-form>
+          </ng-container>
+          <ng-container orderBy>
+            <select
+              name="orderBySelect"
+              class="rounded border-2"
+              [formControl]="orderBySelect">
+              <option value="btCheckpoint">Backtest checkpoint</option>
+              <option value="nTrades">Number trades</option>
+            </select>
           </ng-container>
         </app-filter-options>
       </div>

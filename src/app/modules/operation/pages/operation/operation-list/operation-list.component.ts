@@ -37,24 +37,25 @@ export class OperationListComponent implements AfterViewInit {
   private operationFilterService = inject(OperationFilterService);
   private operationFilterFormService = inject(OperationFilterFormService);
 
-  operations$ = this.operationService.operations$.pipe(shareReplay(1));
+  private operations$ = this.operationService.operations$.pipe(shareReplay(1));
   searchOperationsControl = new FormControl<string>('');
-  searchOperations$ = this.formService.applyDebounceOnSearch(
+  private searchOperations$ = this.formService.applyDebounceOnSearch(
     this.searchOperationsControl.valueChanges,
   );
   isSearchActive$ = this.searchOperationsControl.valueChanges.pipe(
     map((search) => (search?.length ?? 0) > 0),
   );
 
-  filteredOperationsByName$ = this.formService.filterItems(
+  private filteredOperationsByName$ = this.formService.filterItems(
     this.operations$,
     this.searchOperations$,
     ({ symbol }) => symbol.name_sym,
   );
 
-  filteredOperations$ = this.operationFilterService.getFilteredOperations(
-    this.filteredOperationsByName$,
-  );
+  private filteredOperations$ =
+    this.operationFilterService.getFilteredOperations(
+      this.filteredOperationsByName$,
+    );
 
   orderBySelect = new FormControl<string>('');
   ngAfterViewInit() {
@@ -73,7 +74,7 @@ export class OperationListComponent implements AfterViewInit {
         );
       }
 
-      return operations;
+      return operations; //it comes already sorted from backend
     }),
   );
 

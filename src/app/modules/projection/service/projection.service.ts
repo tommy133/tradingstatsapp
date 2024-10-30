@@ -2,9 +2,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
-  map,
   Observable,
   Subscription,
+  map,
+  shareReplay,
   switchMap,
 } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -20,9 +21,10 @@ export class ProjectionService {
   private apiServerUrl = `${environment.apiBaseUrl}/projections`;
   private fetchSignal = new BehaviorSubject(null);
 
-  public projections$ = this.fetchSignal
-    .asObservable()
-    .pipe(switchMap(() => this.getProjections()));
+  public projections$ = this.fetchSignal.asObservable().pipe(
+    switchMap(() => this.getProjections()),
+    shareReplay(1),
+  );
 
   public static PROJECTION_STATUSES = ['WATCHING', 'EXPIRED'];
 

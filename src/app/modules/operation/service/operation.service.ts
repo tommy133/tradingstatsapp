@@ -2,9 +2,10 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   BehaviorSubject,
-  map,
   Observable,
   Subscription,
+  map,
+  shareReplay,
   switchMap,
 } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -20,9 +21,10 @@ export class OperationService {
   private apiServerUrl = `${environment.apiBaseUrl}/operations`;
   private fetchSignal = new BehaviorSubject(null);
 
-  public operations$ = this.fetchSignal
-    .asObservable()
-    .pipe(switchMap(() => this.getOperations()));
+  public operations$ = this.fetchSignal.asObservable().pipe(
+    switchMap(() => this.getOperations()),
+    shareReplay(1),
+  );
 
   public static OPERATION_STATUSES = ['OPEN', 'CLOSED'];
 
