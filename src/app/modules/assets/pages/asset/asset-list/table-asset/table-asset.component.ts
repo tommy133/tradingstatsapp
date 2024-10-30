@@ -36,6 +36,7 @@ export class TableAssetComponent {
     { name: 'Symbol name' },
     { name: 'Market' },
     { name: 'Number trades' },
+    { name: 'Backtest checkpoint' },
     { name: 'Actions' },
   ];
 

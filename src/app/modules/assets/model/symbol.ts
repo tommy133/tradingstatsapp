@@ -5,4 +5,5 @@ export interface Symbol {
   name_sym: string;
   market: Market;
   description?: string;
+  bt_checkpoint?: string;
 }

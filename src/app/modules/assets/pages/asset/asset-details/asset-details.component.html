@@ -33,14 +33,21 @@
       <app-label [text]="asset.market.name_mkt"></app-label>
     </div>
 
-    <div class="row">
+    <div
+      *ngIf="asset.description"
+      class="row">
       <app-form-label text="Description"></app-form-label>
       <app-text-area
         *ngIf="asset.description as desc"
         [text]="desc"
         [cols]="30"></app-text-area>
     </div>
-
+    <div
+      *ngIf="asset.bt_checkpoint"
+      class="row">
+      <app-form-label text="Backtest checkpoint"></app-form-label>
+      <app-label [text]="(asset.bt_checkpoint | date : 'yyyy-MM-dd HH:mm' : 'UTC')!"></app-label>
+    </div>
   </div>
 </ng-container>
 

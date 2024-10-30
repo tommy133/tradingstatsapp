@@ -6,7 +6,6 @@
           <div class="font-bold cell">{{ column.name }}</div>
         </ng-container>
       </div>
-
       <div class="bg-gray-900 text-white text-sm font-light">
         <ng-container *ngFor="let row of rows">
           <div
@@ -16,6 +15,9 @@
             <div class="font-bold cell">{{ row.name_sym }}</div>
             <div class="font-semibold cell">{{ row.market.name_mkt }}</div>
             <div class="font-semibold cell">{{getNumberOfTrades(row.id_sym)}}</div>
+            <div class="font-semibold cell">
+              {{row.bt_checkpoint | date : 'dd/MM/yyyy HH:mm' : 'UTC'}}
+            </div>
             <div class="font-semibold cell">
               <div class="flex justify-center space-x-2 items-center">
                 <icon-button

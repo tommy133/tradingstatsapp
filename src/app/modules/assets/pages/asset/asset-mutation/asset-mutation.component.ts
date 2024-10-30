@@ -1,7 +1,8 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, Observable } from 'rxjs';
+import { Observable, firstValueFrom } from 'rxjs';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { Market } from 'src/app/data/models/market';
 import { MarketService } from 'src/app/data/service/market.service';
@@ -32,6 +33,7 @@ export class AssetMutationComponent {
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
   private toastService = inject(ToastService);
+  private datePipe = inject(DatePipe);
 
   markets$: Observable<Market[]> = this.marketService.getMarkets();
 
@@ -45,12 +47,14 @@ export class AssetMutationComponent {
   name = this.formBuilder.control<string | null>(null, Validators.required);
   market = this.formBuilder.control<number | null>(null, Validators.required);
   description = this.formBuilder.control<string | null>(null);
+  bt_checkpoint = this.formBuilder.control<string | null>(null);
 
   assetForm = this.formBuilder.group({
     id: this.id,
     name: this.name,
     market: this.market,
     description: this.description,
+    bt_checkpoint: this.bt_checkpoint,
   });
 
   async ngOnInit() {
@@ -72,11 +76,21 @@ export class AssetMutationComponent {
       name_sym,
       market: { id_mkt },
       description,
+      bt_checkpoint,
     } = assetDetails;
     this.id.setValue(id_sym);
     this.name.setValue(name_sym);
     this.market.setValue(id_mkt);
     this.description.setValue(description ?? null);
+    this.bt_checkpoint.setValue(
+      bt_checkpoint
+        ? this.datePipe.transform(
+            new Date(bt_checkpoint),
+            'yyyy-MM-ddTHH:mm',
+            'UTC',
+          )
+        : null,
+    );
   }
 
   get mutation(): MutationType {
@@ -156,12 +170,14 @@ export class AssetMutationComponent {
   }
 
   private getSymbolUpdateInput(): SymbolUpdateInput {
-    const { id, name, market, description } = this.assetForm.value;
+    const { id, name, market, description, bt_checkpoint } =
+      this.assetForm.value;
     return {
       id_sym: id!,
       name_sym: name!,
       id_mkt: market!,
       description: description!,
+      bt_checkpoint: bt_checkpoint!,
     };
   }
   async onSubmit() {
