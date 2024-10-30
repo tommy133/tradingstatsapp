@@ -12,6 +12,7 @@ export interface Operation {
   graph?: string;
   status: Status;
   account: Account;
+  checklist?: any;
   volume?: number;
   ratio?: number;
   revenue?: number;

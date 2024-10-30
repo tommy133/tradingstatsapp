@@ -1,0 +1,47 @@
+<div class="bg-yellow-200 rounded p-3 w-[400px]">
+  <form [formGroup]="checklistForm">
+    <div class="mb-5">
+      <div class="flex justify-between font-medium">
+        <div class="w-1/3"></div>
+        <!-- Empty header for labels -->
+        <div class="w-1/3 text-center">A</div>
+        <div class="w-1/3 text-center">D</div>
+      </div>
+    </div>
+
+    <div
+      *ngFor="let field of fields"
+      class="mt-5 flex justify-between items-center">
+      <div class="w-1/3 font-medium">{{ field.label }}</div>
+
+      <div class="flex w-2/3 justify-between">
+        <div class="flex-1 text-center">
+          <input
+            type="radio"
+            [formControlName]="field.name"
+            [value]="true">
+
+        </div>
+        <div class="flex-1 text-center">
+          <input
+            type="radio"
+            [formControlName]="field.name"
+            [value]="false">
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-center mt-5">
+      <button
+        type="button"
+        *ngIf="(accumulationOrDistribution$ | async)  as accumulationOrDistribution"
+        [disabled]="isEquilibrium(accumulationOrDistribution)"
+        class="rounded-md p-3 bg-red"
+        [ngClass]="{'bg-green': isAccumulation(accumulationOrDistribution) ,
+      'bg-red': isDistribution(accumulationOrDistribution) ,
+      'bg-gray-300': isEquilibrium(accumulationOrDistribution)}"
+        (click)="goToddOperation()">
+        {{accumulationOrDistribution }}
+      </button>
+    </div>
+  </form>
+</div>

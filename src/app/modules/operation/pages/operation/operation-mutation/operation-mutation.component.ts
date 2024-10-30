@@ -63,7 +63,6 @@ export class OperationMutationComponent implements OnInit {
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
 
   comments: OperationComment[] = [];
-
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
   selectedSymbol: string = '';
@@ -114,6 +113,7 @@ export class OperationMutationComponent implements OnInit {
   volume = this.formBuilder.control<number | null>(null);
   ratio = this.formBuilder.control<number | null>(null);
   revenue = this.formBuilder.control<number | null>(null);
+  checklist = this.formBuilder.control<string | null>(this.getChecklistData());
   comment = this.formBuilder.control<string | null>(null);
 
   operationForm = this.formBuilder.group({
@@ -128,6 +128,7 @@ export class OperationMutationComponent implements OnInit {
     volume: this.volume,
     ratio: this.ratio,
     revenue: this.revenue,
+    checklist: this.checklist,
     comment: this.comment,
   });
 
@@ -153,6 +154,11 @@ export class OperationMutationComponent implements OnInit {
         this.setInitialFormStateOperationFromProjection(projectionDetails);
       }
     }
+  }
+
+  private getChecklistData() {
+    const navigation = this.router.getCurrentNavigation();
+    return navigation?.extras.state?.['data'];
   }
 
   get mutation(): MutationType {
@@ -182,12 +188,18 @@ export class OperationMutationComponent implements OnInit {
     return this.isMutationAdd ? 'bg-green' : 'bg-light-orange';
   }
 
-  goToList() {
-    navigatePreservingQueryParams(
-      ['/operations'],
-      this.router,
-      this.activatedRoute,
-    );
+  get checklistLoaded(): boolean {
+    return this.checklist.value != null && this.checklist != undefined;
+  }
+
+  get uploadButtonText(): string {
+    return this.graphFileName != null && this.graphFileName != undefined
+      ? 'Replace chart'
+      : 'Upload chart';
+  }
+
+  goBack() {
+    navigatePreservingQueryParams(['..'], this.router, this.activatedRoute);
   }
 
   goToDetails() {
@@ -372,7 +384,7 @@ export class OperationMutationComponent implements OnInit {
       timeframe,
       status,
       account,
-      volume,
+      checklist,
       ratio,
       revenue,
     } = this.operationForm.value;
@@ -386,7 +398,7 @@ export class OperationMutationComponent implements OnInit {
       id_st: status!,
       id_ac: account!,
       rr_ratio: ratio!,
-      volume: volume!,
+      checklist: checklist!,
       revenue: revenue!,
     };
   }
@@ -457,7 +469,7 @@ export class OperationMutationComponent implements OnInit {
       this.toastService.success({
         message: `Operation ${operation} successfully`,
       });
-      this.goToList();
+      this.goBack();
     } else {
       this.errors.forEach((error) => {
         this.toastService.error({

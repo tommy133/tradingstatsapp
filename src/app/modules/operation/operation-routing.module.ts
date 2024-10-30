@@ -10,6 +10,12 @@ const routes: Routes = [
   {
     path: 'rules',
     component: RulesComponent,
+    children: [
+      {
+        path: 'add',
+        component: OperationMutationComponent,
+      },
+    ],
   },
   {
     path: 'view-chart/:id',

@@ -19,6 +19,7 @@ import { LabelComponent } from './components/label/label.component';
 import { LoadingTemplateComponent } from './components/loading-template/loading-template.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { RadioButtonComponent } from './components/radio-button/radio-button.component';
 import { RoundedButtonComponent } from './components/rounded-button/rounded-button.component';
 import { SearchByTextComponent } from './components/search-by-text/search-by-text.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
@@ -64,6 +65,7 @@ const componentsAndPipes = [
   CommentEntryComponent,
   AveragesComponent,
   TotalComponent,
+  RadioButtonComponent,
 ];
 
 const sharedModules = [

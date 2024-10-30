@@ -8,6 +8,6 @@ export interface OperationCreateInput {
   id_st: number;
   id_ac: number;
   rr_ratio?: number;
-  volume?: number;
+  checklist?: string;
   revenue?: number;
 }
