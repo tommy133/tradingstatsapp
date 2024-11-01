@@ -88,8 +88,8 @@ export class AssetListComponent implements AfterViewInit {
         case 'btCheckpoint':
           return unsortedAssets.sort(
             (a, b) =>
-              new Date(a.bt_checkpoint ?? Infinity).getTime() -
-              new Date(b.bt_checkpoint ?? Infinity).getTime(),
+              new Date(a.bt_checkpoint ?? 0).getTime() -
+              new Date(b.bt_checkpoint ?? 0).getTime(),
           );
         case 'nTrades':
         default:
