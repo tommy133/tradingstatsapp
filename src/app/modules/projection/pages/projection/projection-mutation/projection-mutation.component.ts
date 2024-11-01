@@ -143,6 +143,12 @@ export class ProjectionMutationComponent implements OnDestroy {
     return "${this.projectionForm.get('date')!.value} | date: 'yyyy-MM-dd'";
   }
 
+  get uploadButtonText(): string {
+    return this.graphFileName != null && this.graphFileName != undefined
+      ? 'Replace chart'
+      : 'Upload chart';
+  }
+
   goToList() {
     navigatePreservingQueryParams(
       ['/projections'],
