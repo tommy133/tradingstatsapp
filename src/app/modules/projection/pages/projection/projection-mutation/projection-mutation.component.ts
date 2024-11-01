@@ -3,7 +3,6 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map, Observable } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
-import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import {
   CreateProjectionCommentInput,
@@ -39,7 +38,6 @@ export class ProjectionMutationComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private toastService = inject(ToastService);
   private fileService = inject(FileService);
-  private sidebarService = inject(SidebarService);
 
   textToHyperLink = textToHyperlink;
 
@@ -47,7 +45,6 @@ export class ProjectionMutationComponent implements OnInit {
   projectionParamId =
     this.activatedRoute.snapshot.params['id'] ??
     this.activatedRoute.snapshot.parent?.params['id'];
-  isViewChart = this.router.url.includes('view-chart');
 
   isLoading: boolean = false;
   errors: Array<string> = [];

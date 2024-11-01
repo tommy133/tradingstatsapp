@@ -29,6 +29,7 @@ export class ProjectionDetailsComponent implements OnInit {
   comments$?: Observable<ProjectionComment[]>;
   isLoading: boolean = false;
   errors: Array<string> = [];
+  isViewChart = this.router.url.includes('view-chart');
 
   constructor(
     private projectionService: ProjectionService,
@@ -113,9 +114,10 @@ export class ProjectionDetailsComponent implements OnInit {
   }
 
   private goBackDelete() {
-    this.router.navigate(['../'], {
-      relativeTo: this.activatedRoute,
-      queryParamsHandling: 'preserve',
-    });
+    navigatePreservingQueryParams(
+      [this.isViewChart ? '/projections' : '../'],
+      this.router,
+      this.activatedRoute,
+    );
   }
 }
