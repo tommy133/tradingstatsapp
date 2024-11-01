@@ -55,7 +55,7 @@ export class TableProjectionComponent {
   gotoEditProjection(projId: number, event: any) {
     event.stopPropagation();
     navigatePreservingQueryParams(
-      [`/projections/edit/${projId}`],
+      [`/projections/${projId}/edit`],
       this.router,
       this.activatedRoute,
     );

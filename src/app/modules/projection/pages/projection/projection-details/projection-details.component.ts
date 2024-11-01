@@ -80,7 +80,7 @@ export class ProjectionDetailsComponent implements OnInit {
 
   goToEdit(projectionId: number) {
     navigatePreservingQueryParams(
-      ['../edit/', projectionId],
+      ['../', projectionId, 'edit'],
       this.router,
       this.activatedRoute,
     );

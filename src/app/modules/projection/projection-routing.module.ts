@@ -12,6 +12,10 @@ const routes: Routes = [
     children: [
       {
         path: '',
+        component: ProjectionDetailsComponent,
+      },
+      {
+        path: 'edit',
         component: ProjectionMutationComponent,
       },
     ],
@@ -25,7 +29,7 @@ const routes: Routes = [
         component: ProjectionMutationComponent,
       },
       {
-        path: 'edit/:id',
+        path: ':id/edit',
         component: ProjectionMutationComponent,
       },
       {

@@ -171,7 +171,7 @@ export class OperationMutationComponent implements OnInit {
   }
 
   get cancelRoute(): string {
-    return '../../' + this.operationForm.value.id;
+    return '../';
   }
 
   get buttonType(): string {
