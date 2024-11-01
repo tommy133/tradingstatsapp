@@ -131,10 +131,6 @@ export class OperationDetailsComponent implements OnInit {
     );
   }
 
-  closeSidebarLeft() {
-    this.sidebarService.closeSidebarLeft();
-  }
-
   goToChart(operationId: number) {
     this.router.navigate(['../view-chart', operationId], {
       relativeTo: this.activatedRoute,

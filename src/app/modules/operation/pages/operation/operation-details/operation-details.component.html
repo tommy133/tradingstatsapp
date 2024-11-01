@@ -1,7 +1,6 @@
 <ng-container *ngIf="operation$ | async as operation; else loading">
   <div class="p-8 bg-dark">
-    <div class="flex justify-between">
-      <app-close-button (closeEvent)="closeSidebarRedirect ? goBackDelete() : closeSidebarLeft()"></app-close-button>
+    <div class="flex justify-end">
       <div
         *ngIf="extended"
         class="flex flex-row items-center space-x-5">

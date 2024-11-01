@@ -118,8 +118,4 @@ export class ProjectionDetailsComponent implements OnInit {
       queryParamsHandling: 'preserve',
     });
   }
-
-  onCloseSidebar() {
-    navigatePreservingQueryParams(['..'], this.router, this.activatedRoute);
-  }
 }
