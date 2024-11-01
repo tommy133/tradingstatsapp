@@ -8,13 +8,13 @@ import {
 import {
   Component,
   HostListener,
+  inject,
   OnDestroy,
   OnInit,
-  inject,
 } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription, combineLatest, map, shareReplay } from 'rxjs';
+import { combineLatest, map, shareReplay, Subscription } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -51,6 +51,10 @@ export class ViewChartComponent implements OnInit, OnDestroy {
 
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: any) {
+    if (
+      this.activatedRoute.snapshot.children.at(0)?.routeConfig?.path === 'edit'
+    )
+      return;
     event.stopPropagation();
     if (event.key === 'ArrowLeft') {
       this.navigatePreviousOperation();

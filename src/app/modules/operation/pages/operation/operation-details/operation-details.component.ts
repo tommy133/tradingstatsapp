@@ -69,7 +69,9 @@ export class OperationDetailsComponent implements OnInit {
     );
 
     this.accumulationOrDistribution$ = this.operation$?.pipe(
-      map(({ checklist }) => getPotentialDirection(checklist)),
+      map(({ checklist }) =>
+        checklist ? getPotentialDirection(checklist) : '',
+      ),
     );
 
     this.comments$ = this.activatedRoute.params.pipe(
