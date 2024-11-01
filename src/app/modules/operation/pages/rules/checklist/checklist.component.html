@@ -39,7 +39,7 @@
         [ngClass]="{'bg-green': isAccumulation(accumulationOrDistribution) ,
       'bg-red': isDistribution(accumulationOrDistribution) ,
       'bg-gray-300': isEquilibrium(accumulationOrDistribution)}"
-        (click)="goToddOperation()">
+        (click)="goToddOperation(checklistForm)">
         {{accumulationOrDistribution }}
       </button>
     </div>

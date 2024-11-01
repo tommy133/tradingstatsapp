@@ -9,7 +9,7 @@ export function getPotentialDirection(checklist: any) {
       ? 'DISTRIBUTION'
       : 'EQUILIBRIUM';
   }
-  return 'EQUILIBRIUM';
+  return '';
 }
 
 export function isAccumulation(state: string) {

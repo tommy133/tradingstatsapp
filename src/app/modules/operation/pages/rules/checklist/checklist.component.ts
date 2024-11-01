@@ -57,11 +57,13 @@ export class ChecklistComponent {
   ];
 
   // Handle form submission
-  goToddOperation() {
+  goToddOperation(checklistForm: any) {
+    const newChecklistForm = { ...checklistForm.value };
+    this.checklistForm.reset();
     this.router.navigate(['add'], {
       relativeTo: this.activatedRoute,
       queryParamsHandling: 'preserve',
-      state: { data: this.checklistForm.value },
+      state: { data: newChecklistForm },
     });
   }
 }
