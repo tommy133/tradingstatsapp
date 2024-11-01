@@ -89,7 +89,7 @@ export class ProjectionDetailsComponent implements OnInit {
 
   goToCreateOperation(projectionId: number) {
     navigatePreservingQueryParams(
-      ['../../operations/addFromProj', projectionId],
+      ['/operations/addFromProj', projectionId],
       this.router,
       this.activatedRoute,
     );
