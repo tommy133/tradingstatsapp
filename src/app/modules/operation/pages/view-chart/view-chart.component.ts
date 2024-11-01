@@ -112,11 +112,12 @@ export class ViewChartComponent implements OnInit, OnDestroy {
     },
   );
 
+  // MNavigate to more recent
   navigatePreviousOperation() {
-    if (this.navigationIndex > 0) {
+    if (this.navigationIndex < this.operations.length - 1) {
       this.slideState = 'left';
 
-      this.navigationIndex--;
+      this.navigationIndex++;
       const id = this.operations[this.navigationIndex].id;
       this.navigateToOperation(id);
 
@@ -129,11 +130,12 @@ export class ViewChartComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Navigate to older
   navigateNextOperation() {
-    if (this.navigationIndex < this.operations.length - 1) {
+    if (this.navigationIndex > 0) {
       this.slideState = 'right';
 
-      this.navigationIndex++;
+      this.navigationIndex--;
       const id = this.operations[this.navigationIndex].id;
       this.navigateToOperation(id);
 
