@@ -286,6 +286,8 @@ export class ProjectionMutationComponent implements OnInit {
 
   async onSubmit() {
     if (this.projectionForm.invalid) {
+      this.projectionForm.markAllAsTouched();
+
       this.toastService.error({
         message: 'Invalid form!',
       });

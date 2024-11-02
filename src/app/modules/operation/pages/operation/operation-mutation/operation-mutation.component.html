@@ -26,9 +26,14 @@
       <p class="text-white font-semibold">{{formType}} OPERATION</p>
       <div class="flex flex-row items-center justify-between pt-5">
         <app-form-label text="Select symbol"></app-form-label>
-        <app-symbol-search
-          [selected]="selectedSymbol"
-          (symbolSelected)="setSymbolForm($event)"></app-symbol-search>
+        <div class="flex gap-1">
+          <app-symbol-search
+            [selected]="selectedSymbol"
+            (symbolSelected)="setSymbolForm($event)"></app-symbol-search>
+          <app-validation-error
+            for="symbol"
+            fieldName="symbol"></app-validation-error>
+        </div>
       </div>
 
       <div class="flex flex-row items-center justify-between pt-5">

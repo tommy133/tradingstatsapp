@@ -58,7 +58,6 @@ export class OperationMutationComponent implements OnInit {
   isLoading: boolean = false;
   errors: Array<string> = [];
 
-  readonly DEFAULT_SYMBOL = 20; //FDXS
   readonly DEFAULT_STATUS: number = 2; //CLOSED
 
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
@@ -85,10 +84,7 @@ export class OperationMutationComponent implements OnInit {
 
   //CONTROLS
   id = this.formBuilder.control<number | null>(null);
-  symbol = this.formBuilder.control<number | null>(
-    this.DEFAULT_SYMBOL,
-    Validators.required,
-  );
+  symbol = this.formBuilder.control<number | null>(null, Validators.required);
   orderType = this.formBuilder.control<number | null>(
     null,
     Validators.required,
@@ -440,6 +436,8 @@ export class OperationMutationComponent implements OnInit {
 
   async onSubmit() {
     if (this.operationForm.invalid) {
+      this.operationForm.markAllAsTouched();
+
       this.toastService.error({
         message: 'Invalid form!',
       });
