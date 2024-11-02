@@ -25,7 +25,6 @@ const routes: Routes = [
         path: '',
         component: OperationDetailsComponent,
         data: {
-          postDeletePath: '../../',
           showViewChartBtn: false,
         },
       },
@@ -54,10 +53,6 @@ const routes: Routes = [
       {
         path: ':id',
         component: OperationDetailsComponent,
-        data: {
-          postDeletePath: '../',
-          closeSidebarRedirect: true,
-        },
       },
     ],
   },

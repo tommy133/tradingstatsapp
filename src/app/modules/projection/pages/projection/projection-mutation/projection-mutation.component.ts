@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map, Observable } from 'rxjs';
@@ -29,7 +29,7 @@ import { ProjectionService } from '../../../service/projection.service';
   selector: 'app-projection-mutation',
   templateUrl: './projection-mutation.component.html',
 })
-export class ProjectionMutationComponent implements OnDestroy {
+export class ProjectionMutationComponent implements OnInit {
   private formBuilder = inject(FormBuilder);
   private statusService = inject(StatusService);
   private projectionService = inject(ProjectionService);
@@ -40,6 +40,11 @@ export class ProjectionMutationComponent implements OnDestroy {
   private fileService = inject(FileService);
 
   textToHyperLink = textToHyperlink;
+
+  //Take route from operation/:id or operation/view-chart/:id
+  projectionParamId =
+    this.activatedRoute.snapshot.params['id'] ??
+    this.activatedRoute.snapshot.parent?.params['id'];
 
   isLoading: boolean = false;
   errors: Array<string> = [];
@@ -88,28 +93,23 @@ export class ProjectionMutationComponent implements OnDestroy {
     comment: this.comment,
   });
 
-  activatedRouteSubs = this.activatedRoute.params.subscribe(async (params) => {
-    const id = params['id'];
-    if (id) {
+  async ngOnInit() {
+    if (this.projectionParamId) {
       const projectionDetails = await firstValueFrom(
-        this.projectionService.getProjection(id),
+        this.projectionService.getProjection(this.projectionParamId),
       );
       this.comments = await firstValueFrom(
-        this.commentService.getCommentsById(id),
+        this.commentService.getCommentsById(this.projectionParamId),
       );
       this.comments = sortDataByInsertedAt(this.comments); //it comes already sorted from the backend but need it for cached data
       if (projectionDetails) {
         this.setInitialFormStateProj(projectionDetails);
       }
     }
-  });
-
-  ngOnDestroy() {
-    this.activatedRouteSubs.unsubscribe();
   }
 
   get mutation(): MutationType {
-    if (this.activatedRoute.snapshot.params['id']) {
+    if (this.projectionParamId) {
       return MutationType.EDIT;
     }
     return MutationType.ADD;
@@ -124,7 +124,7 @@ export class ProjectionMutationComponent implements OnDestroy {
   }
 
   get cancelRoute(): string {
-    return '../../' + this.projectionForm.value.id;
+    return '../';
   }
 
   get buttonType(): string {
@@ -149,12 +149,8 @@ export class ProjectionMutationComponent implements OnDestroy {
       : 'Upload chart';
   }
 
-  goToList() {
-    navigatePreservingQueryParams(
-      ['/projections'],
-      this.router,
-      this.activatedRoute,
-    );
+  goBack() {
+    navigatePreservingQueryParams(['..'], this.router, this.activatedRoute);
   }
 
   goToDetails() {
@@ -315,7 +311,7 @@ export class ProjectionMutationComponent implements OnDestroy {
       this.toastService.success({
         message: `Projection ${operation} successfully`,
       });
-      this.goToList();
+      this.goBack();
     } else {
       this.errors.forEach((error) => {
         this.toastService.error({

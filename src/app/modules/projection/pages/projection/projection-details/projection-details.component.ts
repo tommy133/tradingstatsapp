@@ -29,6 +29,7 @@ export class ProjectionDetailsComponent implements OnInit {
   comments$?: Observable<ProjectionComment[]>;
   isLoading: boolean = false;
   errors: Array<string> = [];
+  isViewChart = this.router.url.includes('view-chart');
 
   constructor(
     private projectionService: ProjectionService,
@@ -80,7 +81,7 @@ export class ProjectionDetailsComponent implements OnInit {
 
   goToEdit(projectionId: number) {
     navigatePreservingQueryParams(
-      ['../edit/', projectionId],
+      ['../', projectionId, 'edit'],
       this.router,
       this.activatedRoute,
     );
@@ -88,7 +89,7 @@ export class ProjectionDetailsComponent implements OnInit {
 
   goToCreateOperation(projectionId: number) {
     navigatePreservingQueryParams(
-      ['../../operations/addFromProj', projectionId],
+      ['/operations/addFromProj', projectionId],
       this.router,
       this.activatedRoute,
     );
@@ -113,13 +114,10 @@ export class ProjectionDetailsComponent implements OnInit {
   }
 
   private goBackDelete() {
-    this.router.navigate(['../'], {
-      relativeTo: this.activatedRoute,
-      queryParamsHandling: 'preserve',
-    });
-  }
-
-  onCloseSidebar() {
-    navigatePreservingQueryParams(['..'], this.router, this.activatedRoute);
+    navigatePreservingQueryParams(
+      [this.isViewChart ? '/projections' : '../'],
+      this.router,
+      this.activatedRoute,
+    );
   }
 }

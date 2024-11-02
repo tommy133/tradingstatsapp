@@ -2,7 +2,6 @@ import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
-import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { ProjectionService } from 'src/app/modules/projection/service/projection.service';
@@ -29,15 +28,11 @@ export class OperationDetailsComponent implements OnInit {
   private commentService = inject(OperationCommentService);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
-  private sidebarService = inject(SidebarService);
   private fileService = inject(FileService);
 
   @Input() extended: boolean = true;
   @Input() viewChartMode: boolean = false;
 
-  private postDeletePath = this.activatedRoute.snapshot.data['postDeletePath'];
-  closeSidebarRedirect =
-    this.activatedRoute.snapshot.data['closeSidebarRedirect'];
   showViewChartBtn =
     this.activatedRoute.snapshot.data['showViewChartBtn'] ?? true;
 
@@ -46,6 +41,7 @@ export class OperationDetailsComponent implements OnInit {
   comments$?: Observable<OperationComment[]>;
   checklist$?: Observable<any>;
   accumulationOrDistribution$?: Observable<string>;
+  isViewChart = this.router.url.includes('view-chart');
 
   isAccumulation = isAccumulation;
   isDistribution = isDistribution;
@@ -123,16 +119,12 @@ export class OperationDetailsComponent implements OnInit {
     );
   }
 
-  goBackDelete() {
+  private goBackDelete() {
     navigatePreservingQueryParams(
-      [this.postDeletePath],
+      [this.isViewChart ? '/operations' : '../'],
       this.router,
       this.activatedRoute,
     );
-  }
-
-  closeSidebarLeft() {
-    this.sidebarService.closeSidebarLeft();
   }
 
   goToChart(operationId: number) {

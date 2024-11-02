@@ -52,6 +52,7 @@ export class OperationMutationComponent implements OnInit {
   operationParamId =
     this.activatedRoute.snapshot.params['id'] ??
     this.activatedRoute.snapshot.parent?.params['id'];
+
   projectionParamId = this.activatedRoute.snapshot.params['projId'];
 
   isLoading: boolean = false;
@@ -171,7 +172,7 @@ export class OperationMutationComponent implements OnInit {
   }
 
   get cancelRoute(): string {
-    return '../../' + this.operationForm.value.id;
+    return '../';
   }
 
   get buttonType(): string {
