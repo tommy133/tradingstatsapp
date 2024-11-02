@@ -1,13 +1,14 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   BehaviorSubject,
-  Observable,
-  Subscription,
   map,
+  Observable,
   shareReplay,
+  Subscription,
   switchMap,
 } from 'rxjs';
+import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { environment } from 'src/environments/environment';
 import { Projection } from '../model/projection';
@@ -18,6 +19,8 @@ import { ProjectionUpdateInput } from '../model/projectionUpdateInput';
   providedIn: 'root',
 })
 export class ProjectionService {
+  private fileService = inject(FileService);
+
   private apiServerUrl = `${environment.apiBaseUrl}/projections`;
   private fetchSignal = new BehaviorSubject(null);
 
@@ -88,7 +91,15 @@ export class ProjectionService {
       );
   }
 
-  public deleteProjection(projectionId: number) {
+  public async deleteProjection(projection: Projection) {
+    const { id, graph } = projection;
+    if (graph) {
+      if (await this.fileService.deleteImage(graph))
+        this.deleteProjectionAction(id);
+    } else this.deleteProjectionAction(id);
+  }
+
+  private deleteProjectionAction(projectionId: number) {
     this.deleteSubscription = this.http
       .delete(`${this.apiServerUrl}/${projectionId}`)
       .subscribe(

@@ -6,11 +6,13 @@ import {
   Storage,
   uploadBytes,
 } from '@angular/fire/storage';
+import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileService {
+  private toastService = inject(ToastService);
   private storage = inject(Storage);
   private readonly IMG_DIR = 'images';
 
@@ -36,8 +38,14 @@ export class FileService {
 
     try {
       await deleteObject(imageRef);
+      return true;
     } catch (error) {
-      console.error('Error deleting image:', error);
+      const errorMsg = 'Error deleting image: ' + error;
+      console.error(errorMsg);
+      this.toastService.error({
+        message: errorMsg,
+      });
+      return false;
     }
   }
 }

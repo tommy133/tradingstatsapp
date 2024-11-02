@@ -69,12 +69,8 @@ export class ProjectionDetailsComponent implements OnInit {
   }
 
   public onDeleteProjection(projection: Projection): void {
-    const { id, graph } = projection;
     if (confirm('Are you sure you want to delete this projection?')) {
-      if (graph) {
-        this.fileService.deleteImage(graph);
-      }
-      this.projectionService.deleteProjection(id);
+      this.projectionService.deleteProjection(projection);
       this.goBackDelete();
     }
   }

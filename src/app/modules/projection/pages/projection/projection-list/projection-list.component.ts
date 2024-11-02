@@ -2,7 +2,6 @@ import { AfterViewInit, Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, shareReplay } from 'rxjs';
-import { FileService } from 'src/app/core/service/file.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
@@ -29,7 +28,6 @@ const timeframeOrder: { [key: string]: number } = {
 export class ProjectionListComponent implements AfterViewInit {
   private projectionService = inject(ProjectionService);
   private formService = inject(FormService);
-  private fileService = inject(FileService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private projectionFilter = inject(ProjectionFilterService);
@@ -84,11 +82,7 @@ export class ProjectionListComponent implements AfterViewInit {
   }
 
   public onDeleteProjection(projection: Projection): void {
-    const { id, graph } = projection;
-    if (graph) {
-      this.fileService.deleteImage(graph);
-    }
-    this.projectionService.deleteProjection(id);
+    this.projectionService.deleteProjection(projection);
   }
 
   onCloseSidebar() {

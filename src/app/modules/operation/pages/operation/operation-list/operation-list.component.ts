@@ -101,11 +101,7 @@ export class OperationListComponent implements AfterViewInit {
   }
 
   onDeleteOperation(operation: Operation): void {
-    const { id, graph } = operation;
-    if (graph) {
-      this.fileService.deleteImage(graph);
-    }
-    this.operationService.deleteOperation(id);
+    this.operationService.deleteOperation(operation);
   }
 
   onCloseSidebar() {

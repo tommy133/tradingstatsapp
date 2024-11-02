@@ -1,13 +1,14 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import {
   BehaviorSubject,
-  Observable,
-  Subscription,
   map,
+  Observable,
   shareReplay,
+  Subscription,
   switchMap,
 } from 'rxjs';
+import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { environment } from 'src/environments/environment';
 import { Operation } from '../model/operation';
@@ -18,6 +19,8 @@ import { OperationUpdateInput } from '../model/operationUpdateInput';
   providedIn: 'root',
 })
 export class OperationService {
+  private fileService = inject(FileService);
+
   private apiServerUrl = `${environment.apiBaseUrl}/operations`;
   private fetchSignal = new BehaviorSubject(null);
 
@@ -112,7 +115,15 @@ export class OperationService {
       );
   }
 
-  public deleteOperation(operationId: number) {
+  public async deleteOperation(operation: Operation) {
+    const { id, graph } = operation;
+    if (graph) {
+      if (await this.fileService.deleteImage(graph))
+        this.deleteOperationAction(id);
+    } else this.deleteOperationAction(id);
+  }
+
+  private deleteOperationAction(operationId: number) {
     this.deleteSubscription = this.http
       .delete(`${this.apiServerUrl}/${operationId}`)
       .subscribe(

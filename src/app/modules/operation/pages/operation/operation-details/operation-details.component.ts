@@ -92,13 +92,8 @@ export class OperationDetailsComponent implements OnInit {
   }
 
   onDeleteOperation(operation: Operation): void {
-    const { id, graph } = operation;
-
     if (confirm('Are you sure you want to delete this operation?')) {
-      if (graph) {
-        this.fileService.deleteImage(graph);
-      }
-      this.operationService.deleteOperation(id);
+      this.operationService.deleteOperation(operation);
       this.goBackDelete();
     }
   }
