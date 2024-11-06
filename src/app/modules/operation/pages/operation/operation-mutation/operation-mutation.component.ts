@@ -209,9 +209,6 @@ export class OperationMutationComponent implements OnInit {
     operationCreateInput: OperationCreateInput,
     projectionId: number | null,
   ) {
-    if (this.uploadedFile) {
-      this.uploadFileStorage(this.uploadedFile);
-    }
     if (projectionId) {
       return this.operationService.addOperationFromProjection(
         operationCreateInput,
@@ -222,12 +219,6 @@ export class OperationMutationComponent implements OnInit {
   }
 
   onUpdateOperation(operationUpdateInput: OperationUpdateInput) {
-    if (this.uploadedFile) {
-      if (this.graphFileName) {
-        this.fileService.deleteImage(this.graphFileName);
-      }
-      this.uploadFileStorage(this.uploadedFile);
-    }
     return this.operationService.updateOperation(operationUpdateInput);
   }
 
@@ -458,6 +449,12 @@ export class OperationMutationComponent implements OnInit {
     }
 
     if (this.errors.length === 0) {
+      if (this.uploadedFile) {
+        if (!this.isMutationAdd && this.graphFileName) {
+          await this.fileService.deleteImage(this.graphFileName);
+        }
+        this.uploadFileStorage(this.uploadedFile);
+      }
       const operation = this.isMutationAdd ? 'created' : 'updated';
       this.toastService.success({
         message: `Operation ${operation} successfully`,

@@ -162,19 +162,10 @@ export class ProjectionMutationComponent implements OnInit {
   }
 
   onAddProjection(projectionCreateInput: ProjectionCreateInput) {
-    if (this.uploadedFile) {
-      this.uploadFileStorage(this.uploadedFile);
-    }
     return this.projectionService.addProjection(projectionCreateInput);
   }
 
   onUpdateProjection(projectionUpdateInput: ProjectionUpdateInput) {
-    if (this.uploadedFile) {
-      if (this.graphFileName) {
-        this.fileService.deleteImage(this.graphFileName);
-      }
-      this.uploadFileStorage(this.uploadedFile);
-    }
     return this.projectionService.updateProjection(projectionUpdateInput);
   }
 
@@ -309,6 +300,12 @@ export class ProjectionMutationComponent implements OnInit {
     }
 
     if (this.errors.length === 0) {
+      if (this.uploadedFile) {
+        if (!this.isMutationAdd && this.graphFileName) {
+          await this.fileService.deleteImage(this.graphFileName);
+        }
+        this.uploadFileStorage(this.uploadedFile);
+      }
       const operation = this.isMutationAdd ? 'created' : 'updated';
       this.toastService.success({
         message: `Projection ${operation} successfully`,

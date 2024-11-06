@@ -19,7 +19,14 @@ export class FileService {
   public uploadImage(file: File) {
     const imgRef = ref(this.storage, `${this.IMG_DIR}/${file.name}`);
 
-    uploadBytes(imgRef, file).catch((error) => console.error(error));
+    uploadBytes(imgRef, file).catch((error) => {
+      const errorMsg = 'Error uploading image:' + error;
+      console.error(errorMsg);
+      this.toastService.error({
+        message: errorMsg,
+      });
+      return null;
+    });
   }
 
   public async getImage(imgName: string) {
@@ -28,7 +35,11 @@ export class FileService {
     try {
       return await getDownloadURL(imageRef);
     } catch (error) {
-      console.error('Error getting image:', error);
+      const errorMsg = 'Error getting image:' + error;
+      console.error(errorMsg);
+      this.toastService.error({
+        message: errorMsg,
+      });
       return null;
     }
   }
