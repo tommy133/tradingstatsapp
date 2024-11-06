@@ -15,4 +15,6 @@ export interface Operation {
   checklist?: any;
   ratio?: number;
   revenue?: number;
+  inserted_at: string;
+  updated_at: string;
 }

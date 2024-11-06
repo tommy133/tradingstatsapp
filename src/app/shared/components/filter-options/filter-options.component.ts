@@ -14,7 +14,7 @@ import { ClickAwayService } from 'src/app/core/service/click-away.service';
           <ng-content select="[resetButton]" />
         </div>
         <ng-content select="[filters]" />
-        <div class="flex gap-20">
+        <div class="flex justify-between items-center">
           <h1 class="font-semibold">Order by</h1>
           <ng-content select="[orderBy]" />
         </div>

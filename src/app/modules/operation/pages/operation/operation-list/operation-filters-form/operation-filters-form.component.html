@@ -1,10 +1,11 @@
-<div class="flex space-x-6">
+<div class="flex justify-between">
   <div class="flex flex-col gap-4">
     <label>Select order type</label>
     <label>Select timeframe</label>
     <label>Select status</label>
     <label>Select market</label>
     <label>Select result</label>
+    <label>Select date type</label>
   </div>
   <div class="flex flex-col gap-3.5">
     <select
@@ -49,6 +50,13 @@
       <ng-container [ngTemplateOutlet]="blank"></ng-container>
       <option value="1">POSITIVE</option>
       <option value="0">NEGATIVE</option>
+    </select>
+    <select
+      name="dateTypeSelect"
+      class="rounded border-2"
+      [formControl]="dateTypeControl">
+      <option value="insertedAt">Inserted at</option>
+      <option value="dateOpen">Date open</option>
     </select>
   </div>
 </div>

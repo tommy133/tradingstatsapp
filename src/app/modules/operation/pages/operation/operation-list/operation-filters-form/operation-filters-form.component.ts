@@ -25,6 +25,7 @@ export class OperationFiltersFormComponent {
   statusControl = this.filterFormService.status;
   marketControl = this.filterFormService.market;
   resultControl = this.filterFormService.result;
+  dateTypeControl = this.filterFormService.dateType;
 
   statuses$: Observable<Status[]> = this.statusService
     .getStatuses()

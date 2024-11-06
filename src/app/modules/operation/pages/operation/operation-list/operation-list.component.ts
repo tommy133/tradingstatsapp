@@ -59,7 +59,7 @@ export class OperationListComponent implements AfterViewInit {
 
   orderBySelect = new FormControl<string>('');
   ngAfterViewInit() {
-    this.orderBySelect.setValue('Date open');
+    this.orderBySelect.setValue('Inserted at');
   }
 
   orderedOperations$ = combineLatest([
@@ -73,8 +73,16 @@ export class OperationListComponent implements AfterViewInit {
           (a, b) => timeframeOrder[a.timeframe] - timeframeOrder[b.timeframe],
         );
       }
+      if (orderBy === 'Inserted at') {
+        const unsortedOperations = [...operations];
+        return unsortedOperations.sort(
+          (b, a) =>
+            new Date(a.inserted_at).getTime() -
+            new Date(b.inserted_at).getTime(),
+        );
+      }
 
-      return operations; //it comes already sorted from backend
+      return operations; //assume it comes already sorted by dateOpen from backend
     }),
   );
 
