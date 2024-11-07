@@ -15,6 +15,7 @@ import {
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, shareReplay, Subscription } from 'rxjs';
+import { BookmarkService } from 'src/app/core/service/bookmark.service';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -48,6 +49,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   private sidebarService = inject(SidebarService);
   private toastService = inject(ToastService);
   private operationFilter = inject(OperationFilterService);
+  private bookmarkService = inject(BookmarkService);
 
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: any) {
@@ -172,21 +174,7 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   }
 
   setBookmark() {
-    try {
-      const url = this.router.url;
-      if (url) {
-        localStorage.setItem('bookmarkOperation', url);
-        this.toastService.success({
-          message: `Current operation set as bookmark`,
-        });
-      } else {
-        this.toastService.error({
-          message: 'Error with url',
-        });
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    this.bookmarkService.setBookmark(false, this.router.url);
   }
 
   ngOnDestroy() {

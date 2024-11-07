@@ -9,6 +9,7 @@ import { Component, HostListener, inject } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, shareReplay, Subscription, switchMap } from 'rxjs';
+import { BookmarkService } from 'src/app/core/service/bookmark.service';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
@@ -44,6 +45,7 @@ export class ViewChartComponent {
   private projectionFilter = inject(ProjectionFilterService);
   private commentService = inject(ProjectionCommentService);
   private sidebarService = inject(SidebarService);
+  private bookmarkService = inject(BookmarkService);
 
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: any) {
@@ -199,6 +201,10 @@ export class ViewChartComponent {
     );
 
     return this.projections.indexOf(item!);
+  }
+
+  setBookmark() {
+    this.bookmarkService.setBookmark(true, this.router.url);
   }
 
   ngOnDestroy() {

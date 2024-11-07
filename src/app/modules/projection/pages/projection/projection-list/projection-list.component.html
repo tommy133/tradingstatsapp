@@ -32,16 +32,23 @@
           </ng-container>
         </app-filter-options>
       </div>
-      <app-rounded-button
-        [text]="'Add projection'"
-        [bgColor]="'bg-green'"
-        (clickEvent)="goToAdd()">
-      </app-rounded-button>
+      <div class="flex items-center gap-4">
+
+        <icon-button
+          iconSource="assets/svg/bookmark-plus.svg"
+          [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+          (clickEvent)="goToBookmark()"></icon-button>
+        <app-rounded-button
+          [text]="'Add projection'"
+          [bgColor]="'bg-green'"
+          (clickEvent)="goToAdd()">
+        </app-rounded-button>
+      </div>
     </div>
     <p class="text-white font-semibold">Result: {{n_projections$ | async}}</p>
-      <app-table-projection
-        [rows]="projections"
-        (deleteEvent)="onDeleteProjection($event)"></app-table-projection>
+    <app-table-projection
+      [rows]="projections"
+      (deleteEvent)="onDeleteProjection($event)"></app-table-projection>
   </div>
   <app-sidebar
     [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"

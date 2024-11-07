@@ -2,7 +2,9 @@ import { AfterViewInit, Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, shareReplay } from 'rxjs';
+import { BookmarkService } from 'src/app/core/service/bookmark.service';
 import { FormService } from 'src/app/core/service/form.service';
+import { ToastService } from 'src/app/core/service/toast.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../../model/projection';
 import { ProjectionFilterFormService } from '../../../service/projection-filter-form.service';
@@ -32,6 +34,8 @@ export class ProjectionListComponent implements AfterViewInit {
   private activatedRoute = inject(ActivatedRoute);
   private projectionFilter = inject(ProjectionFilterService);
   private projectionFilterFormService = inject(ProjectionFilterFormService);
+  private bookmarkService = inject(BookmarkService);
+  private toastService = inject(ToastService);
 
   private projections$ = this.projectionService.projections$.pipe(
     shareReplay(1),
@@ -77,6 +81,17 @@ export class ProjectionListComponent implements AfterViewInit {
 
   n_projections$ = this.filteredProjections$.pipe(map((projs) => projs.length));
 
+  goToBookmark() {
+    const bookmark = this.bookmarkService.getBookmark(true);
+
+    if (bookmark) {
+      this.router.navigateByUrl(bookmark);
+    } else {
+      this.toastService.info({
+        message: 'No bookmark available',
+      });
+    }
+  }
   goToAdd() {
     navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
   }

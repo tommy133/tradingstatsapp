@@ -2,7 +2,7 @@ import { AfterViewInit, Component, inject } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, shareReplay } from 'rxjs';
-import { FileService } from 'src/app/core/service/file.service';
+import { BookmarkService } from 'src/app/core/service/bookmark.service';
 import { FormService } from 'src/app/core/service/form.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
@@ -32,10 +32,10 @@ export class OperationListComponent implements AfterViewInit {
   private activatedRoute = inject(ActivatedRoute);
   private operationService = inject(OperationService);
   private formService = inject(FormService);
-  private fileService = inject(FileService);
   private toastService = inject(ToastService);
   private operationFilterService = inject(OperationFilterService);
   private operationFilterFormService = inject(OperationFilterFormService);
+  private bookmarkService = inject(BookmarkService);
 
   private operations$ = this.operationService.operations$.pipe(shareReplay(1));
   searchOperationsControl = new FormControl<string>('');
@@ -93,7 +93,7 @@ export class OperationListComponent implements AfterViewInit {
   }
 
   goToBookmark() {
-    const bookmark = this.getBookmark();
+    const bookmark = this.bookmarkService.getBookmark(false);
 
     if (bookmark) {
       this.router.navigateByUrl(bookmark);
@@ -114,17 +114,6 @@ export class OperationListComponent implements AfterViewInit {
 
   onCloseSidebar() {
     navigatePreservingQueryParams(['.'], this.router, this.activatedRoute);
-  }
-
-  private getBookmark() {
-    try {
-      return localStorage.getItem('bookmarkOperation');
-    } catch (err) {
-      this.toastService.error({
-        message: 'Error getting bookmark',
-      });
-      return null;
-    }
   }
 
   resetFilterForm() {

@@ -1,80 +1,92 @@
 <ng-container *ngIf="projection$ | async as projection; else loading">
-  <app-back-to
-    backText="BACK TO PROJECTIONS"
-    backTo="../../"
-    [queryParams]="backToQueryParams"></app-back-to>
-  <icon-button
-    class="fixed top-16  right-0 z-50"
-    iconSource="assets/svg/sidebar-icon-21.svg"
-    [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
-    iconSvgClass="bg-gray-300 rounded-md p-1"
-    (clickEvent)="openSidebarLeft()"></icon-button>
-  <app-tradingview-button
-    [data]="{symbolName: projection.symbol.name_sym, timeframe: projection.timeframe}"
-    class="fixed top-32 right-0 z-50"
-    [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
-    iconSvgClass="bg-white rounded border-4 border-black"></app-tradingview-button>
-  <div
-    *ngIf="!isLoading; else loading"
-    [@slideAnimation]="slideState">
-
-    <div class="fixed top-1/2">
-      <icon-button
-        iconSource="assets/svg/go-left.svg"
-        [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
-        (clickEvent)="navigatePreviousProjection()"></icon-button>
+  <div class="flex flex-col">
+    <div class="flex justify-end pr-20">
+      <app-back-to
+        backText="BACK TO PROJECTIONS"
+        backTo="../../"
+        [queryParams]="backToQueryParams"></app-back-to>
     </div>
-    <div class="flex flex-col m-20">
-      <app-card>
-        <h2 class="text-xl font-bold mb-2">Projection</h2>
-        <div class="flex flex-row space-x-8">
-          <div class="flex flex-col space-y-2">
-            <label class="font-semibold">Symbol</label>
-            <label class="font-semibold">Type</label>
-            <label class="font-semibold">Date</label>
-            <label class="font-semibold">Timeframe</label>
-            <label class="font-semibold">Status</label>
-          </div>
 
-          <div class="flex flex-col space-y-3">
-            <app-label
-              [text]="projection.symbol.name_sym"
-              bgColor="bg-dark-gray"
-              textColor="text-white"></app-label>
-            <app-label
-              [text]="getUpdownLabel(projection.updown ?? null)"
-              bgColor="bg-dark-gray"
-              textColor="text-white"></app-label>
-            <app-label
-              [text]="(projection.date | date : 'yyyy-MM-dd')!"
-              bgColor="bg-dark-gray"
-              textColor="text-white"></app-label>
-            <app-label
-              [text]="projection.timeframe"
-              bgColor="bg-dark-gray"
-              textColor="text-white"></app-label>
-            <app-label
-              [text]="projection.status.name_st"
-              bgColor="bg-dark-gray"
-              textColor="text-white"></app-label>
-          </div>
-          <ng-container *ngIf="comments$ | async as comments;">
-            <comments-thread
-              class="w-full"
-              [comments]="comments"></comments-thread>
-          </ng-container>
-        </div>
-      </app-card>
-      <img
-        [src]="imageUrl"
-        alt="chart image">
-    </div>
     <icon-button
-      class="fixed top-1/2 right-0"
-      iconSource="assets/svg/go-right.svg"
-      [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
-      (clickEvent)="navigateNextProjection()"></icon-button>
+      class="fixed top-16  right-0 z-50"
+      iconSource="assets/svg/sidebar-icon-21.svg"
+      [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+      iconSvgClass="bg-gray-300 rounded-md p-1"
+      (clickEvent)="openSidebarLeft()"></icon-button>
+    <app-tradingview-button
+      [data]="{symbolName: projection.symbol.name_sym, timeframe: projection.timeframe}"
+      class="fixed top-32 right-0 z-50"
+      [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+      iconSvgClass="bg-white rounded border-4 border-black"></app-tradingview-button>
+    <icon-button
+      class="fixed top-48 right-0 z-50"
+      iconSource="assets/svg/bookmark-plus.svg"
+      [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+      iconSvgClass="bg-gray-300 rounded-md p-1"
+      (clickEvent)="setBookmark()"></icon-button>
 
+    <div
+      *ngIf="!isLoading; else loading"
+      [@slideAnimation]="slideState">
+
+      <div class="fixed top-1/2">
+        <icon-button
+          iconSource="assets/svg/go-left.svg"
+          [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
+          (clickEvent)="navigatePreviousProjection()"></icon-button>
+      </div>
+      <div class="flex flex-col m-20">
+        <app-card>
+          <h2 class="text-xl font-bold mb-2">Projection</h2>
+          <div class="flex flex-row space-x-8">
+            <div class="flex flex-col space-y-2">
+              <label class="font-semibold">Symbol</label>
+              <label class="font-semibold">Type</label>
+              <label class="font-semibold">Date</label>
+              <label class="font-semibold">Timeframe</label>
+              <label class="font-semibold">Status</label>
+            </div>
+
+            <div class="flex flex-col space-y-3">
+              <app-label
+                [text]="projection.symbol.name_sym"
+                bgColor="bg-dark-gray"
+                textColor="text-white"></app-label>
+              <app-label
+                [text]="getUpdownLabel(projection.updown ?? null)"
+                bgColor="bg-dark-gray"
+                textColor="text-white"></app-label>
+              <app-label
+                [text]="(projection.date | date : 'yyyy-MM-dd')!"
+                bgColor="bg-dark-gray"
+                textColor="text-white"></app-label>
+              <app-label
+                [text]="projection.timeframe"
+                bgColor="bg-dark-gray"
+                textColor="text-white"></app-label>
+              <app-label
+                [text]="projection.status.name_st"
+                bgColor="bg-dark-gray"
+                textColor="text-white"></app-label>
+            </div>
+            <ng-container *ngIf="comments$ | async as comments;">
+              <comments-thread
+                class="w-full"
+                [comments]="comments"></comments-thread>
+            </ng-container>
+          </div>
+        </app-card>
+        <img
+          [src]="imageUrl"
+          alt="chart image">
+      </div>
+      <icon-button
+        class="fixed top-1/2 right-0"
+        iconSource="assets/svg/go-right.svg"
+        [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
+        (clickEvent)="navigateNextProjection()"></icon-button>
+
+    </div>
   </div>
 </ng-container>
 
