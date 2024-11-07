@@ -1,50 +1,99 @@
-<div class="flex flex-col">
-  <div class="flex justify-end pr-20">
-    <app-back-to
-      backText="BACK TO OPERATIONS"
-      backTo="../../"></app-back-to>
-  </div>
-
-  <icon-button
-    class="fixed top-16 right-0"
-    iconSource="assets/svg/sidebar-icon-21.svg"
-    [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
-    iconSvgClass="bg-gray-300 rounded-md p-1"
-    (clickEvent)="openSidebarLeft()"></icon-button>
-  <icon-button
-    class="fixed top-32 right-0"
-    iconSource="assets/svg/bookmark-plus.svg"
-    [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
-    iconSvgClass="bg-gray-300 rounded-md p-1"
-    (clickEvent)="setBookmark()"></icon-button>
-
-  <div
-    *ngIf="!isLoading; else loading"
-    class="overflow-hidden">
-    <div class="fixed top-1/2">
-      <icon-button
-        iconSource="assets/svg/go-left.svg"
-        [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
-        (clickEvent)="navigatePreviousOperation()"></icon-button>
+<ng-container *ngIf="operation$ | async as operation else loading">
+  <div class="flex flex-col">
+    <div class="flex justify-end pr-20">
+      <app-back-to
+        backText="BACK TO OPERATIONS"
+        backTo="../../"></app-back-to>
     </div>
+
+    <icon-button
+      class="fixed top-16 right-0"
+      iconSource="assets/svg/sidebar-icon-21.svg"
+      [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+      iconSvgClass="bg-gray-300 rounded-md p-1"
+      (clickEvent)="openSidebarLeft()"></icon-button>
+    <icon-button
+      class="fixed top-32 right-0"
+      iconSource="assets/svg/bookmark-plus.svg"
+      [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+      iconSvgClass="bg-gray-300 rounded-md p-1"
+      (clickEvent)="setBookmark()"></icon-button>
+
     <div
-      class="flex m-20"
+      *ngIf="!isLoading; else loading"
       [@slideAnimation]="slideState">
-      <img
-        [src]="imageUrl"
-        alt="chart image">
-    </div>
-    <div class="fixed top-1/2 right-0">
-      <icon-button
-        iconSource="assets/svg/go-right.svg"
-        [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
-        (clickEvent)="navigateNextOperation()"></icon-button>
+
+      <div class="fixed top-1/2">
+        <icon-button
+          iconSource="assets/svg/go-left.svg"
+          [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
+          (clickEvent)="navigatePreviousOperation()"></icon-button>
+      </div>
+      <div class="flex flex-col m-20">
+        <app-card>
+          <h2 class="text-xl font-bold mb-2">Operation</h2>
+          <div class="flex flex-row space-x-8">
+            <div class="flex flex-col space-y-2">
+              <label class="font-semibold">Symbol</label>
+              <label class="font-semibold">Type</label>
+              <label class="font-semibold">Timeframe</label>
+              <label class="font-semibold">Revenue</label>
+            </div>
+
+            <div class="flex flex-col space-y-3">
+              <app-label
+                [text]="operation.symbol.name_sym"
+                bgColor="bg-dark-gray"
+                textColor="text-white"></app-label>
+              <app-label
+                [text]="getUpdownLabel(operation.updown ?? null)"
+                bgColor="bg-dark-gray"
+                textColor="text-white"></app-label>
+              <app-label
+                [text]="operation.timeframe"
+                bgColor="bg-dark-gray"
+                textColor="text-white"></app-label>
+              <app-label
+                *ngIf="operation.revenue as revenue"
+                [textColor]="getRevenueColorClass(revenue)"
+                [text]="''+revenue"
+                bgColor="bg-dark-gray"></app-label>
+            </div>
+            <ng-container *ngIf="comments$ | async as comments;">
+              <comments-thread
+                class="w-full"
+                [comments]="comments"></comments-thread>
+            </ng-container>
+          </div>
+        </app-card>
+        <img
+          [src]="imageUrl"
+          alt="chart image">
+      </div>
+      <div class="fixed top-1/2 right-0">
+        <icon-button
+          iconSource="assets/svg/go-right.svg"
+          [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
+          (clickEvent)="navigateNextOperation()"></icon-button>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
 
 <ng-template #loading>
+  <div class="fixed top-1/2">
+    <icon-button
+      iconSource="assets/svg/go-left.svg"
+      [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
+      (clickEvent)="navigatePreviousOperation()"></icon-button>
+  </div>
   <app-loading-template></app-loading-template>
+  <div class="fixed top-1/2 right-0">
+    <icon-button
+      iconSource="assets/svg/go-right.svg"
+      [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
+      (clickEvent)="navigateNextOperation()"></icon-button>
+  </div>
 </ng-template>
 
 <app-sidebar

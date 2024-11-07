@@ -8,16 +8,19 @@ import {
 import { Component, HostListener, inject, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest, map, shareReplay, Subscription } from 'rxjs';
+import { combineLatest, map, shareReplay, Subscription, switchMap } from 'rxjs';
 import { BookmarkService } from 'src/app/core/service/bookmark.service';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
+import { OperationCommentService } from 'src/app/data/service/opcomment.service';
+import { getUpdownLabel } from 'src/app/modules/projection/utils/shared-utils';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 import { sidebarLeftAnimationSlide } from 'src/app/shared/utils/sidebar-left-animation';
 import { Operation } from '../../model/operation';
 import { OperationFilterService } from '../../service/operation-filter.service';
 import { OperationService } from '../../service/operation.service';
+import { getRevenueColorClass } from '../../utils/shared-utils';
 @Component({
   selector: 'app-view-chart',
   templateUrl: './view-chart.component.html',
@@ -44,6 +47,7 @@ export class ViewChartComponent implements OnDestroy {
   private toastService = inject(ToastService);
   private operationFilter = inject(OperationFilterService);
   private bookmarkService = inject(BookmarkService);
+  private operationCommentService = inject(OperationCommentService);
 
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: any) {
@@ -59,6 +63,9 @@ export class ViewChartComponent implements OnDestroy {
     }
   }
 
+  getUpdownLabel = getUpdownLabel;
+  getRevenueColorClass = getRevenueColorClass;
+
   operations: Operation[] = [];
   filteredOperations$ = this.operationFilter.getFilteredOperations(
     this.operationService.operations$.pipe(shareReplay(1)),
@@ -70,6 +77,20 @@ export class ViewChartComponent implements OnDestroy {
     this.operations = operations.reverse();
     this.navigationIndex = this.getNavigationIndex();
   });
+
+  operation$ = this.activatedRoute.params.pipe(
+    switchMap((params) => {
+      const id = params['id'];
+      return this.operationService.getOperation(id);
+    }),
+  );
+
+  comments$ = this.activatedRoute.params.pipe(
+    switchMap((params) => {
+      const id = params['id'];
+      return this.operationCommentService.getCommentsById(id);
+    }),
+  );
 
   navigationIndex!: number;
   imageUrl?: SafeUrl;

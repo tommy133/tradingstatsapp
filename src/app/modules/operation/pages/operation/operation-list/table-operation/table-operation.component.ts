@@ -2,6 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TouchableStatusService } from 'src/app/core/service/touchable-status.service';
 import { Operation } from 'src/app/modules/operation/model/operation';
+import { getRevenueColorClass } from 'src/app/modules/operation/utils/shared-utils';
 import {
   getStatusColorClass,
   navigatePreservingQueryParams,
@@ -27,6 +28,7 @@ export class TableOperationComponent {
   private activatedRoute = inject(ActivatedRoute);
 
   getStatusColorClass = getStatusColorClass;
+  getRevenueColorClass = getRevenueColorClass;
   isTouchable = TouchableStatusService.isTouchable;
 
   @Input() rows!: Operation[];
@@ -42,10 +44,6 @@ export class TableOperationComponent {
     { name: 'Revenue' },
     { name: 'Actions' },
   ];
-
-  getRevenueColorClass(revenue: number): string {
-    return revenue > 0 ? 'text-green' : 'text-red';
-  }
 
   goToDetails(operationId: number) {
     navigatePreservingQueryParams(

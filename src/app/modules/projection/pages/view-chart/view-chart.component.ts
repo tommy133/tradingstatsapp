@@ -43,7 +43,7 @@ export class ViewChartComponent {
   private sanitizer = inject(DomSanitizer);
   private toastService = inject(ToastService);
   private projectionFilter = inject(ProjectionFilterService);
-  private commentService = inject(ProjectionCommentService);
+  private projectionCommentService = inject(ProjectionCommentService);
   private sidebarService = inject(SidebarService);
   private bookmarkService = inject(BookmarkService);
 
@@ -80,7 +80,7 @@ export class ViewChartComponent {
   comments$ = this.activatedRoute.params.pipe(
     switchMap((params) => {
       const id = params['id'];
-      return this.commentService.getCommentsById(id);
+      return this.projectionCommentService.getCommentsById(id);
     }),
   );
 
@@ -95,7 +95,6 @@ export class ViewChartComponent {
 
   ngOnInit() {
     this.setBackToQueryParams();
-    this.sidebarService.closeSidebarLeft();
   }
 
   projection$ = this.activatedRoute.params.pipe(

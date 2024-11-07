@@ -10,6 +10,7 @@ import {
 } from 'src/app/shared/utils/shared-utils';
 import { Operation } from '../../../model/operation';
 import { OperationService } from '../../../service/operation.service';
+import { getRevenueColorClass } from '../../../utils/shared-utils';
 import {
   getPotentialDirection,
   isAccumulation,
@@ -44,6 +45,7 @@ export class OperationDetailsComponent implements OnInit {
   isAccumulation = isAccumulation;
   isDistribution = isDistribution;
   isEquilibrium = isEquilibrium;
+  getRevenueColorClass = getRevenueColorClass;
 
   ngOnInit() {
     this.operation$ = this.activatedRoute.params.pipe(
@@ -128,9 +130,5 @@ export class OperationDetailsComponent implements OnInit {
       },
       queryParamsHandling: 'merge',
     });
-  }
-
-  getRevenueColorClass(revenue: number): string {
-    return revenue > 0 ? 'text-dark-green' : 'text-red';
   }
 }
