@@ -144,11 +144,13 @@ export class ViewChartComponent {
         this.activatedRoute.snapshot.queryParams['year'];
     }
   }
+
+  // Navigate to more recent
   navigatePreviousProjection() {
-    if (this.navigationIndex > 0) {
+    if (this.navigationIndex < this.projections.length - 1) {
       this.slideState = 'left';
 
-      this.navigationIndex--;
+      this.navigationIndex++;
       const id = this.projections[this.navigationIndex].id;
       this.navigateToProjection(id);
 
@@ -161,11 +163,12 @@ export class ViewChartComponent {
     }
   }
 
+  // Navigate to older
   navigateNextProjection() {
-    if (this.navigationIndex < this.projections.length - 1) {
+    if (this.navigationIndex > 0) {
       this.slideState = 'right';
 
-      this.navigationIndex++;
+      this.navigationIndex--;
       const id = this.projections[this.navigationIndex].id;
       this.navigateToProjection(id);
 
