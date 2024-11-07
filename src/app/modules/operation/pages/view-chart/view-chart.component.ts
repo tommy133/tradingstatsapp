@@ -5,13 +5,7 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
-import {
-  Component,
-  HostListener,
-  inject,
-  OnDestroy,
-  OnInit,
-} from '@angular/core';
+import { Component, HostListener, inject, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, shareReplay, Subscription } from 'rxjs';
@@ -40,7 +34,7 @@ import { OperationService } from '../../service/operation.service';
     ]),
   ],
 })
-export class ViewChartComponent implements OnInit, OnDestroy {
+export class ViewChartComponent implements OnDestroy {
   private fileService = inject(FileService);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -83,10 +77,6 @@ export class ViewChartComponent implements OnInit, OnDestroy {
   slideState = 'center';
 
   sidebarLeftState$ = this.sidebarService.sidebarLeftState$;
-
-  ngOnInit() {
-    this.sidebarService.openSidebarLeft(); //default open
-  }
 
   private image$ = combineLatest([
     this.activatedRoute.params,

@@ -1,7 +1,6 @@
 import { Component, inject, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, switchMap } from 'rxjs';
-import { FileService } from 'src/app/core/service/file.service';
 import { OperationComment } from 'src/app/data/models/opcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { ProjectionService } from 'src/app/modules/projection/service/projection.service';
@@ -28,7 +27,6 @@ export class OperationDetailsComponent implements OnInit {
   private commentService = inject(OperationCommentService);
   private activatedRoute = inject(ActivatedRoute);
   private router = inject(Router);
-  private fileService = inject(FileService);
 
   @Input() extended: boolean = true;
   @Input() viewChartMode: boolean = false;

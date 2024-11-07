@@ -35,7 +35,7 @@
   <div class="p-8">
     <div class="flex items-center justify-between">
       <p class="text-white font-semibold">PROJECTION DETAILS</p>
-      <div *ngIf="projection.graph">
+      <div *ngIf="showViewChartBtn && projection.graph">
         <button
           type="button"
           (click)="goToChart(projection.id)">

@@ -91,7 +91,18 @@
 </ng-container>
 
 <ng-template #loading>
+  <div class="fixed top-1/2">
+    <icon-button
+      iconSource="assets/svg/go-left.svg"
+      [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
+      (clickEvent)="navigatePreviousProjection()"></icon-button>
+  </div>
   <app-loading-template></app-loading-template>
+  <icon-button
+    class="fixed top-1/2 right-0"
+    iconSource="assets/svg/go-right.svg"
+    [iconSvgStyle]="{ 'width.px': 50, 'height.px': 50 }"
+    (clickEvent)="navigateNextProjection()"></icon-button>
 </ng-template>
 
 <app-sidebar

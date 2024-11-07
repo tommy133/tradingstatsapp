@@ -13,6 +13,9 @@ const routes: Routes = [
       {
         path: '',
         component: ProjectionDetailsComponent,
+        data: {
+          showViewChartBtn: false,
+        },
       },
       {
         path: 'edit',

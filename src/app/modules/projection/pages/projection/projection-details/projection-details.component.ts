@@ -1,7 +1,6 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { map, Observable, switchMap } from 'rxjs';
-import { FileService } from 'src/app/core/service/file.service';
 import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
@@ -19,8 +18,6 @@ import { getUpdownLabel } from '../../../utils/shared-utils';
   templateUrl: './projection-details.component.html',
 })
 export class ProjectionDetailsComponent implements OnInit {
-  private fileService = inject(FileService);
-
   getStatusColorClass = getStatusColorClass;
   getUpdownLabel = getUpdownLabel;
 
@@ -30,6 +27,8 @@ export class ProjectionDetailsComponent implements OnInit {
   isLoading: boolean = false;
   errors: Array<string> = [];
   isViewChart = this.router.url.includes('view-chart');
+  showViewChartBtn =
+    this.activatedRoute.snapshot.data['showViewChartBtn'] ?? true;
 
   constructor(
     private projectionService: ProjectionService,
