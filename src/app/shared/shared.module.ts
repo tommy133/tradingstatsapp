@@ -34,6 +34,7 @@ import { TrimesterBtnComponent } from './components/trimester-selector/trimester
 import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { YearSelectorComponent } from './components/year-selector/year-selector.component';
+import { CommentChildrenComponent } from './components/comments-thread/comment-children/comment-children.component';
 
 const componentsAndPipes = [
   NavbarComponent,
@@ -77,7 +78,7 @@ const sharedModules = [
 ];
 
 @NgModule({
-  declarations: [componentsAndPipes],
+  declarations: [componentsAndPipes, CommentChildrenComponent],
   imports: [...sharedModules, AngularSvgIconModule.forRoot(), AutosizeModule],
   exports: [...componentsAndPipes, ...sharedModules],
 })

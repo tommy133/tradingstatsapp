@@ -1,7 +1,7 @@
 <div class="flex flex-col-reverse max-h-[50vh] pt-4 overflow-y-auto rounded bg-gray-300">
-  <ng-container *ngIf="comments.length > 0; else noComments">
+  <ng-container *ngIf="rootComments.length > 0; else noComments">
     <div
-      *ngFor="let comment of comments; let i = index"
+      *ngFor="let comment of rootComments; let i = index"
       class="px-5 flex space-x-4 relative">
       <div class="w-3">
         <div class="w-3 h-3 bg-dark rounded-full"></div>
@@ -13,9 +13,12 @@
       </div>
 
       <div class="flex-grow -mt-2 pb-4">
-        <comment-entry
-          [comment]="comment"
-          [isOpen]="i === 0"></comment-entry>
+        <app-comment-entry [comment]="comment"></app-comment-entry>
+        <div
+          *ngIf="getChildrenComments(comment) as children"
+          class="ml-5 mt-2">
+          <app-comment-children [children]="children"></app-comment-children>
+        </div>
       </div>
     </div>
   </ng-container>
