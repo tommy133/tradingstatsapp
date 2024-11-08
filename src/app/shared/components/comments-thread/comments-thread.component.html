@@ -13,10 +13,12 @@
       </div>
 
       <div class="flex-grow -mt-2 pb-4">
-        <app-comment-entry [comment]="comment"></app-comment-entry>
+        <app-comment-entry
+          class="relative"
+          [comment]="comment"></app-comment-entry>
         <div
           *ngIf="getChildrenComments(comment) as children"
-          class="ml-5 mt-2">
+          class="ml-6 mt-2">
           <app-comment-children [children]="children"></app-comment-children>
         </div>
       </div>

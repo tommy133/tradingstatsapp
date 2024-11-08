@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Comment } from '../comments-thread.component';
 
@@ -8,8 +8,7 @@ import { Comment } from '../comments-thread.component';
       <label class="text-dark-400 cursor-pointer">
         {{ comment.inserted_at | date : 'd MMMM y  h:mm a' }}
       </label>
-      <button type="button" (click)="isOpen = !isOpen">
-        <!-- Toggle reply output to a commentview parent component -->
+      <button type="button">
         <svg-icon
           [svgStyle]="{ 'height.px': 32, 'width.px': 32 }"
           src="assets/svg/reply.svg"
@@ -30,7 +29,7 @@ import { Comment } from '../comments-thread.component';
 export class CommentEntryComponent {
   private router = inject(Router);
   @Input() comment!: Comment;
-  @Input() isOpen = false;
+  @Output() toggleReplies = new EventEmitter<void>();
 
   processLinks(e: any) {
     const element: HTMLElement = e.target;
