@@ -54,6 +54,12 @@ export class AssetListComponent implements AfterViewInit {
     ({ name_sym }) => name_sym,
   );
 
+  private filteredAssetsByDescription$ = this.formService.filterItems(
+    this.assets$,
+    this.searchAssets$,
+    ({ description }) => description ?? '',
+  );
+
   private filterForm$ =
     this.assetFilterFormService.filtersForm.valueChanges.pipe(
       startWith(null),
@@ -62,9 +68,11 @@ export class AssetListComponent implements AfterViewInit {
 
   private filteredAssets$ = combineLatest([
     this.filteredAssetsByName$,
+    this.filteredAssetsByDescription$,
     this.filterForm$,
   ]).pipe(
-    map(([assets, filterForm]) => {
+    map(([assetsByName, assetsByDescription, filterForm]) => {
+      const assets = [...assetsByName, ...assetsByDescription];
       if (!filterForm) return assets;
       return assets.filter((asset) => {
         const { market } = filterForm;
