@@ -10,11 +10,11 @@ import {
 } from './formulas';
 
 @Component({
-  selector: 'app-checklist',
-  templateUrl: './checklist.component.html',
+  selector: 'app-checklist-form',
+  templateUrl: './checklist-form.component.html',
   styles: [],
 })
-export class ChecklistComponent {
+export class ChecklistFormComponent {
   private formBuilder = inject(FormBuilder);
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
@@ -60,7 +60,7 @@ export class ChecklistComponent {
   goToddOperation(checklistForm: any) {
     const newChecklistForm = { ...checklistForm.value };
     this.checklistForm.reset();
-    this.router.navigate(['add'], {
+    this.router.navigate(['../add'], {
       relativeTo: this.activatedRoute,
       queryParamsHandling: 'preserve',
       state: { data: newChecklistForm },

@@ -83,8 +83,9 @@ export class ProjectionDetailsComponent implements OnInit {
   }
 
   goToCreateOperation(projectionId: number) {
+    this.operationService.tempAssociatedProjectionId = projectionId;
     navigatePreservingQueryParams(
-      ['/operations/addFromProj', projectionId],
+      ['/operations/checklist'],
       this.router,
       this.activatedRoute,
     );

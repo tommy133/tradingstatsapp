@@ -22,7 +22,7 @@ import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils
       >
     {{ rules }}
   </textarea>
-      <app-checklist />
+      <app-checklist-form />
     </div>
     <app-sidebar
       [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"

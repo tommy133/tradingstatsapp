@@ -29,6 +29,7 @@ export class OperationService {
     shareReplay(1),
   );
 
+  public tempAssociatedProjectionId: number | null = null;
   public static OPERATION_STATUSES = ['OPEN', 'CLOSED'];
 
   deleteSubscription?: Subscription;

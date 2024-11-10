@@ -53,8 +53,7 @@ export class OperationMutationComponent implements OnInit {
     this.activatedRoute.snapshot.params['id'] ??
     this.activatedRoute.snapshot.parent?.params['id'];
 
-  projectionParamId = this.activatedRoute.snapshot.params['projId'];
-
+  associatedProjectionId = this.operationService.tempAssociatedProjectionId;
   isLoading: boolean = false;
   errors: Array<string> = [];
 
@@ -141,11 +140,12 @@ export class OperationMutationComponent implements OnInit {
       if (operationDetails) {
         this.setInitialFormStateOperation(operationDetails);
       }
-    } else if (this.projectionParamId) {
+    } else if (this.associatedProjectionId) {
       const projectionDetails = await firstValueFrom(
-        this.projectionService.getProjection(this.projectionParamId),
+        this.projectionService.getProjection(this.associatedProjectionId),
       );
       if (projectionDetails) {
+        this.operationService.tempAssociatedProjectionId = null;
         this.setInitialFormStateOperationFromProjection(projectionDetails);
       }
     }
@@ -307,25 +307,23 @@ export class OperationMutationComponent implements OnInit {
   ): Promise<number | void> {
     try {
       this.isLoading = true;
-      const projId = this.activatedRoute.snapshot.paramMap.get('projId');
-      const parsedProjId = projId ? parseInt(projId) : null;
       const statuses = await firstValueFrom(this.statusService.statuses$);
 
       const result = this.isMutationAdd
         ? await firstValueFrom(
             this.onAddOperation(
               operationInput as OperationCreateInput,
-              parsedProjId,
+              this.associatedProjectionId,
             ),
           )
         : await firstValueFrom(
             this.onUpdateOperation(operationInput as OperationUpdateInput),
           );
 
-      if (parsedProjId) {
+      if (this.associatedProjectionId) {
         await firstValueFrom(
           this.projectionService.updateProjection({
-            id_proj: parsedProjId,
+            id_proj: this.associatedProjectionId,
             id_st: statuses['EXPIRED'],
           }),
         );

@@ -16,7 +16,7 @@ import {
   isAccumulation,
   isDistribution,
   isEquilibrium,
-} from '../../rules/checklist/formulas';
+} from '../checklist-form/formulas';
 
 @Component({
   selector: 'app-operation-details',

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { ChecklistFormComponent } from './pages/operation/checklist-form/checklist-form.component';
 import { OperationDetailsComponent } from './pages/operation/operation-details/operation-details.component';
 import { OperationListComponent } from './pages/operation/operation-list/operation-list.component';
 import { OperationMutationComponent } from './pages/operation/operation-mutation/operation-mutation.component';
@@ -39,11 +40,15 @@ const routes: Routes = [
     component: OperationListComponent,
     children: [
       {
-        path: 'addFromProj/:projId',
-        component: OperationMutationComponent,
+        path: 'checklist',
+        component: ChecklistFormComponent,
       },
       {
         path: 'add',
+        component: OperationMutationComponent,
+      },
+      {
+        path: 'add/assocProjection/:id',
         component: OperationMutationComponent,
       },
       {

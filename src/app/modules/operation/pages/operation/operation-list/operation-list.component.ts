@@ -88,8 +88,12 @@ export class OperationListComponent implements AfterViewInit {
 
   n_operations$ = this.filteredOperations$.pipe(map((ops) => ops.length));
 
-  goToAdd() {
-    navigatePreservingQueryParams(['add'], this.router, this.activatedRoute);
+  goToChecklist() {
+    navigatePreservingQueryParams(
+      ['checklist'],
+      this.router,
+      this.activatedRoute,
+    );
   }
 
   goToBookmark() {
