@@ -36,6 +36,7 @@ import { TrimesterBtnComponent } from './components/trimester-selector/trimester
 import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { YearSelectorComponent } from './components/year-selector/year-selector.component';
+import { AutoFocusDirective } from './directives/auto-focus.directive';
 
 const componentsAndPipes = [
   NavbarComponent,
@@ -69,6 +70,7 @@ const componentsAndPipes = [
   TotalComponent,
   RadioButtonComponent,
   CommentReplyComponent,
+  AutoFocusDirective,
 ];
 
 const sharedModules = [
