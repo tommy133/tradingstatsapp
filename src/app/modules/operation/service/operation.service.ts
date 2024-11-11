@@ -19,6 +19,8 @@ import { OperationUpdateInput } from '../model/operationUpdateInput';
   providedIn: 'root',
 })
 export class OperationService {
+  private httpClient = inject(HttpClient);
+  private toastService = inject(ToastService);
   private fileService = inject(FileService);
 
   private apiServerUrl = `${environment.apiBaseUrl}/operations`;
@@ -33,24 +35,24 @@ export class OperationService {
 
   deleteSubscription?: Subscription;
 
-  constructor(private http: HttpClient, private toastService: ToastService) {}
-
   public refetch() {
     this.fetchSignal.next(null);
   }
 
   public getOperations(): Observable<Operation[]> {
-    return this.http.get<Operation[]>(`${this.apiServerUrl}`);
+    return this.httpClient.get<Operation[]>(`${this.apiServerUrl}`);
   }
 
   public getOperation(operationId: number): Observable<Operation> {
-    return this.http.get<Operation>(`${this.apiServerUrl}/${operationId}`);
+    return this.httpClient.get<Operation>(
+      `${this.apiServerUrl}/${operationId}`,
+    );
   }
 
   public getOperationFromProjection(
     projectionId: number,
   ): Observable<Operation> {
-    return this.http.get<Operation>(
+    return this.httpClient.get<Operation>(
       `${this.apiServerUrl}/projectionAssoc/${projectionId}`,
     );
   }
@@ -59,7 +61,7 @@ export class OperationService {
     operationCreateInput: OperationCreateInput,
     projectionId: number,
   ) {
-    return this.http
+    return this.httpClient
       .post<number>(
         `${this.apiServerUrl}/addFromProj/${projectionId}`,
         operationCreateInput,
@@ -80,7 +82,7 @@ export class OperationService {
   }
 
   public addOperation(operationCreateInput: OperationCreateInput) {
-    return this.http
+    return this.httpClient
       .post<number>(`${this.apiServerUrl}`, operationCreateInput)
       .pipe(
         map(
@@ -98,7 +100,7 @@ export class OperationService {
   }
 
   public updateOperation(operation: OperationUpdateInput) {
-    return this.http
+    return this.httpClient
       .put<number>(`${this.apiServerUrl}/${operation.id_op}`, operation)
       .pipe(
         map(
@@ -124,7 +126,7 @@ export class OperationService {
   }
 
   private deleteOperationAction(operationId: number) {
-    this.deleteSubscription = this.http
+    this.deleteSubscription = this.httpClient
       .delete(`${this.apiServerUrl}/${operationId}`)
       .subscribe(
         () => {

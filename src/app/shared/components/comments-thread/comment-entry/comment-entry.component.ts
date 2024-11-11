@@ -1,11 +1,9 @@
 import { Component, inject, Input, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
-import { OperationComment } from 'src/app/data/models/opcomment';
-import {
-  CreateProjectionCommentInput,
-  ProjectionComment,
-} from 'src/app/data/models/pcomment';
+import { CreateOperationCommentInput } from 'src/app/data/models/opcomment';
+import { CreateProjectionCommentInput } from 'src/app/data/models/pcomment';
+import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { Comment } from '../comments-thread.component';
 
@@ -42,6 +40,7 @@ import { Comment } from '../comments-thread.component';
 export class CommentEntryComponent {
   private router = inject(Router);
   private projectionCommentService = inject(ProjectionCommentService);
+  private operationCommentService = inject(OperationCommentService);
 
   @Input() comment!: Comment;
   @Input() repliable = true;
@@ -53,17 +52,20 @@ export class CommentEntryComponent {
   }
 
   sendChildComment(comment: Comment, text: string) {
-    let commentId: number | undefined;
     if ('id_pc' in comment) {
-      commentId = (comment as ProjectionComment).id_pc;
       const projectionCreateInput = {
         comment: text,
         id_proj: comment.id_proj,
         parent_id: comment.id_pc,
       };
-      this.handleMutationComment(projectionCreateInput);
+      this.handleMutationProjectionComment(projectionCreateInput);
     } else if ('id_opc' in comment) {
-      commentId = (comment as OperationComment).id_opc;
+      const operationCreateInput = {
+        comment: text,
+        id_op: comment.id_op,
+        parent_id: comment.id_opc,
+      };
+      this.handleMutationOperationComment(operationCreateInput);
     } else {
       console.error('Unknown comment type');
       return;
@@ -72,15 +74,41 @@ export class CommentEntryComponent {
 
   isLoading = false;
   errors: Array<string> = [];
+  private async addProjectionComment(comment: CreateProjectionCommentInput) {
+    return await firstValueFrom(
+      this.projectionCommentService.addComment(comment),
+    );
+  }
 
-  private async handleMutationComment(
+  private async addOperationComment(comment: CreateOperationCommentInput) {
+    return await firstValueFrom(
+      this.operationCommentService.addComment(comment),
+    );
+  }
+
+  private async handleMutationProjectionComment(
     commentInput: CreateProjectionCommentInput,
   ): Promise<number | void> {
     try {
       this.isLoading = true;
-      const result = await firstValueFrom(
-        this.projectionCommentService.addComment(commentInput),
-      );
+      const result = this.addProjectionComment(commentInput);
+      if (result) {
+        this.isLoading = false;
+        return result;
+      }
+    } catch (e: any) {
+      this.errors = [...this.errors, e.message as string];
+    } finally {
+      this.isLoading = false;
+    }
+  }
+
+  private async handleMutationOperationComment(
+    commentInput: CreateOperationCommentInput,
+  ): Promise<number | void> {
+    try {
+      this.isLoading = true;
+      const result = this.addOperationComment(commentInput);
       if (result) {
         this.isLoading = false;
         return result;

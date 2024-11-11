@@ -49,10 +49,9 @@ export class ProjectionDetailsComponent implements OnInit {
     this.comments$ = this.activatedRoute.params.pipe(
       switchMap((params) => {
         const id = params['id'];
-        return this.commentService.getCommentsById(id).pipe(
-          map(
-            (res) => sortDataByInsertedAt(res), //it comes already sorted from the backend but need it for cached data
-          ),
+        return this.commentService.projectionComments$.pipe(
+          map((res) => res.filter((comment) => comment.id_proj === Number(id))),
+          map((filteredComments) => sortDataByInsertedAt(filteredComments)),
         );
       }),
     );
