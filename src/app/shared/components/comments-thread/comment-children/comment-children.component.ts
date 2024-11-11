@@ -13,7 +13,10 @@ import { Comment } from '../comments-thread.component';
     </div>
     <ng-container *ngIf="toggleChildren && checkChildren">
       <div *ngFor="let child of children" class="flex mt-2">
-        <app-comment-entry [comment]="child"></app-comment-entry>
+        <app-comment-entry
+          [comment]="child"
+          [repliable]="false"
+        ></app-comment-entry>
       </div>
     </ng-container> `,
 })

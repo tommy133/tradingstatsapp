@@ -1,0 +1,25 @@
+<ng-container *ngIf="isReplyOpen">
+  <div class="px-1 bg-white rounded-md ml-8 mt-4">
+    <form
+      [formGroup]="formGroup"
+      (ngSubmit)="replyComment()">
+      <div class="flex space-x-4">
+        <input
+          [formControl]="commentControl"
+          class="appearance-none w-full px-3 text-gray-700 leading-tight small focus:outline-none focus:shadow-outline"
+          type="text"
+          name="text"
+          autocomplete="off"
+          value
+          placeholder="Add a reply"
+          appAutoFocus>
+
+        <button [disabled]="commentControl.invalid">
+          <svg-icon
+            src="assets/svg/send.svg"
+            [svgStyle]="{ 'width.px': 32 }"></svg-icon>
+        </button>
+      </div>
+    </form>
+  </div>
+</ng-container>
