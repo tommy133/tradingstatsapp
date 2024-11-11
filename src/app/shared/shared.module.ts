@@ -8,6 +8,8 @@ import { AveragesComponent } from './components/averages/averages.component';
 import { BackToComponent } from './components/back-to/back-to.component';
 import { CardComponent } from './components/card/card.component';
 import { CloseButtonComponent } from './components/close-button/close-button.component';
+import { CommentReplyComponent } from './components/comment-reply/comment-reply.component';
+import { CommentChildrenComponent } from './components/comments-thread/comment-children/comment-children.component';
 import { CommentEntryComponent } from './components/comments-thread/comment-entry/comment-entry.component';
 import { CommentsThreadComponent } from './components/comments-thread/comments-thread.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
@@ -34,6 +36,7 @@ import { TrimesterBtnComponent } from './components/trimester-selector/trimester
 import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { YearSelectorComponent } from './components/year-selector/year-selector.component';
+import { AutoFocusDirective } from './directives/auto-focus.directive';
 
 const componentsAndPipes = [
   NavbarComponent,
@@ -66,6 +69,8 @@ const componentsAndPipes = [
   AveragesComponent,
   TotalComponent,
   RadioButtonComponent,
+  CommentReplyComponent,
+  AutoFocusDirective,
 ];
 
 const sharedModules = [
@@ -77,7 +82,7 @@ const sharedModules = [
 ];
 
 @NgModule({
-  declarations: [componentsAndPipes],
+  declarations: [componentsAndPipes, CommentChildrenComponent],
   imports: [...sharedModules, AngularSvgIconModule.forRoot(), AutosizeModule],
   exports: [...componentsAndPipes, ...sharedModules],
 })

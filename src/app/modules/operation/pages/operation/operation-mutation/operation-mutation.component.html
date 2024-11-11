@@ -131,7 +131,12 @@
       </div>
 
       <div class="flex flex-col gap-4 pt-5">
-        <app-form-label text="Comment"></app-form-label>
+        <app-form-label text="Comments"></app-form-label>
+        <ng-container *ngIf="!isMutationAdd">
+          <comments-thread
+            *ngIf="comments$ | async as comments; else loadingComments"
+            [comments]="comments ?? []"></comments-thread>
+        </ng-container>
 
         <div class="flex justify-end">
           <icon-button
@@ -146,7 +151,8 @@
           class="rounded"
           formControlName="comment"
           cols="50"
-          rows="5"></textarea>
+          rows="5"
+          (keydown.enter)="onSubmit(); $event.preventDefault()"></textarea>
       </div>
 
       <div
@@ -201,6 +207,9 @@
 
 <ng-template #loading>
   <app-loading-template></app-loading-template>
+</ng-template>
+<ng-template #loadingComments>
+  <app-spinner [type]="'inline'"></app-spinner>
 </ng-template>
 
 <ng-template #addSingleBtn>

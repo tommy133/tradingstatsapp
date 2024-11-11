@@ -15,7 +15,10 @@ import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { getUpdownLabel } from 'src/app/modules/projection/utils/shared-utils';
-import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
+import {
+  navigatePreservingQueryParams,
+  sortDataByInsertedAt,
+} from 'src/app/shared/utils/shared-utils';
 import { sidebarLeftAnimationSlide } from 'src/app/shared/utils/sidebar-left-animation';
 import { Operation } from '../../model/operation';
 import { OperationFilterService } from '../../service/operation-filter.service';
@@ -47,7 +50,7 @@ export class ViewChartComponent implements OnDestroy {
   private toastService = inject(ToastService);
   private operationFilter = inject(OperationFilterService);
   private bookmarkService = inject(BookmarkService);
-  private operationCommentService = inject(OperationCommentService);
+  private commentService = inject(OperationCommentService);
 
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: any) {
@@ -88,7 +91,10 @@ export class ViewChartComponent implements OnDestroy {
   comments$ = this.activatedRoute.params.pipe(
     switchMap((params) => {
       const id = params['id'];
-      return this.operationCommentService.getCommentsById(id);
+      return this.commentService.operationComments$.pipe(
+        map((res) => res.filter((comment) => comment.id_op === Number(id))),
+        map((filteredComments) => sortDataByInsertedAt(filteredComments)),
+      );
     }),
   );
 

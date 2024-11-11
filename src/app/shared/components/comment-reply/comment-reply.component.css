@@ -1,0 +1,14 @@
+svg-icon::ng-deep svg path {
+  fill: rgb(0 160 255);
+}
+
+button:disabled svg-icon::ng-deep svg path {
+  fill: rgb(44 58 66 / 0.4);
+}
+
+.text-chip {
+  @apply font-semibold;
+  @apply text-dark;
+  font-size: 0.75rem; /* 12px */
+  line-height: 0.75rem; /* 12px */
+}

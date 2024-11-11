@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import {
@@ -51,7 +51,7 @@ export class ProjectionMutationComponent implements OnInit {
 
   readonly STATUS_WATCHING = 3;
 
-  comments: ProjectionComment[] = [];
+  comments$?: Observable<ProjectionComment[]>;
 
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
@@ -98,10 +98,17 @@ export class ProjectionMutationComponent implements OnInit {
       const projectionDetails = await firstValueFrom(
         this.projectionService.getProjection(this.projectionParamId),
       );
-      this.comments = await firstValueFrom(
-        this.commentService.getCommentsById(this.projectionParamId),
+      this.comments$ = this.activatedRoute.params.pipe(
+        switchMap((params) => {
+          const id = params['id'];
+          return this.commentService.projectionComments$.pipe(
+            map((res) =>
+              res.filter((comment) => comment.id_proj === Number(id)),
+            ),
+            map((filteredComments) => sortDataByInsertedAt(filteredComments)),
+          );
+        }),
       );
-      this.comments = sortDataByInsertedAt(this.comments); //it comes already sorted from the backend but need it for cached data
       if (projectionDetails) {
         this.setInitialFormStateProj(projectionDetails);
       }
@@ -205,6 +212,12 @@ export class ProjectionMutationComponent implements OnInit {
   ): Promise<number | void> {
     try {
       this.isLoading = true;
+      //check some projection field changed to submit projection / only comment
+      if (
+        !this.isMutationAdd &&
+        this.areAllControlsPristineExceptComment(this.projectionForm)
+      )
+        return (projectionInput as ProjectionUpdateInput).id_proj;
       const result = this.isMutationAdd
         ? await firstValueFrom(
             this.onAddProjection(projectionInput as ProjectionCreateInput),
@@ -273,6 +286,12 @@ export class ProjectionMutationComponent implements OnInit {
       comment: comment!,
       id_proj: idProj!,
     };
+  }
+
+  private areAllControlsPristineExceptComment(formGroup: FormGroup): boolean {
+    return Object.keys(formGroup.controls)
+      .filter((controlName) => controlName !== 'comment')
+      .every((controlName) => formGroup.controls[controlName].pristine);
   }
 
   async onSubmit() {

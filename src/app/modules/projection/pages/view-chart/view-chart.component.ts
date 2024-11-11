@@ -14,7 +14,10 @@ import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
-import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
+import {
+  navigatePreservingQueryParams,
+  sortDataByInsertedAt,
+} from 'src/app/shared/utils/shared-utils';
 import { Projection } from '../../model/projection';
 import { ProjectionFilterService } from '../../service/projection-filter.service';
 import { ProjectionService } from '../../service/projection.service';
@@ -43,7 +46,7 @@ export class ViewChartComponent {
   private sanitizer = inject(DomSanitizer);
   private toastService = inject(ToastService);
   private projectionFilter = inject(ProjectionFilterService);
-  private projectionCommentService = inject(ProjectionCommentService);
+  private commentService = inject(ProjectionCommentService);
   private sidebarService = inject(SidebarService);
   private bookmarkService = inject(BookmarkService);
 
@@ -80,7 +83,10 @@ export class ViewChartComponent {
   comments$ = this.activatedRoute.params.pipe(
     switchMap((params) => {
       const id = params['id'];
-      return this.projectionCommentService.getCommentsById(id);
+      return this.commentService.projectionComments$.pipe(
+        map((res) => res.filter((comment) => comment.id_proj === Number(id))),
+        map((filteredComments) => sortDataByInsertedAt(filteredComments)),
+      );
     }),
   );
 
