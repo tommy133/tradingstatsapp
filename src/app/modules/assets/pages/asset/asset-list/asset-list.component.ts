@@ -72,7 +72,9 @@ export class AssetListComponent implements AfterViewInit {
     this.filterForm$,
   ]).pipe(
     map(([assetsByName, assetsByDescription, filterForm]) => {
-      const assets = [...assetsByName, ...assetsByDescription];
+      const assets = Array.from(
+        new Set([...assetsByName, ...assetsByDescription]),
+      );
       if (!filterForm) return assets;
       return assets.filter((asset) => {
         const { market } = filterForm;
