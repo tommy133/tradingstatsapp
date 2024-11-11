@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
@@ -316,6 +316,13 @@ export class OperationMutationComponent implements OnInit {
       const parsedProjId = projId ? parseInt(projId) : null;
       const statuses = await firstValueFrom(this.statusService.statuses$);
 
+      //check some operation field changed to submit operation / only comment
+      if (
+        !this.isMutationAdd &&
+        this.areAllControlsPristineExceptComment(this.operationForm)
+      )
+        return (operationInput as OperationUpdateInput).id_op;
+
       const result = this.isMutationAdd
         ? await firstValueFrom(
             this.onAddOperation(
@@ -428,6 +435,12 @@ export class OperationMutationComponent implements OnInit {
       comment: comment!,
       id_op: idOperation!,
     };
+  }
+
+  private areAllControlsPristineExceptComment(formGroup: FormGroup): boolean {
+    return Object.keys(formGroup.controls)
+      .filter((controlName) => controlName !== 'comment')
+      .every((controlName) => formGroup.controls[controlName].pristine);
   }
 
   async onSubmit() {

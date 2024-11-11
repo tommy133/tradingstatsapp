@@ -1,5 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
@@ -212,6 +212,12 @@ export class ProjectionMutationComponent implements OnInit {
   ): Promise<number | void> {
     try {
       this.isLoading = true;
+      //check some projection field changed to submit projection / only comment
+      if (
+        !this.isMutationAdd &&
+        this.areAllControlsPristineExceptComment(this.projectionForm)
+      )
+        return (projectionInput as ProjectionUpdateInput).id_proj;
       const result = this.isMutationAdd
         ? await firstValueFrom(
             this.onAddProjection(projectionInput as ProjectionCreateInput),
@@ -280,6 +286,12 @@ export class ProjectionMutationComponent implements OnInit {
       comment: comment!,
       id_proj: idProj!,
     };
+  }
+
+  private areAllControlsPristineExceptComment(formGroup: FormGroup): boolean {
+    return Object.keys(formGroup.controls)
+      .filter((controlName) => controlName !== 'comment')
+      .every((controlName) => formGroup.controls[controlName].pristine);
   }
 
   async onSubmit() {
