@@ -31,12 +31,6 @@ export class OperationCommentService {
     return this.httpClient.get<OperationComment[]>(`${this.serverUrl}`);
   }
 
-  public getCommentsById(projId: number): Observable<OperationComment[]> {
-    return this.httpClient.get<OperationComment[]>(
-      `${this.serverUrl}/${projId}`,
-    );
-  }
-
   public getComment(operationId: number): Observable<OperationComment> {
     return this.httpClient.get<OperationComment>(
       `${this.serverUrl}/${operationId}`,

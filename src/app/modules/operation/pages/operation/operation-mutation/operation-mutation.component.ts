@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { firstValueFrom, map, Observable } from 'rxjs';
+import { firstValueFrom, map, Observable, switchMap } from 'rxjs';
 import { FileService } from 'src/app/core/service/file.service';
 import { ToastService } from 'src/app/core/service/toast.service';
 import {
@@ -62,7 +62,7 @@ export class OperationMutationComponent implements OnInit {
 
   readonly accountTypes: AccountType[] = ['Demo', 'Live', 'Backtest'];
 
-  comments: OperationComment[] = [];
+  comments$?: Observable<OperationComment[]>;
   graphFileName: string | null = null;
   uploadedFile: File | null = null;
   selectedSymbol: string = '';
@@ -133,10 +133,15 @@ export class OperationMutationComponent implements OnInit {
       const operationDetails = await firstValueFrom(
         this.operationService.getOperation(this.operationParamId),
       );
-      this.comments = await firstValueFrom(
-        this.commentService.getCommentsById(this.operationParamId),
+      this.comments$ = this.activatedRoute.params.pipe(
+        switchMap((params) => {
+          const id = params['id'];
+          return this.commentService.operationComments$.pipe(
+            map((res) => res.filter((comment) => comment.id_op === Number(id))),
+            map((filteredComments) => sortDataByInsertedAt(filteredComments)),
+          );
+        }),
       );
-      this.comments = sortDataByInsertedAt(this.comments); //it comes already sorted from the backend but need it for cached data
 
       if (operationDetails) {
         this.setInitialFormStateOperation(operationDetails);

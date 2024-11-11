@@ -31,12 +31,6 @@ export class ProjectionCommentService {
     return this.httpClient.get<ProjectionComment[]>(`${this.serverUrl}`);
   }
 
-  public getCommentsById(projId: number): Observable<ProjectionComment[]> {
-    return this.httpClient.get<ProjectionComment[]>(
-      `${this.serverUrl}/${projId}`,
-    );
-  }
-
   public addComment(comment: CreateProjectionCommentInput) {
     return this.httpClient.post<number>(`${this.serverUrl}`, comment).pipe(
       map(
