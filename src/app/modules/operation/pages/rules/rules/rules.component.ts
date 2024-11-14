@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
@@ -22,7 +22,6 @@ import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils
       >
     {{ rules }}
   </textarea>
-      <app-checklist-form />
     </div>
     <app-sidebar
       [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"
