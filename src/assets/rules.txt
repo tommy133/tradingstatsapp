@@ -9,19 +9,24 @@ REGLAS FUNDAMENTALES
 
 REGLAS ESPECÍFICAS
 
-  OPERATIVA
+  1. Marcos temporales M - H1 siempre a favor de la tendencia que marque el contexto, no necesáriamente para temporalidades menores
+  2. Fuera del mercado con noticias fuertes en temporalidades menores
+  3. Usar ordenes stop para confirmar el disparo hacia la dirección que queremos
+  4. Si llegamos a 2 pérdidas automáticamente dejamos de operar al estar vacía la cuenta emocional
+  5. Si el volumen es fuerte pero la vela pequeña no la tomaremos en cuenta
+  6. No mas del 5% de riesgo por operación
 
-    1. Empezar siempre por el contexto, si en temporalidades mayores tendencia alcista favorecemos las compras
-    2. Fuera del mercado con noticias fuertes en temporalidades menores
-    3. Esperar zonas operativas de alta negociación para buscar nuestro gatillo de entrada
-    4. Usar ordenes stop para confirmar el disparo hacia la dirección que queremos
-    5. Si llegamos a 2 pérdidas automáticamente dejamos de operar al estar vacía la cuenta emocional
-    6. Si el volumen es fuerte pero la vela pequeña no la tomaremos en cuenta
+OPERATIVA
 
-  GESTIÓN DE LA POSICIÓN
+  1. Empezar siempre por el contexto, si en temporalidades mayores tendencia alcista favorecemos las compras
+  2. Esperar zonas operativas de alta negociación
+  3. Planteamiento de escenario
+  4. Búsqueda de vela de fuerza como gatillo de entrada
 
-    1. Ratio mínimo R/B 1/2
-    2. Stop en breakeven a 3/4 TP
-    3. Si puedo tener el grafico delante durante el desarrollo de TODA la operación, puedo permitirme poner solo stop loss (antifragilidad)
+GESTIÓN DE LA POSICIÓN
+
+  1. Ratio mínimo R/B 1/2
+  2. Stop en breakeven a 3/4 TP
+  3. Si puedo tener el grafico delante durante el desarrollo de TODA la operación, puedo permitirme poner solo stop loss (antifragilidad)
 
 
