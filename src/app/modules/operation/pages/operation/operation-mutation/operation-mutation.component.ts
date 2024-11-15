@@ -317,6 +317,7 @@ export class OperationMutationComponent implements OnInit {
       //check some operation field changed to submit operation / only comment
       if (
         !this.isMutationAdd &&
+        !this.graphFileName &&
         this.areAllControlsPristineExceptComment(this.operationForm)
       )
         return (operationInput as OperationUpdateInput).id_op;
@@ -464,7 +465,7 @@ export class OperationMutationComponent implements OnInit {
       this.handleMutationComment(commentInput);
     }
 
-    if (this.errors.length === 0) {
+    if (operationId && this.errors.length === 0) {
       if (this.uploadedFile) {
         if (!this.isMutationAdd && this.graphFileName) {
           await this.fileService.deleteImage(this.graphFileName);

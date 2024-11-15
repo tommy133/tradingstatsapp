@@ -215,6 +215,7 @@ export class ProjectionMutationComponent implements OnInit {
       //check some projection field changed to submit projection / only comment
       if (
         !this.isMutationAdd &&
+        !this.uploadedFile &&
         this.areAllControlsPristineExceptComment(this.projectionForm)
       )
         return (projectionInput as ProjectionUpdateInput).id_proj;
@@ -318,7 +319,7 @@ export class ProjectionMutationComponent implements OnInit {
       this.handleMutationComment(commentInput);
     }
 
-    if (this.errors.length === 0) {
+    if (projId && this.errors.length === 0) {
       if (this.uploadedFile) {
         if (!this.isMutationAdd && this.graphFileName) {
           await this.fileService.deleteImage(this.graphFileName);
