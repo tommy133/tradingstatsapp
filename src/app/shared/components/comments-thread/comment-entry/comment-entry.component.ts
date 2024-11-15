@@ -5,6 +5,7 @@ import { CreateOperationCommentInput } from 'src/app/data/models/opcomment';
 import { CreateProjectionCommentInput } from 'src/app/data/models/pcomment';
 import { OperationCommentService } from 'src/app/data/service/opcomment.service';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
+import { gotoExternalDomain } from 'src/app/shared/utils/shared-utils';
 import { Comment } from '../comments-thread.component';
 
 @Component({
@@ -125,7 +126,12 @@ export class CommentEntryComponent {
     if (element.nodeName === 'A') {
       e.preventDefault();
       const link = element.getAttribute('href');
-      this.router.navigate([link], { queryParamsHandling: 'preserve' });
+      if (!link) return;
+      if (link.includes('projections/') || link.includes('operations/')) {
+        this.router.navigate([link], { queryParamsHandling: 'preserve' });
+      } else {
+        gotoExternalDomain(link);
+      }
     }
   }
 }

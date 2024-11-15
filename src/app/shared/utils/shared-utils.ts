@@ -81,3 +81,8 @@ export function sortDataByInsertedAt(res: any[]) {
     (a, b) => Date.parse(b.inserted_at) - Date.parse(a.inserted_at),
   );
 }
+
+//navigate to external domain opening new tab
+export function gotoExternalDomain(domain: string) {
+  (window as any).open(domain, '_blank');
+}
