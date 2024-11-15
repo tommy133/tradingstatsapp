@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -38,6 +39,7 @@ export class ProjectionMutationComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private toastService = inject(ToastService);
   private fileService = inject(FileService);
+  private datePipe = inject(DatePipe);
 
   textToHyperLink = textToHyperlink;
 
@@ -75,7 +77,10 @@ export class ProjectionMutationComponent implements OnInit {
   id = this.formBuilder.control<number | null>(null);
   symbol = this.formBuilder.control<number | null>(null, Validators.required);
   orderType = this.formBuilder.control<number | null>(null);
-  date = this.formBuilder.control<string | null>(null, Validators.required);
+  date = this.formBuilder.control<string | null>(
+    this.datePipe.transform(new Date(), 'yyyy-MM-dd'),
+    Validators.required,
+  );
   timeframe = this.formBuilder.control<string | null>(
     null,
     Validators.required,
