@@ -33,6 +33,13 @@
         </div>
       </div>
     </div>
+    <div class="mt-5 flex gap-[3.65rem] items-center">
+      <app-label>Minor timeframe</app-label>
+      <input
+        type="checkbox"
+        [formControl]="minorTimeframe"
+        [value]="false">
+    </div>
     <div class="flex justify-center mt-5">
       <button
         type="button"

@@ -30,6 +30,7 @@ export class ChecklistFormComponent {
   jac = this.formBuilder.control<boolean | null>(null);
   volume = this.formBuilder.control<boolean | null>(null);
   delta = this.formBuilder.control<boolean | null>(null);
+  minorTimeframe = this.formBuilder.control<boolean | null>(null);
 
   // Initialize the form with a FormArray
   checklistForm = this.formBuilder.group({
@@ -40,6 +41,7 @@ export class ChecklistFormComponent {
     jac: this.jac,
     volume: this.volume,
     delta: this.delta,
+    minorTimeframe: this.minorTimeframe,
   });
 
   accumulationOrDistribution$ = this.checklistForm.valueChanges.pipe(
