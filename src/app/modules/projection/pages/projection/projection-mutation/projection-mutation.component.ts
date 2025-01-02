@@ -187,6 +187,7 @@ export class ProjectionMutationComponent implements OnInit {
 
   setSymbolForm(symbol: Symbol) {
     this.projectionForm.controls.symbol.setValue(symbol.id_sym);
+    this.projectionForm.controls.symbol.markAsDirty();
   }
 
   private setInitialFormStateProj(projectionDetails: Projection) {
@@ -220,10 +221,12 @@ export class ProjectionMutationComponent implements OnInit {
       //check some projection field changed to submit projection / only comment
       if (
         !this.isMutationAdd &&
+        !this.graphFileName &&
         !this.uploadedFile &&
         this.areAllControlsPristineExceptComment(this.projectionForm)
       )
         return (projectionInput as ProjectionUpdateInput).id_proj;
+
       const result = this.isMutationAdd
         ? await firstValueFrom(
             this.onAddProjection(projectionInput as ProjectionCreateInput),
@@ -295,6 +298,7 @@ export class ProjectionMutationComponent implements OnInit {
   }
 
   private areAllControlsPristineExceptComment(formGroup: FormGroup): boolean {
+    debugger;
     return Object.keys(formGroup.controls)
       .filter((controlName) => controlName !== 'comment')
       .every((controlName) => formGroup.controls[controlName].pristine);

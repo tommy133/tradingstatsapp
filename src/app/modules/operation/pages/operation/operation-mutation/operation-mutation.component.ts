@@ -233,6 +233,7 @@ export class OperationMutationComponent implements OnInit {
 
   setSymbolForm(symbol: Symbol) {
     this.operationForm.controls.symbol.setValue(symbol.id_sym);
+    this.operationForm.controls.symbol.markAsDirty();
   }
 
   private setInitialFormStateOperation(operationDetails: Operation) {
@@ -314,10 +315,11 @@ export class OperationMutationComponent implements OnInit {
       this.isLoading = true;
       const statuses = await firstValueFrom(this.statusService.statuses$);
 
-      //check some operation field changed to submit operation / only comment
+      //check some operation field changed to submit only comment / operation
       if (
         !this.isMutationAdd &&
         !this.graphFileName &&
+        !this.uploadedFile &&
         this.areAllControlsPristineExceptComment(this.operationForm)
       )
         return (operationInput as OperationUpdateInput).id_op;
