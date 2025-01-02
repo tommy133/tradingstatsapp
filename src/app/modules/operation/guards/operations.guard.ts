@@ -29,7 +29,7 @@ export class OperationsGuard implements CanActivate {
 
     //redirect Ok route
     let route: string = '';
-    if (state.url.includes('addFromProj')) {
+    if (state.url.includes('checklist')) {
       route = state.url.split('?')[0];
     } else {
       route = 'operations';
