@@ -92,7 +92,7 @@ export class ProjectionDetailsComponent implements OnInit {
 
   goToOperation(operationId: number) {
     navigatePreservingQueryParams(
-      ['../../operations', operationId],
+      ['/operations', operationId],
       this.router,
       this.activatedRoute,
     );
