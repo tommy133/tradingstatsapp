@@ -9,6 +9,7 @@ import { Component, HostListener, inject, OnDestroy } from '@angular/core';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, map, shareReplay, Subscription, switchMap } from 'rxjs';
+import { AccountService } from 'src/app/core/service/account.service';
 import { BookmarkService } from 'src/app/core/service/bookmark.service';
 import { FileService } from 'src/app/core/service/file.service';
 import { SidebarService } from 'src/app/core/service/sidebar.service';
@@ -51,6 +52,18 @@ export class ViewChartComponent implements OnDestroy {
   private operationFilter = inject(OperationFilterService);
   private bookmarkService = inject(BookmarkService);
   private commentService = inject(OperationCommentService);
+  private accountService = inject(AccountService);
+
+  ngOnInit() {
+    //hack to manually update account form control when we switch accounts going from bookmarked operations
+    const accountControl = this.accountService.accountControl.value;
+    const accountTypes = this.accountService.accountTypes;
+    const accountQueryParam =
+      accountTypes[this.activatedRoute.snapshot.queryParams['account'] - 1];
+
+    if (accountQueryParam !== accountControl)
+      this.accountService.accountControl.setValue(accountQueryParam);
+  }
 
   @HostListener('window:keydown', ['$event'])
   keyboardInput(event: any) {
