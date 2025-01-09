@@ -14,7 +14,6 @@ REGLAS ESPECÍFICAS
   3. Usar ordenes stop para confirmar el disparo hacia la dirección que queremos
   4. Si llegamos a 2 pérdidas automáticamente dejamos de operar al estar vacía la cuenta emocional
   5. Si el volumen es fuerte pero la vela pequeña no la tomaremos en cuenta
-  6. No mas del 5% de riesgo por operación
 
 OPERATIVA
 
@@ -25,8 +24,10 @@ OPERATIVA
 
 GESTIÓN DE LA POSICIÓN
 
-  1. Ratio mínimo R/B 1/2
-  2. Stop en breakeven a 3/4 TP
-  3. Si puedo tener el grafico delante durante el desarrollo de TODA la operación, puedo permitirme poner solo stop loss (antifragilidad)
+  1. Ratio mínimo P/L 3/2
+  2. 3% riesgo / operación
+  3. Max drawdown 30%, si se supera se suspende temporalment la cuenta real
+  3. Stop en breakeven a 3/4 TP
+  4. Si puedo tener el grafico delante durante el desarrollo de TODA la operación, puedo permitirme poner solo stop loss (antifragilidad)
 
 
