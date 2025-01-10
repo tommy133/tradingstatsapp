@@ -24,15 +24,13 @@ export class ProjectionFiltersFormComponent {
   statusControl = this.filterFormService.status;
   marketControl = this.filterFormService.market;
 
-  statuses$: Observable<Status[]> = this.statusService
-    .getStatuses()
-    .pipe(
-      map((statuses) =>
-        statuses.filter((status) =>
-          ProjectionService.PROJECTION_STATUSES.includes(status.name_st),
-        ),
+  statuses$: Observable<Status[]> = this.statusService.statuses$.pipe(
+    map((statuses) =>
+      statuses.filter((status) =>
+        ProjectionService.PROJECTION_STATUSES.includes(status.name_st),
       ),
-    );
+    ),
+  );
 
   markets$ = this.marketService.getMarkets();
 }

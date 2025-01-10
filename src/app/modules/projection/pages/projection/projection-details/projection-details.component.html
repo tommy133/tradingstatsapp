@@ -15,7 +15,7 @@
           (clickEvent)="goToOperation(opId)"></app-rounded-button>
         <ng-template #createOperation>
           <app-rounded-button
-            *ngIf="projection.status.name_st === 'WATCHING'"
+            *ngIf="projection.status.name_st === 'TRIGGER'"
             text="To Operation"
             bgColor="bg-green"
             type="button"
@@ -74,9 +74,7 @@
 
     <div class="flex items-center justify-between pt-5">
       <app-form-label text="Status"></app-form-label>
-      <app-label
-        [text]="projection.status.name_st"
-        [textColor]="getStatusColorClass(projection.status.id_st)"></app-label>
+      <app-label [text]="projection.status.name_st"></app-label>
     </div>
 
     <div class="flex flex-col gap-2 pt-5">

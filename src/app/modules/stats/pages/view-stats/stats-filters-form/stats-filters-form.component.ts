@@ -25,15 +25,13 @@ export class StatsFiltersFormComponent {
   marketControl = this.filterFormService.market;
   resultControl = this.filterFormService.result;
 
-  statuses$: Observable<Status[]> = this.statusService
-    .getStatuses()
-    .pipe(
-      map((statuses) =>
-        statuses.filter((status) =>
-          OperationService.OPERATION_STATUSES.includes(status.name_st),
-        ),
+  statuses$: Observable<Status[]> = this.statusService.statuses$.pipe(
+    map((statuses) =>
+      statuses.filter((status) =>
+        OperationService.OPERATION_STATUSES.includes(status.name_st),
       ),
-    );
+    ),
+  );
 
   markets$ = this.marketService.getMarkets();
 }

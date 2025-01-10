@@ -1,12 +1,10 @@
 import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TouchableStatusService } from 'src/app/core/service/touchable-status.service';
+import { StatusService } from 'src/app/data/service/status.service';
 import { Operation } from 'src/app/modules/operation/model/operation';
 import { getRevenueColorClass } from 'src/app/modules/operation/utils/shared-utils';
-import {
-  getStatusColorClass,
-  navigatePreservingQueryParams,
-} from 'src/app/shared/utils/shared-utils';
+import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 
 export interface TableColumn {
   name: string;
@@ -26,8 +24,9 @@ export interface TableColumn {
 export class TableOperationComponent {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private statusService = inject(StatusService);
 
-  getStatusColorClass = getStatusColorClass;
+  getStatusColorClass = this.statusService.getStatusColorClass;
   getRevenueColorClass = getRevenueColorClass;
   isTouchable = TouchableStatusService.isTouchable;
 

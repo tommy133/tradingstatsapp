@@ -59,15 +59,13 @@ export class ProjectionMutationComponent implements OnInit {
   uploadedFile: File | null = null;
   selectedSymbol: string = '';
 
-  statuses$: Observable<Status[]> = this.statusService
-    .getStatuses()
-    .pipe(
-      map((statuses) =>
-        statuses.filter((status) =>
-          ProjectionService.PROJECTION_STATUSES.includes(status.name_st),
-        ),
+  statuses$: Observable<Status[]> = this.statusService.statuses$.pipe(
+    map((statuses) =>
+      statuses.filter((status) =>
+        ProjectionService.PROJECTION_STATUSES.includes(status.name_st),
       ),
-    );
+    ),
+  );
 
   timeframes = Object.values(Timeframe).filter(
     (value) => typeof value !== 'number',

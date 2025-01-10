@@ -23,6 +23,12 @@ const timeframeOrder: { [key: string]: number } = {
   M: 9,
 };
 
+const urgencyOrder: { [key: string]: number } = {
+  TRIGGER: 1,
+  WATCHING: 2,
+  EXPIRED: 3,
+};
+
 @Component({
   selector: 'app-projection-list',
   templateUrl: './projection-list.component.html',
@@ -74,8 +80,15 @@ export class ProjectionListComponent implements AfterViewInit {
           (a, b) => timeframeOrder[a.timeframe] - timeframeOrder[b.timeframe],
         );
       }
+      if (orderBy === 'Urgency') {
+        const unsortedProjections = [...projections];
+        return unsortedProjections.sort(
+          (a, b) =>
+            urgencyOrder[a.status.name_st] - urgencyOrder[b.status.name_st],
+        );
+      }
 
-      return projections;
+      return projections; //assume it comes already sorted by date from backend
     }),
   );
 

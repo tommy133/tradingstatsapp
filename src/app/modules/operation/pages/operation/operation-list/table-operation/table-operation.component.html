@@ -25,7 +25,7 @@
               <app-label
                 [text]="row.status.name_st"
                 bgColor="bg-dark"
-                [textColor]="getStatusColorClass(row.status.id_st)"></app-label>
+                [textColor]="getStatusColorClass(row.status)"></app-label>
             </div>
             <div [ngClass]="'font-semibold cell ' + getRevenueColorClass(row.revenue!)">{{ row.revenue }}</div>
             <div class="font-semibold cell">

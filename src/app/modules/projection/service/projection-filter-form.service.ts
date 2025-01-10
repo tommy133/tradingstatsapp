@@ -6,7 +6,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class ProjectionFilterFormService {
   private formBuilder = inject(FormBuilder);
-  readonly DEFAULT_STATUS = '3'; //WATCHING
+  readonly DEFAULT_STATUS = '0'; //Synthetic status ALL WATCHING
 
   orderType = this.formBuilder.control<string | null>(null);
   timeframe = this.formBuilder.control<string | null>(null);

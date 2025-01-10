@@ -28,6 +28,7 @@
       class="rounded border-2"
       [formControl]="statusControl">
       <ng-container [ngTemplateOutlet]="blank"></ng-container>
+      <option [value]="0">ALL WATCHING</option>
       <ng-container *ngFor="let status of statuses$ | async">
         <option [value]="status.id_st">{{ status.name_st }}</option>
       </ng-container>

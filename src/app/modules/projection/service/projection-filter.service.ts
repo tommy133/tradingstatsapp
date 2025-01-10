@@ -11,7 +11,7 @@ export class ProjectionFilterService {
   private activatedRoute = inject(ActivatedRoute);
   private projectionFilterFormService = inject(ProjectionFilterFormService);
 
-  readonly DEFAULT_STATUS = '3'; //WATCHING
+  readonly DEFAULT_STATUS = '0'; //Synthetic status ALL WATCHING
 
   private quarters$ = this.activatedRoute.queryParams.pipe(
     map((quarters) => ({
@@ -77,7 +77,10 @@ export class ProjectionFilterService {
             : projection.updown === parseInt(orderType!);
           const checkStatus = checkNullSelectControl(status)
             ? true
-            : projection.status.id_st === parseInt(status!);
+            : //checks for either api status or ALL WATCHING status
+              projection.status.id_st === parseInt(status!) ||
+              (parseInt(status!) === 0 &&
+                projection.status.name_st !== 'EXPIRED');
           const checkTimeframe = checkNullSelectControl(timeframe)
             ? true
             : projection.timeframe === timeframe;

@@ -67,15 +67,13 @@ export class OperationMutationComponent implements OnInit {
   selectedSymbol: string = '';
 
   symbols$: Observable<Symbol[]> = this.symbolService.assets$;
-  statuses$: Observable<Status[]> = this.statusService
-    .getStatuses()
-    .pipe(
-      map((statuses) =>
-        statuses.filter((status) =>
-          OperationService.OPERATION_STATUSES.includes(status.name_st),
-        ),
+  statuses$: Observable<Status[]> = this.statusService.statuses$.pipe(
+    map((statuses) =>
+      statuses.filter((status) =>
+        OperationService.OPERATION_STATUSES.includes(status.name_st),
       ),
-    );
+    ),
+  );
 
   timeframes = Object.values(Timeframe).filter(
     (value) => typeof value !== 'number',
@@ -313,7 +311,7 @@ export class OperationMutationComponent implements OnInit {
   ): Promise<number | void> {
     try {
       this.isLoading = true;
-      const statuses = await firstValueFrom(this.statusService.statuses$);
+      const statuses = await firstValueFrom(this.statusService.statusesMap$);
 
       //check some operation field changed to submit only comment / operation
       if (

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { map, Observable } from 'rxjs';
+import { map, Observable, shareReplay } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Status } from '../models/status';
 
@@ -12,11 +12,26 @@ export class StatusService {
 
   constructor(private http: HttpClient) {}
 
-  statuses$ = this.getStatuses().pipe(
+  statuses$ = this.getStatuses().pipe(shareReplay(1));
+  statusesMap$ = this.getStatuses().pipe(
     map((statuses: Status[]) => this.transformToMap(statuses)),
+    shareReplay(1),
   );
   public getStatuses(): Observable<Status[]> {
     return this.http.get<Status[]>(`${this.apiServerUrl}`);
+  }
+
+  public getStatusColorClass(status: Status): string {
+    switch (status.name_st) {
+      case 'OPEN':
+        return 'text-blue-300';
+      case 'WATCHING':
+        return 'text-orange-600';
+      case 'TRIGGER':
+        return 'text-yellow-500';
+      default:
+        return '';
+    }
   }
 
   private transformToMap(statuses: Status[]): { [key: string]: number } {

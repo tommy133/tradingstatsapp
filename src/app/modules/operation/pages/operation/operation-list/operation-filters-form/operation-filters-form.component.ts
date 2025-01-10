@@ -27,15 +27,13 @@ export class OperationFiltersFormComponent {
   resultControl = this.filterFormService.result;
   dateTypeControl = this.filterFormService.dateType;
 
-  statuses$: Observable<Status[]> = this.statusService
-    .getStatuses()
-    .pipe(
-      map((statuses) =>
-        statuses.filter((status) =>
-          OperationService.OPERATION_STATUSES.includes(status.name_st),
-        ),
+  statuses$: Observable<Status[]> = this.statusService.statuses$.pipe(
+    map((statuses) =>
+      statuses.filter((status) =>
+        OperationService.OPERATION_STATUSES.includes(status.name_st),
       ),
-    );
+    ),
+  );
 
   markets$ = this.marketService.getMarkets();
 }

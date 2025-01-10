@@ -5,7 +5,6 @@ import { ProjectionComment } from 'src/app/data/models/pcomment';
 import { ProjectionCommentService } from 'src/app/data/service/pcomment.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import {
-  getStatusColorClass,
   navigatePreservingQueryParams,
   sortDataByInsertedAt,
 } from 'src/app/shared/utils/shared-utils';
@@ -18,7 +17,6 @@ import { getUpdownLabel } from '../../../utils/shared-utils';
   templateUrl: './projection-details.component.html',
 })
 export class ProjectionDetailsComponent implements OnInit {
-  getStatusColorClass = getStatusColorClass;
   getUpdownLabel = getUpdownLabel;
 
   projection$?: Observable<Projection>;

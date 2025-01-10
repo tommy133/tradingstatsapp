@@ -29,7 +29,7 @@ export class ProjectionService {
     shareReplay(1),
   );
 
-  public static PROJECTION_STATUSES = ['WATCHING', 'EXPIRED'];
+  public static PROJECTION_STATUSES = ['WATCHING', 'TRIGGER', 'EXPIRED'];
 
   deleteSubscription?: Subscription;
 
