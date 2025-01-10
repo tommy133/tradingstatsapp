@@ -12,13 +12,13 @@ import { Operation } from 'src/app/modules/operation/model/operation';
       <div class="flex flex-col gap-4">
         <p class="font-semibold text-base">Averages</p>
         <app-label
-          ><p>Time operation (min): {{ avgTimeOperation }}</p>
+          ><p>
+            Time operation: {{ avgTimeOperationInMinutes }} (min) |
+            {{ avgTimeOperationInHours }} (hours)
+          </p>
         </app-label>
         <app-label
           ><p>Ratio: {{ avgRatio }}</p>
-        </app-label>
-        <app-label
-          ><p>Revenue: {{ avgRevenue }}</p>
         </app-label>
       </div>
     </app-label>
@@ -29,11 +29,13 @@ export class AveragesComponent {
 
   get avgTimeOperation() {
     const durations = this.data.map((op) => {
-      //assume we evaluate always closed positions
-      const startTime = new Date(op.dateOpen!).getTime();
-      const endTime = new Date(op.dateClose!).getTime();
+      if (op.dateOpen && op.dateClose) {
+        const startTime = new Date(op.dateOpen).getTime();
+        const endTime = new Date(op.dateClose).getTime();
 
-      return endTime - startTime;
+        return endTime - startTime;
+      }
+      return 0;
     });
 
     const totalDuration = durations.reduce(
@@ -41,9 +43,15 @@ export class AveragesComponent {
       0,
     );
 
-    const averageDuration = totalDuration / durations.length;
-    const averageDurationInMinutes = (averageDuration / (1000 * 60)).toFixed(2);
-    return averageDurationInMinutes;
+    return totalDuration / durations.length;
+  }
+
+  get avgTimeOperationInMinutes() {
+    return (this.avgTimeOperation / (1000 * 60)).toFixed(2);
+  }
+
+  get avgTimeOperationInHours() {
+    return (this.avgTimeOperation / (1000 * 60 * 60)).toFixed(2);
   }
 
   get avgRatio() {
