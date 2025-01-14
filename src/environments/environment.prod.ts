@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiBaseUrl: `${window.location.protocol}//${window.location.hostname}:8080`,
+  apiBaseUrl: `${window.location.protocol}//${window.location.hostname}:3000/api`,
   tradingViewUrl:
     'https://es.tradingview.com/chart/svq2CwMv/?symbol=IBROKER%3A',
   firebaseConfig: {
