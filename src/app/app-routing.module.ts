@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LoginComponent } from './authentication/pages/login/login.component';
 import { AssetLayoutComponent } from './layout/asset-layout/asset-layout.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { OperationLayoutComponent } from './layout/operation-layout/operation-layout.component';
 import { ProjectionLayoutComponent } from './layout/projection-layout/projection-layout.component';
 import { StatsLayoutComponent } from './layout/stats-layout/stats-layout.component';
-import { LoginComponent } from './modules/authentication/pages/login/login.component';
 import { OperationsGuard } from './modules/operation/guards/operations.guard';
 import { ProjectionGuard } from './modules/projection/guards/projection.guard';
 import { StatsGuard } from './modules/stats/guards/stats.guard';

@@ -12,11 +12,11 @@ import { catchError, Observable, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class SetTokenRequestInterceptor implements HttpInterceptor {
-  private readonly accessToken: string | null;
+  private accessToken: string | null = null;
   private router = inject(Router);
 
-  constructor() {
-    this.accessToken = localStorage.getItem('access_token');
+  async ngOnInit() {
+    this.accessToken = await localStorage.getItem('access_token');
   }
 
   intercept(
@@ -33,6 +33,8 @@ export class SetTokenRequestInterceptor implements HttpInterceptor {
     }
     return next.handle(req).pipe(
       catchError((error) => {
+        console.log(error);
+
         if (error.status === 401) {
           // Token expired, redirect to login page
           this.router.navigate(['/login']);

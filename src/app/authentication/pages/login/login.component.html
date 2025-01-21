@@ -1,6 +1,8 @@
 <div class="h-screen flex flex-col justify-center items-center">
   <div class="bg-dark p-7 rounded-[10px] py-16 px-20">
-    <form class="just w-[370px]">
+    <form
+      [formGroup]="loginForm"
+      class="just w-[370px]">
       <div class="mb-4">
         <label
           class="block text-white text-sm font-bold mb-2"
@@ -11,7 +13,8 @@
           class="shadow appearance-none border rounded w-full py-2 px-3 text-dark"
           id="username"
           type="text"
-          placeholder="Username">
+          placeholder="Username"
+          formControlName="username">
       </div>
       <div class="mb-6">
         <label
@@ -23,11 +26,13 @@
           class="shadow appearance-none border  rounded w-full py-2 px-3 text-dark mb-3"
           id="password"
           type="password"
-          placeholder="******************">
+          placeholder="******************"
+          formControlName="password">
       </div>
       <button
-        class="bg-blue-500 w-full h-12 rounded-full font-semibold text-white disabled:bg-dark disabled:bg-opacity-60"
-        [routerLink]="['/']">
+        type="button"
+        (click)="onSubmit()"
+        class="bg-blue-500 w-full h-12 rounded-full font-semibold text-white disabled:bg-dark disabled:bg-opacity-60">
         Login
       </button>
 

@@ -12,6 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { environment } from 'src/environments/environment';
+import { AuthenticationModule } from './authentication/authentication.module';
 import { CachingInterceptor } from './data/http-interceptors/caching-interceptor';
 import { SetTokenRequestInterceptor } from './data/http-interceptors/set-token-request-interceptor';
 import { AssetLayoutComponent } from './layout/asset-layout/asset-layout.component';
@@ -21,7 +22,6 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 import { OperationLayoutComponent } from './layout/operation-layout/operation-layout.component';
 import { ProjectionLayoutComponent } from './layout/projection-layout/projection-layout.component';
 import { StatsLayoutComponent } from './layout/stats-layout/stats-layout.component';
-import { LoginComponent } from './modules/authentication/pages/login/login.component';
 import { OperationModule } from './modules/operation/operation.module';
 import { ProjectionModule } from './modules/projection/projection.module';
 import { StatsModule } from './modules/stats/stats.module';
@@ -36,7 +36,6 @@ import { SharedModule } from './shared/shared.module';
     ToastMessageComponent,
     StatsLayoutComponent,
     LoginLayoutComponent,
-    LoginComponent,
     AssetLayoutComponent,
   ],
   imports: [
@@ -50,6 +49,7 @@ import { SharedModule } from './shared/shared.module';
     OperationModule,
     StatsModule,
     HighchartsChartModule,
+    AuthenticationModule,
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideStorage(() => getStorage()),
     ServiceWorkerModule.register('ngsw-worker.js', {
