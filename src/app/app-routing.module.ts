@@ -48,7 +48,7 @@ const pageRoutes: Routes = [
 
 const routes: Routes = [
   {
-    path: 'authentication',
+    path: 'login',
     component: LoginComponent, //replace for LoginLayoutComponent
   },
   { path: '', component: MainLayoutComponent, children: pageRoutes },
