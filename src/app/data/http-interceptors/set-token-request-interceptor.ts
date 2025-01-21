@@ -4,14 +4,16 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SetTokenRequestInterceptor implements HttpInterceptor {
   private readonly accessToken: string | null;
+  private router = inject(Router);
 
   constructor() {
     this.accessToken = localStorage.getItem('access_token');
@@ -29,6 +31,14 @@ export class SetTokenRequestInterceptor implements HttpInterceptor {
       });
       return next.handle(modReq);
     }
-    return next.handle(req);
+    return next.handle(req).pipe(
+      catchError((error) => {
+        if (error.status === 401) {
+          // Token expired, redirect to login page
+          this.router.navigate(['/login']);
+        }
+        return throwError(error);
+      }),
+    );
   }
 }
