@@ -12,21 +12,17 @@ import { catchError, Observable, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class SetTokenRequestInterceptor implements HttpInterceptor {
-  private accessToken: string | null = null;
   private router = inject(Router);
-
-  async ngOnInit() {
-    this.accessToken = await localStorage.getItem('access_token');
-  }
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler,
   ): Observable<HttpEvent<any>> {
-    if (this.accessToken) {
+    const accessToken = localStorage.getItem('access_token');
+    if (accessToken) {
       const modReq = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${this.accessToken}`,
+          Authorization: `Bearer ${accessToken}`,
         },
       });
       return next.handle(modReq);
