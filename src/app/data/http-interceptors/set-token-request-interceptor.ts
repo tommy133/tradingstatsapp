@@ -7,12 +7,14 @@ import {
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { catchError, Observable, throwError } from 'rxjs';
+import { ToastService } from 'src/app/core/service/toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SetTokenRequestInterceptor implements HttpInterceptor {
   private router = inject(Router);
+  private toast = inject(ToastService);
 
   intercept(
     req: HttpRequest<any>,
@@ -29,10 +31,11 @@ export class SetTokenRequestInterceptor implements HttpInterceptor {
     }
     return next.handle(req).pipe(
       catchError((error) => {
-        console.log(error);
+        console.log('Error:', error);
+
+        this.toast.error(error);
 
         if (error.status === 401) {
-          // Token expired, redirect to login page
           this.router.navigate(['/login']);
         }
         return throwError(error);

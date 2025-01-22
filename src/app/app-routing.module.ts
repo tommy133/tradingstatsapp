@@ -44,13 +44,13 @@ const pageRoutes: Routes = [
     loadChildren: () =>
       import('./modules/assets/assets.module').then((m) => m.AssetsModule),
   },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
 ];
 
 const routes: Routes = [
-  {
-    path: 'login',
-    component: LoginComponent, //replace for LoginLayoutComponent
-  },
   { path: '', component: MainLayoutComponent, children: pageRoutes },
   {
     path: '**',
