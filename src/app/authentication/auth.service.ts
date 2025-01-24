@@ -28,8 +28,13 @@ export class AuthService {
     });
   }
 
-  async setUserSession(res: LoginResponse) {
-    await localStorage.setItem('access_token', res.token);
-    await localStorage.setItem('user', JSON.stringify(res.user));
+  setUserSession(res: LoginResponse) {
+    localStorage.setItem('access_token', res.token);
+    localStorage.setItem('user', JSON.stringify(res.user));
+  }
+
+  logout() {
+    //delete full local storage
+    localStorage.clear();
   }
 }
