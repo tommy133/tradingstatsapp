@@ -9,4 +9,6 @@ export interface Projection {
   graph?: string;
   timeframe: string;
   status: Status;
+  inserted_at: string;
+  updated_at: string;
 }

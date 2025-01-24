@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:8080',
+  apiBaseUrl: 'http://localhost:8080/api',
   tradingViewUrl:
     'https://es.tradingview.com/chart/svq2CwMv/?symbol=IBROKER%3A',
   firebaseConfig: {

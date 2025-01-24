@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/authentication/auth.service';
 import { AccountService } from 'src/app/core/service/account.service';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
 import { MainLayoutComponent } from '../main-layout/main-layout.component';
@@ -12,6 +13,7 @@ import { MainLayoutComponent } from '../main-layout/main-layout.component';
 export class StatsLayoutComponent {
   private operationService = inject(OperationService);
   accountService = inject(AccountService);
+  private authService = inject(AuthService);
 
   private accountSubscription!: Subscription;
 
@@ -33,6 +35,10 @@ export class StatsLayoutComponent {
 
   get isDefaultAccount() {
     return this.accountService.isDefaultAccount();
+  }
+
+  logout() {
+    this.authService.logout();
   }
 
   ngOnDestroy() {
