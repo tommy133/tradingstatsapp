@@ -30,7 +30,6 @@ export class AuthService {
 
   setUserSession(res: LoginResponse) {
     localStorage.setItem('access_token', res.token);
-    localStorage.setItem('user', JSON.stringify(res.user));
   }
 
   logout() {

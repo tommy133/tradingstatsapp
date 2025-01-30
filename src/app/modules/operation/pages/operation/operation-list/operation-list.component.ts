@@ -96,11 +96,13 @@ export class OperationListComponent implements AfterViewInit {
     );
   }
 
-  goToBookmark() {
-    const bookmark = this.bookmarkService.getBookmark(false);
+  async goToBookmark() {
+    const bookmarkId = await this.bookmarkService.getBookmark(false);
 
-    if (bookmark) {
-      this.router.navigateByUrl(bookmark);
+    if (bookmarkId) {
+      this.router.navigate(['/operations', bookmarkId], {
+        queryParamsHandling: 'preserve',
+      });
     } else {
       this.toastService.info({
         message: 'No bookmark available',

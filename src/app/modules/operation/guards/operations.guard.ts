@@ -28,14 +28,7 @@ export class OperationsGuard implements CanActivate {
       ).toString();
 
     //redirect Ok route
-    let route: string = '';
-    if (state.url.includes('checklist')) {
-      route = state.url.split('?')[0];
-    } else {
-      route = 'operations';
-    }
-
-    this.router.navigate([route], {
+    this.router.navigate([state.url], {
       queryParams: {
         account: account,
         year: year,

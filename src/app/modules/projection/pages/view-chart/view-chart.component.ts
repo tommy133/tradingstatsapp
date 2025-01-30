@@ -212,7 +212,8 @@ export class ViewChartComponent {
   }
 
   setBookmark() {
-    this.bookmarkService.setBookmark(true, this.router.url);
+    const id = parseInt(this.activatedRoute.snapshot.params['id']);
+    this.bookmarkService.setBookmark(true, id);
   }
 
   ngOnDestroy() {

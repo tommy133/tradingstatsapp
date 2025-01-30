@@ -94,11 +94,13 @@ export class ProjectionListComponent implements AfterViewInit {
 
   n_projections$ = this.filteredProjections$.pipe(map((projs) => projs.length));
 
-  goToBookmark() {
-    const bookmark = this.bookmarkService.getBookmark(true);
+  async goToBookmark() {
+    const bookmarkId = await this.bookmarkService.getBookmark(true);
 
-    if (bookmark) {
-      this.router.navigateByUrl(bookmark);
+    if (bookmarkId) {
+      this.router.navigate(['/projections', bookmarkId], {
+        queryParamsHandling: 'preserve',
+      });
     } else {
       this.toastService.info({
         message: 'No bookmark available',

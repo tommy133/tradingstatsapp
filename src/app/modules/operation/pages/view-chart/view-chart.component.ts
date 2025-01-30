@@ -204,7 +204,8 @@ export class ViewChartComponent implements OnDestroy {
   }
 
   setBookmark() {
-    this.bookmarkService.setBookmark(false, this.router.url);
+    const id = parseInt(this.activatedRoute.snapshot.params['id']);
+    this.bookmarkService.setBookmark(false, id);
   }
 
   ngOnDestroy() {

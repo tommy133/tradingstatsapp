@@ -1,27 +1,36 @@
 import { inject, Injectable } from '@angular/core';
+import { firstValueFrom, shareReplay } from 'rxjs';
 import { ToastService } from './toast.service';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookmarkService {
+  private userService = inject(UserService);
   private toastService = inject(ToastService);
 
-  public setBookmark(projection: boolean, url: string) {
+  currentUser$ = this.userService.currentUser().pipe(shareReplay(1));
+
+  public async setBookmark(projection: boolean, id: number) {
     try {
-      if (url) {
-        const bookmarkKey = projection
-          ? 'bookmarkProjection'
-          : 'bookmarkOperation';
-        localStorage.setItem(bookmarkKey, url);
-        this.toastService.success({
-          message: `Current ${
-            projection ? 'projection' : 'operation'
-          } set as bookmark`,
-        });
+      if (id) {
+        const user = await firstValueFrom(this.currentUser$);
+        if (projection) {
+          user.proj_bm = id;
+        } else {
+          user.op_bm = id;
+        }
+        const res = await firstValueFrom(this.userService.updateUser(user));
+        if (res)
+          this.toastService.success({
+            message: `Current ${
+              projection ? 'projection' : 'operation'
+            } set as bookmark`,
+          });
       } else {
         this.toastService.error({
-          message: 'Error with url',
+          message: 'Error with id',
         });
       }
     } catch (err) {
@@ -32,11 +41,11 @@ export class BookmarkService {
     }
   }
 
-  public getBookmark(projection: boolean) {
+  public async getBookmark(projection: boolean) {
     try {
-      return localStorage.getItem(
-        projection ? 'bookmarkProjection' : 'bookmarkOperation',
-      );
+      const user = await firstValueFrom(this.currentUser$);
+
+      return projection ? user.proj_bm : user.op_bm;
     } catch (err) {
       console.error(err);
       this.toastService.error({
