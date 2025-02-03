@@ -100,7 +100,7 @@ export class OperationListComponent implements AfterViewInit {
     const bookmarkId = await this.bookmarkService.getBookmark(false);
 
     if (bookmarkId) {
-      this.router.navigate(['/operations', bookmarkId], {
+      this.router.navigate(['/operations/view-chart', bookmarkId], {
         queryParamsHandling: 'preserve',
       });
     } else {

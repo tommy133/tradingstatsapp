@@ -67,8 +67,9 @@ export class ViewChartComponent {
   getUpdownLabel = getUpdownLabel;
 
   projections: Projection[] = [];
+  projections$ = this.projectionService.projections$.pipe(shareReplay(1));
   filteredProjections$ = this.projectionFilter.getFilteredProjections(
-    this.projectionService.projections$.pipe(shareReplay(1)),
+    this.projections$,
   );
 
   projectionsWithChart$ = this.filteredProjections$.pipe(
@@ -112,7 +113,7 @@ export class ViewChartComponent {
 
   private image$ = combineLatest([
     this.activatedRoute.params,
-    this.projectionsWithChart$,
+    this.projections$,
   ]).pipe(
     map(([params, projections]) => {
       const fileName = projections.find(

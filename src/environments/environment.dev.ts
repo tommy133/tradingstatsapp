@@ -2,7 +2,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://192.168.1.196:8080',
+  apiBaseUrl: 'http://192.168.1.196:8080/api',
   tradingViewUrl:
     'https://es.tradingview.com/chart/svq2CwMv/?symbol=IBROKER%3A',
   firebaseConfig: {

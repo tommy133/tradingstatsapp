@@ -83,8 +83,9 @@ export class ViewChartComponent implements OnDestroy {
   getRevenueColorClass = getRevenueColorClass;
 
   operations: Operation[] = [];
+  operations$ = this.operationService.operations$.pipe(shareReplay(1));
   filteredOperations$ = this.operationFilter.getFilteredOperations(
-    this.operationService.operations$.pipe(shareReplay(1)),
+    this.operations$,
   );
   operationsWithChart$ = this.filteredOperations$.pipe(
     map((operations) => operations.filter((operation) => operation.graph)),
@@ -120,7 +121,7 @@ export class ViewChartComponent implements OnDestroy {
 
   private image$ = combineLatest([
     this.activatedRoute.params,
-    this.operationsWithChart$,
+    this.operations$,
   ]).pipe(
     map(([params, operations]) => {
       const fileName = operations.find(

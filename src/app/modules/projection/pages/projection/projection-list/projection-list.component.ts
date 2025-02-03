@@ -98,7 +98,7 @@ export class ProjectionListComponent implements AfterViewInit {
     const bookmarkId = await this.bookmarkService.getBookmark(true);
 
     if (bookmarkId) {
-      this.router.navigate(['/projections', bookmarkId], {
+      this.router.navigate(['/projections/view-chart', bookmarkId], {
         queryParamsHandling: 'preserve',
       });
     } else {
