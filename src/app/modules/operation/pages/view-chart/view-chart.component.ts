@@ -95,10 +95,13 @@ export class ViewChartComponent implements OnDestroy {
     this.navigationIndex = this.getNavigationIndex();
   });
 
-  operation$ = this.activatedRoute.params.pipe(
-    switchMap((params) => {
-      const id = params['id'];
-      return this.operationService.getOperation(id);
+  operation$ = combineLatest([
+    this.activatedRoute.params,
+    this.operations$,
+  ]).pipe(
+    map(([params, operations]) => {
+      const id = parseInt(params['id']);
+      return operations.find((operation) => operation.id === id);
     }),
   );
 

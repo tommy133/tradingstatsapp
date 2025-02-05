@@ -104,10 +104,13 @@ export class ViewChartComponent {
     this.setBackToQueryParams();
   }
 
-  projection$ = this.activatedRoute.params.pipe(
-    switchMap((params) => {
-      const id = params['id'];
-      return this.projectionService.getProjection(id);
+  projection$ = combineLatest([
+    this.activatedRoute.params,
+    this.projections$,
+  ]).pipe(
+    map(([params, projections]) => {
+      const id = parseInt(params['id']);
+      return projections.find((projection) => projection.id === id);
     }),
   );
 
