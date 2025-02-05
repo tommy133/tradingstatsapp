@@ -4,6 +4,7 @@
       <label class="flex justify-center text-white text-sm font-bold mb-6">TRADING STATS APP</label>
       <form
         [formGroup]="loginForm"
+        (ngSubmit)="onSubmit()"
         class="just w-[370px]">
         <div class="mb-4">
           <label
@@ -31,12 +32,7 @@
             placeholder="******************"
             formControlName="password">
         </div>
-        <button
-          type="button"
-          (click)="onSubmit()"
-          class="bg-blue-500 w-full h-12 rounded-full font-semibold text-white disabled:bg-dark disabled:bg-opacity-60">
-          Login
-        </button>
+        <button class="bg-blue-500 w-full h-12 rounded-full font-semibold text-white disabled:bg-dark disabled:bg-opacity-60">Login</button>
       </form>
     </div>
   </div>
