@@ -27,8 +27,9 @@ export class OperationsGuard implements CanActivate {
         ) + 1
       ).toString();
 
-    //redirect Ok route
-    this.router.navigate([state.url], {
+    //route without queryparams
+    const route = state.url.split('?')[0];
+    this.router.navigate([route], {
       queryParams: {
         account: account,
         year: year,

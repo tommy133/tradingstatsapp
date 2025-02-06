@@ -1,7 +1,7 @@
 <div class="overflow-x-auto max-h-[70vh] no-scrollbar rounded">
   <div class="w-full">
     <div class="flex flex-col">
-      <div class="flex justify-between items-center bg-dark text-white sticky top-0 z-30">
+      <div class="flex justify-between items-center bg-dark text-white sticky top-0 z-10">
         <ng-container *ngFor="let column of columns">
           <div class="font-bold cell">{{ column.name }}</div>
         </ng-container>
@@ -14,7 +14,9 @@
             (click)="goToDetails(row.id)">
             <div class="font-bold cell">{{ row.symbol.name_sym }}</div>
             <div class="font-semibold cell">
-              <app-updown-icon [updown]="row.updown" />
+              <app-updown-icon
+                [updown]="row.updown"
+                class="z-0"></app-updown-icon>
             </div>
             <div class="font-semibold cell">
               {{ row.dateOpen | date : 'dd/MM/yyyy HH:mm' : 'UTC' }}
