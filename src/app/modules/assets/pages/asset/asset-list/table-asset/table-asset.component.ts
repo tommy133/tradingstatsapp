@@ -5,6 +5,8 @@ import { TouchableStatusService } from 'src/app/core/service/touchable-status.se
 import { Symbol } from 'src/app/modules/assets/model/symbol';
 import { Operation } from 'src/app/modules/operation/model/operation';
 import { OperationService } from 'src/app/modules/operation/service/operation.service';
+import { Projection } from 'src/app/modules/projection/model/projection';
+import { ProjectionService } from 'src/app/modules/projection/service/projection.service';
 import { navigatePreservingQueryParams } from 'src/app/shared/utils/shared-utils';
 
 interface TableColumn {
@@ -23,9 +25,10 @@ interface TableColumn {
   ],
 })
 export class TableAssetComponent {
-  private router = inject(Router);
-  private activatedRoute = inject(ActivatedRoute);
-  private operationService = inject(OperationService);
+  private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
+  private readonly projectionService = inject(ProjectionService);
+  private readonly operationService = inject(OperationService);
 
   isTouchable = TouchableStatusService.isTouchable;
 
@@ -35,18 +38,27 @@ export class TableAssetComponent {
   columns: TableColumn[] = [
     { name: 'Symbol name' },
     { name: 'Market' },
-    { name: 'Number trades' },
+    { name: 'Projections' },
+    { name: 'Operations' },
     { name: 'Backtest checkpoint' },
     { name: 'Actions' },
   ];
 
+  projections: Projection[] = [];
   operations: Operation[] = [];
 
   async ngOnInit() {
+    this.projections = await firstValueFrom(
+      this.projectionService.projections$,
+    );
     this.operations = await firstValueFrom(this.operationService.operations$);
   }
 
-  getNumberOfTrades(symbolId: number) {
+  getNumberOfProjections(symbolId: number) {
+    return this.projections.filter((p) => p.symbol.id_sym === symbolId).length;
+  }
+
+  getNumberOfOperations(symbolId: number) {
     return this.operations.filter((op) => op.symbol.id_sym === symbolId).length;
   }
 

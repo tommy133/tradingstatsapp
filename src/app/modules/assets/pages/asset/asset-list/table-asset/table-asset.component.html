@@ -14,7 +14,8 @@
             (click)="goToDetails(row.id_sym)">
             <div class="font-bold cell">{{ row.name_sym }}</div>
             <div class="font-semibold cell">{{ row.market.name_mkt }}</div>
-            <div class="font-semibold cell">{{getNumberOfTrades(row.id_sym)}}</div>
+            <div class="font-semibold cell">{{getNumberOfProjections(row.id_sym)}}</div>
+            <div class="font-semibold cell">{{getNumberOfOperations(row.id_sym)}}</div>
             <div class="font-semibold cell">
               {{row.bt_checkpoint | date : 'dd/MM/yyyy HH:mm' : 'UTC'}}
             </div>
