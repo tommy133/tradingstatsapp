@@ -34,6 +34,7 @@ import { TotalComponent } from './components/total/total.component';
 import { TradingviewButtonComponent } from './components/tradingview-button/tradingview-button.component';
 import { TrimesterBtnComponent } from './components/trimester-selector/trimester-btn/trimester-btn.component';
 import { TrimesterSelectorComponent } from './components/trimester-selector/trimester-selector.component';
+import { UpdownIconComponent } from './components/updown-icon/updown-icon.component';
 import { ValidationErrorComponent } from './components/validation-error/validation-error.component';
 import { YearSelectorComponent } from './components/year-selector/year-selector.component';
 import { AutoFocusDirective } from './directives/auto-focus.directive';
@@ -71,6 +72,8 @@ const componentsAndPipes = [
   RadioButtonComponent,
   CommentReplyComponent,
   AutoFocusDirective,
+  CommentChildrenComponent,
+  UpdownIconComponent,
 ];
 
 const sharedModules = [
@@ -82,7 +85,7 @@ const sharedModules = [
 ];
 
 @NgModule({
-  declarations: [componentsAndPipes, CommentChildrenComponent],
+  declarations: [componentsAndPipes],
   imports: [...sharedModules, AngularSvgIconModule.forRoot(), AutosizeModule],
   exports: [...componentsAndPipes, ...sharedModules],
 })
