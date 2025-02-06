@@ -121,7 +121,7 @@
           (keydown.enter)="onSubmit(); $event.preventDefault()"></textarea>
 
       </div>
-      <div class="flex items-center flex-row justify-end pt-10">
+      <div class="flex items-center flex-row justify-end pt-10 gap-2">
         <button type="button">
           <label class="flex flex-row bg-red-violet rounded text-white items-center font-semibold p-3">
             <svg-icon
@@ -137,10 +137,10 @@
               (change)="uploadFileMemory($event)">
           </label>
         </button>
-        <div
-          *ngIf="uploadedFile"
-          class="flex flex-col">
-          <div class="flex flex-row items-center pl-4 space-x-2">
+        <div class="flex flex-col">
+          <div
+            *ngIf="uploadedFile"
+            class="flex items-center pl-4 space-x-2">
             <p class="text-white">File uploaded</p>
             <app-text-button
               buttonText="Cancel"
@@ -148,7 +148,7 @@
               (clickEvent)="removeFileMemory()">
             </app-text-button>
           </div>
-          <p class="text-green">{{uploadedFile.name}}</p>
+          <p class="text-green">{{uploadedFile?.name ?? graphFileName}}</p>
         </div>
       </div>
     </div>
