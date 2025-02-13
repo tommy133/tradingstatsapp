@@ -121,7 +121,7 @@ export class OperationService {
   public async deleteOperation(operation: Operation) {
     const { id, graph } = operation;
     if (graph) {
-      if (await this.fileService.deleteImage(graph))
+      if (await this.fileService.deleteFile(graph, FileService.IMG_DIR))
         this.deleteOperationAction(id);
     } else this.deleteOperationAction(id);
   }

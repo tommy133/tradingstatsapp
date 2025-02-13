@@ -138,7 +138,7 @@ export class ViewChartComponent implements OnDestroy {
     (fileName) => {
       if (fileName) {
         this.isLoading = true;
-        this.fileService.getImage(fileName).then((url) => {
+        this.fileService.getFile(fileName, FileService.IMG_DIR).then((url) => {
           if (url) {
             this.imageUrl = this.sanitizer.bypassSecurityTrustUrl(url);
             this.isLoading = false;

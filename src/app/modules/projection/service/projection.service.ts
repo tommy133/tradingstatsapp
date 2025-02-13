@@ -94,7 +94,7 @@ export class ProjectionService {
   public async deleteProjection(projection: Projection) {
     const { id, graph } = projection;
     if (graph) {
-      if (await this.fileService.deleteImage(graph))
+      if (await this.fileService.deleteFile(graph, FileService.IMG_DIR))
         this.deleteProjectionAction(id);
     } else this.deleteProjectionAction(id);
   }

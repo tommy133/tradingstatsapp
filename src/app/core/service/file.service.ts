@@ -14,13 +14,14 @@ import { ToastService } from './toast.service';
 export class FileService {
   private toastService = inject(ToastService);
   private storage = inject(Storage);
-  private readonly IMG_DIR = 'images';
 
-  public uploadImage(file: File) {
-    const imgRef = ref(this.storage, `${this.IMG_DIR}/${file.name}`);
+  public static readonly IMG_DIR = 'images';
 
-    uploadBytes(imgRef, file).catch((error) => {
-      const errorMsg = 'Error uploading image:' + error;
+  public uploadFile(file: File, directory: string) {
+    const fileRef = ref(this.storage, `${directory}/${file.name}`);
+
+    uploadBytes(fileRef, file).catch((error) => {
+      const errorMsg = 'Error uploading file:' + error;
       console.error(errorMsg);
       this.toastService.error({
         message: errorMsg,
@@ -29,13 +30,13 @@ export class FileService {
     });
   }
 
-  public async getImage(imgName: string) {
-    const imageRef = ref(this.storage, `${this.IMG_DIR}/${imgName}`);
+  public async getFile(fileName: string, directory: string) {
+    const fileRef = ref(this.storage, `${directory}/${fileName}`);
 
     try {
-      return await getDownloadURL(imageRef);
+      return await getDownloadURL(fileRef);
     } catch (error) {
-      const errorMsg = 'Error getting image:' + error;
+      const errorMsg = 'Error getting file:' + error;
       console.error(errorMsg);
       this.toastService.error({
         message: errorMsg,
@@ -44,14 +45,14 @@ export class FileService {
     }
   }
 
-  public async deleteImage(imgName: string) {
-    const imageRef = ref(this.storage, `${this.IMG_DIR}/${imgName}`);
+  public async deleteFile(fileName: string, directory: string) {
+    const fileRef = ref(this.storage, `${directory}/${fileName}`);
 
     try {
-      await deleteObject(imageRef);
+      await deleteObject(fileRef);
       return true;
     } catch (error) {
-      const errorMsg = 'Error deleting image: ' + error;
+      const errorMsg = 'Error deleting file: ' + error;
       console.error(errorMsg);
       this.toastService.error({
         message: errorMsg,

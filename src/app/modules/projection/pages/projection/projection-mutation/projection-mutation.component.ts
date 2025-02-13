@@ -208,7 +208,7 @@ export class ProjectionMutationComponent implements OnInit {
   }
 
   private uploadFileStorage(file: File) {
-    this.fileService.uploadImage(file);
+    this.fileService.uploadFile(file, FileService.IMG_DIR);
   }
 
   private async handleMutationProjection(
@@ -329,7 +329,10 @@ export class ProjectionMutationComponent implements OnInit {
     if (projId && this.errors.length === 0) {
       if (this.uploadedFile) {
         if (!this.isMutationAdd && this.graphFileName) {
-          await this.fileService.deleteImage(this.graphFileName);
+          await this.fileService.deleteFile(
+            this.graphFileName,
+            FileService.IMG_DIR,
+          );
         }
         this.uploadFileStorage(this.uploadedFile);
       }
