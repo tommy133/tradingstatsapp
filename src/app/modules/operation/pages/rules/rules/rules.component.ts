@@ -72,8 +72,8 @@ export class RulesComponent implements OnInit {
     if (this.rulesForm.valid) {
       const updatedRules = this.rulesForm.value.rules;
       try {
-        const res = await this.rulesService.updateRules(updatedRules);
-        if (res) this.toastService.success({ message: 'Rules updated' });
+        await this.rulesService.updateRules(updatedRules);
+        this.toastService.success({ message: 'Rules updated' });
       } catch (error) {
         this.toastService.error({ message: 'Error updating rules: ' + error });
       }

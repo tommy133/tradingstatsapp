@@ -1,24 +1,20 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
-import { environment } from 'src/environments/environment';
+import { inject, Injectable } from '@angular/core';
+import { FileService } from 'src/app/core/service/file.service';
 @Injectable({
   providedIn: 'root',
 })
 export class RulesService {
-  private apiServerUrl = `${environment.apiBaseUrl}/rules`;
+  private readonly fileService = inject(FileService);
 
-  constructor(private httpClient: HttpClient) {}
-
-  getRules() {
-    return firstValueFrom(
-      this.httpClient.get(this.apiServerUrl, { responseType: 'text' }),
-    );
+  async getRules() {
+    const fileMetadata = await this.fileService.getFile('rules.txt', '');
+    const fileContent = await this.fileService.downloadFile(fileMetadata ?? '');
+    return fileContent;
   }
 
   updateRules(newRules: string) {
-    return firstValueFrom(
-      this.httpClient.put(this.apiServerUrl, { rules: newRules }),
-    );
+    const blob = new Blob([newRules], { type: 'text/plain' });
+    const file = new File([blob], 'rules.txt', { type: 'text/plain' });
+    this.fileService.uploadFile(file, '');
   }
 }

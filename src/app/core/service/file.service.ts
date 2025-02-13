@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import {
   deleteObject,
@@ -6,14 +7,16 @@ import {
   Storage,
   uploadBytes,
 } from '@angular/fire/storage';
+import { firstValueFrom } from 'rxjs';
 import { ToastService } from './toast.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FileService {
-  private toastService = inject(ToastService);
-  private storage = inject(Storage);
+  private readonly toastService = inject(ToastService);
+  private readonly storage = inject(Storage);
+  private readonly http = inject(HttpClient);
 
   public static readonly IMG_DIR = 'images';
 
@@ -43,6 +46,9 @@ export class FileService {
       });
       return null;
     }
+  }
+  async downloadFile(downloadURL: string) {
+    return firstValueFrom(this.http.get(downloadURL, { responseType: 'text' }));
   }
 
   public async deleteFile(fileName: string, directory: string) {
