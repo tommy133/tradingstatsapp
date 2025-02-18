@@ -1,8 +1,10 @@
 #!/bin/bash
 
-echo "*** REMEMBER TO BE CONNECTED TO VPN ***"
+echo "*** REMEMBER TO BE CONNECTED TO VPN AND RUN DOCKER***"
 DOCKER_IMAGE="tommy1997/tstats_frt_img"
 DOCKER_CONTAINER_NAME="tstats_frt_container"
+
+git pull
 
 #build and push new image
 docker build -t $DOCKER_IMAGE .
