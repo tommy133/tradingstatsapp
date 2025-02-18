@@ -333,17 +333,34 @@ export class OperationMutationComponent implements OnInit {
             this.onUpdateOperation(operationInput as OperationUpdateInput),
           );
 
-      if (this.associatedProjectionId) {
-        await firstValueFrom(
-          this.projectionService.updateProjection({
-            id_proj: this.associatedProjectionId,
-            id_st: statuses['EXPIRED'],
-          }),
-        );
-      }
-
       if (result) {
         this.isLoading = false;
+
+        // if we come from create operation from projection then we can expire the projection
+        if (this.associatedProjectionId) {
+          await firstValueFrom(
+            this.projectionService.updateProjection({
+              id_proj: this.associatedProjectionId,
+              id_st: statuses['EXPIRED'],
+            }),
+          );
+        }
+
+        const STATUS_WATCHING: any = '3';
+        // if we create a new backtest operation we can update the backtest checkpoint based of the date close of the operation
+        if (
+          operationInput['id_ac'] === STATUS_WATCHING &&
+          operationInput['time_close'] &&
+          this.isMutationAdd
+        ) {
+          await firstValueFrom(
+            this.symbolService.updateSymbol({
+              id_sym: operationInput['id_sym']!,
+              bt_checkpoint: operationInput['time_close'],
+            }),
+          );
+        }
+
         return result;
       }
     } catch (e: any) {
