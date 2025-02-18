@@ -28,19 +28,20 @@
   <div class="p-10">
     <div class="flex items-center justify-between">
       <p class="text-white font-semibold">OPERATION DETAILS</p>
-      <div *ngIf="showViewChartBtn && operation.graph">
-        <button
-          type="button"
-          (click)="goToChart(operation.id)">
-          <label class="flex flex-row bg-blue-turquoise rounded text-white items-center cursor-pointer font-semibold p-3">
-            <svg-icon
-              [svgStyle]="{ 'height.px': 32, 'width.px': 32 }"
-              src="assets/svg/graphics.svg"></svg-icon>
-            <div class="pl-2">
-              <h5 class="text-center">View chart</h5>
-            </div>
-          </label>
-        </button>
+      <div class="flex items-center gap-4">
+        <icon-button
+          *ngIf="showViewChartBtn && operation.graph"
+          iconSource="assets/svg/trading_stats_notitle.svg"
+          iconSvgClass="hover:bg-gray-300 rounded-md"
+          [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+          (clickEvent)="goToChart(operation.id)"></icon-button>
+        <app-tradingview-button
+          [iconSvgStyle]="{ 'height.px': 50, 'width.px': 50 }"
+          [data]="{
+            symbolName: operation.symbol.name_sym,
+            timeframe: operation.timeframe
+          }"
+          iconSvgClass="bg-white rounded border-4 border-black"></app-tradingview-button>
       </div>
     </div>
     <div class="flex items-center justify-between pt-5">
