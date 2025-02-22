@@ -26,9 +26,9 @@ export class StatusService {
       case 'OPEN':
         return 'text-blue-300';
       case 'WATCHING':
-        return 'text-orange-600';
+        return 'text-yellow-600';
       case 'TRIGGER':
-        return 'text-yellow-500';
+        return 'text-orange-500';
       default:
         return '';
     }
