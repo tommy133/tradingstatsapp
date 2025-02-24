@@ -56,6 +56,16 @@ export class ViewChartComponent {
       this.activatedRoute.snapshot.children.at(0)?.routeConfig?.path === 'edit'
     )
       return;
+
+    const target = event.target as HTMLElement;
+    if (
+      target.tagName === 'INPUT' ||
+      target.tagName === 'TEXTAREA' ||
+      target.isContentEditable
+    ) {
+      return;
+    }
+
     event.stopPropagation();
     if (event.key === 'ArrowLeft') {
       this.navigatePreviousProjection();
