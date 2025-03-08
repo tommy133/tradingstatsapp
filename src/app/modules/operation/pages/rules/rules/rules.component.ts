@@ -7,39 +7,7 @@ import { RulesService } from '../../../service/rules.service';
 
 @Component({
   selector: 'app-rules',
-  template: `
-    <app-back-to
-      class="top-5"
-      backText="BACK TO OPERATIONS"
-      backTo=".."
-    ></app-back-to>
-
-    <form [formGroup]="rulesForm" (ngSubmit)="onSubmit()">
-      <div class="flex flex-col h-full  whitespace-pre gap-3 p-5 relative">
-        <button
-          class="absolute right-5 top-[-45px] w-[250px] bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4"
-          type="submit"
-        >
-          Save Changes
-        </button>
-        <textarea
-          class="font-semibold rounded-md no-scrollbar p-4 bg-dark text-white"
-          rows="20"
-          cols="100"
-          formControlName="rules"
-        ></textarea>
-      </div>
-    </form>
-
-    <app-sidebar
-      [sidebarState]="sidebarRight.isActivated ? 'in' : 'out'"
-      (closeEvent)="onCloseSidebar()"
-    >
-      <ng-container right-content>
-        <router-outlet #sidebarRight="outlet"></router-outlet>
-      </ng-container>
-    </app-sidebar>
-  `,
+  templateUrl: './rules.component.html',
 })
 export class RulesComponent implements OnInit {
   private router = inject(Router);
@@ -48,6 +16,7 @@ export class RulesComponent implements OnInit {
   private toastService = inject(ToastService);
 
   rulesForm: FormGroup;
+  isLoading: boolean = false;
 
   constructor(private fb: FormBuilder) {
     this.rulesForm = this.fb.group({
@@ -61,10 +30,16 @@ export class RulesComponent implements OnInit {
 
   private async loadRules() {
     try {
+      this.isLoading = true;
       const rules = await this.rulesService.getRules();
-      this.rulesForm.patchValue({ rules });
+      if (rules) {
+        this.isLoading = false;
+        this.rulesForm.patchValue({ rules });
+      }
     } catch (error) {
-      console.error('Error loading rules', error);
+      this.toastService.error({ message: 'Error loading rules: ' + error });
+    } finally {
+      this.isLoading = false;
     }
   }
 
